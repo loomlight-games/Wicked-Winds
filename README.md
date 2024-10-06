@@ -12,10 +12,61 @@
 Alfi
 
 ## Información de usuarios
-Alba
+#### Perfil demográfico
+Wicked Wings es un juego casual multiplataforma, cuyo público posee un rango de edad bastante amplio (10 - 40 años) y un género mixto, debido a que es una experiencia dinámica y amena que puede ser disfrutada por cualquier persona. Sin embargo, el rango de más alto interés puede estar entre los 14 - 25, debido a las mecánicas de juego de gestión del tiempo. Se espera principalmente el éxito del videojuego en América, Europa y Asia, donde los juegos de navegador y móviles tienen una alta tasa de adopción.
+#### Perfil psicográfico
+Los jugadores muestran fascinación por temas de magia y fantasía además de por el género arcade. Prefieren juegos que puedan disfrutar en sesiones cortas (de 5 a 15 min), lo que encajan con las misiones rápidas y el ritmo acelerado del juego. Tienden a ser personas competitivas tanto con el resto de jugadores como con ellos mismos debido al sistema de puntuaciones y récords globales.
+#### Hábitos de consumo
+En cuanto a sus hábitos de consumo se esperan jugadores que frecuenten los juegos de navegador y que hagan microtransacciones para obtener aspectos para el personaje, escobas personalizadas o efectos especiales.
 
 ## Mapa de empatía
-Alba
+Es importante definir el mapa de empatía que nos permita empatizar con el jugador y diseñar una experiencia que lo enganche emocionalmente, anticipando sus motivaciones y posibles frustraciones.
+
+### ¿Con quién estamos empatizando?
+#### ¿Quién es la persona que queremos entender?
+- Jugadores adolescentes y jóvenes adultos, con interés en juegos rápidos, de acción y temática mágica.
+#### ¿Cuál es la situación en la que se encuentran?
+- Buscan entretenimiento casual y competitivo, en cortos periodos de tiempo, en plataformas de fácil acceso como móviles y navegadores.
+#### ¿Cuál es su papel en la situación?
+- El jugador asume el rol de Lenora, una bruja aprendiz que completa misiones bajo presión de tiempo para escalar en las clasificaciones y desbloquear nuevos desafíos.
+
+### ¿Qué necesitan hacer?
+#### ¿Qué necesitan hacer de manera diferente?
+- Optimizar el uso del tiempo en el juego, planificar rutas eficientes y ejecutar bien los minijuegos para mantener el cronómetro corriendo y escalar en las clasificaciones.
+#### ¿Qué trabajo necesitan o desean realizar?
+- Completar misiones rápidas y variadas, como entregar cartas, preparar pociones o rescatar gatos, para mantenerse en acción y progresar en el juego.
+#### ¿Qué decisiones necesitan tomar?
+- Priorizar qué misiones realizar primero, maximizar el tiempo extra ganado en cada tarea, y decidir cuándo invertir en personalizaciones o mejoras.
+#### ¿Cómo sabremos que han sido exitosos?
+- Cuando logren superar sus mejores tiempos, escalar en la clasificación.
+
+### ¿Qué ven?
+#### ¿Qué ven en el mercado?
+- Juego arcade y de acción con mecánicas rápidas y competitivas, como Crazy Taxi o Temple Run, y otros juegos con componentes mágicos y de exploración.
+#### ¿Qué ven en su entorno inmediato?
+- Un juego visualmente atractivo con un estilo vibrante y caricaturesco, con un mundo lleno de detalles mágicos, misiones dinámicas y una interfaz intuitiva.
+
+### ¿Qué ven que otros están diciendo y haciendo?
+- Influencers y jugadores hablando de estrategias para completar misiones más rápido, mostrando sus mejores puntajes en redes sociales y compartiendo logros estéticos como skins de escobas y atuendos.
+#### ¿Qué están viendo y leyendo?
+- Tutoriales o videos en plataformas como YouTube y TikTok sobre cómo maximizar el tiempo en las misiones, mejorar en los minijuegos y gestionar mejor las rutas.
+
+### ¿Qué oyen?
+#### ¿Qué están escuchando de los demás?
+- Opiniones de amigos y compañeros de juegos sobre la competencia en las clasificaciones y el atractivo de la personalización de personajes.
+#### ¿Qué están oyendo de amigos?
+- Recomendaciones sobre cómo mejorar sus tiempos o estrategias en minijuegos.
+- Retroalimentación constante a través de sonidos mágicos y efectos sonoros cuando completa misiones o gana tiempo extra.
+- La música de fondo envolvente, que refuerza la temática de magia y urgencia, ayudando a mantener el ritmo rápido del juego.
+
+### ¿Qué piensan y sienten?
+#### ¿Cuáles son sus miedos, frustraciones y ansiedades?
+- Temen que el juego se vuelva repetitivo si no hay suficiente variedad en las misiones o mapas.
+- Se frustran cuando pierden porque no logran completar una misión a tiempo, o si la curva de dificultad es demasiado abrupta.
+#### ¿Cuáles son sus deseos, necesidades, esperanzas y sueños?
+- Esperan desbloquear personalizaciones únicas para Lenora y sus habilidades mágicas, como skins de escobas o nuevas misiones y áreas en el mapa.
+- Sueñan con escalar a lo más alto de las clasificaciones, mostrando sus habilidades para gestionar el tiempo y dominar los minijuegos.
+- Quieren un flujo constante de nuevas actualizaciones, eventos o retos que mantengan el juego fresco e interesante.
 
 ## Caja de herramientas
 
