@@ -24,8 +24,7 @@ Alba
 - **Proveedores (Recursos tecnológicos y financieros):** Empresas que proporcionan diferentes tecnologías; motores de juego (Unity), servicios en la nube, herramientas de monetización, y posibles financiadores.
 - **Consumidores (Jugadores):** Público objetivo que interactúa con el juego, desde jugadores casuales hasta fans de juegos arcade y mágicos en plataformas de navegador.
 - **Gobierno/Reguladores:** Autoridades que regulan aspectos como protección de datos de los jugadores, clasificación por edades y políticas de monetización.
-- **Otras empresas (Plataformas de distribución y publicidad):** Webs o servicios que ofrecen visibilidad para el juego; plataformas de distribución de juegos para PC (Itch.io), tiendas de aplicaciones móvil (Play Store).
-- **Organizaciones sin ánimo de lucro:** En un principio no tendremos relación directa con ONGs, sin embargo, si el juego va adoptando elementos de responsabilidad social, este bloque podría ser relevante de cara a futuras expansiones.
+- **Otras empresas (Plataformas de distribución y publicidad):** Webs o servicios que ofrecen visibilidad para el juego; plataformas de distribución de juegos para PC (Itch.io) y páginas web donde jugador en navegador.
 
 ### Relaciones
 - **Productos (Empresa - Consumidores):** El principal producto es el propio juego. Se comercializa como un juego de navegador con mecánicas arcade/acción y misiones rápidas.
@@ -45,14 +44,21 @@ Alba
 4. Otras empresas (plataformas de distribución como Itch.io o Play Store) promueven el juego en sus plataformas y comparten parte de las ventas o ingresos publicitarios.
 5. El gobierno y reguladores aseguran que la empresa cumple con las normativas de protección de datos y regulación del mercado de juegos.
 
-
 ## Modelo de lienzo
 Cris
 
 ## Monetización
-Wicked Winds es un videojuego freemium que incluye una tienda donde comprar ítems y *skins* con monedas que el jugador puede encontrar en cada partida repartidas por el escenario. También es posible ganar más monedas viendo anuncios, pero esto sigue siendo una pequeña cantidad comparada con las que se pueden conseguir comprándolas directamente con un micropago. Las compras en la tienda del juego nunca supondrán una ventaja del jugador frente a los demás, por lo que la clasificación se mantendrá justa entre todos los jugadores.
+Wicked Winds es un videojuego freemium, ya que es gratis pero incluye una tienda donde el jugador puede realizar micropagos para obtener más monedas que le permitan comprar ítems y *skins* para personalizar su partida. Cabe destacar que las compras realizadas en la tienda nunca supondrán una ventaja del jugador frente a los demás, ya que las clasificaciones de los jugadores deben ser justas.
 
-En principio, el marketing del juego se lleva a cabo por autopromoción a través de las redes sociales y página web de Loomlight, aunque si se consigue una buena repercusión, se espera que Wicked Winds aparezca en blogs especializados en juegos indie españoles.
+Aparte de con micropagos, las monedas de tienda también se pueden conseguir: jugando, ya que se pueden encontrar unas pocas repartidas por el escenario en cada partida; o viendo anuncios, que aunque darán más monedas que jugando, sigue siendo una menor cantidad comparada con las que se pueden conseguir comprándolas directamente con micropagos.
+
+En un futuro se podrían aumentar los beneficios económicos del juego con:
+- Implementación de más tipos de monedas/objetos especiales, lo que permitiría justificar más micropagos opcionales.
+- Creación y distribución de *merchandising* de Wicked Winds.
+- Colaboraciones publicitarias con marcas conocidas que se alineen con la temática del juego.
+
+#### Marketing
+En principio, el marketing del juego se lleva a cabo por autopromoción a través de las redes sociales y página web de Loomlight, aunque si se consigue una buena repercusión, se espera que Wicked Winds aparezca en blogs especializados en juegos indie españoles. También se organizarían apariciones en pequeños eventos de juegos y colaboraciones con *influencers* de videojuegos o *streamers* que ayuden a aumentar la repercusión del juego.
 
 ### Métricas de éxito
 Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar con Wicked Winds:
@@ -78,7 +84,7 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 #### Escenario Optimista
 - **Base de Jugadores:** 100,000 usuarios activos mensuales.
 - **Micropagos (Monedas):** Tasa de conversión del 3%, con 3,000 jugadores comprando monedas, con un gasto promedio de 3 € por compra.
-- **Ingresos por Anuncios:** Ingresos elevados debido a la gran cantidad de impresiones y clics en los anuncios, generando entre 1,500 € y 3,000 € al mes.
+- **Ingresos por Anuncios:** Ingresos elevados debido a la gran cantidad de impresiones y clics en los anuncios, generando entre 1,000 € y 2,000 € al mes.
 - **Ingresos Totales:** Entre 10,500 € y 12,000 € al mes (micropagos + anuncios).
 - **Engagement:** Los jugadores disfrutan de la posibilidad de personalizar su experiencia mediante las monedas adquiridas, y no se ven demasiado afectados por los anuncios, lo que mejora el compromiso con el juego.
 - **Retención:** Un 35% de los jugadores permanecen después de 7 días.
@@ -102,7 +108,7 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Entorno**: la partida se produce en un escenario urbano que el jugador puede recorrer libremente.
 
 ### Sinopsis
-Lenora es una joven bruja nativa de Ashenwick, una ciudad tan encantadora como bulliciosa. Los habitantes de esta aldea siempre necesitan su ayuda para completar tareas urgentes, por lo que Lenora debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
+Lenora es una joven bruja que vive en una ciudad tan encantadora como bulliciosa. Los habitantes de esta siempre necesitan su ayuda para completar tareas urgentes, por lo que Lenora debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
 
 ### Mecánica del juego
 El jugador se desplaza por el escenario en una escoba encantada para atender cómodamente los recados de los vecino. Debe acercarse a cada vecino para saber sus necesidades y decidir si es un buen momento para ayudarle. Cuando se activa un recado debe ir a otro punto del escenario para recoger algo o realizar una tarea en forma de minijuego, y luego es posible que deba volver a la ubicación de quien le pidió el recado. Para desplazarse más rápido el jugador deberá recoger ciertos objetos repartidos por el escenario que rellenarán poco a poco una barra en el HUD que indica el impulso que puede recibir. Este es limitado por lo que si se acaba se mueve a una velocidad normal. El bonus del impulso puede activarse o desactivarse como quiera el jugador y se gasta mientras está en uso.  
