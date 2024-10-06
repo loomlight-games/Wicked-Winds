@@ -8,13 +8,13 @@
 </i></b></div>
 
 ## Modelo de negocio
-### Roadmap 2 años vista
+## Roadmap 2 años vista
 Alfi
 
-### Información de usuarios
+## Información de usuarios
 Alba
 
-### Mapa de empatía
+## Mapa de empatía
 Alba
 
 ## Caja de herramientas
@@ -46,7 +46,7 @@ Alba
 5. El gobierno y reguladores aseguran que la empresa cumple con las normativas de protección de datos y regulación del mercado de juegos.
 
 
-### Modelo de lienzo
+## Modelo de lienzo
 Cris
 
 ## Monetización
