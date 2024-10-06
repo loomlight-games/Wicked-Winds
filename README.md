@@ -17,8 +17,34 @@ Alba
 ### Mapa de empatía
 Alba
 
-### Caja de herramientas
-Paula
+## Caja de herramientas
+
+### Bloques
+- **La empresa (Loomlight):** Desarrolladora indie responsable de la creación, publicación y monetización del juego.
+- **Proveedores (Recursos tecnológicos y financieros):** Empresas que proporcionan diferentes tecnologías; motores de juego (Unity), servicios en la nube, herramientas de monetización, y posibles financiadores.
+- **Consumidores (Jugadores):** Público objetivo que interactúa con el juego, desde jugadores casuales hasta fans de juegos arcade y mágicos en plataformas de navegador.
+- **Gobierno/Reguladores:** Autoridades que regulan aspectos como protección de datos de los jugadores, clasificación por edades y políticas de monetización.
+- **Otras empresas (Plataformas de distribución y publicidad):** Webs o servicios que ofrecen visibilidad para el juego; plataformas de distribución de juegos para PC (Itch.io), tiendas de aplicaciones móvil (Play Store).
+- **Organizaciones sin ánimo de lucro:** En un principio no tendremos relación directa con ONGs, sin embargo, si el juego va adoptando elementos de responsabilidad social, este bloque podría ser relevante de cara a futuras expansiones.
+
+### Relaciones
+- **Productos (Empresa - Consumidores):** El principal producto es el propio juego. Se comercializa como un juego de navegador con mecánicas arcade/acción y misiones rápidas.
+- **Servicios (Empresa - Consumidores/Proveedores):** La empresa puede ofrecer servicios como soporte técnico, actualizaciones constantes del juego y contenido adicional a través de microtransacciones o DLCs.
+- **Experiencia (Consumidores - Empresa):** La experiencia del usuario es crucial. Wicked Winds busca ofrecer una experiencia mágica e inmersiva, con controles intuitivos, variabilidad de misiones y entornos atractivos. El feedback de los jugadores será clave para futuras actualizaciones.
+- **Visibilidad (Empresa - Otras empresas/Consumidores):** Estableciendo estrategias de marketing daremos visibilidad al juego; anuncios en redes sociales, colaboraciones con influencers o participación en eventos de videojuegos.
+- **Exposición (Empresa - Gobierno/Otras empresas):** La exposición del juego dependerá de cumplir con las normativas de distribución; edad recomendada o protección de datos. Para ganar exposición inicial será importante darnos a conocer en plataformas de distribución.
+- **Dinero/Poco Dinero (Empresa - Consumidores/Otras empresas):** Se plantea un modelo de monetización freemium con micropagos para la obtención de monedas que se podrán canjear por aspectos y personalización. También es posible conseguirlas a través de publicidad y anuncios no intrusivos, aunque en menor cantidad.
+- **Información (Empresa - Consumidores/Proveedores):** La empresa recogerá datos sobre el comportamiento de los jugadores para mejorar la jugabilidad y adaptarlo a las posibles necesidades que puedan surgir, para así captar a un mayor número de jugadores. Los proveedores tendrán el papel de ofrecer estadísticas de rendimiento.
+- **Derechos (Empresa - Otras empresas/Proveedores):** Loomlight mantiene los derechos de propiedad intelectual, aunque se tienen licencias con proveedores por el uso de herramientas de software y canales de distribución; Unity o Itch.io, respectivamente.
+- **Crédito (Empresa - Proveedores):** La empresa obtendrá financiamiento inicial a través de préstamos o créditos de los proveedores. El modelo freemium que hemos elegido, generará ingresos mediante micropagos y publicidad.
+
+### Ejemplo del proceso
+1. La empresa Loomlight crea y publica Wicked Winds como un juego de navegador y dispositivos móviles.
+2. Los consumidores (jugadores) pueden acceder al juego gratuitamente y, opcionalmente, podrán realizar micropagos o visualizar anuncios para obtener recompensas, meramente estéticas, dentro del juego. A través de estos, la empresa genera ingresos.
+3. Los proveedores (Unity) proporcionan las tecnologías necesarias para desarrollar el juego.
+4. Otras empresas (plataformas de distribución como Itch.io o Play Store) promueven el juego en sus plataformas y comparten parte de las ventas o ingresos publicitarios.
+5. El gobierno y reguladores aseguran que la empresa cumple con las normativas de protección de datos y regulación del mercado de juegos.
+
 
 ### Modelo de lienzo
 Cris
