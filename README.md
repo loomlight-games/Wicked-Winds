@@ -9,7 +9,40 @@
 
 ## **MODELO DE NEGOCIO**
 ## Roadmap 2 años vista
-Alfi
+### HITO 1 (3 MESES): Personajes nuevos e implementación de habilidades.
+- **Desarrollo de personajes:** Crear 5 personajes únicos que tengan un diseño coherente con el estilo artístico (3D lowpoly y cartoon). Cada uno debe tener una personalidad visual y una habilidad que ofrezca distintas ventajas durante el juego, como diferentes formas de impulso o poderes mágicos.
+- **Implementación de habilidades:** Cada personaje debe tener una habilidad especial que aporte algo diferente a la mecánica de completar recados o desplazarse por la ciudad (ej. un personaje con mayor velocidad, otro con la habilidad de atraer más power-ups). Lenora también tendrá una habilidad ya que antes de esta actualización no tendría. A partir de este punto se podrán incluir en la tienda diferentes skins para estos nuevos personajes.
+
+### HITO 2 (6 MESES): Mapas nuevos
+- **Diseño de mapas:** Crear 3 nuevas áreas, cada una con una temática única. Esto puede incluir zonas como un poblado helado, un tétrico bosque o una zona desértica.
+- **Mecánicas únicas de los mapas:** estos nuevos mapas tendrán mecánicas especiales tales como un fuerte viento que aparece aleatoriamente en algunas calles y puede dificultar el desplazamiento.
+
+### HITO 3 (9 MESES): Power Ups, Pase de batalla y Misiones.
+- **Power-ups:** Introducir una variedad de nuevos power-ups que ofrezcan mecánicas adicionales como un boost de velocidad, escudos protectores, y habilidades de recolección automática de recados.
+- **Pase de Batalla:** Desarrollar un sistema de recompensas por temporadas que motive a los jugadores a cumplir con objetivos específicos para desbloquear cosméticos, personajes nuevos o monedas del juego. Este pase tendrá una parte gratuita y patria de pago, siendo la de pago la que mejores cosas ofrezca.
+- **Misiones:** Al incluirse el pase, se añadirán misiones tanto diarias como semanales con las que el jugador pueda conseguir puntos para seguir avanzando en el pase.
+
+### HITO 4 (1 AÑO): Modo multijugador colaborativo y Housing
+- **Multijugador colaborativo:** Implementar un sistema donde los jugadores puedan trabajar juntos para completar recados en equipo. Este modo podría incluir la posibilidad de repartir tareas entre jugadores o compartir power-ups. Sería un modo con un ranking diferente al del modo singleplayer y se jugaría cooperativo con un amigo o mediante emparejamiento aleatorio.
+- **Modo Housing:** Crear una función donde los jugadores puedan personalizar su propia casa dentro de la ciudad, desbloqueando decoración y objetos según progresen en el juego. Además los jugadores que tengas agregados a tu lista de amigos podrán visitar tu casa. Los muebles y decoraciones se podrán comprar con la moneda del juego y algunos se darán de forma exclusiva en el pase de batalla.
+
+### HITO 5 (15 MESES): Eventos temporales (Halloween, Navidad, etc.)
+- **Eventos especiales:** Crear eventos temáticos donde la ciudad cambie de ambiente y se ofrezcan misiones y recompensas exclusivas de tiempo limitado (ej. misiones de temática de Halloween que den distintas recompensas como muebles, skins o monedas del juego).
+- **Contenido estacional:** Añadir elementos visuales como pequeñas decoraciones navideñas en el mapa durante el evento de Navidad. También en la tienda se podrán comprar distintos muebles y skins de la temática del evento.
+
+### HITO 6 (18 MESES): Modos multijugador competitivos
+- **Modos competitivos:** Crear nuevos modos donde los jugadores compitan directamente, como un modo donde los jugadores se enfrenten para ver quien consigue hacer más recados en un tiempo límite (jugando cada uno en su mapa), un modo donde cada cierto tiempo se vayan eliminando a los jugadores con menor puntuación hasta que solo quede uno o un modo donde 4 o 5 jugadores jueguen en el mismo mapa y puedan estorbarse el uno al otro mediante el uso de habilidades u objetos.
+- **Ranking de ligas:** El principal de estos modos tendría un ranking especial, ya que sería un ranking dividido en diferentes ligas (bronce, plata, oro, etc) donde para ascender de liga tendrás que alcanzar un número de puntos y ganar en las partidas de ascenso.
+
+### HITO 7 (21 MESES): Merchandising del juego
+- **Diseño de productos:** Desarrollar artículos promocionales como camisetas, figuras de personajes, pósters y otros productos basados en el juego.
+- **Tienda en línea:** Crear una plataforma dentro de la página oficial del juego donde los fans puedan comprar el merchandising oficial.
+- **Marketing:** Promocionar el merchandising a través de las redes sociales oficiales del juego y dentro del propio juego.
+
+### HITO 8 (2 AÑOS): Creación de un torneo competitivo
+- **Torneo oficial:** Organizar un torneo presencial donde los jugadores compitan por premios y reconocimiento, centrado en los modos competitivos introducidos en el Hito 6.
+- **Reglas:** Definir reglas claras para la competición que hagan que esta sea lo más justa posible así como evitar diversas trampas por parte de los competidores.
+- **Promoción y difusión:** Publicitar el evento en redes sociales y con la comunidad del juego para atraer la mayor cantidad de jugadores posible.
 
 ## Información de usuarios
 #### Perfil demográfico
