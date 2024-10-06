@@ -7,7 +7,7 @@
     Versión 0.0.1
 </i></b></div>
 
-## Modelo de negocio
+## **MODELO DE NEGOCIO**
 ## Roadmap 2 años vista
 Alfi
 
