@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: aca76b990f4780644ad922a3ea0f68a1,
     type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -60,7 +60,39 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 355376627466237822}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fd0ae92a-914c-4639-8e80-144eb0d2eb92
+    m_ActionName: Player movement/Input
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 355376627466237822}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnRun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 982fbb0a-a3b0-4bab-9333-65af1ca6ea67
+    m_ActionName: Player movement/Run[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
@@ -78,7 +110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92255a43e15f10419e71423ef2d3741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  cameraTransform: {fileID: 0}
+  walkSpeed: 10
+  runSpeed: 20
+  rotationSpeed: 5
+  gravity: 9.8
 --- !u!143 &526009619674639312
 CharacterController:
   m_ObjectHideFlags: 0
