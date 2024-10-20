@@ -11,14 +11,13 @@ public class Movable : MonoBehaviour
 {
 // Properties ////////////////////////////////////////////////////
     // Input
-    InputActions playerInput; // Class generated from input map
     bool runKey,runJoystick, jumpKey;
     CharacterController controller;
     // Movement
     public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
     public Transform cameraTransform; // Isometric camera
-    Vector2 movement2D; // Joystick
-    Vector3 movement3D, lookAtPosition; // Player
+    Vector2 movement2D;
+    Vector3 movement3D, lookAtPosition;
     Quaternion lookAtRotation;
     float verticalVelocity, movementSpeed;
     float joystickScale = 2f;
@@ -29,31 +28,13 @@ public class Movable : MonoBehaviour
     public float rotationSpeed = 5f;
     public float jumpForce = 2f;
     public float gravity = 9.8f;
+    public float heightLimit = 10f;
 
 
     ///////////////////////////////////////////////////////////////////////
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-
-        playerInput = new();
-
-        // Joystick: OnStick is susbcribed to walk inputs
-        playerInput.Playermovement.Joystick.started += OnStick;
-        playerInput.Playermovement.Joystick.performed += OnStick;
-        playerInput.Playermovement.Joystick.canceled += OnStick;
-
-        // Walk: OnMove is susbcribed to walk inputs
-        playerInput.Playermovement.Walk.started += OnWalk;
-        playerInput.Playermovement.Walk.canceled += OnWalk;
-
-        // Run
-        playerInput.Playermovement.Run.started += OnRun;
-        playerInput.Playermovement.Run.canceled += OnRun;
-
-        // Jump
-        playerInput.Playermovement.Jump.started += OnJump;
-        playerInput.Playermovement.Jump.canceled += OnJump;
 
         // Needs to know boost value
         Boostable boostable = GetComponent<Boostable>();
@@ -74,17 +55,17 @@ public class Movable : MonoBehaviour
     /// </summary>
     void Fly()
     {
-        if (controller.isGrounded)
-        {
+        if (controller.isGrounded) {
             verticalVelocity = -1f; // Slight downward force to keep grounded
             
-            if (jumpKey) // If jump is pressed while grounded
+            // If jump is pressed and height limit hasn't been reached
+            if (jumpKey && transform.position.y < heightLimit)
                 verticalVelocity = jumpForce; // Apply jump force
         }
-        else
-        {
-            if (jumpKey) // If jump is pressed while in the air, ascend
-                verticalVelocity += jumpForce * Time.deltaTime; // Gradually increase altitude
+        else {
+            // If jump is pressed and height limit hasn't been reached
+            if (jumpKey && transform.position.y < heightLimit)
+                 verticalVelocity += jumpForce * Time.deltaTime; // Gradually increase altitude
             else // Apply gravity when jump is not pressed
                 verticalVelocity -= gravity * Time.deltaTime; // Descend naturally
         }
@@ -108,14 +89,13 @@ public class Movable : MonoBehaviour
         forward.Normalize(); // Magnitude of 1
         right.Normalize(); // Magnitude of 1
 
-        // 3DMovement based on 2D input and camera's orientation, without veretical volicity applied
+        // 3DMovement based on 2D input and camera's orientation, 
+        // Without vertical velicity applied bc will be affected by running
         movement3D = right * movement2D.x + forward * movement2D.y;
-
-        // Check if the player is running (on the ground or in the air)
-        if (runKey || runJoystick)
-        {
-            if (canRun)  // If able to run (boost available)
-            {
+        
+        // Check if the player is running
+        if (runKey || runJoystick){
+            if (canRun) { // If able to run (boost available)
                 if (movement2D.sqrMagnitude != 0) // Is moving
                     RunningEvent?.Invoke(this, null); // Trigger running event
                 
@@ -123,12 +103,17 @@ public class Movable : MonoBehaviour
             }
             else  // If not able to run, walk
                 movementSpeed = walkSpeed;
-        }
-        else
+        } else
             movementSpeed = walkSpeed;
 
         // Move character applying vertical velocity
         controller.Move((movement3D * movementSpeed + verticalVelocity * Vector3.up) * Time.deltaTime);
+        
+        // Apply both movement and vertical (jump/gravity) logic together
+        Vector3 movementWithJump = movement3D * movementSpeed + verticalVelocity * Vector3.up;
+    
+        // Move the character based on combined movement and jump
+        controller.Move(movementWithJump * Time.deltaTime);
     }
 
     /// <summary>
@@ -179,6 +164,10 @@ public class Movable : MonoBehaviour
     {
         movement2D = context.ReadValue<Vector2>();
         movement2D *= joystickScale; // Must be bigger than keyboard scake (1.0)
+
+
+        // Ensure joystick running is still detected
+        CheckJoystick();
     }
 
     /// <summary>
@@ -198,7 +187,7 @@ public class Movable : MonoBehaviour
     }
 
     /// <summary>
-    /// Detects run inputs
+    /// Detects jump inputs
     /// </summary>
     public void OnJump(InputAction.CallbackContext context)
     {
