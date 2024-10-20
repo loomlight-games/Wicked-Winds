@@ -1,8 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Detects inputs (joystick and keyboard) and moves object
+/// Only runs when enough boost
+/// </summary>
 public class Movable : MonoBehaviour
 {
 // Properties ////////////////////////////////////////////////////
@@ -11,6 +14,7 @@ public class Movable : MonoBehaviour
     bool runKey,runJoystick; // Run triggers
     CharacterController controller;
     // Movement
+    public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
     public Transform cameraTransform; // Fixed isometric camera
     Vector2 movement2D; // Joystick
     Vector3 movement3D, lookAtPosition; // Player
@@ -18,11 +22,12 @@ public class Movable : MonoBehaviour
     float verticalVelocity;
     float gravity = 9.8f;
     float joystickScale = 2f;
+    bool canRun;
     // Inspector
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float rotationSpeed = 5f;
-    public bool canRun = true;
+
 
     ///////////////////////////////////////////////////////////////////////
     void Awake()
@@ -43,6 +48,10 @@ public class Movable : MonoBehaviour
         // Run
         playerInput.Playermovement.Run.started += OnRun;
         playerInput.Playermovement.Run.canceled += OnRun;
+
+        // Needs to know boost value
+        Boostable boostable = GetComponent<Boostable>();
+        boostable.BoostValueEvent += OnBoostChangeEvent;
     }
 
     // Update is called once per frame
@@ -71,11 +80,23 @@ public class Movable : MonoBehaviour
     }
 
     /// <summary>
-    /// Detects run inputs: Left Shift
+    /// Detects run inputs
     /// </summary>
     public void OnRun(InputAction.CallbackContext context)
     {
         runKey = context.ReadValueAsButton();
+    }
+
+    /// <summary>
+    /// Called when boost value is modified (only when running)
+    /// </summary>
+    private void OnBoostChangeEvent(object sender, float currentBoost)
+    {
+        // All consumed
+        if (currentBoost <= 0)
+            canRun = false; // Can't run
+        else
+            canRun = true;
     }
 
     /// <summary>
@@ -138,10 +159,12 @@ public class Movable : MonoBehaviour
 
         // Any run trigger happens
         if (runKey || runJoystick){ 
-            if (canRun) // Can run
+            if (canRun){ // Any boost is left
+                RunningEvent?.Invoke(this, null); // Invoke as it's running
                 controller.Move(runSpeed * Time.deltaTime * movement3D); // Run
-            else
+            }else{
                 controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
+            }
         }
         else{
             controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
