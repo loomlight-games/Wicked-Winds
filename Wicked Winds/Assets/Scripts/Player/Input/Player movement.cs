@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float rotationSpeed = 5f;
+    public bool canRun = true;
 
     ///////////////////////////////////////////////////////////////////////
     void Awake()
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         Rotate();
     }
 
+    ///////////////////////////////////////////////////////////////////////
     /// <summary>
     /// Detects Joystickinputs
     /// </summary>
@@ -80,20 +83,17 @@ public class PlayerMovement : MonoBehaviour
     /// Calculates gravity
     /// </summary>
     float Gravity(){
-        if (controller.isGrounded){
-            verticalVelocity = -1f;
-        }else{
-            verticalVelocity -= gravity * Time.deltaTime;
-        }
+        if (controller.isGrounded) verticalVelocity = -1f;
+        else verticalVelocity -= gravity * Time.deltaTime;
+        
         return verticalVelocity;
     }
 
     /// <summary>
-    /// Moves player in isometric perspective.
+    /// Check if joystick has passed keyboard limits to run
     /// </summary>
-    void Move(){
-
-        // Check if joystick has passed keyboard limits
+    private void CheckJoystick()
+    {
         // Keyboard inputs are normalized (-1>0<1)
         if (movement2D.x > 1 || movement2D.y > 1 || 
             movement2D.x < -1 || movement2D.y < -1){
@@ -113,6 +113,14 @@ public class PlayerMovement : MonoBehaviour
         else{
             runJoystick = false;
         }
+    }
+
+    /// <summary>
+    /// Moves player in isometric perspective.
+    /// </summary>
+    void Move(){
+        // Limit joystick movement and check if it's running
+        CheckJoystick();
 
         // Get direction in 3D space based on camera orientation
         Vector3 forward = cameraTransform.forward;
@@ -125,20 +133,25 @@ public class PlayerMovement : MonoBehaviour
         forward.Normalize(); // Magnitude of 1
         right.Normalize(); // Magnitude of 1
 
-        // Movement based on 2D input and camera's orientation
+        // 3DMovement based on 2D input and camera's orientation
         movement3D = right * movement2D.x + forward * movement2D.y;
         movement3D.y = Gravity(); // Add gravity
 
-        // Run key is pressed
-        if (runKey || runJoystick){
-            // Run
-            controller.Move(runSpeed * Time.deltaTime * movement3D);
-        }else{
-            // Walk
-            controller.Move(walkSpeed * Time.deltaTime * movement3D);
+        // Any run trigger happens
+        if (runKey || runJoystick){ 
+            if (canRun) // Can run
+                controller.Move(runSpeed * Time.deltaTime * movement3D); // Run
+            else
+                controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
         }
+        else{
+            controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
+        }   
     }
 
+    /// <summary>
+    /// Rotates player to face movement and maintains it after stopping
+    /// </summary>
     void Rotate(){
         // Only rotate if there is movement input
         // To ensure that rotation moving is maintained when stopping
