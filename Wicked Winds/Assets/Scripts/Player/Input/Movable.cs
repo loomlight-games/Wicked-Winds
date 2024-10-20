@@ -15,12 +15,11 @@ public class Movable : MonoBehaviour
     CharacterController controller;
     // Movement
     public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
-    public Transform cameraTransform; // Fixed isometric camera
+    public Transform cameraTransform; // Isometric camera
     Vector2 movement2D; // Joystick
     Vector3 movement3D, lookAtPosition; // Player
     Quaternion lookAtRotation;
-    float verticalVelocity;
-    float gravity = 9.8f;
+    float verticalVelocity, gravity = 9.8f;
     float joystickScale = 2f;
     bool canRun;
     // Inspector
@@ -100,16 +99,6 @@ public class Movable : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculates gravity
-    /// </summary>
-    float Gravity(){
-        if (controller.isGrounded) verticalVelocity = -1f;
-        else verticalVelocity -= gravity * Time.deltaTime;
-        
-        return verticalVelocity;
-    }
-
-    /// <summary>
     /// Check if joystick has passed keyboard limits to run
     /// </summary>
     private void CheckJoystick()
@@ -133,6 +122,16 @@ public class Movable : MonoBehaviour
         else{
             runJoystick = false;
         }
+    }
+
+    /// <summary>
+    /// Calculates gravity
+    /// </summary>
+    float Gravity(){
+        if (controller.isGrounded) verticalVelocity = -1f;
+        else verticalVelocity -= gravity * Time.deltaTime;
+        
+        return verticalVelocity;
     }
 
     /// <summary>

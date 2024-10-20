@@ -44,14 +44,12 @@ public class Boostable : MonoBehaviour
     /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("FlyBoost"))
+        if (other.gameObject.CompareTag("RunBoost"))
         {
-            //currentStamina += other.GetComponent<FlyBoost>().recoverValue;
-            // Ensures stamina max
-            // if (currentStamina > MAX_STAMINA)
-            //     currentStamina = MAX_STAMINA;
-            
-            currentBoost = MAX_STAMINA;
+            //currentBoost += other.GetComponent<RunBoost>().recoverValue;
+            //Ensures stamina max
+            //if (currentBoost > MAX_STAMINA)
+                currentBoost = MAX_STAMINA;
 
             //Deactivates it
             other.gameObject.SetActive(false);
