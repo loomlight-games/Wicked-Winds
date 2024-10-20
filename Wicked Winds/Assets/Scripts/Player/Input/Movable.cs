@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class Movable : MonoBehaviour
 {
-    // Properties ////////////////////////////////////////////////////
+// Properties ////////////////////////////////////////////////////
     // Input
     InputActions playerInput; // Class generated from input map
     bool runKey,runJoystick; // Run triggers

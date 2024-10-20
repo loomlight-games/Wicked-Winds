@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 618694654738858141}
   - component: {fileID: 4228864829277328864}
-  - component: {fileID: 355376627466237822}
+  - component: {fileID: 2301791791081920114}
   - component: {fileID: 526009619674639312}
   m_Layer: 0
   m_Name: Player placeholder
@@ -63,8 +63,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 355376627466237822}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 2301791791081920114}
+        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnWalk
         m_Mode: 0
         m_Arguments:
@@ -79,8 +79,8 @@ MonoBehaviour:
     m_ActionName: Player movement/Input
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 355376627466237822}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 2301791791081920114}
+        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnRun
         m_Mode: 0
         m_Arguments:
@@ -95,8 +95,8 @@ MonoBehaviour:
     m_ActionName: Player movement/Run[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 355376627466237822}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 2301791791081920114}
+        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnStick
         m_Mode: 0
         m_Arguments:
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &355376627466237822
+--- !u!114 &2301791791081920114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,16 +123,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8372127748781726271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92255a43e15f10419e71423ef2d3741, type: 3}
+  m_Script: {fileID: 11500000, guid: c6d421d02712b264fa21f100744a18cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runKey: 0
-  runJoystick: 0
   cameraTransform: {fileID: 0}
-  walkSpeed: 10
+  walkSpeed: 5
   runSpeed: 15
   rotationSpeed: 5
-  joystickScale: 2
+  canRun: 1
 --- !u!143 &526009619674639312
 CharacterController:
   m_ObjectHideFlags: 0
