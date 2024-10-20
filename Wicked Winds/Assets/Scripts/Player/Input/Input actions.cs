@@ -28,6 +28,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             ""id"": ""d729c354-131a-4515-9149-8a5dc1cf8f75"",
             ""actions"": [
                 {
+                    ""name"": ""Joystick"",
+                    ""type"": ""Value"",
+                    ""id"": ""33f270d9-9dd5-4a85-a6ee-261095cc90b8"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Walk"",
                     ""type"": ""Value"",
                     ""id"": ""fd0ae92a-914c-4639-8e80-144eb0d2eb92"",
@@ -47,17 +56,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""3f184c70-eba1-495d-9324-2570b59e477e"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=2,y=2)"",
-                    ""groups"": """",
-                    ""action"": ""Walk"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""26abf1ba-4bf0-4d0d-a250-166218005da3"",
@@ -134,6 +132,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Run"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f184c70-eba1-495d-9324-2570b59e477e"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Joystick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -142,6 +151,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 }");
         // Player movement
         m_Playermovement = asset.FindActionMap("Player movement", throwIfNotFound: true);
+        m_Playermovement_Joystick = m_Playermovement.FindAction("Joystick", throwIfNotFound: true);
         m_Playermovement_Walk = m_Playermovement.FindAction("Walk", throwIfNotFound: true);
         m_Playermovement_Run = m_Playermovement.FindAction("Run", throwIfNotFound: true);
     }
@@ -210,12 +220,14 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     // Player movement
     private readonly InputActionMap m_Playermovement;
     private List<IPlayermovementActions> m_PlayermovementActionsCallbackInterfaces = new List<IPlayermovementActions>();
+    private readonly InputAction m_Playermovement_Joystick;
     private readonly InputAction m_Playermovement_Walk;
     private readonly InputAction m_Playermovement_Run;
     public struct PlayermovementActions
     {
         private @InputActions m_Wrapper;
         public PlayermovementActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Joystick => m_Wrapper.m_Playermovement_Joystick;
         public InputAction @Walk => m_Wrapper.m_Playermovement_Walk;
         public InputAction @Run => m_Wrapper.m_Playermovement_Run;
         public InputActionMap Get() { return m_Wrapper.m_Playermovement; }
@@ -227,6 +239,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayermovementActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayermovementActionsCallbackInterfaces.Add(instance);
+            @Joystick.started += instance.OnJoystick;
+            @Joystick.performed += instance.OnJoystick;
+            @Joystick.canceled += instance.OnJoystick;
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
@@ -237,6 +252,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPlayermovementActions instance)
         {
+            @Joystick.started -= instance.OnJoystick;
+            @Joystick.performed -= instance.OnJoystick;
+            @Joystick.canceled -= instance.OnJoystick;
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
@@ -262,6 +280,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public PlayermovementActions @Playermovement => new PlayermovementActions(this);
     public interface IPlayermovementActions
     {
+        void OnJoystick(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
     }

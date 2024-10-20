@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     // Properties ////////////////////////////////////////////////////
     // Input
     InputActions playerInput; // Class generated from input map
-    bool runKey,runJoystick;
+    bool runKey,runJoystick; // Run triggers
     CharacterController controller;
     // Movement
     public Transform cameraTransform; // Fixed isometric camera
@@ -16,12 +16,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement3D, lookAtPosition; // Player
     Quaternion lookAtRotation;
     float verticalVelocity;
+    float gravity = 9.8f;
+    float joystickScale = 2f;
     // Inspector
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float rotationSpeed = 5f;
-    float gravity = 9.8f;
-    float joystickWalkLimit = 1.1f;
 
     ///////////////////////////////////////////////////////////////////////
     void Awake()
@@ -30,10 +30,14 @@ public class PlayerMovement : MonoBehaviour
 
         playerInput = new();
 
+        // Joystick: OnStick is susbcribed to walk inputs
+        playerInput.Playermovement.Joystick.started += OnStick;
+        playerInput.Playermovement.Joystick.performed += OnStick;
+        playerInput.Playermovement.Joystick.canceled += OnStick;
+
         // Walk: OnMove is susbcribed to walk inputs
-        playerInput.Playermovement.Walk.started += OnMove;
-        playerInput.Playermovement.Walk.performed += OnMove;
-        playerInput.Playermovement.Walk.canceled += OnMove;
+        playerInput.Playermovement.Walk.started += OnWalk;
+        playerInput.Playermovement.Walk.canceled += OnWalk;
 
         // Run
         playerInput.Playermovement.Run.started += OnRun;
@@ -48,9 +52,18 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Detects walk inputs: Joystick and WASD
+    /// Detects Joystickinputs
     /// </summary>
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnStick(InputAction.CallbackContext context)
+    {
+        movement2D = context.ReadValue<Vector2>();
+        movement2D *= joystickScale; // Must be bigger than keyboard scake (1.0)
+    }
+
+    /// <summary>
+    /// Detects walk inputs
+    /// </summary>
+    public void OnWalk(InputAction.CallbackContext context)
     {
         movement2D = context.ReadValue<Vector2>();
     }
@@ -79,6 +92,28 @@ public class PlayerMovement : MonoBehaviour
     /// Moves player in isometric perspective.
     /// </summary>
     void Move(){
+
+        // Check if joystick has passed keyboard limits
+        // Keyboard inputs are normalized (-1>0<1)
+        if (movement2D.x > 1 || movement2D.y > 1 || 
+            movement2D.x < -1 || movement2D.y < -1){
+            // Limit movement passed keyboard values
+            // Ensures the movemeent difference between both inputs is minimal
+            if (movement2D.x > 1)
+                movement2D.x = 1.1f;
+            else if (movement2D.x < -1)
+                movement2D.x = -1.1f;
+            if (movement2D.y > 1)
+                movement2D.y = 1.1f;
+            else if (movement2D.y < -1)
+                movement2D.y = -1.1f;
+
+            runJoystick = true;
+        }
+        else{
+            runJoystick = false;
+        }
+
         // Get direction in 3D space based on camera orientation
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -93,14 +128,6 @@ public class PlayerMovement : MonoBehaviour
         // Movement based on 2D input and camera's orientation
         movement3D = right * movement2D.x + forward * movement2D.y;
         movement3D.y = Gravity(); // Add gravity
-
-        //movement2D.Normalize();
-        // Check if joystick has passed walk limit
-        if (movement2D.x >= joystickWalkLimit || movement2D.y >= joystickWalkLimit || 
-            movement2D.x <= -joystickWalkLimit || movement2D.y <= -joystickWalkLimit)
-            runJoystick = true;
-        else
-            runJoystick = false;
 
         // Run key is pressed
         if (runKey || runJoystick){
