@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 618694654738858141}
-  - component: {fileID: 4228864829277328864}
   - component: {fileID: 526009619674639312}
+  - component: {fileID: 4228864829277328864}
   - component: {fileID: 2301791791081920114}
   - component: {fileID: 1386592556044285793}
   m_Layer: 0
@@ -36,6 +36,32 @@ Transform:
   - {fileID: 8752503910184161048}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &526009619674639312
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372127748781726271}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.6
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4228864829277328864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,37 +136,27 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 33f270d9-9dd5-4a85-a6ee-261095cc90b8
     m_ActionName: Player movement/Joystick
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2301791791081920114}
+        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f1908700-a436-43d5-9d63-9f41ee18699b
+    m_ActionName: Player movement/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!143 &526009619674639312
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372127748781726271}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.6
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2301791791081920114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +173,8 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 15
   rotationSpeed: 5
+  jumpForce: 2
+  gravity: 3
 --- !u!114 &1386592556044285793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,8 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11faa6909acd8f4c97c6e21143156e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lossPerSecond: 20
-  currentBoost: 50
+  lossPerSecond: 1
+  currentBoost: 100
 --- !u!1001 &8411576254791481665
 PrefabInstance:
   m_ObjectHideFlags: 0

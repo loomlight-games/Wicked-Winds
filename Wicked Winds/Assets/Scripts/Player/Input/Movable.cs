@@ -11,7 +11,7 @@ public class Movable : MonoBehaviour
 // Properties ////////////////////////////////////////////////////
     // Input
     InputActions playerInput; // Class generated from input map
-    bool runKey,runJoystick; // Run triggers
+    bool runKey,runJoystick, jumpKey;
     CharacterController controller;
     // Movement
     public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
@@ -19,13 +19,15 @@ public class Movable : MonoBehaviour
     Vector2 movement2D; // Joystick
     Vector3 movement3D, lookAtPosition; // Player
     Quaternion lookAtRotation;
-    float verticalVelocity, gravity = 9.8f;
+    float verticalVelocity;
     float joystickScale = 2f;
     bool canRun;
     // Inspector
     public float walkSpeed = 10f;
     public float runSpeed = 15f;
     public float rotationSpeed = 5f;
+    public float jumpForce = 2f;
+    public float gravity = 9.8f;
 
 
     ///////////////////////////////////////////////////////////////////////
@@ -48,6 +50,10 @@ public class Movable : MonoBehaviour
         playerInput.Playermovement.Run.started += OnRun;
         playerInput.Playermovement.Run.canceled += OnRun;
 
+        // Jump
+        playerInput.Playermovement.Jump.started += OnJump;
+        playerInput.Playermovement.Jump.canceled += OnJump;
+
         // Needs to know boost value
         Boostable boostable = GetComponent<Boostable>();
         boostable.BoostValueEvent += OnBoostChangeEvent;
@@ -56,6 +62,7 @@ public class Movable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Fly();
         Move();
         Rotate();
     }
@@ -84,6 +91,14 @@ public class Movable : MonoBehaviour
     public void OnRun(InputAction.CallbackContext context)
     {
         runKey = context.ReadValueAsButton();
+    }
+
+    /// <summary>
+    /// Detects run inputs
+    /// </summary>
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        jumpKey = context.ReadValueAsButton();
     }
 
     /// <summary>
@@ -123,15 +138,32 @@ public class Movable : MonoBehaviour
             runJoystick = false;
         }
     }
-
+    
     /// <summary>
-    /// Calculates gravity
+    /// Gravity calculation and flying behavior
     /// </summary>
-    float Gravity(){
-        if (controller.isGrounded) verticalVelocity = -1f;
-        else verticalVelocity -= gravity * Time.deltaTime;
-        
-        return verticalVelocity;
+    void Fly()
+    {
+        if (controller.isGrounded)
+        {
+            verticalVelocity = -1f; // Slight downward force to keep grounded
+            
+            if (jumpKey) // If jump is pressed while grounded
+            {
+                verticalVelocity = jumpForce; // Apply jump force
+            }
+        }
+        else
+        {
+            if (jumpKey) // If jump is pressed while in the air, ascend
+            {
+                verticalVelocity += jumpForce * Time.deltaTime; // Gradually increase altitude
+            }
+            else // Apply gravity when jump is not pressed
+            {
+                verticalVelocity -= gravity * Time.deltaTime; // Descend naturally
+            }
+        }
     }
 
     /// <summary>
@@ -154,20 +186,30 @@ public class Movable : MonoBehaviour
 
         // 3DMovement based on 2D input and camera's orientation
         movement3D = right * movement2D.x + forward * movement2D.y;
-        movement3D.y = Gravity(); // Add gravity
+        
+        // Ensure vertical speed (gravity or flight) does not affect horizontal movement
+        Vector3 horizontalMovement = new(movement3D.x, 0, movement3D.z);
 
-        // Any run trigger happens
-        if (runKey || runJoystick){ 
-            if (canRun){ // Any boost is left
-                RunningEvent?.Invoke(this, null); // Invoke as it's running
-                controller.Move(runSpeed * Time.deltaTime * movement3D); // Run
-            }else{
-                controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
+        // Apply the vertical velocity calculated in Fly() to movement3D
+        movement3D.y = verticalVelocity;
+
+        // Check if the player is running (on the ground or in the air)
+        if (runKey || runJoystick)
+        {
+            if (canRun)  // If able to run (boost available)
+            {
+                RunningEvent?.Invoke(this, null); // Trigger running event
+                controller.Move(runSpeed * Time.deltaTime * horizontalMovement + movement3D.y * Time.deltaTime * Vector3.up); // Run and fly
+            }
+            else  // If not able to run, walk
+            {
+                controller.Move(walkSpeed * Time.deltaTime * horizontalMovement + movement3D.y * Time.deltaTime * Vector3.up); // Walk and fly
             }
         }
-        else{
-            controller.Move(walkSpeed * Time.deltaTime * movement3D); // Walk
-        }   
+        else
+        {
+            controller.Move(walkSpeed * Time.deltaTime * horizontalMovement + movement3D.y * Time.deltaTime * Vector3.up); // Walk and fly
+        } 
     }
 
     /// <summary>
