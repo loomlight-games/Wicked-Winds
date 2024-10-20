@@ -52,7 +52,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""id"": ""3f184c70-eba1-495d-9324-2570b59e477e"",
                     ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
-                    ""processors"": ""NormalizeVector2"",
+                    ""processors"": ""ScaleVector2(x=2,y=2)"",
                     ""groups"": """",
                     ""action"": ""Walk"",
                     ""isComposite"": false,
