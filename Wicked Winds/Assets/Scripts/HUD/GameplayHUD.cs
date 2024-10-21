@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class GameplayHUD : MonoBehaviour
 {
-    public TextMeshProUGUI timerText, elapsedText;
+    public TextMeshProUGUI timerText, elapsedText, boostText;
     public float remainingTime, elapsedTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public GameObject player;
+    void Awake()
     {
-        
+        // Needs to know boost value
+        Boostable boostable = player.GetComponent<Boostable>();
+        boostable.BoostValueEvent += OnBoostChangeEvent;
     }
 
     // Update is called once per frame
@@ -37,5 +37,13 @@ public class GameplayHUD : MonoBehaviour
 
         timerText.text = string.Format("{0:00}:{1:00}", timerMinutes, timerSeconds);
         elapsedText.text = string.Format("{0:00}:{1:00}", elapsedMinutes, elapsedSeconds);
+    }
+
+    /// <summary>
+    /// Called when boost value is modified (only when running)
+    /// </summary>
+    private void OnBoostChangeEvent(object sender, float currentBoost)
+    {
+        boostText.text = Mathf.FloorToInt(currentBoost).ToString();
     }
 }
