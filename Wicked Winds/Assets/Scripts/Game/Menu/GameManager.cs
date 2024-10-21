@@ -15,6 +15,8 @@ public class GameManager : AStateController
     readonly GamePauseState pauseState = new();
     readonly mainMenuState mainMenuState = new();
     readonly GamePlayState playState = new();
+    public readonly FinalState endState = new();
+
     #endregion
 
     public override void Awake()
@@ -64,5 +66,11 @@ public class GameManager : AStateController
             default:
                 break;
         }
+    }
+    //add the points later
+    void GameEnded()
+    {
+        Debug.Log("Game Over - Switching to FinalState");
+        SwitchState(endState);
     }
 }
