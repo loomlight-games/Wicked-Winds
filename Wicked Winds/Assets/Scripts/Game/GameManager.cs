@@ -16,11 +16,11 @@ public class GameManager : AStateController
     readonly MainMenuState mainMenuState = new();
     readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
-
     #endregion
 
     public override void Awake()
-    { //if there's not an instance, it creates one
+    { 
+        //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
             Instance = this;
@@ -42,6 +42,7 @@ public class GameManager : AStateController
     }
     public void ClickButton(string buttonName)
     {
+        // Send button
         ButtonClicked?.Invoke(this, buttonName);
 
         switch (buttonName)
@@ -50,7 +51,7 @@ public class GameManager : AStateController
                 SwitchState(pauseState);
                 break;
             case "ResumeButton":
-                Debug.Log("Resuming the game"); // <-- Confirma que el juego intenta reanudarse
+                Debug.Log("Resuming the game");
                 SwitchState(playState);
                 break;
             case "Replay":
@@ -67,6 +68,7 @@ public class GameManager : AStateController
                 break;
         }
     }
+
     //add the points later
     void GameEnded()
     {
