@@ -13,7 +13,7 @@ public class GameManager : AStateController
 
     #region STATES
     readonly GamePauseState pauseState = new();
-    readonly mainMenuState mainMenuState = new();
+    readonly MainMenuState mainMenuState = new();
     readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
 
