@@ -30,7 +30,7 @@ public class Movable : MonoBehaviour
     public float gravity = 9.8f;
     public float heightLimit = 10f;
 
-
+    
     ///////////////////////////////////////////////////////////////////////
     void Awake()
     {

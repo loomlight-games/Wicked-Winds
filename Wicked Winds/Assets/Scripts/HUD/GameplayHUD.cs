@@ -26,7 +26,7 @@ public class GameplayHUD : MonoBehaviour
             remainingTime = 0;
 
             // GAMEOVER
-
+            //GameManager.Instance.SwitchState()
             timerText.color = Color.red;
         }
 

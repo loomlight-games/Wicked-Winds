@@ -55,4 +55,9 @@ public class Boostable : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
+
+    public void resetBoost ()
+    {
+        currentBoost = MAX_STAMINA;
+    }
 }
