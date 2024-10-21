@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class menuInicio : MonoBehaviour
+public class buttonsController : MonoBehaviour
 {
     // Referencias a los Canvas
     public GameObject menuInicioC;   // El Canvas del menú de inicio 

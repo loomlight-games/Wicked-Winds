@@ -27,7 +27,8 @@ public class GameManager : AStateController
     }
 
     public override void Start()
-    {//ifnot in main menu, it's in the playing state
+    {
+        //ifnot in main menu, it's in the playing state
         if (SceneManager.GetActiveScene().name == "Main Menu")
         {
             SetState(mainMenuState);
@@ -43,10 +44,11 @@ public class GameManager : AStateController
 
         switch (buttonName)
         {
-            case "Pause":
+            case "PauseButton":
                 SwitchState(pauseState);
                 break;
-            case "Resume":
+            case "ResumeButton":
+                Debug.Log("Resuming the game"); // <-- Confirma que el juego intenta reanudarse
                 SwitchState(playState);
                 break;
             case "Replay":

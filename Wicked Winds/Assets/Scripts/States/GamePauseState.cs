@@ -25,13 +25,13 @@ public class GamePauseState : AState
     public override void Update()
     {//press ESCAPE (i'll implement the button too later)
         if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Resume");
+            GameManager.Instance.ClickButton("ResumeButton");
     }
     public override void Exit()
     {
         Time.timeScale = 1f; // Resumes simulation
 
-        // Oculta los botones del menú de pausa
+        //hide pause menu buttons
         resumeButton.SetActive(false);
         background.SetActive(false);
         HUD.SetActive(true);
