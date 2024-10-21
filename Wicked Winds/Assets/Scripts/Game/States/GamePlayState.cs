@@ -14,6 +14,7 @@ public class GamePlayState : AState
         hud.SetActive(true);
 
         buttons = UI.transform.Find("Buttons").gameObject;
+        buttons.SetActive(true);
         gameplayButtons = buttons.transform.Find("Gameplay").gameObject;
         gameplayButtons.SetActive(true);
     }

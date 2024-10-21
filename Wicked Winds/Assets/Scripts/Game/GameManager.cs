@@ -16,6 +16,9 @@ public class GameManager : AStateController
     readonly MainMenuState mainMenuState = new();
     readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
+    readonly CreditsState creditsState = new();
+    readonly SettingsState settingsState = new();
+    readonly ShopState shopState = new();
     #endregion
 
     public override void Awake()
@@ -30,15 +33,14 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        //ifnot in main menu, it's in the playing state
-        if (SceneManager.GetActiveScene().name == "Main Menu")
-        {
+        //if not in main menu, it's in the playing state
+        if (SceneManager.GetActiveScene().name == "Main menu")
             SetState(mainMenuState);
-        }
+        else if (SceneManager.GetActiveScene().name == "Shop")
+            SetState(shopState);
         else
-        {
             SetState(playState);
-        }
+        
     }
     public void ClickButton(string buttonName)
     {
@@ -54,14 +56,19 @@ public class GameManager : AStateController
                 SwitchState(pauseState);
                 break;
             case "Resume":
-                Debug.Log("Resuming the game");
                 SwitchState(playState);
                 break;
-            // case "Replay":
-            //     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            //     break;
             case "Main menu":
-                SceneManager.LoadScene("Main Menu");
+                SceneManager.LoadScene("Main menu");
+                break;
+            case "Credits":
+                SwitchState(creditsState);
+                break;
+            case "Settings":
+                SwitchState(settingsState);
+                break;
+            case "Shop":
+                SceneManager.LoadScene("Shop");
                 break;
             case "Quit":
                 Debug.Log("Quit");

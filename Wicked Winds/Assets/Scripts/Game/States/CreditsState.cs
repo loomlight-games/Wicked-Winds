@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuState : AState
+public class CreditsState : AState
 {
-    GameObject UI, mainMenu;
+    GameObject UI, credits;
 
     public override void Enter()
     {
         UI = GameObject.Find("UI");
-        mainMenu = UI.transform.Find("Main menu").gameObject;
-        mainMenu.SetActive(true);
+        credits = UI.transform.Find("Credits").gameObject;
+        credits.SetActive(true);
     }
 
     public override void Exit()
     {
-        mainMenu.SetActive(false);
+        credits.SetActive(false);
     }
 }

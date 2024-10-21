@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuState : AState
+public class ShopState : AState
 {
-    GameObject UI, mainMenu;
+    GameObject UI, buttons;
 
     public override void Enter()
     {
         UI = GameObject.Find("UI");
-        mainMenu = UI.transform.Find("Main menu").gameObject;
-        mainMenu.SetActive(true);
+        buttons = UI.transform.Find("Buttons").gameObject;
+        buttons.SetActive(true);
     }
 
     public override void Exit()
     {
-        mainMenu.SetActive(false);
+        buttons.SetActive(false);
     }
 }
