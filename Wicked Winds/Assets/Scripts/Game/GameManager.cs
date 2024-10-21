@@ -47,16 +47,19 @@ public class GameManager : AStateController
 
         switch (buttonName)
         {
-            case "PauseButton":
+            case "Play":
+                SceneManager.LoadScene("Gameplay");
+                break;
+            case "Pause":
                 SwitchState(pauseState);
                 break;
-            case "ResumeButton":
+            case "Resume":
                 Debug.Log("Resuming the game");
                 SwitchState(playState);
                 break;
-            case "Replay":
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                break;
+            // case "Replay":
+            //     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //     break;
             case "Main menu":
                 SceneManager.LoadScene("Main Menu");
                 break;
@@ -69,10 +72,9 @@ public class GameManager : AStateController
         }
     }
 
-    //add the points later
-    void GameEnded()
+
+    void GameEnded(object sender, string result)
     {
-        Debug.Log("Game Over - Switching to FinalState");
-        SwitchState(endState);
+        SwitchState(endState, result);
     }
 }

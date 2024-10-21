@@ -1,36 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GamePauseState : AState
 {
-    GameObject pauseMenu;
-    GameObject resumeButton;
-
-    GameObject HUD;
+    GameObject UI, buttons, pauseMenu;
     public override void Enter()
     {
-        pauseMenu = GameObject.Find("PauseMenu");
+        Time.timeScale = 0f; // Stops simulation
+
+        UI = GameObject.Find("UI");
+
+        buttons = UI.transform.Find("Buttons").gameObject;
+        pauseMenu = buttons.transform.Find("PauseMenu").gameObject;
         pauseMenu.SetActive(true);
-        resumeButton = pauseMenu.transform.Find("ResumeButton").gameObject;
-        resumeButton.SetActive(true);
-
-
-        HUD = GameObject.Find("HUD");
-        HUD.SetActive(false);
-        Time.timeScale = 0f;
     }
     public override void Update()
-    {//press ESCAPE 
+    {
+        // Press ESCAPE 
         if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("ResumeButton");
+            GameManager.Instance.ClickButton("Resume");
     }
     public override void Exit()
     {
-        //hide pause menu buttons
-        resumeButton.SetActive(false);
-
-        HUD.SetActive(true);
+        // Hide pause menu
+        pauseMenu.SetActive(false);
     }
 }
