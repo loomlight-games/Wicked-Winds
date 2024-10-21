@@ -2,6 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Defines context methods. Implements MonoBehaviour.
+/// Controls states' actions (switching states, detect collisions...)
 /// </summary>
 public abstract class AStateController: MonoBehaviour
 {
@@ -62,7 +63,7 @@ public abstract class AStateController: MonoBehaviour
     }
 
     /// <summary>
-    /// Swichts to another state after exiting the current.
+    /// Switchs to another state after exiting the current.
     /// </summary>
     public virtual void SwitchState(AState state)
     {
@@ -74,7 +75,7 @@ public abstract class AStateController: MonoBehaviour
     }
 
     /// <summary>
-    /// Swichts to another state, transmittin additional info, after exiting the current.
+    /// Switchs to another state, sending additional info, after leaving the current.
     /// </summary>
     public virtual void SwitchState(AState state, string info)
     {

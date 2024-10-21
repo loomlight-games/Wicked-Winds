@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuInicio : MonoBehaviour
+public class menuInicio : MonoBehaviour
 {
     // Referencias a los Canvas
-    public GameObject menuInicio;   // El Canvas del menú de inicio 
+    public GameObject menuInicioC;   // El Canvas del menú de inicio 
     public GameObject menuCreditos;     // El Canvas que muestra los créditos
 
     private void Start()
     {
         // Asegurarse de que el canvas de créditos esté desactivado al iniciar el juego
         menuCreditos.SetActive(false);
-        menuInicio.SetActive(true);
+        menuInicioC.SetActive(true);
     }
     public void Jugar()
     {
@@ -23,14 +23,14 @@ public class MenuInicio : MonoBehaviour
     public void Creditos()
     {
         // Desactivar el menú de inicio y activar los créditos
-        menuInicio.SetActive(false);
+        menuInicioC.SetActive(false);
         menuCreditos.SetActive(true);
     }
     public void VolverAlMenu()
     {
         // Regresar al menú de inicio desactivando los créditos y activando el menú
         menuCreditos.SetActive(false);
-        menuInicio.SetActive(true);
+        menuInicioC.SetActive(true);
     }
     public void Opciones()
     {
