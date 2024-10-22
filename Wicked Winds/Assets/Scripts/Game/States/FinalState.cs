@@ -1,26 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
+using static UnityEditor.VersionControl.Asset;
 
 public class FinalState : AState
 {
-    GameObject finalMenu;
-    GameObject defeat;
-    //GameObject retryButton;
-    //GameObject mainMenuButton;
+    GameObject finalMenu, defeat, retryButton, mainMenuButton, UI, statesUI;
+    TextMeshProUGUI scoreText;
+
     public override void Enter()
     {
-        // Mostrar el menú final o de derrota
-        finalMenu = GameObject.Find("FinalMenu");
-        defeat = GameObject.Find("defeat");
-        //defeat.SetActive(true);
+        UI = GameObject.Find("UI");
 
-        //retryButton = finalMenu.transform.Find("RetryButton").gameObject;
-        //mainMenuButton = finalMenu.transform.Find("MainMenuButton").gameObject;
+        statesUI = UI.transform.Find("States").gameObject;
+        finalMenu = statesUI.transform.Find("FinalMenu").gameObject;
+        defeat = finalMenu.transform.Find("Defeat").gameObject;
+        retryButton = finalMenu.transform.Find("RetryButton").gameObject;
+        mainMenuButton = finalMenu.transform.Find("MainMenuButton").gameObject;
+        scoreText = finalMenu.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
 
-        //retryButton.SetActive(true);
-        //mainMenuButton.SetActive(true);
+        // Mostrar el menú de final de juego
+        finalMenu.SetActive(true);
+        defeat.SetActive(true);
+        retryButton.SetActive(true);
+        mainMenuButton.SetActive(true);
+
+        // Mostrar la puntuación final
+        float playerScore = GameManager.Instance.GetPlayerScore();
+        scoreText.text = "Your Score: " + Mathf.FloorToInt(playerScore).ToString();
+
 
         Time.timeScale = 0f; // Pausar el juego
     }

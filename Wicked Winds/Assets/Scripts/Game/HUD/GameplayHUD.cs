@@ -22,6 +22,7 @@ public class GameplayHUD : MonoBehaviour
     void Update()
     {
         if (remainingTime > 0){
+
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
         }else if (remainingTime <= 0 && !gameOverTriggered)
@@ -33,6 +34,7 @@ public class GameplayHUD : MonoBehaviour
             timerText.color = Color.red;
         }
 
+        //update timer texts
         timerMinutes = Mathf.FloorToInt(remainingTime / 60);
         timerSeconds = Mathf.FloorToInt(remainingTime % 60);
         elapsedMinutes = Mathf.FloorToInt(elapsedTime / 60);
@@ -44,13 +46,14 @@ public class GameplayHUD : MonoBehaviour
 
     void TriggerGameOver()
     {
-        gameOverTriggered = true;  // Evita que se vuelva a llamar
+        gameOverTriggered = true;  // avoids double calls
 
-        // Cambia al estado de derrota
+        // switch to defeat state
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
-
-        // Cambia el color del texto del timer a rojo
         timerText.color = Color.red;
+
+        //notify end of the game passing the elapsedtime (score)
+        GameManager.Instance.GameOver(elapsedTime);
     }
     /// <summary>
     /// Called when boost value is modified (only when running)

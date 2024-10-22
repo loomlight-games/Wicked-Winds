@@ -10,6 +10,7 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
+    private float playerScore;
 
     #region STATES
     readonly GamePauseState pauseState = new();
@@ -58,6 +59,9 @@ public class GameManager : AStateController
             case "Resume":
                 SwitchState(playState);
                 break;
+            case "RetryButton":
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                break;
             case "Main menu":
                 SceneManager.LoadScene("Main menu");
                 break;
@@ -80,8 +84,15 @@ public class GameManager : AStateController
     }
 
 
-    void GameEnded(object sender, string result)
+    // end game 
+    public void GameOver(float elapsedTime)
     {
-        SwitchState(endState, result);
+        playerScore = elapsedTime; // save played time as score
+        SwitchState(endState); 
+    }
+
+    public float GetPlayerScore()
+    {
+        return playerScore;
     }
 }
