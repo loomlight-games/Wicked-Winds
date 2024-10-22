@@ -9,13 +9,28 @@ public class Customizable : MonoBehaviour
         Head, UpperBody, LowerBody, Shoes
     }
 
+    public class ItemGO{
+        public CustomizableItem item;
+        public GameObject gameObject;
+
+        public ItemGO(){
+            item = null;
+            gameObject = null;
+        }
+
+        public ItemGO(CustomizableItem _item, GameObject _GO){
+            item = _item;
+            gameObject = _GO;
+        }
+    }
+
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
-    public Dictionary<BodyPart, GameObject> customization = new(){
-        {BodyPart.Head,null},
-        {BodyPart.UpperBody,null},
-        {BodyPart.LowerBody,null},
-        {BodyPart.Shoes,null},
+    public Dictionary<BodyPart, ItemGO> customization = new(){
+        {BodyPart.Head, null},
+        {BodyPart.UpperBody, null},
+        {BodyPart.LowerBody, null},
+        {BodyPart.Shoes, null},
     };
 
     // Start is called before the first frame update
@@ -32,35 +47,45 @@ public class Customizable : MonoBehaviour
     }
 
     public void ChooseItem (CustomizableItem item){
-        Debug.Log(item.transform.name);
-
         switch(item.bodyPart){
             case BodyPart.Head:
-                UpdateBodyPart(BodyPart.Head, item, headTransform);
+                UpdateBodyPart(item, headTransform);
                 break;
             case BodyPart.UpperBody:
-                UpdateBodyPart(BodyPart.UpperBody, item, upperBodyTransform);
+                UpdateBodyPart(item, upperBodyTransform);
                 break;
             case BodyPart.LowerBody:
-                UpdateBodyPart(BodyPart.LowerBody, item, lowerBodyTransform);
+                UpdateBodyPart(item, lowerBodyTransform);
                 break;
             case BodyPart.Shoes:
-               UpdateBodyPart(BodyPart.Shoes, item, shoesTransform);
+               UpdateBodyPart(item, shoesTransform);
                 break;
             default:
                 break;
         }
     }
 
-    void UpdateBodyPart(BodyPart bodyPart, CustomizableItem item, Transform transform){
-        // Destroys the previous item
-        if (customization[bodyPart] != null) Destroy(customization[bodyPart]);
+    void UpdateBodyPart(CustomizableItem item, Transform transform){
+        // Current item
+        if (customization[item.bodyPart] != null){
+            // Not chosen anymore
+            customization[item.bodyPart].item.chosen = false;
 
-        // Instantiates a copy of the item
-        GameObject newItem = Instantiate(item.gameObject,transform.position, transform.rotation, transform);
-        newItem.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+            // Destroys the current item gameobject
+            if (customization[item.bodyPart] != null) 
+                Destroy(customization[item.bodyPart].gameObject);
+            
+            // Delete from bodypart
+            customization[item.bodyPart] = null;
+        }else{
+            Debug.Log(item.transform.name);
 
-        // Updates dictionary
-        customization[item.bodyPart] = newItem;
+            // Instantiates a copy of the item gameobject
+            GameObject GOcopy = Instantiate(item.gameObject,transform.position, transform.rotation, transform);
+            GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+
+            // Add to body part
+            customization[item.bodyPart] = new(item,GOcopy);
+        }
     }
 }
