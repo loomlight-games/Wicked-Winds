@@ -66,20 +66,37 @@ public class Customizable : MonoBehaviour
     }
 
     void UpdateBodyPart(CustomizableItem item, Transform transform){
-        // Current item
+        // Current item not null
         if (customization[item.bodyPart] != null){
-            // Not chosen anymore
-            customization[item.bodyPart].item.chosen = false;
+            // Different from the given
+            if(customization[item.bodyPart].item != item){
+                // Not chosen anymore
+                customization[item.bodyPart].item.chosen = false;
 
-            // Destroys the current item gameobject
-            if (customization[item.bodyPart] != null) 
+                // Destroys the current item gameobject
                 Destroy(customization[item.bodyPart].gameObject);
-            
-            // Delete from bodypart
-            customization[item.bodyPart] = null;
-        }else{
-            Debug.Log(item.transform.name);
 
+                // Instantiates a copy of the item gameobject
+                GameObject GOcopy = Instantiate(item.gameObject,transform.position, transform.rotation, transform);
+                GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+
+                // Add to body part
+                customization[item.bodyPart] = new(item,GOcopy);
+            }else{
+                if (customization[item.bodyPart].item.chosen){
+                    // Instantiates a copy of the item gameobject
+                    GameObject GOcopy = Instantiate(item.gameObject,transform.position, transform.rotation, transform);
+                    GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+
+                    // Add to body part
+                    customization[item.bodyPart] = new(item,GOcopy);
+                }
+                else{
+                    // Destroys the current item gameobject 
+                    Destroy(customization[item.bodyPart].gameObject);
+                }   
+            }  
+        }else{
             // Instantiates a copy of the item gameobject
             GameObject GOcopy = Instantiate(item.gameObject,transform.position, transform.rotation, transform);
             GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
