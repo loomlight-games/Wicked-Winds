@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class ShopState : AState
 {
-    GameObject UI, buttons;
+    GameObject UI;
 
     public override void Enter()
     {
         UI = GameObject.Find("UI");
-        buttons = UI.transform.Find("Buttons").gameObject;
-        buttons.SetActive(true);
     }
 
     public override void Exit()
     {
-        buttons.SetActive(false);
+        
     }
 }
