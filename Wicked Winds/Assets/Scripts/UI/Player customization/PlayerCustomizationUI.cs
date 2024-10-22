@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerCustomizationUI : MonoBehaviour
 {
-    Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f); // 50% transparent white
-    Color semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent white
-    
     public Customizable playerCustomizable;
 
     // Start is called before the first frame update

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(Button))]
 public class ItemButton : MonoBehaviour
 {
     public CustomizableItem item;
@@ -16,9 +16,13 @@ public class ItemButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Gets the item (must be the fist child)
-        item = transform.GetChild(0).gameObject.GetComponent<CustomizableItem>();
-
+        try{
+            // Gets the item (must be the fist child)
+            item = transform.GetChild(0).gameObject.GetComponent<CustomizableItem>();
+        } catch {
+            Debug.LogError("The CustomizableItem component is not found on the first child of the transform.");
+        }
+        
         // Gets the button
         button = transform.GetComponent<Button>();
     }
@@ -26,6 +30,8 @@ public class ItemButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (item == null) return;
+
         if(item.chosen)
             button.image.color = semiTransparentBlue;
         else

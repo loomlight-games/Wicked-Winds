@@ -9,21 +9,6 @@ public class Customizable : MonoBehaviour
         Head, UpperBody, LowerBody, Shoes
     }
 
-    public class ItemGO{
-        public CustomizableItem item;
-        public GameObject gameObject;
-
-        public ItemGO(){
-            item = null;
-            gameObject = null;
-        }
-
-        public ItemGO(CustomizableItem _item, GameObject _GO){
-            item = _item;
-            gameObject = _GO;
-        }
-    }
-
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     public Dictionary<BodyPart, ItemGO> customization = new(){
@@ -104,5 +89,20 @@ public class Customizable : MonoBehaviour
             // Add to body part
             customization[item.bodyPart] = new(item,GOcopy);
         }
+    }
+}
+
+public class ItemGO{
+    public CustomizableItem item;
+    public GameObject gameObject;
+
+    public ItemGO(){
+        item = null;
+        gameObject = null;
+    }
+
+    public ItemGO(CustomizableItem _item, GameObject _GO){
+        item = _item;
+        gameObject = _GO;
     }
 }
