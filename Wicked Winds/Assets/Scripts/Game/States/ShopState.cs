@@ -9,10 +9,11 @@ public class ShopState : AState
     public override void Enter()
     {
         UI = GameObject.Find("UI");
+        Time.timeScale = 0f; // Stops simulation
     }
 
     public override void Exit()
     {
-        
+        Time.timeScale = 1f; // Restores simulation
     }
 }
