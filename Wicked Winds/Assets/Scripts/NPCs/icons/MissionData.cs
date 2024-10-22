@@ -5,6 +5,8 @@ public class MissionData : ScriptableObject
 {
     public string missionName;
     public string missionDescription;
-    public int difficulty; // 1 fácil, 2 intermedio, 3 difícil
+    public int difficulty; // 0 fácil, 1 medio, 2 difícil
+    public Sprite missionIconSprite; // El ícono específico para esta misión
     public bool isCompleted = false;
+
 }

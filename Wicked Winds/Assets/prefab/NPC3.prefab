@@ -132,17 +132,13 @@ PrefabInstance:
         type: 3}
       propertyPath: missionIcon
       value: 
-      objectReference: {fileID: 3231435379175927963}
+      objectReference: {fileID: 1688748061238991769, guid: 7e02ceb2d0cb6bc4b94f798b32525c72,
+        type: 3}
     - target: {fileID: 6760119559678319065, guid: b631ed19325fb7e42bb1a258de30d7f1,
         type: 3}
       propertyPath: bubble
       value: 
       objectReference: {fileID: 8442201407426163295}
-    - target: {fileID: 6760119559678319065, guid: b631ed19325fb7e42bb1a258de30d7f1,
-        type: 3}
-      propertyPath: missionIcon
-      value: 
-      objectReference: {fileID: 3231435379175927963}
     - target: {fileID: 6760119559678319065, guid: b631ed19325fb7e42bb1a258de30d7f1,
         type: 3}
       propertyPath: movementScript
@@ -209,10 +205,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1005444286217907388, guid: b631ed19325fb7e42bb1a258de30d7f1,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3231435379175927963}
-    - targetCorrespondingSourceObject: {fileID: 1005444286217907388, guid: b631ed19325fb7e42bb1a258de30d7f1,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3565849976798550716}
   m_SourcePrefab: {fileID: 100100000, guid: b631ed19325fb7e42bb1a258de30d7f1, type: 3}
 --- !u!114 &2369238808546654556 stripped
@@ -233,22 +225,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4497090569754747533}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3231435379175927963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3719109401371168305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3a70133fc0dc0145bff6fe8fc03a96e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconRenderer: {fileID: 0}
-  missionSprite: {fileID: 21300000, guid: fff17fb09f3abb449b0ce414b8e6efb9, type: 3}
-  completedSprite: {fileID: 21300000, guid: a675fae870f41ed4d88839a56f9962a1, type: 3}
-  currentMission: {fileID: 0}
 --- !u!195 &3565849976798550716
 NavMeshAgent:
   m_ObjectHideFlags: 0

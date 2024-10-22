@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MissionBubble : MonoBehaviour
 {
+    //ESTO ES PARA MOSTRAR O NO EL BOCADILLO, NO EL EMOJI DE DENTRO
     public AObjectPool<MissionIcon> iconPool; // Referencia al pool genérico
     public Transform iconPosition; // La posición donde quieres que aparezca el ícono
     public float detectionRadius = 3.0f; // El radio de detección para que aparezca el ícono de misión
@@ -11,6 +12,8 @@ public class MissionBubble : MonoBehaviour
 
     private GameObject player; // El jugador
     private MissionIcon activeIcon; // El ícono actualmente activo
+    private float checkInterval = 0.5f; // Comprobar cada 0.5 segundos
+    private float checkTimer = 0f;
 
     void Start()
     {
@@ -19,24 +22,28 @@ public class MissionBubble : MonoBehaviour
 
     void Update()
     {
-        if (player != null)
+        checkTimer += Time.deltaTime;
+        if (checkTimer >= checkInterval)
         {
-            // Distancia entre el jugador y el NPC
-            float distance = Vector3.Distance(transform.position, player.transform.position);
+            checkTimer = 0f;
 
-            // Si el jugador está dentro del rango, muestra el ícono
-            if (distance <= detectionRadius)
+            if (player != null)
             {
-                ShowMissionIcon();
-            }
-            else
-            {
-                HideMissionIcon();
+                float distance = Vector3.Distance(transform.position, player.transform.position);
+
+                if (distance <= detectionRadius)
+                {
+                    ShowMissionIcon();
+                }
+                else
+                {
+                    HideMissionIcon();
+                }
             }
         }
     }
 
-    // Muestra el ícono de misión o la carita feliz según el estado de la misión
+    // Muestra el ícono de misión en el bubble
     void ShowMissionIcon()
     {
         if (activeIcon == null) // Si no hay ícono activo, obtén uno del pool
@@ -45,7 +52,7 @@ public class MissionBubble : MonoBehaviour
             if (activeIcon != null)
             {
                 activeIcon.transform.position = iconPosition.position; // Coloca el ícono en la posición correcta
-                SetMissionIcon(); // Establece el ícono adecuado según el estado de la misión
+                activeIcon.bubble.SetActive(true); // Asegúrate de activar el bubble si es necesario
             }
         }
     }
@@ -55,21 +62,9 @@ public class MissionBubble : MonoBehaviour
     {
         if (activeIcon != null)
         {
+            activeIcon.bubble.SetActive(false); // Desactiva el bubble en lugar del ícono
             iconPool.ReturnObject(activeIcon); // Devuelve el ícono al pool
             activeIcon = null; // Reinicia la referencia al ícono activo
-        }
-    }
-
-    // Cambia el ícono según el estado de la misión
-    void SetMissionIcon()
-    {
-        if (missionCompleted)
-        {
-            activeIcon.iconRenderer.sprite = /* tu sprite de carita feliz */ null;
-        }
-        else
-        {
-            activeIcon.iconRenderer.sprite = /* tu sprite de misión */ null;
         }
     }
 
@@ -77,6 +72,9 @@ public class MissionBubble : MonoBehaviour
     public void CompleteMission()
     {
         missionCompleted = true;
-        SetMissionIcon(); // Cambia el ícono a la carita feliz
+        if (activeIcon != null)
+        {
+            activeIcon.CompleteMission();  // Cambia el ícono a la carita feliz dentro del `Bubble`
+        }
     }
 }
