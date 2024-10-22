@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class GamePauseState : AState
 {
-    GameObject UI, buttons, pauseMenu;
+    GameObject UI, statesUI, pauseMenuUI;
     public override void Enter()
     {
         Time.timeScale = 0f; // Stops simulation
 
         UI = GameObject.Find("UI");
 
-        buttons = UI.transform.Find("Buttons").gameObject;
-        pauseMenu = buttons.transform.Find("PauseMenu").gameObject;
-        pauseMenu.SetActive(true);
+        statesUI = UI.transform.Find("States").gameObject;
+        pauseMenuUI = statesUI.transform.Find("PauseMenu").gameObject;
+        pauseMenuUI.SetActive(true);
     }
     public override void Update()
     {
@@ -22,6 +22,6 @@ public class GamePauseState : AState
     public override void Exit()
     {
         // Hide pause menu
-        pauseMenu.SetActive(false);
+        pauseMenuUI.SetActive(false);
     }
 }

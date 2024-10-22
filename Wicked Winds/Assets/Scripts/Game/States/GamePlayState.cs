@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GamePlayState : AState
 {
-    GameObject UI, buttons, gameplayButtons, hud;
+    GameObject UI, statesUI, gameplayUI, hud;
 
     public override void Enter()
     {
@@ -13,10 +13,10 @@ public class GamePlayState : AState
         hud = UI.transform.Find("HUD").gameObject;
         hud.SetActive(true);
 
-        buttons = UI.transform.Find("Buttons").gameObject;
-        buttons.SetActive(true);
-        gameplayButtons = buttons.transform.Find("Gameplay").gameObject;
-        gameplayButtons.SetActive(true);
+        statesUI = UI.transform.Find("States").gameObject;
+        statesUI.SetActive(true);
+        gameplayUI = statesUI.transform.Find("Gameplay").gameObject;
+        gameplayUI.SetActive(true);
     }
 
     public override void Update()
@@ -28,6 +28,6 @@ public class GamePlayState : AState
     public override void Exit()
     {
         hud.SetActive(false);
-        gameplayButtons.SetActive(false);
+        gameplayUI.SetActive(false);
     }
 }
