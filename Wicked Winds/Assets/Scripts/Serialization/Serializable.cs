@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 [Serializable]
-public class Serializable<T>
+public class Serializablee<T>
 {
     T value;
 
@@ -26,7 +26,7 @@ public class Serializable<T>
     {
         BinaryFormatter formatter = new();
         FileStream jsonFile = File.OpenRead(fileName); //Open and read file with that name
-        Serializable<T> data = (Serializable<T>)formatter.Deserialize(jsonFile); //Extracts information from file
+        Serializablee<T> data = (Serializablee<T>)formatter.Deserialize(jsonFile); //Extracts information from file
         jsonFile.Close(); //Close file
         this.value = data.value;
         return value;

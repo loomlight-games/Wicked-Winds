@@ -1,19 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CustomizableCharacter : MonoBehaviour
-{
+public class CustomizableCharacter : MonoBehaviour {
+    const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
+
     // Types of body parts, basically of items
+    [Serializable]
     public enum BodyPart{
-        Head, UpperBody, LowerBody, Shoes
+        Head = 0, 
+        UpperBody = 1, 
+        LowerBody = 2, 
+        Shoes = 3
     }
 
     // Positions for items GOs
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
+    
     public Dictionary<BodyPart, CustomizableItem> customization = new(){
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
@@ -25,8 +32,8 @@ public class CustomizableCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Read from memory
-
+        // Load customization from memory
+        //LoadCustomization();
     }
 
     // Update is called once per frame
@@ -55,6 +62,9 @@ public class CustomizableCharacter : MonoBehaviour
             default:
                 break;
         }
+
+        // Save customization in memory
+        SaveCustomization();
     }
 
     /// <summary>
@@ -66,10 +76,8 @@ public class CustomizableCharacter : MonoBehaviour
         
         // Current item not null
         if (currentItem != null){
-
             // Different from the given
             if(currentItem != newItem){
-
                 // Not chosen anymore
                 currentItem.chosen = false;
 
@@ -103,4 +111,76 @@ public class CustomizableCharacter : MonoBehaviour
         item.GO = GOcopy;
         customization[item.bodyPart] = item;
     }
+
+    /// <summary>
+    /// Save player customization in nmemory as a json
+    /// </summary>
+    void SaveCustomization(){
+        PlayerCustomization playerCustomization = new PlayerCustomization();
+
+        // Loop through the dictionary and create a serializable version
+        foreach (var kvp in customization) {
+            if (kvp.Value != null) {
+                CustomizationData data = new () {
+                    bodyPart = kvp.Key,
+                    prefabName = kvp.Value.gameObject.name,
+                };
+                playerCustomization.customizationItems.Add(data);
+            }
+        }
+
+        // Serialize the list to JSON
+        string json = JsonUtility.ToJson(playerCustomization);
+        Debug.Log(json);
+        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
+    }
+
+    /// <summary>
+    /// Reads a json file with the player customization and loads the data
+    /// </summary>
+    void LoadCustomization(){
+         string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
+        
+        if (string.IsNullOrEmpty(json)) {
+            Debug.LogWarning("No saved customization found.");
+            return;
+        }
+
+        PlayerCustomization playerCustomization = JsonUtility.FromJson<PlayerCustomization>(json);
+
+        // Loop through the saved customization data and instantiate items
+        foreach (var data in playerCustomization.customizationItems) {
+            // Load the prefab using the itemID
+            GameObject prefab = Resources.Load<GameObject>(data.prefabName); // Assuming prefabs are stored in the Resources folder
+
+            if (prefab != null) {
+                CustomizableItem newItem = Instantiate(prefab).GetComponent<CustomizableItem>();
+                newItem.bodyPart = data.bodyPart;
+                Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
+                InstantiateItem(newItem, bodyPartTransform);
+            }
+        }
+    }
+
+    Transform GetBodyPartTransform(BodyPart bodyPart){
+        return bodyPart switch
+        {
+            BodyPart.Head => headTransform,
+            BodyPart.UpperBody => upperBodyTransform,
+            BodyPart.LowerBody => lowerBodyTransform,
+            BodyPart.Shoes => shoesTransform,
+            _ => null,
+        };
+    }
+}
+
+[Serializable]
+public class CustomizationData {
+    public CustomizableCharacter.BodyPart bodyPart;
+    public string prefabName;
+}
+
+[Serializable]
+public class PlayerCustomization {
+    public List<CustomizationData> customizationItems = new List<CustomizationData>();
 }
