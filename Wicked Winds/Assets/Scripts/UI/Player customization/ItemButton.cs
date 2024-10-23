@@ -9,7 +9,7 @@ public class ItemButton : MonoBehaviour
     public CustomizableItem item;
     Button button;
 
-    CustomizableCharacter character; //Player.Instance.customizable
+    public CustomizableCharacter character; //Player.Instance.customizable
 
     Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f); // 50% transparent white
     Color semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent blue

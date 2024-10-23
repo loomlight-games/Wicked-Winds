@@ -31,9 +31,8 @@ public class CustomizableCharacter : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        // Load customization from memory
-            // Instantiate the chosen items
-
+        // Example Load customization on start
+        LoadCustomization();
     }
 
     // Update is called once per frame
@@ -70,6 +69,9 @@ public class CustomizableCharacter : MonoBehaviour {
         }else
             // Instantiates the new and updates dictionary
             InstantiateItem(newItem);
+
+        // Save customization after updating
+        SaveCustomization();
     }
 
     /// <summary>
@@ -98,63 +100,6 @@ public class CustomizableCharacter : MonoBehaviour {
         
     }
 
-    /// <summary>
-    /// Save player customization in memory as a json
-    /// </summary>
-    void SaveCustomization(){
-
-        // PlayerCustomization playerCustomization = new ();
-
-        // // Loop through the dictionary and create a serializable version
-        // foreach (var kvp in customization) {
-        //     if (kvp.Value != null) {
-        //         CustomizationData data = new () {
-        //             bodyPart = kvp.Key,
-        //             prefabName = kvp.Value.prefab.name,
-        //             isChosen = kvp.Value.chosen,
-        //         };
-        //         playerCustomization.customizationItems.Add(data);
-        //     }
-        // }
-
-        // // Serialize the list to JSON
-        // string json = JsonUtility.ToJson(playerCustomization);
-        // Debug.Log(json);
-        // PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
-    }
-
-    /// <summary>
-    /// Reads a json file with the player customization and loads the data
-    /// </summary>
-    void LoadCustomization(){
-
-        // string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
-
-        // Debug.Log(json);
-
-        // if (string.IsNullOrEmpty(json)) {
-        //     Debug.LogWarning("No saved customization found.");
-        //     return;
-        // }
-
-        // PlayerCustomization playerCustomization = JsonUtility.FromJson<PlayerCustomization>(json);
-
-        // // Loop through the saved customization data and instantiate items
-        // foreach (var loadedItem in playerCustomization.customizationItems) {
-        //     // Load the prefab using Addressables
-        //     Addressables.LoadAssetAsync<GameObject>(loadedItem.prefabName).Completed += handle => {
-        //         if (handle.Status == AsyncOperationStatus.Succeeded) {
-        //             GameObject prefab = handle.Result;
-        //             CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
-        //             newItem.bodyPart = loadedItem.bodyPart;
-        //             Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
-        //             newItem.chosen = loadedItem.isChosen;
-        //             if (newItem.chosen) InstantiateItem(newItem, bodyPartTransform);
-        //         }
-        //     };
-        // }
-    }
-
     /// <returns>Corresponding transform to body part</returns>
     Transform GetBodyPartTransform(BodyPart bodyPart){
         return bodyPart switch
@@ -166,15 +111,106 @@ public class CustomizableCharacter : MonoBehaviour {
             _ => null,
         };
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    /// <summary>
+    /// Save customization to PlayerPrefs as JSON.
+    /// </summary>
+    public void SaveCustomization()
+    {
+        List<CustomizationData> dataList = new();
+
+        // Convert dictionary to a serializable list
+        foreach (var kvp in customization)
+        {
+            if (kvp.Value != null)
+            {
+                CustomizationData data = new ()
+                {
+                    bodyPart = kvp.Key,
+                    prefabName = kvp.Value.prefab.name
+                };
+                dataList.Add(data);
+            }
+            // else{
+            //     dataList.Add(null);
+            // }
+        }
+
+        // Serialize the list to JSON
+        string json = JsonUtility.ToJson(new CustomizationList(dataList));
+        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
+        Debug.Log("Saved Customization: " + json);
+    }
+
+    /// <summary>
+    /// Load customization from PlayerPrefs and apply it.
+    /// </summary>
+    public void LoadCustomization()
+    {
+        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE, "");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("No saved customization found.");
+            return;
+        }
+
+        CustomizationList customizationList = JsonUtility.FromJson<CustomizationList>(json);
+        
+        foreach (var data in customizationList.customizationItems)
+        {
+            // Use Addressables to load the prefab by name/label
+            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => 
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    GameObject prefab = handle.Result;
+
+                    if (prefab != null)
+                    {
+                        // Get the CustomizableItem component attached to the prefab
+                        CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
+                        
+                        // Assign data to the new item
+                        newItem.bodyPart = data.bodyPart;
+                        newItem.prefab = prefab;
+
+                        // Instantiate the item
+                        InstantiateItem(newItem);
+                    }
+                    else
+                    {
+                        Debug.LogError("Prefab not found for: " + data.prefabName);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Failed to load prefab: " + data.prefabName);
+                }
+            };
+        }
+        Debug.Log("Loaded Customization: " + json);
+    }
 }
 
+/// <summary>
+/// Customization data class for serialization
+/// </summary>
 [Serializable]
 public class CustomizationData {
     public CustomizableCharacter.BodyPart bodyPart;
-    public string prefabName;
+    public string prefabName; // Label for addressables
 }
 
+/// <summary>
+/// Wrapper class to hold list of CustomizationData (required for Unity serialization)
+/// </summary>
 [Serializable]
-public class PlayerCustomization {
+public class CustomizationList {
     public List<CustomizationData> customizationItems = new ();
+
+    public CustomizationList(List<CustomizationData> customizationItems){
+        this.customizationItems = customizationItems;
+    }
 }

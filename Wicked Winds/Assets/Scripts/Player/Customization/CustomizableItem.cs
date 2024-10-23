@@ -5,6 +5,6 @@ using UnityEngine;
 public class CustomizableItem : MonoBehaviour
 {
     public CustomizableCharacter.BodyPart bodyPart;
-    public GameObject prefab;
-    public GameObject instance;
+    public GameObject prefab;  // Reference to the prefab
+    public GameObject instance;  // Instance of the item in the scene
 }
