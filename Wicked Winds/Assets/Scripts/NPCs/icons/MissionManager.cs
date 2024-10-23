@@ -5,9 +5,9 @@ public class MissionManager : MonoBehaviour
 {
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
-    public const int numMissionsToAssign = 10; // Número de misiones por ronda
+    public const int numMissionsToAssign = 3; // Número de misiones por ronda
     public MissionIconPoolManager missionIconPoolManager; // Asigna el GameObject del Pool Manager
-    private AObjectPool<MissionIcon> missionIconPool;
+    private MissionIconPool missionIconPool;
 
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
@@ -64,9 +64,12 @@ public class MissionManager : MonoBehaviour
         Debug.Log($"Misiones difíciles disponibles: {hardMissions.Count}");
 
         // Determinar cuántas misiones de cada dificultad asignar
-        int numHardMissions = Mathf.Max(0, Mathf.Min(currentRound / 2, numMissionsToAssign));
-        int numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions));
+        int numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign)); // Incrementa con cada ronda
+        int numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions)); // Aumenta ligeramente
         int numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
+
+        // Asegúrate de que no se asigne un número negativo de misiones
+        numEasyMissions = Mathf.Max(numEasyMissions, 0);
 
         Debug.Log($"Número de misiones A ASIGNAR: Fácil: {numEasyMissions}, Media: {numMediumMissions}, Difícil: {numHardMissions}");
 
@@ -82,11 +85,9 @@ public class MissionManager : MonoBehaviour
             int randomIndex = Random.Range(0, shuffledNPCs.Count);
             NPC selectedNPC = shuffledNPCs[randomIndex];
 
-            Debug.Log($"NPC {selectedNPC.missionIcon} ya tiene una misión, saltando.");
             // Verificar si el NPC ya tiene una misión asignada
             if (selectedNPC.missionIcon != null)
             {
-                Debug.Log($"NPC {selectedNPC.name} ya tiene una misión, saltando.");
                 shuffledNPCs.RemoveAt(randomIndex); // Eliminar NPC que ya tiene una misión
                 continue; // Pasar al siguiente NPC
             }
@@ -121,7 +122,7 @@ public class MissionManager : MonoBehaviour
             }
 
             // Obtener un icono de misión del pool
-            MissionIcon missionIcon = missionIconPool.GetObject();
+            MissionIcon missionIcon = missionIconPool.GetIcon();
             if (missionIcon == null)
             {
                 Debug.LogError("No se pudo obtener un MissionIcon del pool.");
@@ -141,8 +142,6 @@ public class MissionManager : MonoBehaviour
                 missionIcon.transform.localPosition = desiredPosition;
                 missionIcon.transform.localScale = desiredScale;
                 Debug.Log($"Icono de misión asignado a {selectedNPC.name} dentro de Bubble.");
-                // Llamar a AssignMission para asignar el sprite y mostrarlo
-                missionIcon.AssignMission(mission, this);
             }
             else
             {
@@ -160,7 +159,6 @@ public class MissionManager : MonoBehaviour
         Debug.Log("Finalizada la asignación de misiones.");
     }
 
-
     // Método para obtener una misión aleatoria (puede repetirse)
     private MissionData GetRandomMission(List<MissionData> missions)
     {
@@ -168,7 +166,7 @@ public class MissionManager : MonoBehaviour
         return missions[randomIndex]; // Permitir duplicados
     }
 
-    //actualización del estado del NPC después de que complete su misión
+    // Actualización del estado del NPC después de que complete su misión
     public void UpdateNPCStateAfterMissionComplete(MissionIcon missionIcon)
     {
         NPC assignedNPC = assignedNPCs.Find(npc => npc.missionIcon == missionIcon);
@@ -176,6 +174,25 @@ public class MissionManager : MonoBehaviour
         {
             assignedNPC.hasMission = false; // Actualiza el estado del NPC al completar la misión
             assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
+            assignedNPC.missionIcon = null; // Restablecer la referencia al icono de la misión
+        }
+
+        // Reasignar misiones si hay menos de 10 activas
+        ReassignMissions();
+    }
+
+    // Método para reasignar misiones
+    private void ReassignMissions()
+    {
+        int activeMissionsCount = assignedNPCs.Count;
+
+        // Verificar cuántas misiones faltan para llegar a 10
+        int missionsToReassign = numMissionsToAssign - activeMissionsCount;
+
+        if (missionsToReassign > 0)
+        {
+            Debug.Log($"Reasignando {missionsToReassign} misiones...");
+            AssignMissions();
         }
     }
 
@@ -185,23 +202,19 @@ public class MissionManager : MonoBehaviour
         bool allCompleted = true;
         foreach (NPC npc in assignedNPCs)
         {
-            if (npc.missionIcon != null && npc.missionIcon.currentMission != null)
+            if (npc.missionIcon != null && npc.missionIcon.isActiveAndEnabled)
             {
-                if (!npc.missionIcon.currentMission.isCompleted)
-                {
-                    allCompleted = false;
-                    break;
-                }
+                allCompleted = false;
+                break; // Salir si hay alguna misión activa
             }
         }
 
         if (allCompleted)
         {
-            Debug.Log("Todas las misiones completadas. Avanzando a la siguiente ronda.");
-            currentRound++;
-            // Reasignar misiones
-            AssignMissions();
+            Debug.Log("Todas las misiones han sido completadas.");
+            // Aquí puedes añadir lógica adicional si todas las misiones se completaron
+            currentRound++; // Incrementar la ronda al completar todas las misiones
+            AssignMissions(); // Asignar nuevas misiones después de completar
         }
     }
-
 }

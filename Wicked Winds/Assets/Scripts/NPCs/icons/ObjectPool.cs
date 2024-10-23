@@ -1,53 +1,61 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AObjectPool<T> where T : MonoBehaviour, IPoolable
+public class MissionIconPool
 {
-    public T prefab; // El prefab del objeto que se reutilizará en el pool
-    public int poolSize = 10; // Tamaño del pool
-    private List<T> pool; // Lista de objetos en el pool
+    private MissionIcon prefab;
+    private List<MissionIcon> pool;
+    private Transform iconPoolParent; // Almacena la referencia al GameObject del pool
 
-    // Constructor para inicializar el pool con objetos
-    public AObjectPool(T prefab, int poolSize)
+    // Constructor que acepta el prefab y el GameObject del pool
+    public MissionIconPool(MissionIcon prefab, int initialSize, Transform parent)
     {
         this.prefab = prefab;
-        this.poolSize = poolSize;
-        pool = new List<T>();
+        this.iconPoolParent = parent; // Asigna el padre
+        pool = new List<MissionIcon>();
 
-        // Crear los objetos iniciales y desactivarlos
-        for (int i = 0; i < poolSize; i++)
+        // Inicializa el pool con el tamaño dado
+        for (int i = 0; i < initialSize; i++)
         {
-            T obj = GameObject.Instantiate(prefab);
-            obj.gameObject.SetActive(false);
-            pool.Add(obj);
+            MissionIcon icon = Object.Instantiate(prefab);
+            icon.gameObject.SetActive(false); // Desactiva el ícono hasta que se necesite
+            icon.transform.SetParent(iconPoolParent); // Asigna el padre del pool
+            pool.Add(icon);
         }
     }
 
-    // Obtener un objeto del pool
-    public T GetObject()
+    // Método para obtener un ícono disponible del pool
+    public MissionIcon GetIcon()
     {
-        foreach (T obj in pool)
+        // Revisa si hay un ícono inactivo disponible
+        foreach (var icon in pool)
         {
-            if (!obj.gameObject.activeInHierarchy)
+            if (!icon.gameObject.activeInHierarchy)
             {
-                obj.gameObject.SetActive(true);
-                obj.OnObjectSpawn(); // Llama a OnObjectSpawn cuando se toma del pool
-                return obj;
+                icon.gameObject.SetActive(true);
+                icon.OnObjectSpawn();
+                return icon;
             }
         }
 
-        // Si no hay objetos disponibles, instanciar uno nuevo (puedes ajustar este comportamiento)
-        T newObj = GameObject.Instantiate(prefab);
-        newObj.OnObjectSpawn();
-        pool.Add(newObj);
-        return newObj;
+        // Si no hay íconos disponibles, crea uno nuevo y añádelo al pool
+        MissionIcon newIcon = Object.Instantiate(prefab);
+        newIcon.gameObject.SetActive(true); // Activa el nuevo ícono
+        newIcon.transform.SetParent(iconPoolParent); // Asigna el nuevo ícono al padre del pool
+        pool.Add(newIcon); // Añadir el nuevo ícono al pool para su reutilización futura
+        Debug.Log($"Creado nuevo MissionIcon. Pool size: {pool.Count}");
+        newIcon.OnObjectSpawn();
+        return newIcon;
+
+        
     }
 
-    // Devolver un objeto al pool
-    public void ReturnObject(T obj)
+    // Método para devolver un ícono al pool
+    public void ReleaseIcon(MissionIcon icon)
     {
-        obj.OnObjectReturn(); // Llama a OnObjectReturn cuando se devuelve al pool
-        obj.gameObject.SetActive(false);
+        icon.OnObjectReturn();
+        icon.gameObject.SetActive(false); // Desactiva el ícono
+        icon.transform.SetParent(iconPoolParent); // Devuelve el ícono al padre del pool
+        // Puedes agregar código adicional aquí si necesitas restablecer propiedades
     }
 }

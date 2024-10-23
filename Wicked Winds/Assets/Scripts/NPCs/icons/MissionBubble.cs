@@ -5,7 +5,7 @@ using UnityEngine;
 public class MissionBubble : MonoBehaviour
 {
     //ESTO ES PARA MOSTRAR O NO EL BOCADILLO, NO EL EMOJI DE DENTRO
-    public AObjectPool<MissionIcon> iconPool; // Referencia al pool genérico
+    public MissionIconPool iconPool; // Referencia al pool genérico
     public Transform iconPosition; // La posición donde quieres que aparezca el ícono
     public float detectionRadius = 3.0f; // El radio de detección para que aparezca el ícono de misión
     public bool missionCompleted = false; // Estado de la misión (completada o no)
@@ -48,7 +48,7 @@ public class MissionBubble : MonoBehaviour
     {
         if (activeIcon == null) // Si no hay ícono activo, obtén uno del pool
         {
-            activeIcon = iconPool.GetObject(); // Obtén un objeto del pool
+            activeIcon = iconPool.GetIcon(); // Obtén un objeto del pool
             if (activeIcon != null)
             {
                 activeIcon.transform.position = iconPosition.position; // Coloca el ícono en la posición correcta
@@ -63,7 +63,7 @@ public class MissionBubble : MonoBehaviour
         if (activeIcon != null)
         {
             activeIcon.bubble.SetActive(false); // Desactiva el bubble en lugar del ícono
-            iconPool.ReturnObject(activeIcon); // Devuelve el ícono al pool
+            iconPool.ReleaseIcon(activeIcon); // Devuelve el ícono al pool
             activeIcon = null; // Reinicia la referencia al ícono activo
         }
     }

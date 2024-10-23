@@ -10,6 +10,7 @@ public class MissionIcon : MonoBehaviour, IPoolable
     public MissionData currentMission; // La misión asignada a este ícono
     private MissionManager missionManager; // Referencia al MissionManager
     private NPC assignedNPC; // Referencia al NPC asignado para este icono (nuevo cambio)
+    private MissionIconPool missionIconPool;
 
 
 
@@ -81,10 +82,7 @@ public class MissionIcon : MonoBehaviour, IPoolable
             {
                 assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
             }
-            else
-            {
-                Debug.LogError("No se ha asignado un NPC a este MissionIcon.");
-            }
+          
 
             // Verifica si todas las misiones se completaron
             missionManager.CheckMissionCompletion();
@@ -94,11 +92,29 @@ public class MissionIcon : MonoBehaviour, IPoolable
     // Este método es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
-        currentMission = null;
+        Debug.Log($"se quiere devolver el missionIcon al `pool de : {assignedNPC}");
+        // Si hay un NPC asignado, limpia su ícono de misión
         if (assignedNPC != null)
         {
-            assignedNPC.missionIcon = null; // pone null el MissionIcon en el NPC para que se marque que no tiene misión
+            Debug.Log($"El mision icon q se quiere devolver es : {assignedNPC.missionIcon}");
+            // Verifica que el NPC tenga un ícono de misión antes de limpiarlo
+            if (assignedNPC.missionIcon != null)
+            {
+                // Devuelve el ícono de misión al pool
+                missionIconPool.ReleaseIcon(assignedNPC.missionIcon);
+                assignedNPC.missionIcon = null; // Limpia la referencia del ícono de misión en el NPC
+            }
+
+            assignedNPC.hasMission = false; // Actualiza el estado del NPC
         }
-        assignedNPC = null; // Limpia la referencia al NPC
+
+        // Limpia la referencia al NPC
+        assignedNPC = null;
+
+        // Establece currentMission a null si es necesario (aquí asumiendo que se requiere)
+        currentMission = null; // Limpia la referencia a la misión actual
     }
+
+
 }
+

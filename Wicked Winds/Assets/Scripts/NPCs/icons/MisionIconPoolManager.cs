@@ -4,16 +4,24 @@ public class MissionIconPoolManager : MonoBehaviour
 {
     public MissionIcon missionIconPrefab; // Asignar el prefab de MissionIcon en el inspector
     public int poolSize = 10; // Tamaño inicial del pool
-    private AObjectPool<MissionIcon> missionIconPool;
+    private MissionIconPool missionIconPool;
+    public Transform iconPoolObject;
 
     void Start()
     {
-        // Inicializar el pool con el prefab y tamaño inicial
-        missionIconPool = new AObjectPool<MissionIcon>(missionIconPrefab, poolSize);
+        // Verifica que el prefab esté asignado antes de inicializar el pool
+        if (missionIconPrefab == null)
+        {
+            Debug.LogError("MissionIcon prefab no asignado en el inspector");
+            return;
+        }
+
+        // Inicializar el pool con el prefab y el tamaño inicial
+        missionIconPool = new MissionIconPool(missionIconPrefab, poolSize, iconPoolObject);
     }
 
     // Método para obtener el pool desde otros scripts
-    public AObjectPool<MissionIcon> GetMissionIconPool()
+    public MissionIconPool GetMissionIconPool()
     {
         return missionIconPool;
     }
