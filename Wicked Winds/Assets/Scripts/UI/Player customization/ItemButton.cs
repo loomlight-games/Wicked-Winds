@@ -27,6 +27,14 @@ public class ItemButton : MonoBehaviour
 
         // Gets the button
         button = transform.GetComponent<Button>();
+
+        if (character.customization[item.bodyPart] != null){
+            // If the item is the one the character is wearing
+            if (character.customization[item.bodyPart].name == item.name)
+                button.image.color = semiTransparentBlue;
+            else
+                button.image.color = semiTransparentWhite;
+        }
     }
 
     // Update is called once per frame
@@ -34,13 +42,13 @@ public class ItemButton : MonoBehaviour
     {
         if (item == null) return;
         if (character == null) return;
+        if (character.customization[item.bodyPart] == null) return;
 
         // If the item is the one the character is wearing
-        if (character.customization[item.bodyPart] == item)
+        if (character.customization[item.bodyPart].name == item.name)
             button.image.color = semiTransparentBlue;
         else
             button.image.color = semiTransparentWhite;
-        
     }
 
     public void AssignCharacter(CustomizableCharacter character){

@@ -28,21 +28,10 @@ public class CustomizableCharacter : MonoBehaviour {
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        // Example Load customization on start
+        // Load customization
         LoadCustomization();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Reset(){
-        
     }
 
     /// <summary>
@@ -93,13 +82,6 @@ public class CustomizableCharacter : MonoBehaviour {
         customization[item.bodyPart] = item;
     }
 
-    /// <summary>
-    /// Instantiates the item of a body part stored in dictionary 
-    /// </summary>
-    void InstantiateBodyPart(BodyPart bodyPart){
-        
-    }
-
     /// <returns>Corresponding transform to body part</returns>
     Transform GetBodyPartTransform(BodyPart bodyPart){
         return bodyPart switch
@@ -113,6 +95,7 @@ public class CustomizableCharacter : MonoBehaviour {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
+    #region SERIALIZATION
     /// <summary>
     /// Save customization to PlayerPrefs as JSON.
     /// </summary>
@@ -132,9 +115,6 @@ public class CustomizableCharacter : MonoBehaviour {
                 };
                 dataList.Add(data);
             }
-            // else{
-            //     dataList.Add(null);
-            // }
         }
 
         // Serialize the list to JSON
@@ -167,22 +147,15 @@ public class CustomizableCharacter : MonoBehaviour {
                 {
                     GameObject prefab = handle.Result;
 
-                    if (prefab != null)
-                    {
-                        // Get the CustomizableItem component attached to the prefab
-                        CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
-                        
-                        // Assign data to the new item
-                        newItem.bodyPart = data.bodyPart;
-                        newItem.prefab = prefab;
+                    // Get the CustomizableItem component attached to the prefab
+                    CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
+                    
+                    // Assign data to the new item
+                    newItem.bodyPart = data.bodyPart;
+                    newItem.prefab = prefab;
 
-                        // Instantiate the item
-                        InstantiateItem(newItem);
-                    }
-                    else
-                    {
-                        Debug.LogError("Prefab not found for: " + data.prefabName);
-                    }
+                    // Instantiate the item
+                    InstantiateItem(newItem);
                 }
                 else
                 {
@@ -192,6 +165,7 @@ public class CustomizableCharacter : MonoBehaviour {
         }
         Debug.Log("Loaded Customization: " + json);
     }
+    #endregion
 }
 
 /// <summary>
