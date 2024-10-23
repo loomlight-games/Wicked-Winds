@@ -32,6 +32,7 @@ public class CustomizableCharacter : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
+        //Reset();
         // Load customization from memory
         LoadCustomization();
     }
@@ -40,6 +41,11 @@ public class CustomizableCharacter : MonoBehaviour {
     void Update()
     {
         
+    }
+
+    public void Reset(){
+        PlayerPrefs.DeleteAll();
+        LoadCustomization();
     }
 
     /// <summary>
@@ -123,7 +129,8 @@ public class CustomizableCharacter : MonoBehaviour {
             if (kvp.Value != null) {
                 CustomizationData data = new () {
                     bodyPart = kvp.Key,
-                    prefabName = kvp.Value.gameObject.name,
+                    prefabName = kvp.Value.prefab.name,
+                    isChosen = kvp.Value.chosen,
                 };
                 playerCustomization.customizationItems.Add(data);
             }
@@ -151,16 +158,16 @@ public class CustomizableCharacter : MonoBehaviour {
         PlayerCustomization playerCustomization = JsonUtility.FromJson<PlayerCustomization>(json);
 
         // Loop through the saved customization data and instantiate items
-        foreach (var data in playerCustomization.customizationItems) {
+        foreach (var loadedItem in playerCustomization.customizationItems) {
             // Load the prefab using Addressables
-            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => {
+            Addressables.LoadAssetAsync<GameObject>(loadedItem.prefabName).Completed += handle => {
                 if (handle.Status == AsyncOperationStatus.Succeeded) {
                     GameObject prefab = handle.Result;
                     CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
-                    newItem.bodyPart = data.bodyPart;
+                    newItem.bodyPart = loadedItem.bodyPart;
                     Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
-                    newItem.chosen = true;
-                    InstantiateItem(newItem, bodyPartTransform);
+                    newItem.chosen = loadedItem.isChosen;
+                    if (newItem.chosen) InstantiateItem(newItem, bodyPartTransform);
                 }
             };
         }
@@ -182,9 +189,10 @@ public class CustomizableCharacter : MonoBehaviour {
 public class CustomizationData {
     public CustomizableCharacter.BodyPart bodyPart;
     public string prefabName;
+    public bool isChosen;
 }
 
 [Serializable]
 public class PlayerCustomization {
-    public List<CustomizationData> customizationItems = new List<CustomizationData>();
+    public List<CustomizationData> customizationItems = new ();
 }
