@@ -14,7 +14,7 @@ public class CustomizableCharacter : MonoBehaviour
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
-    public Dictionary<BodyPart, ItemData> customization = new(){
+    public Dictionary<BodyPart, CustomizableItem> customization = new(){
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
         {BodyPart.LowerBody, null},
@@ -38,19 +38,19 @@ public class CustomizableCharacter : MonoBehaviour
     /// <summary>
     /// Given an item updates its correspondant body part
     /// </summary>
-    public void ChooseItem (CustomizableItem item){
-        switch(item.bodyPart){
+    public void RecognizeBodyPart (CustomizableItem newItem){
+        switch(newItem.bodyPart){
             case BodyPart.Head:
-                UpdateBodyPart(item, headTransform);
+                UpdateBodyPart(newItem, headTransform);
                 break;
             case BodyPart.UpperBody:
-                UpdateBodyPart(item, upperBodyTransform);
+                UpdateBodyPart(newItem, upperBodyTransform);
                 break;
             case BodyPart.LowerBody:
-                UpdateBodyPart(item, lowerBodyTransform);
+                UpdateBodyPart(newItem, lowerBodyTransform);
                 break;
             case BodyPart.Shoes:
-               UpdateBodyPart(item, shoesTransform);
+               UpdateBodyPart(newItem, shoesTransform);
                 break;
             default:
                 break;
@@ -60,34 +60,38 @@ public class CustomizableCharacter : MonoBehaviour
     /// <summary>
     /// Handles creation and destruction of items 
     /// </summary>
-    void UpdateBodyPart(CustomizableItem item, Transform bodyPartTransform){
+    void UpdateBodyPart(CustomizableItem newItem, Transform bodyPartTransform){
+        
+        CustomizableItem currentItem = customization[newItem.bodyPart];
+        
         // Current item not null
-        if (customization[item.bodyPart] != null){
+        if (currentItem != null){
+
             // Different from the given
-            if(customization[item.bodyPart].item != item){
+            if(currentItem != newItem){
+
                 // Not chosen anymore
-                customization[item.bodyPart].item.chosen = false;
+                currentItem.chosen = false;
 
                 // Destroys the current item gameobject
-                Destroy(customization[item.bodyPart].gameObject);
+                Destroy(currentItem.GO);
 
-                InstantiateItem(item, bodyPartTransform);
+                InstantiateItem(newItem, bodyPartTransform);
+            
             // Same as given
             }else{
                 // Current is chosen
-                if (customization[item.bodyPart].item.chosen){
-                    InstantiateItem(item, bodyPartTransform);
-                }
+                if (currentItem.chosen)
+                    InstantiateItem(newItem, bodyPartTransform);
+
                 // Current is not chosen
-                else{
+                else
                     // Destroys the current item gameobject 
-                    Destroy(customization[item.bodyPart].gameObject);
-                }   
+                    Destroy(newItem.GO);
             } 
         // Current item is null
-        }else{
-            InstantiateItem(item, bodyPartTransform);
-        }
+        }else
+            InstantiateItem(newItem, bodyPartTransform);
     }
 
     /// <summary>
@@ -96,25 +100,7 @@ public class CustomizableCharacter : MonoBehaviour
     void InstantiateItem(CustomizableItem item, Transform bodyPartTransform){
         GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
         GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
-
-        customization[item.bodyPart] = new(item,GOcopy);
-    }
-}
-/////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// Stores an item with its game object
-/// </summary>
-public class ItemData{
-    public CustomizableItem item;
-    public GameObject gameObject;
-
-    public ItemData(){
-        item = null;
-        gameObject = null;
-    }
-
-    public ItemData(CustomizableItem _item, GameObject _GO){
-        item = _item;
-        gameObject = _GO;
+        item.GO = GOcopy;
+        customization[item.bodyPart] = item;
     }
 }

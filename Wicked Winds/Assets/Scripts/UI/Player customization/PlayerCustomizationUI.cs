@@ -21,10 +21,10 @@ public class PlayerCustomizationUI : MonoBehaviour
 
     // Receives the button of the item to choose
     public void ChooseItem(ItemButton button){
-        // Flip chosen value if its item
+        // Flip chosen value of its item
         button.item.chosen = !button.item.chosen;
 
         // Sends it to the player customization
-        playerCustomizable.ChooseItem(button.item);
+        playerCustomizable.RecognizeBodyPart(button.item);
     }
 }
