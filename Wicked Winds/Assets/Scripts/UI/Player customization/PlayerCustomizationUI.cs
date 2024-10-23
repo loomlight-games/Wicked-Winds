@@ -15,6 +15,8 @@ public class PlayerCustomizationUI : MonoBehaviour
     {
         AdPanel panel = adPanel.GetComponent<AdPanel>();
         panel.EarnCoinsEvent += AddCoins;
+        BuyCoinsPanel buyPanel= buyCoinsPanel.GetComponent<BuyCoinsPanel>();
+        buyPanel.PayCoinsEvent += AddCoins;
     }
 
     // Update is called once per frame
@@ -32,15 +34,6 @@ public class PlayerCustomizationUI : MonoBehaviour
     public void ChooseItem(ItemButton button){
         // Sends it to the player customization
         playerCustomizable.UpdateBodyPart(button.item);
-    }
-
-    public void BuyCoins(){
-        coinsNum++;
-
-        bodyParts.SetActive(!bodyParts.activeSelf);
-        adPanel.SetActive(false);
-
-        buyCoinsPanel.SetActive(!bodyParts.activeSelf);
     }
 
     void AddCoins(object sender, int coinsToAdd)
