@@ -42,16 +42,15 @@ public class ItemButton : MonoBehaviour
     {
         if (item == null) return;
         if (character == null) return;
-        if (character.customization[item.bodyPart] == null) return;
+        if (character.customization[item.bodyPart] == null){
+            button.image.color = semiTransparentWhite;
+            return;
+        }
 
         // If the item is the one the character is wearing
         if (character.customization[item.bodyPart].name == item.name)
             button.image.color = semiTransparentBlue;
         else
             button.image.color = semiTransparentWhite;
-    }
-
-    public void AssignCharacter(CustomizableCharacter character){
-        this.character = character;
     }
 }
