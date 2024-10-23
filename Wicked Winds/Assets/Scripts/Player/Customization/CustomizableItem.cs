@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
+[Serializable]
 public class CustomizableItem : MonoBehaviour
 {
     public CustomizableCharacter.BodyPart bodyPart;
     public bool chosen = false;
+    public GameObject GO;
+    public string prefabName;
 }

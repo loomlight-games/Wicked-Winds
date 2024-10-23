@@ -1,20 +1,27 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class CustomizableCharacter : MonoBehaviour
-{
+public class CustomizableCharacter : MonoBehaviour {
+    const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
+
     // Types of body parts, basically of items
+    [Serializable]
     public enum BodyPart{
-        Head, UpperBody, LowerBody, Shoes
+        Head = 0, 
+        UpperBody = 1, 
+        LowerBody = 2, 
+        Shoes = 3
     }
 
     // Positions for items GOs
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
-    public Dictionary<BodyPart, ItemData> customization = new(){
+    
+    public Dictionary<BodyPart, CustomizableItem> customization = new(){
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
         {BodyPart.LowerBody, null},
@@ -25,8 +32,8 @@ public class CustomizableCharacter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Read from memory
-
+        // Load customization from memory
+        LoadCustomization();
     }
 
     // Update is called once per frame
@@ -38,86 +45,146 @@ public class CustomizableCharacter : MonoBehaviour
     /// <summary>
     /// Given an item updates its correspondant body part
     /// </summary>
-    public void ChooseItem (CustomizableItem item){
-        switch(item.bodyPart){
+    public void RecognizeBodyPart (CustomizableItem newItem){
+        switch(newItem.bodyPart){
             case BodyPart.Head:
-                UpdateBodyPart(item, headTransform);
+                UpdateBodyPart(newItem, headTransform);
                 break;
             case BodyPart.UpperBody:
-                UpdateBodyPart(item, upperBodyTransform);
+                UpdateBodyPart(newItem, upperBodyTransform);
                 break;
             case BodyPart.LowerBody:
-                UpdateBodyPart(item, lowerBodyTransform);
+                UpdateBodyPart(newItem, lowerBodyTransform);
                 break;
             case BodyPart.Shoes:
-               UpdateBodyPart(item, shoesTransform);
+               UpdateBodyPart(newItem, shoesTransform);
                 break;
             default:
                 break;
         }
+
+        // Save customization in memory
+        SaveCustomization();
     }
 
     /// <summary>
     /// Handles creation and destruction of items 
     /// </summary>
-    void UpdateBodyPart(CustomizableItem item, Transform bodyPartTransform){
+    void UpdateBodyPart(CustomizableItem newItem, Transform bodyPartTransform){
+        
+        CustomizableItem currentItem = customization[newItem.bodyPart];
+        
         // Current item not null
-        if (customization[item.bodyPart] != null){
+        if (currentItem != null){
             // Different from the given
-            if(customization[item.bodyPart].item != item){
+            if(currentItem != newItem){
                 // Not chosen anymore
-                customization[item.bodyPart].item.chosen = false;
+                currentItem.chosen = false;
 
                 // Destroys the current item gameobject
-                Destroy(customization[item.bodyPart].gameObject);
+                Destroy(currentItem.GO);
 
-                // Instantiates a copy of the item gameobject and makes it a child of the body part
-                GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-                GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
-
-                // Add to body part in dictionary
-                customization[item.bodyPart] = new(item,GOcopy);
+                InstantiateItem(newItem, bodyPartTransform);
+            
             // Same as given
             }else{
                 // Current is chosen
-                if (customization[item.bodyPart].item.chosen){
-                    // Instantiates a copy of the item gameobject
-                    GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-                    GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+                if (currentItem.chosen)
+                    InstantiateItem(newItem, bodyPartTransform);
 
-                    // Add to body part
-                    customization[item.bodyPart] = new(item,GOcopy);
-                }
                 // Current is not chosen
-                else{
+                else
                     // Destroys the current item gameobject 
-                    Destroy(customization[item.bodyPart].gameObject);
-                }   
+                    Destroy(newItem.GO);
             } 
         // Current item is null
-        }else{
-            GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-            GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+        }else
+            InstantiateItem(newItem, bodyPartTransform);
+    }
 
-            customization[item.bodyPart] = new(item,GOcopy);
+    /// <summary>
+    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child
+    /// </summary>
+    void InstantiateItem(CustomizableItem item, Transform bodyPartTransform){
+        GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
+        GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+        item.GO = GOcopy;
+        customization[item.bodyPart] = item;
+    }
+
+    /// <summary>
+    /// Save player customization in nmemory as a json
+    /// </summary>
+    void SaveCustomization(){
+        PlayerCustomization playerCustomization = new ();
+
+        // Loop through the dictionary and create a serializable version
+        foreach (var kvp in customization) {
+            if (kvp.Value != null) {
+                CustomizationData data = new () {
+                    bodyPart = kvp.Key,
+                    prefabName = kvp.Value.gameObject.name,
+                };
+                playerCustomization.customizationItems.Add(data);
+            }
+        }
+
+        // Serialize the list to JSON
+        string json = JsonUtility.ToJson(playerCustomization);
+        Debug.Log(json);
+        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
+    }
+
+    /// <summary>
+    /// Reads a json file with the player customization and loads the data
+    /// </summary>
+    void LoadCustomization(){
+        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
+
+        Debug.Log(json);
+
+        if (string.IsNullOrEmpty(json)) {
+            Debug.LogWarning("No saved customization found.");
+            return;
+        }
+
+        PlayerCustomization playerCustomization = JsonUtility.FromJson<PlayerCustomization>(json);
+
+        // Loop through the saved customization data and instantiate items
+        foreach (var data in playerCustomization.customizationItems) {
+            // Load the prefab using Addressables
+            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => {
+                if (handle.Status == AsyncOperationStatus.Succeeded) {
+                    GameObject prefab = handle.Result;
+                    CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
+                    newItem.bodyPart = data.bodyPart;
+                    Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
+                    newItem.chosen = true;
+                    InstantiateItem(newItem, bodyPartTransform);
+                }
+            };
         }
     }
+
+    Transform GetBodyPartTransform(BodyPart bodyPart){
+        return bodyPart switch
+        {
+            BodyPart.Head => headTransform,
+            BodyPart.UpperBody => upperBodyTransform,
+            BodyPart.LowerBody => lowerBodyTransform,
+            BodyPart.Shoes => shoesTransform,
+            _ => null,
+        };
+    }
 }
-/////////////////////////////////////////////////////////////////////////////////////////////
-/// <summary>
-/// Stores an item with its game object
-/// </summary>
-public class ItemData{
-    public CustomizableItem item;
-    public GameObject gameObject;
 
-    public ItemData(){
-        item = null;
-        gameObject = null;
-    }
+[Serializable]
+public class CustomizationData {
+    public CustomizableCharacter.BodyPart bodyPart;
+    public string prefabName;
+}
 
-    public ItemData(CustomizableItem _item, GameObject _GO){
-        item = _item;
-        gameObject = _GO;
-    }
+[Serializable]
+public class PlayerCustomization {
+    public List<CustomizationData> customizationItems = new List<CustomizationData>();
 }
