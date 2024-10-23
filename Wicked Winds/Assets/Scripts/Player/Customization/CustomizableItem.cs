@@ -5,7 +5,7 @@ using UnityEngine;
 public class CustomizableItem : MonoBehaviour
 {
     public CustomizableCharacter.BodyPart bodyPart;
-    public bool chosen = false;
+    //public bool chosen = false;
     public GameObject prefab;
     public GameObject GO;
     //public string prefabName;
