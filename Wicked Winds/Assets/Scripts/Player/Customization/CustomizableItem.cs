@@ -5,6 +5,6 @@ using UnityEngine.UI;
 
 public class CustomizableItem : MonoBehaviour
 {
-    public Customizable.BodyPart bodyPart;
+    public CustomizableCharacter.BodyPart bodyPart;
     public bool chosen = false;
 }

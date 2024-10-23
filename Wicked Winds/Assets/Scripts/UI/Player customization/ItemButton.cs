@@ -10,7 +10,7 @@ public class ItemButton : MonoBehaviour
     Button button;
 
     Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f); // 50% transparent white
-    Color semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent white
+    Color semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent blue
     
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class ItemButton : MonoBehaviour
         } catch {
             Debug.LogError("The CustomizableItem component is not found on the first child of the transform.");
         }
-        
+
         // Gets the button
         button = transform.GetComponent<Button>();
     }
