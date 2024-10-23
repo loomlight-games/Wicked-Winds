@@ -11,6 +11,7 @@ public class GameplayHUD : MonoBehaviour
     public GameObject player;
     private bool gameOverTriggered = false; //in order to not recall the method
 
+
     void Awake()
     {
         // Needs to know boost value
@@ -29,7 +30,7 @@ public class GameplayHUD : MonoBehaviour
         {
             remainingTime = 0;
 
-            // GAMEOVER
+            // GAMEOVER when remaining time is over
             TriggerGameOver(); //switching states
             timerText.color = Color.red;
         }
@@ -48,12 +49,27 @@ public class GameplayHUD : MonoBehaviour
     {
         gameOverTriggered = true;  // avoids double calls
 
+        // Guardar el tiempo transcurrido como puntuación en PlayerPrefs
+        PlayerPrefs.SetFloat("PlayerScore", elapsedTime);
+        PlayerPrefs.Save();  // Asegurarse de que el valor se guarda correctamente
+        
+        // Envía la puntuación al ScoreManager (pasa elapsedTime)
+        /*if (ScoreManager.Instance != null)
+        {
+            Debug.Log("scoremanager is not nuuuuull");
+            ScoreManager.Instance.UpdateScore((int)elapsedTime);
+            ScoreManager.Instance.SubmitScore();  // Submit the score
+        }
+        */
+
+        GameManager.Instance.GameOver(elapsedTime);
         // switch to defeat state
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
         timerText.color = Color.red;
 
-        //notify end of the game passing the elapsedtime (score)
-        GameManager.Instance.GameOver(elapsedTime);
+
+        // swithcing scene
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Leaderboard");
     }
     /// <summary>
     /// Called when boost value is modified (only when running)
