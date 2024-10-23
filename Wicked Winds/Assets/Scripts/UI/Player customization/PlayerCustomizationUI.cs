@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerCustomizationUI : MonoBehaviour
 {
@@ -21,10 +18,9 @@ public class PlayerCustomizationUI : MonoBehaviour
 
     // Receives the button of the item to choose
     public void ChooseItem(ItemButton button){
-        // Flip chosen value of its item
-        button.item.chosen = !button.item.chosen;
+        button.AssignCharacter(playerCustomizable);
 
         // Sends it to the player customization
-        playerCustomizable.RecognizeBodyPart(button.item);
+        playerCustomizable.UpdateBodyPart(button.item);
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class CustomizableItem : MonoBehaviour
 {
     public CustomizableCharacter.BodyPart bodyPart;
-    public bool chosen = false;
-    public GameObject GO;
-    public string prefabName;
+    public GameObject prefab;  // Reference to the prefab
+    public GameObject instance;  // Instance of the item in the scene
 }
