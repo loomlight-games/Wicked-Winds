@@ -116,7 +116,7 @@ public class CustomizableCharacter : MonoBehaviour {
     /// Save player customization in nmemory as a json
     /// </summary>
     void SaveCustomization(){
-        PlayerCustomization playerCustomization = new PlayerCustomization();
+        PlayerCustomization playerCustomization = new ();
 
         // Loop through the dictionary and create a serializable version
         foreach (var kvp in customization) {
@@ -156,7 +156,7 @@ public class CustomizableCharacter : MonoBehaviour {
             Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => {
                 if (handle.Status == AsyncOperationStatus.Succeeded) {
                     GameObject prefab = handle.Result;
-                    CustomizableItem newItem = Instantiate(prefab).GetComponent<CustomizableItem>();
+                    CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
                     newItem.bodyPart = data.bodyPart;
                     Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
                     newItem.chosen = true;
