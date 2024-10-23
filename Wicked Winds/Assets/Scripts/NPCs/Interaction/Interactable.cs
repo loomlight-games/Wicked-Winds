@@ -4,6 +4,7 @@ public class Interactable : MonoBehaviour
 {
     private NPC npc; // Referencia al NPC con el que se interactúa
     private MissionIcon missionIcon; // Referencia al ícono de misión del NPC
+    private NPC activeNPC; // Referencia al NPC con el que se está interactuando actualmente
 
     private void Start()
     {
@@ -15,12 +16,14 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    // Método para manejar la interacción con el NPC
     public void Interact()
     {
         if (npc == null)
             return;
 
         Debug.Log($"Interacted with NPC: {npc.name}");
+        activeNPC = npc; // Guarda el NPC con el que se interactúa
 
         // Cambia el sprite del icono de misión al sprite de la misión
         if (missionIcon != null && missionIcon.currentMission != null)
@@ -39,10 +42,11 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) && npc != null && missionIcon != null)
+        // Si se presiona la tecla 'C' y se ha interactuado con un NPC
+        if (Input.GetKeyDown(KeyCode.C) && activeNPC != null && missionIcon != null)
         {
-            missionIcon.CompleteMission(); // Completa la misión del NPC
-            missionIcon.transform.parent.gameObject.SetActive(false); // Desactiva la burbuja
+            missionIcon.CompleteMission(); // Completa la misión del NPC actual
+            missionIcon.transform.parent.gameObject.SetActive(false); // Desactiva la burbuja del NPC actual
         }
     }
 }

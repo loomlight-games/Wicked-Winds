@@ -9,14 +9,16 @@ public class MissionIcon : MonoBehaviour, IPoolable
 
     public MissionData currentMission; // La misión asignada a este ícono
     private MissionManager missionManager; // Referencia al MissionManager
-    
-    
+    private NPC assignedNPC; // Referencia al NPC asignado para este icono (nuevo cambio)
+
+
 
     // Método para asignar una misión a este ícono
-    public void AssignMission(MissionData mission, MissionManager manager)
+    public void AssignMission(MissionData mission, MissionManager manager) // Añadido NPC como parámetro
     {
         currentMission = mission;
         missionManager = manager;
+        
 
         // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -52,7 +54,7 @@ public class MissionIcon : MonoBehaviour, IPoolable
 
             currentMission.isCompleted = false;
         }
-        
+
     }
 
     // Llamar cuando la misión se complete
@@ -74,15 +76,14 @@ public class MissionIcon : MonoBehaviour, IPoolable
                 Debug.LogError("SpriteRenderer o spriteMissionCompleted es nulo.");
             }
 
-            // Actualiza el estado del NPC que tiene este MissionIcon asignado
-            if (missionManager != null)
+            // Actualiza el estado del NPC asignado a este MissionIcon
+            if (assignedNPC != null)
             {
-                NPC assignedNPC = missionManager.assignedNPCs.Find(npc => npc.missionIcon == this);
-                if (assignedNPC != null)
-                {
-                    assignedNPC.hasMission = false; // Actualiza el estado del NPC al completar la misión
-                    assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
-                }
+                assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
+            }
+            else
+            {
+                Debug.LogError("No se ha asignado un NPC a este MissionIcon.");
             }
 
             // Verifica si todas las misiones se completaron
@@ -90,24 +91,14 @@ public class MissionIcon : MonoBehaviour, IPoolable
         }
     }
 
-
-
     // Este método es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
         currentMission = null;
-
-        // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = null;
-
-        // Buscar el NPC que tiene este MissionIcon asignado
-        NPC assignedNPC = missionManager.assignedNPCs.Find(npc => npc.missionIcon == this);
         if (assignedNPC != null)
         {
-            assignedNPC.missionIcon = null; // Limpiar la referencia al MissionIcon
-            assignedNPC.hasMission = false; // Actualizar el estado del NPC
+            assignedNPC.missionIcon = null; // pone null el MissionIcon en el NPC para que se marque que no tiene misión
         }
+        assignedNPC = null; // Limpia la referencia al NPC
     }
-
 }
