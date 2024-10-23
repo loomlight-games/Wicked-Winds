@@ -9,6 +9,8 @@ public class ItemButton : MonoBehaviour
     public CustomizableItem item;
     Button button;
 
+    public CustomizableCharacter character; //Player.Instance.customizable
+
     Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f); // 50% transparent white
     Color semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent blue
     
@@ -25,16 +27,31 @@ public class ItemButton : MonoBehaviour
 
         // Gets the button
         button = transform.GetComponent<Button>();
+
+        if (character.customization[item.bodyPart] != null){
+            // If the item is the one the character is wearing
+            if (character.customization[item.bodyPart].name == item.name)
+                button.image.color = semiTransparentBlue;
+            else
+                button.image.color = semiTransparentWhite;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         if (item == null) return;
+        if (character == null) return;
+        if (character.customization[item.bodyPart] == null) return;
 
-        if(item.chosen)
+        // If the item is the one the character is wearing
+        if (character.customization[item.bodyPart].name == item.name)
             button.image.color = semiTransparentBlue;
         else
             button.image.color = semiTransparentWhite;
+    }
+
+    public void AssignCharacter(CustomizableCharacter character){
+        this.character = character;
     }
 }

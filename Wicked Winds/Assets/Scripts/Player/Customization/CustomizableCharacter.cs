@@ -20,7 +20,6 @@ public class CustomizableCharacter : MonoBehaviour {
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
-    
     public Dictionary<BodyPart, CustomizableItem> customization = new(){
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
@@ -29,143 +28,61 @@ public class CustomizableCharacter : MonoBehaviour {
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        // Load customization from memory
+        // Load customization
         LoadCustomization();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
-    /// Given an item updates its correspondant body part
+    /// Change body part according to item received, creationg or destroying it
     /// </summary>
-    public void RecognizeBodyPart (CustomizableItem newItem){
-        switch(newItem.bodyPart){
-            case BodyPart.Head:
-                UpdateBodyPart(newItem, headTransform);
-                break;
-            case BodyPart.UpperBody:
-                UpdateBodyPart(newItem, upperBodyTransform);
-                break;
-            case BodyPart.LowerBody:
-                UpdateBodyPart(newItem, lowerBodyTransform);
-                break;
-            case BodyPart.Shoes:
-               UpdateBodyPart(newItem, shoesTransform);
-                break;
-            default:
-                break;
-        }
-
-        // Save customization in memory
-        SaveCustomization();
-    }
-
-    /// <summary>
-    /// Handles creation and destruction of items 
-    /// </summary>
-    void UpdateBodyPart(CustomizableItem newItem, Transform bodyPartTransform){
+    public void UpdateBodyPart(CustomizableItem newItem){
         
         CustomizableItem currentItem = customization[newItem.bodyPart];
         
         // Current item not null
         if (currentItem != null){
-            // Different from the given
-            if(currentItem != newItem){
-                // Not chosen anymore
-                currentItem.chosen = false;
+            // Destroys it
+            Destroy(currentItem.instance);
 
-                // Destroys the current item gameobject
-                Destroy(currentItem.GO);
-
-                InstantiateItem(newItem, bodyPartTransform);
-            
-            // Same as given
-            }else{
-                // Current is chosen
-                if (currentItem.chosen)
-                    InstantiateItem(newItem, bodyPartTransform);
-
-                // Current is not chosen
-                else
-                    // Destroys the current item gameobject 
-                    Destroy(newItem.GO);
-            } 
+            // Is the same one wearing
+            if(currentItem == newItem)
+                // Unwears it
+                customization[newItem.bodyPart] = null;
+            // Is different
+            else
+                // Instantiates the new and updates dictionary
+                InstantiateItem(newItem);
         // Current item is null
         }else
-            InstantiateItem(newItem, bodyPartTransform);
+            // Instantiates the new and updates dictionary
+            InstantiateItem(newItem);
+
+        // Save customization after updating
+        SaveCustomization();
     }
 
     /// <summary>
-    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child
+    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child.
+    /// Updates the dictionary with the new item
     /// </summary>
-    void InstantiateItem(CustomizableItem item, Transform bodyPartTransform){
-        GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-        GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
-        item.GO = GOcopy;
+    void InstantiateItem(CustomizableItem item){
+        // Gets transform
+        Transform bodyPartTransform = GetBodyPartTransform(item.bodyPart);
+
+        // Instantiates a copy of the prefab in that transform as a child of it
+        GameObject prefabCopy = Instantiate(item.prefab,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
+        prefabCopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+        
+        // Defines item reference to the copy
+        item.instance = prefabCopy;
+        
+        // Update dictionary
         customization[item.bodyPart] = item;
     }
 
-    /// <summary>
-    /// Save player customization in nmemory as a json
-    /// </summary>
-    void SaveCustomization(){
-        PlayerCustomization playerCustomization = new ();
-
-        // Loop through the dictionary and create a serializable version
-        foreach (var kvp in customization) {
-            if (kvp.Value != null) {
-                CustomizationData data = new () {
-                    bodyPart = kvp.Key,
-                    prefabName = kvp.Value.gameObject.name,
-                };
-                playerCustomization.customizationItems.Add(data);
-            }
-        }
-
-        // Serialize the list to JSON
-        string json = JsonUtility.ToJson(playerCustomization);
-        Debug.Log(json);
-        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
-    }
-
-    /// <summary>
-    /// Reads a json file with the player customization and loads the data
-    /// </summary>
-    void LoadCustomization(){
-        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
-
-        Debug.Log(json);
-
-        if (string.IsNullOrEmpty(json)) {
-            Debug.LogWarning("No saved customization found.");
-            return;
-        }
-
-        PlayerCustomization playerCustomization = JsonUtility.FromJson<PlayerCustomization>(json);
-
-        // Loop through the saved customization data and instantiate items
-        foreach (var data in playerCustomization.customizationItems) {
-            // Load the prefab using Addressables
-            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => {
-                if (handle.Status == AsyncOperationStatus.Succeeded) {
-                    GameObject prefab = handle.Result;
-                    CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
-                    newItem.bodyPart = data.bodyPart;
-                    Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
-                    newItem.chosen = true;
-                    InstantiateItem(newItem, bodyPartTransform);
-                }
-            };
-        }
-    }
-
+    /// <returns>Corresponding transform to body part</returns>
     Transform GetBodyPartTransform(BodyPart bodyPart){
         return bodyPart switch
         {
@@ -176,15 +93,98 @@ public class CustomizableCharacter : MonoBehaviour {
             _ => null,
         };
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    #region SERIALIZATION
+    /// <summary>
+    /// Save customization to PlayerPrefs as JSON.
+    /// </summary>
+    public void SaveCustomization()
+    {
+        List<CustomizationData> dataList = new();
+
+        // Convert dictionary to a serializable list
+        foreach (var kvp in customization)
+        {
+            if (kvp.Value != null)
+            {
+                CustomizationData data = new ()
+                {
+                    bodyPart = kvp.Key,
+                    prefabName = kvp.Value.prefab.name
+                };
+                dataList.Add(data);
+            }
+        }
+
+        // Serialize the list to JSON
+        string json = JsonUtility.ToJson(new CustomizationList(dataList));
+        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
+        Debug.Log("Saved Customization: " + json);
+    }
+
+    /// <summary>
+    /// Load customization from PlayerPrefs and apply it.
+    /// </summary>
+    public void LoadCustomization()
+    {
+        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE, "");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("No saved customization found.");
+            return;
+        }
+
+        CustomizationList customizationList = JsonUtility.FromJson<CustomizationList>(json);
+        
+        foreach (var data in customizationList.customizationItems)
+        {
+            // Use Addressables to load the prefab by name/label
+            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => 
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    GameObject prefab = handle.Result;
+
+                    // Get the CustomizableItem component attached to the prefab
+                    CustomizableItem newItem = prefab.GetComponent<CustomizableItem>();
+                    
+                    // Assign data to the new item
+                    newItem.bodyPart = data.bodyPart;
+                    newItem.prefab = prefab;
+
+                    // Instantiate the item
+                    InstantiateItem(newItem);
+                }
+                else
+                {
+                    Debug.LogError("Failed to load prefab: " + data.prefabName);
+                }
+            };
+        }
+        Debug.Log("Loaded Customization: " + json);
+    }
+    #endregion
 }
 
+/// <summary>
+/// Customization data class for serialization
+/// </summary>
 [Serializable]
 public class CustomizationData {
     public CustomizableCharacter.BodyPart bodyPart;
-    public string prefabName;
+    public string prefabName; // Label for addressables
 }
 
+/// <summary>
+/// Wrapper class to hold list of CustomizationData (required for Unity serialization)
+/// </summary>
 [Serializable]
-public class PlayerCustomization {
-    public List<CustomizationData> customizationItems = new List<CustomizationData>();
+public class CustomizationList {
+    public List<CustomizationData> customizationItems = new ();
+
+    public CustomizationList(List<CustomizationData> customizationItems){
+        this.customizationItems = customizationItems;
+    }
 }
