@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class CustomizableCharacter : MonoBehaviour {
     const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
@@ -33,7 +33,7 @@ public class CustomizableCharacter : MonoBehaviour {
     void Start()
     {
         // Load customization from memory
-        //LoadCustomization();
+        LoadCustomization();
     }
 
     // Update is called once per frame
@@ -139,8 +139,10 @@ public class CustomizableCharacter : MonoBehaviour {
     /// Reads a json file with the player customization and loads the data
     /// </summary>
     void LoadCustomization(){
-         string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
-        
+        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE);
+
+        Debug.Log(json);
+
         if (string.IsNullOrEmpty(json)) {
             Debug.LogWarning("No saved customization found.");
             return;
@@ -150,15 +152,17 @@ public class CustomizableCharacter : MonoBehaviour {
 
         // Loop through the saved customization data and instantiate items
         foreach (var data in playerCustomization.customizationItems) {
-            // Load the prefab using the itemID
-            GameObject prefab = Resources.Load<GameObject>(data.prefabName); // Assuming prefabs are stored in the Resources folder
-
-            if (prefab != null) {
-                CustomizableItem newItem = Instantiate(prefab).GetComponent<CustomizableItem>();
-                newItem.bodyPart = data.bodyPart;
-                Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
-                InstantiateItem(newItem, bodyPartTransform);
-            }
+            // Load the prefab using Addressables
+            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle => {
+                if (handle.Status == AsyncOperationStatus.Succeeded) {
+                    GameObject prefab = handle.Result;
+                    CustomizableItem newItem = Instantiate(prefab).GetComponent<CustomizableItem>();
+                    newItem.bodyPart = data.bodyPart;
+                    Transform bodyPartTransform = GetBodyPartTransform(newItem.bodyPart);
+                    newItem.chosen = true;
+                    InstantiateItem(newItem, bodyPartTransform);
+                }
+            };
         }
     }
 
