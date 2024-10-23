@@ -35,11 +35,6 @@ public class ItemButton : MonoBehaviour
         if (item == null) return;
         if (character == null) return;
 
-        // if(item.chosen)
-        //     button.image.color = semiTransparentBlue;
-        // else
-        //     button.image.color = semiTransparentWhite;
-
         // If the item is the one the character is wearing
         if (character.customization[item.bodyPart] == item)
             button.image.color = semiTransparentBlue;

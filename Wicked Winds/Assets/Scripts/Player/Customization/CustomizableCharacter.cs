@@ -43,11 +43,11 @@ public class CustomizableCharacter : MonoBehaviour {
     }
 
     public void Reset(){
-        PlayerPrefs.DeleteAll();
+        
     }
 
     /// <summary>
-    /// Handles creation and destruction of items 
+    /// Change body part according to item received, creationg or destroying it
     /// </summary>
     public void UpdateBodyPart(CustomizableItem newItem){
         
@@ -56,7 +56,7 @@ public class CustomizableCharacter : MonoBehaviour {
         // Current item not null
         if (currentItem != null){
             // Destroys it
-            Destroy(currentItem.GO);
+            Destroy(currentItem.instance);
 
             // Is the same one wearing
             if(currentItem == newItem)
@@ -73,19 +73,19 @@ public class CustomizableCharacter : MonoBehaviour {
     }
 
     /// <summary>
-    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child
+    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child.
     /// Updates the dictionary with the new item
     /// </summary>
     void InstantiateItem(CustomizableItem item){
         // Gets transform
         Transform bodyPartTransform = GetBodyPartTransform(item.bodyPart);
 
-        // Instantiates a copy in that transform as a child of it
-        GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-        GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+        // Instantiates a copy of the prefab in that transform as a child of it
+        GameObject prefabCopy = Instantiate(item.prefab,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
+        prefabCopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
         
-        item.GO = GOcopy;
-        //item.chosen = true;
+        // Defines item reference to the copy
+        item.instance = prefabCopy;
         
         // Update dictionary
         customization[item.bodyPart] = item;
@@ -95,11 +95,7 @@ public class CustomizableCharacter : MonoBehaviour {
     /// Instantiates the item of a body part stored in dictionary 
     /// </summary>
     void InstantiateBodyPart(BodyPart bodyPart){
-        Transform bodyPartTransform = GetBodyPartTransform(bodyPart);
-        CustomizableItem item = customization[bodyPart];
-
-        GameObject GOcopy = Instantiate(item.gameObject,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-        GOcopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
+        
     }
 
     /// <summary>
@@ -176,7 +172,6 @@ public class CustomizableCharacter : MonoBehaviour {
 public class CustomizationData {
     public CustomizableCharacter.BodyPart bodyPart;
     public string prefabName;
-    public bool isChosen;
 }
 
 [Serializable]
