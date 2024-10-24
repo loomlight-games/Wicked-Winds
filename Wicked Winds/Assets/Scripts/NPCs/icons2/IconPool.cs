@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class IconPool : MonoBehaviour, IObjectPool
 {
+    //La clase IconPool es responsable de crear, activar y desactivar los objetos Icon.
+    //Debe ser capaz de devolver un objeto Icon del pool y devolverlo cuando ya no se necesite.
+
     [SerializeField] private GameObject iconPrefab;
     [SerializeField] private int poolSize = 5;
     [SerializeField] private List<GameObject> iconList;
@@ -50,17 +53,20 @@ public class IconPool : MonoBehaviour, IObjectPool
                 return icon.GetComponent<IPoolableObject>();
             }
         }
-        return null;  // Política de crecimiento: si no hay balas disponibles, devuelvo null
+        return null;  // Si no hay íconos disponibles, devuelve null
     }
 
-    public void release(IPoolableObject icon)
+    public void release(IPoolableObject obj)
     {
-        icon.setActive(false);
-        icon.reset();  // Opcionalmente, resetea el estado de la bala antes de devolverla al pool
+        if (obj is Icon icon) // Asegúrate de que el objeto es un Icon
+        {
+            icon.gameObject.SetActive(false); // Desactiva el GameObject
+            icon.Reset(); // Reinicia el estado del ícono
+                          // Aquí podrías agregar cualquier otra lógica que necesites
+        }
     }
 
-    // Método específico para desactivar la bala (manteniendo compatibilidad con el código existente)
-    public void iconRelease(GameObject icon)
+    public void ReleaseIcon(GameObject icon)
     {
         release(icon.GetComponent<IPoolableObject>());
     }

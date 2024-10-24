@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MissionIconPool
-{
+{/*
     private MissionIcon prefab;
     private List<MissionIcon> pool;
     private Transform iconPoolParent; // Almacena la referencia al GameObject del pool
@@ -57,5 +57,5 @@ public class MissionIconPool
         icon.gameObject.SetActive(false); // Desactiva el ícono
         icon.transform.SetParent(iconPoolParent); // Devuelve el ícono al padre del pool
         // Puedes agregar código adicional aquí si necesitas restablecer propiedades
-    }
+    }*/
 }

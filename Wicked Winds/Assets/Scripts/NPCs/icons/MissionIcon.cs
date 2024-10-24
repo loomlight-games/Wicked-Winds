@@ -1,8 +1,8 @@
 using System.Linq;
 using UnityEngine;
 
-public class MissionIcon : MonoBehaviour, IPoolable
-{
+public class MissionIcon : MonoBehaviour
+{/*
     public GameObject bubble; // Referencia al GameObject del Bubble
     public Sprite spriteMission;
     public Sprite spriteMissionCompleted;
@@ -114,7 +114,7 @@ public class MissionIcon : MonoBehaviour, IPoolable
         // Establece currentMission a null si es necesario (aquí asumiendo que se requiere)
         currentMission = null; // Limpia la referencia a la misión actual
     }
-
+    */
 
 }
 

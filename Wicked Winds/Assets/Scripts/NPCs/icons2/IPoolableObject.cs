@@ -6,5 +6,5 @@ public interface IPoolableObject
 {
     void setActive(bool active);  // Activar/desactivar el objeto
     bool isActive();  // Comprobar si el objeto está activo
-    void reset();  // Resetear el objeto (opcional, para reiniciar su estado)
+    void Reset();  // Resetear el objeto (opcional, para reiniciar su estado)
 }
