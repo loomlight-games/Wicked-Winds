@@ -84,10 +84,6 @@ public class Icon : MonoBehaviour, IPoolableObject
             {
                 assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
             }
-
-
-            // Verifica si todas las misiones se completaron
-            missionManager.CheckMissionCompletion();
         }
     }
 

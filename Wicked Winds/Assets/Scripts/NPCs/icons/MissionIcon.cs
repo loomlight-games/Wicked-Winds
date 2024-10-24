@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class MissionIcon : MonoBehaviour, IPoolable
+public class MissionIcon : MonoBehaviour
 {
     public GameObject bubble; // Referencia al GameObject del Bubble
     public Sprite spriteMission;
@@ -34,7 +34,7 @@ public class MissionIcon : MonoBehaviour, IPoolable
             Debug.LogError("SpriteRenderer o newSprite es nulo.");
         }
     }
-
+    
     // Este método es llamado cuando el objeto es tomado del pool
     public void OnObjectSpawn()
     {
@@ -77,18 +77,15 @@ public class MissionIcon : MonoBehaviour, IPoolable
                 Debug.LogError("SpriteRenderer o spriteMissionCompleted es nulo.");
             }
 
-            // Actualiza el estado del NPC asignado a este MissionIcon
+            /*// Actualiza el estado del NPC asignado a este MissionIcon
             if (assignedNPC != null)
             {
                 assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
-            }
-          
-
-            // Verifica si todas las misiones se completaron
-            missionManager.CheckMissionCompletion();
+            }*/
+    
         }
     }
-
+    
     // Este método es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
