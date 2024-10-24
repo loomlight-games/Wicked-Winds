@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
@@ -8,7 +9,7 @@ public class ItemButton : MonoBehaviour
 {
     public CustomizableItem item;
     Button button;
-
+    public TextMeshProUGUI priceText;
     public CustomizableCharacter character; //Player.Instance.customizable
 
     Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f); // 50% transparent white
@@ -35,6 +36,8 @@ public class ItemButton : MonoBehaviour
             else
                 button.image.color = semiTransparentWhite;
         }
+
+        priceText.text = item.price.ToString();
     }
 
     // Update is called once per frame
