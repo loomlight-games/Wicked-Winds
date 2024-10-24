@@ -66,10 +66,6 @@ public class GameplayHUD : MonoBehaviour
         // switch to defeat state
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
         timerText.color = Color.red;
-
-
-        // swithcing scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Leaderboard");
     }
     /// <summary>
     /// Called when boost value is modified (only when running)

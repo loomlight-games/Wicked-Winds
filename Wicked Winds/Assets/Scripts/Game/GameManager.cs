@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Pipeline.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -27,9 +28,16 @@ public class GameManager : AStateController
         //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         else
+        {
             Destroy(gameObject);
+        }
+            
     }
 
     public override void Start()
@@ -64,6 +72,10 @@ public class GameManager : AStateController
                 break;
             case "Main menu":
                 SceneManager.LoadScene("Main menu");
+                break;
+            case "LeaderboardButton":
+                SwitchState(endState);
+                SceneManager.LoadScene("Leaderboard");
                 break;
             case "Credits":
                 SwitchState(creditsState);
