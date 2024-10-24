@@ -56,7 +56,7 @@ public class Leaderboard : MonoBehaviour
     //uploading to the leaderboard
     public void SetLeaderboardEntry (string username, float score){
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username,
-            (int)score, ((msg) =>
+            (int)GameManager.Instance.playerScore, ((msg) =>
             {   //limit the number of characters in username to 20
                 username = username.Substring(0, Mathf.Min(20, username.Length)); // Limita el nombre a 20 caracteres
                 GetLeaderboard();

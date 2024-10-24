@@ -11,7 +11,7 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
-    private float playerScore;
+    public int playerScore;
 
     #region STATES
     readonly GamePauseState pauseState = new();
@@ -99,12 +99,8 @@ public class GameManager : AStateController
     // end game 
     public void GameOver(float elapsedTime)
     {
-        playerScore = elapsedTime; // save played time as score
+        playerScore = (int)elapsedTime; // save played time as score
         SwitchState(endState); 
     }
 
-    public float GetPlayerScore()
-    {
-        return playerScore;
-    }
 }

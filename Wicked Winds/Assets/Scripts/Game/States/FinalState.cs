@@ -28,7 +28,7 @@ public class FinalState : AState
         mainMenuButton.SetActive(true);
 
         // Mostrar la puntuación final
-        float playerScore = GameManager.Instance.GetPlayerScore();
+        float playerScore = GameManager.Instance.playerScore;
         scoreText.text = "Your Score: " + Mathf.FloorToInt(playerScore).ToString();
 
 
