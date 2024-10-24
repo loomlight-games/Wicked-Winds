@@ -55,12 +55,15 @@ public class Leaderboard : MonoBehaviour
 
     //uploading to the leaderboard
     public void SetLeaderboardEntry (string username, float score){
+        Debug.Log("Puntuación antes de subir: " + score);
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username,
-            (int)GameManager.Instance.playerScore, ((msg) =>
+            GameManager.Instance.playerScore, ((msg) =>
             {   //limit the number of characters in username to 20
                 username = username.Substring(0, Mathf.Min(20, username.Length)); // Limita el nombre a 20 caracteres
                 GetLeaderboard();
+                Debug.Log("puntuacion es: "  + score );
                 Debug.Log("puntuacion subida correctamente");
+
             }) );
     }
 }

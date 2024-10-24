@@ -40,6 +40,18 @@ public class GameManager : AStateController
             
     }
 
+    public void AddScore(float score)
+    {
+        playerScore += (int)score;
+        Debug.Log("Puntuación actualizada en GameManager: " + playerScore);
+    }
+
+    public void SetScore(float score)
+    {
+        playerScore = (int)score;
+        Debug.Log("Puntuación seteada en GameManager: " + playerScore);
+    }
+
     public override void Start()
     {
         //if not in main menu, it's in the playing state

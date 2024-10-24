@@ -41,7 +41,7 @@ public class ScoreManager : MonoBehaviour
         score = Mathf.FloorToInt(PlayerPrefs.GetFloat("PlayerScore", 0));
       
         // Mostrar la puntuación en el UI
-        scoreText.text = "Your Score: " + score.ToString();
+        scoreText.text =  score.ToString();
         UpdateScore(score);
     }
     // Método que actualiza la puntuación cuando el juego acaba
