@@ -95,6 +95,6 @@ public class PlayerCustomizationUI : MonoBehaviour
 
     public void Reset(){
         PlayerPrefs.DeleteAll();
-        playerCustomizable.LoadCustomization();
+        playerCustomizable.Load();
     }
 }

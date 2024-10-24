@@ -34,8 +34,8 @@ public class CustomizableCharacter : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////////////////////
     void Awake()
     {
-        // Load customization
-        LoadCustomization();
+        // Load customization and purchased items
+        Load();
     }
 
     /// <summary>
@@ -69,8 +69,8 @@ public class CustomizableCharacter : MonoBehaviour {
             newItem.isPurchased = true;
         }
 
-        // Save customization after updating
-        SaveCustomization();
+        // Save customization and purchased items after updating
+        Save();
     }
 
     /// <summary>
@@ -106,23 +106,62 @@ public class CustomizableCharacter : MonoBehaviour {
 
     ///////////////////////////////////////////////////////////////////////////////////
     #region SERIALIZATION
+    public void Save(){
+        SavePurchasedItems();
+        SaveCustomization();
+    }
+
+    public void Load(){
+        LoadPurchasedItems();
+        LoadCustomization();
+    }
+    
+    
+    /// <summary>
+    /// Saves purchased items to PlayerPrefs as JSON
+    /// </summary>
+    public void SavePurchasedItems()
+    {
+        List<ItemData> dataList = new();
+
+        foreach (var item in purchasedItems)
+        {
+            ItemData data = new ()
+            {
+                bodyPart = item.bodyPart,
+                prefabName = item.prefab.name,
+                isPurchased = item.isPurchased,
+            };
+
+            dataList.Add(data);
+        }
+
+        // Serialize the list to JSON
+        string json = JsonUtility.ToJson(new PurchasedItemsList(dataList));
+        PlayerPrefs.SetString(PLAYER_PURCHASED_ITEMS_FILE, json);
+        Debug.Log("Saved purchased items: " + json);
+    }
+
+
     /// <summary>
     /// Save customization to PlayerPrefs as JSON.
     /// </summary>
     public void SaveCustomization()
     {
-        List<CustomizationData> dataList = new();
+        List<ItemData> dataList = new();
 
         // Convert dictionary to a serializable list
         foreach (var kvp in currentCustomization)
         {
             if (kvp.Value != null)
             {
-                CustomizationData data = new ()
+                ItemData data = new ()
                 {
                     bodyPart = kvp.Key,
-                    prefabName = kvp.Value.prefab.name
+                    prefabName = kvp.Value.prefab.name,
+                    isPurchased = kvp.Value.isPurchased,
                 };
+
                 dataList.Add(data);
             }
         }
@@ -130,7 +169,48 @@ public class CustomizableCharacter : MonoBehaviour {
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new CustomizationList(dataList));
         PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
-        Debug.Log("Saved Customization: " + json);
+        //Debug.Log("Saved Customization: " + json);
+    }
+
+    /// <summary>
+    /// Load purchased items from PlayerPrefs.
+    /// </summary>
+    public void LoadPurchasedItems()
+    {
+        string json = PlayerPrefs.GetString(PLAYER_PURCHASED_ITEMS_FILE, "");
+
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogWarning("No purchased items found.");
+            return;
+        }
+
+        Debug.Log("Loaded purchased items: " + json);
+        
+        PurchasedItemsList loadedPurchasedItemsList = JsonUtility.FromJson<PurchasedItemsList>(json);
+        
+        // Mark each item prefab as purchased
+        foreach (var item in loadedPurchasedItemsList.purchasedItems)
+        {
+            // Use Addressables to load the prefab by name/label
+            Addressables.LoadAssetAsync<GameObject>(item.prefabName).Completed += handle => 
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    GameObject prefab = handle.Result;
+
+                    // Get the CustomizableItem component attached to the prefab
+                    CustomizableItem loadedItem = prefab.GetComponent<CustomizableItem>();
+                    
+                    purchasedItems.Add(loadedItem);
+                }
+                else
+                {
+                    Debug.LogError("Failed to load prefab: " + item.prefabName);
+                }
+            };
+        }
+        
     }
 
     /// <summary>
@@ -163,6 +243,7 @@ public class CustomizableCharacter : MonoBehaviour {
                     // Assign data to the new item
                     newItem.bodyPart = data.bodyPart;
                     newItem.prefab = prefab;
+                    newItem.isPurchased = data.isPurchased;
 
                     // Instantiate the item
                     InstantiateItem(newItem);
@@ -173,7 +254,7 @@ public class CustomizableCharacter : MonoBehaviour {
                 }
             };
         }
-        Debug.Log("Loaded Customization: " + json);
+        //Debug.Log("Loaded Customization: " + json);
     }
     #endregion
 }
@@ -182,9 +263,10 @@ public class CustomizableCharacter : MonoBehaviour {
 /// Customization data class for serialization
 /// </summary>
 [Serializable]
-public class CustomizationData {
+public class ItemData {
     public CustomizableCharacter.BodyPart bodyPart;
     public string prefabName; // Label for addressables
+    public bool isPurchased;
 }
 
 /// <summary>
@@ -192,9 +274,21 @@ public class CustomizationData {
 /// </summary>
 [Serializable]
 public class CustomizationList {
-    public List<CustomizationData> customizationItems = new ();
+    public List<ItemData> customizationItems = new ();
 
-    public CustomizationList(List<CustomizationData> customizationItems){
+    public CustomizationList(List<ItemData> customizationItems){
         this.customizationItems = customizationItems;
+    }
+}
+
+/// <summary>
+/// Wrapper class to hold list of CustomizationData (required for Unity serialization)
+/// </summary>
+[Serializable]
+public class PurchasedItemsList {
+    public List<ItemData> purchasedItems = new ();
+
+    public PurchasedItemsList(List<ItemData> purchasedItems){
+        this.purchasedItems = purchasedItems;
     }
 }
