@@ -4,8 +4,8 @@ using System;
 
 public class PlayerCustomizationUI : MonoBehaviour
 {
-    public CustomizableCharacter playerCustomizable; //Player.Instance.customizable
-
+    public event EventHandler<int> OnCoinsChange;
+    public CustomizableCharacter player; //Player.Instance.customizable
     public TextMeshProUGUI coinsNumText;
     public int coinsNum, lastPage = 1;
     public GameObject bodyParts1, bodyParts2, adPanel, buyCoinsPanel;
@@ -19,6 +19,11 @@ public class PlayerCustomizationUI : MonoBehaviour
         buyPanel.PayCoinsEvent += AddCoins;
 
         bodyParts1.SetActive(true);
+
+        // Find player
+        player = GameObject.Find("Player").GetComponent<CustomizableCharacter> ();
+
+        coinsNum = player.coins;
     }
 
     // Update is called once per frame
@@ -46,16 +51,22 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// Receives the button of the item to choose
     /// </summary>
     public void ChooseItem(ItemButton button){
-        int itemPrice = button.item.price;
-        // Enough money to buy it
-        if (coinsNum >= itemPrice){
-            // Sends it to the player customization
-            playerCustomizable.UpdateBodyPart(button.item);
 
-            // Reduces coins number
-            coinsNum -= itemPrice;
-        }
-            
+        OnCoinsChange?.Invoke(this, coinsNum);
+
+        int itemPrice = button.item.price;
+
+        // Enough money to buy it or is already purchased
+        if (coinsNum >= itemPrice || button.item.isPurchased){
+            // Not purchased yet
+            if (!button.item.isPurchased)
+                // Reduces coins number
+                coinsNum -= itemPrice;
+
+            // Sends it to the player customization
+            player.UpdateBodyPart(button.item);
+            player.UpdateCoins(coinsNum);
+        }  
         else
             Debug.Log("Not enough coins");
     }
@@ -84,9 +95,14 @@ public class PlayerCustomizationUI : MonoBehaviour
         coinsNum += coinsToAdd;
 
         coinsNumText.text = coinsNum.ToString();
+
+        player.UpdateCoins(coinsNum);
+
+        OnCoinsChange?.Invoke(this, coinsNum);
     }
 
     public void Reset(){
         PlayerPrefs.DeleteAll();
+        player.Load();
     }
 }
