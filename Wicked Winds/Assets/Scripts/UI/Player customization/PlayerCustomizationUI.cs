@@ -22,10 +22,14 @@ public class PlayerCustomizationUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        coinsNumText.text = coinsNum.ToString();
-
-        if (adPanel.activeSelf || buyCoinsPanel.activeSelf)
+        if (adPanel.activeSelf || buyCoinsPanel.activeSelf){
             bodyParts.SetActive(false);
+
+            if (adPanel.activeSelf)
+                buyCoinsPanel.SetActive(false);
+            else if (buyCoinsPanel.activeSelf)
+                adPanel.SetActive(false);
+        }  
         else
             bodyParts.SetActive(true);
     }
@@ -39,5 +43,7 @@ public class PlayerCustomizationUI : MonoBehaviour
     void AddCoins(object sender, int coinsToAdd)
     {
         coinsNum += coinsToAdd;
+
+        coinsNumText.text = coinsNum.ToString();
     }
 }

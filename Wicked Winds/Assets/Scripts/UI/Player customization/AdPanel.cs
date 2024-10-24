@@ -32,7 +32,7 @@ public class AdPanel : MonoBehaviour
     {
         // Only if watching ad
         if (gameObject.activeSelf && !confirmationPanel.activeSelf){
-            if (secondsForReward > 0)
+            if (secondsForReward > 0.5)
             {
                 rewardButton.interactable = false;
                 
@@ -42,13 +42,12 @@ public class AdPanel : MonoBehaviour
                 timerSeconds = Mathf.FloorToInt(secondsForReward % 60);
                 rewardText.text = string.Format("Reward in {0:00}:{1:00}", timerMinutes, timerSeconds);
             }
-            else if (secondsForReward <= 0) // Timer finished
+            else // Timer finished
             {
+                rewardText.text = "Get reward!";
                 rewardButton.interactable = true;
                 
                 secondsForReward = 0;
-
-                rewardText.text = "Get reward!";
             }
         }
     }
@@ -80,9 +79,18 @@ public class AdPanel : MonoBehaviour
     }
 
     /// <summary>
+    /// Try to close panel
+    /// </summary>
+    public void ClosePanel(){
+        // This is active -> trying to close
+        if (gameObject.activeSelf)
+            // Confirm before closing
+            confirmationPanel.SetActive(true);
+    }
+
+    /// <summary>
     /// Shows confimation message before closing panel
     /// </summary>
-    /// <param name="answer"></param>
     public void Confirm(string answer){
         confirmationPanel.SetActive(false);
 

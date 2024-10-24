@@ -7,28 +7,12 @@ public class BuyCoinsPanel : MonoBehaviour
 {
     public event EventHandler<int> PayCoinsEvent;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Handles panel activation
     /// </summary>
     public void UpdatePanel (){
-        // This is active -> close
-        if (gameObject.activeSelf)
-            gameObject.SetActive(false);
-        // This is not active -> show panel
-        else
-            gameObject.SetActive(true);
+        // Flips activation
+        gameObject.SetActive(!gameObject.activeSelf);
     }
 
     /// <summary>
