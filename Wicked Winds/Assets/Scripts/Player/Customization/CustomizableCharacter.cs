@@ -7,6 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class CustomizableCharacter : MonoBehaviour {
     const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     const string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
+    const string PLAYER_COINS_FILE = "PlayerCoins";
 
     // Types of body parts, basically of items
     [Serializable]
@@ -30,6 +31,8 @@ public class CustomizableCharacter : MonoBehaviour {
 
     // List of purchased items
     public List<CustomizableItem> purchasedItems = new();
+
+    public int coins;
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     void Awake()
@@ -104,6 +107,12 @@ public class CustomizableCharacter : MonoBehaviour {
         };
     }
 
+    internal void UpdateCoins(int coins)
+    {
+        this.coins = coins;
+        SaveCoins();
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////
     #region SERIALIZATION
     public void Save(){
@@ -114,9 +123,18 @@ public class CustomizableCharacter : MonoBehaviour {
     public void Load(){
         LoadPurchasedItems();
         LoadCustomization();
+        LoadCoins();
     }
     
-    
+    /// <summary>
+    /// Saves coins to PlayerPrefs as JSON
+    /// </summary>
+    public void SaveCoins()
+    {
+        PlayerPrefs.SetInt(PLAYER_COINS_FILE, coins);
+        Debug.Log("Saved coins: " + coins);
+    }
+
     /// <summary>
     /// Saves purchased items to PlayerPrefs as JSON
     /// </summary>
@@ -169,7 +187,23 @@ public class CustomizableCharacter : MonoBehaviour {
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new CustomizationList(dataList));
         PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
-        //Debug.Log("Saved Customization: " + json);
+        
+        Debug.Log("Saved Customization: " + json);
+    }
+
+    /// <summary>
+    /// Load purchased items from PlayerPrefs.
+    /// </summary>
+    public void LoadCoins()
+    {
+        if (!PlayerPrefs.HasKey(PLAYER_COINS_FILE))
+        {
+            Debug.LogWarning("No coins found.");
+            return;
+        }
+
+        coins = PlayerPrefs.GetInt(PLAYER_COINS_FILE, 0); // Default to 0 if no data is found
+        Debug.Log("Loaded coins: " + coins);
     }
 
     /// <summary>
@@ -254,7 +288,7 @@ public class CustomizableCharacter : MonoBehaviour {
                 }
             };
         }
-        //Debug.Log("Loaded Customization: " + json);
+        Debug.Log("Loaded Customization: " + json);
     }
     #endregion
 }
