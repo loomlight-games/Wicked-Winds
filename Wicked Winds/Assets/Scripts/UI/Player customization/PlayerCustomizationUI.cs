@@ -24,6 +24,8 @@ public class PlayerCustomizationUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        coinsNumText.text = coinsNum.ToString();
+        
         if (adPanel.activeSelf || buyCoinsPanel.activeSelf){
             bodyParts1.SetActive(false);
             bodyParts2.SetActive(false);
@@ -44,8 +46,18 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// Receives the button of the item to choose
     /// </summary>
     public void ChooseItem(ItemButton button){
-        // Sends it to the player customization
-        playerCustomizable.UpdateBodyPart(button.item);
+        int itemPrice = button.item.price;
+        // Enough money to buy it
+        if (coinsNum >= itemPrice){
+            // Sends it to the player customization
+            playerCustomizable.UpdateBodyPart(button.item);
+
+            // Reduces coins number
+            coinsNum -= itemPrice;
+        }
+            
+        else
+            Debug.Log("Not enough coins");
     }
 
     /// <summary>
@@ -72,5 +84,9 @@ public class PlayerCustomizationUI : MonoBehaviour
         coinsNum += coinsToAdd;
 
         coinsNumText.text = coinsNum.ToString();
+    }
+
+    public void Reset(){
+        PlayerPrefs.DeleteAll();
     }
 }
