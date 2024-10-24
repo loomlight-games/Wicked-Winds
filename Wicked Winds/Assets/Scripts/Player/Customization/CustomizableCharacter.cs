@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class CustomizableCharacter : MonoBehaviour {
     const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
+    const string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
 
     // Types of body parts, basically of items
     [Serializable]
@@ -20,12 +21,15 @@ public class CustomizableCharacter : MonoBehaviour {
     public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
-    public Dictionary<BodyPart, CustomizableItem> customization = new(){
+    public Dictionary<BodyPart, CustomizableItem> currentCustomization = new(){
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
         {BodyPart.LowerBody, null},
         {BodyPart.Shoes, null},
     };
+
+    // List of purchased items
+    public List<CustomizableItem> purchasedItems = new();
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     void Awake()
@@ -39,7 +43,7 @@ public class CustomizableCharacter : MonoBehaviour {
     /// </summary>
     public void UpdateBodyPart(CustomizableItem newItem){
         
-        CustomizableItem currentItem = customization[newItem.bodyPart];
+        CustomizableItem currentItem = currentCustomization[newItem.bodyPart];
         
         // Current item not null
         if (currentItem != null){
@@ -49,7 +53,7 @@ public class CustomizableCharacter : MonoBehaviour {
             // Is the same one wearing
             if(currentItem == newItem)
                 // Unwears it
-                customization[newItem.bodyPart] = null;
+                currentCustomization[newItem.bodyPart] = null;
             // Is different
             else
                 // Instantiates the new and updates dictionary
@@ -58,6 +62,12 @@ public class CustomizableCharacter : MonoBehaviour {
         }else
             // Instantiates the new and updates dictionary
             InstantiateItem(newItem);
+
+        // Adds item to purchased list if new
+        if (!newItem.isPurchased){
+            purchasedItems.Add(newItem);
+            newItem.isPurchased = true;
+        }
 
         // Save customization after updating
         SaveCustomization();
@@ -79,7 +89,7 @@ public class CustomizableCharacter : MonoBehaviour {
         item.instance = prefabCopy;
         
         // Update dictionary
-        customization[item.bodyPart] = item;
+        currentCustomization[item.bodyPart] = item;
     }
 
     /// <returns>Corresponding transform to body part</returns>
@@ -104,7 +114,7 @@ public class CustomizableCharacter : MonoBehaviour {
         List<CustomizationData> dataList = new();
 
         // Convert dictionary to a serializable list
-        foreach (var kvp in customization)
+        foreach (var kvp in currentCustomization)
         {
             if (kvp.Value != null)
             {

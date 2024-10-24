@@ -4,8 +4,8 @@ using System;
 
 public class PlayerCustomizationUI : MonoBehaviour
 {
+    public event EventHandler<int> OnCoinsChange;
     public CustomizableCharacter playerCustomizable; //Player.Instance.customizable
-
     public TextMeshProUGUI coinsNumText;
     public int coinsNum, lastPage = 1;
     public GameObject bodyParts1, bodyParts2, adPanel, buyCoinsPanel;
@@ -46,16 +46,21 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// Receives the button of the item to choose
     /// </summary>
     public void ChooseItem(ItemButton button){
+
+        OnCoinsChange?.Invoke(this, coinsNum);
+
         int itemPrice = button.item.price;
-        // Enough money to buy it
-        if (coinsNum >= itemPrice){
+
+        // Enough money to buy it or is already purchased
+        if (coinsNum >= itemPrice || button.item.isPurchased){
+            // Not purchased yet
+            if (!button.item.isPurchased)
+                // Reduces coins number
+                coinsNum -= itemPrice;
+
             // Sends it to the player customization
             playerCustomizable.UpdateBodyPart(button.item);
-
-            // Reduces coins number
-            coinsNum -= itemPrice;
-        }
-            
+        }  
         else
             Debug.Log("Not enough coins");
     }
@@ -84,9 +89,12 @@ public class PlayerCustomizationUI : MonoBehaviour
         coinsNum += coinsToAdd;
 
         coinsNumText.text = coinsNum.ToString();
+
+        OnCoinsChange?.Invoke(this, coinsNum);
     }
 
     public void Reset(){
         PlayerPrefs.DeleteAll();
+        playerCustomizable.LoadCustomization();
     }
 }
