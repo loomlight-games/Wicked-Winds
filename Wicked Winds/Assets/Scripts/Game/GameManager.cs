@@ -26,12 +26,6 @@ public class GameManager : AStateController
 
     [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
 
-    #region LEADERBOARD
-    [Header("Leaderboard")]
-    public string publicLeaderboardKey =
-        "d79d438f30ad962bdf7ba1f9ef19bc37bc77c16c165f95f90bc3dff59716a850";
-    #endregion
-
     public override void Awake()
     { 
         //if there's not an instance, it creates one

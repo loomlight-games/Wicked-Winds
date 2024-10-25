@@ -3,84 +3,83 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Dan.Main;
-using System.Collections;
-using UnityEngine.SocialPlatforms.Impl;
-using System;
-using Unity.VisualScripting;
-
+using UnityEngine.UIElements;
 
 public class LeaderboardGameState : AState
 {
-    List<TextMeshProUGUI> names = new(), scores = new();
+    static int size = 7;
+    TextMeshProUGUI[] entriesText = new TextMeshProUGUI[size];
 
     TMP_InputField inputName;
     TextMeshProUGUI scoreText; // Campo para mostrar la puntuación
 
-    int score; // Almacena la puntuación
-
-    string publicLeaderboardKey;
+    int score; 
+  
 
     public override void Enter()
     {
-        publicLeaderboardKey = GameManager.Instance.publicLeaderboardKey;
-        GameObject namesParent = GameObject.Find("Names");
-        GameObject scoresParent = GameObject.Find("Scores");
+        GameObject entriesParent = GameObject.Find("Entries");
         scoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
         inputName = GameObject.Find("InputName").GetComponent<TMP_InputField>();
 
-        foreach (Transform nameTransform in namesParent.transform)
+        // Filling the array with parents's children
+        for (int i = 0; i < size; i++)
         {
-            TextMeshProUGUI name = nameTransform.GetComponent<TextMeshProUGUI>();
-
-            names.Add(name);
-
-            Debug.Log(name.text);
+            //TextMeshProUGUI name = name.Transform.GetComponent<TextMeshProUGUI>();
+            //names.Add(name);
+            entriesText[i] = entriesParent.transform.GetChild(i).GetComponent<TextMeshProUGUI>(); 
         }
 
-
-        foreach (Transform scoreTransform in scoresParent.transform)
-        {
-            TextMeshProUGUI score = scoreTransform.GetComponent<TextMeshProUGUI>();
-
-            scores.Add(score);
-
-            Debug.Log(score.text);
-        }
-
-        // Recuperar la puntuación desde PlayerPrefs (o 0 si no hay puntuación guardada)
+        // Deserialise score 
         score = PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0);
         
-        // Mostrar la puntuación en el UI
+        // Show score
         scoreText.text = score.ToString();
 
-        GetLeaderboard();
+        LoadEntries();
     }
 
+    public void LoadEntries()
+    {
+        Leaderboards.ElapsedTime.GetEntries(entries =>
+        {
+            foreach (var t in entriesText)
+                t.text = "";
+
+            var length = Mathf.Min(entriesText.Length, entries.Length);
+
+            for (int i = 0; i < length; i++)
+            {
+                entriesText[i].text = $"{entries[i].Rank}. {entries[i].Username} - {entries[i].Score}";
+            }
+        });
+    }
+
+    /// <summary>
+    /// Gets username from input field
+    /// </summary>
     public void SubmitScore() //ARREGLAAAAAAAAAAAR RESETEA EL SCORE AL CAMBIAR AL LEADERBOARD
     {
-        // Obtener el nombre del input
-        if (!string.IsNullOrEmpty(inputName.text))
+        Leaderboards.ElapsedTime.UploadNewEntry(inputName.text, score, isSuccessful =>
         {
-            SetLeaderboardEntry(inputName.text, score);
-
-            Debug.Log("Nombre y puntuación enviados al evento." + inputName.text + score);
-
-        }
-        else
-        {
-
-            Debug.LogWarning("El nombre del jugador está vacío.");
-        }
+            if (isSuccessful)
+                LoadEntries();
+        });
     }
 
+    /*
+    /// <summary>
+    /// Get online data from leaderboard and update scene texts
+    /// </summary>
     public void GetLeaderboard()
     {
         // Obtener los datos del leaderboard desde la API
         LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>
         {
-            int loopLength = (msg.Length < names.Count)? msg.Length: names.Count;
+            // Choose the lesser one
+            int loopLength = (msg.Length < names.Count) ? msg.Length : names.Count;
 
-            for (int i = 0; i < loopLength; i++)
+            for (int i = 0; i < loopLength; ++i)
             {
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
@@ -90,9 +89,9 @@ public class LeaderboardGameState : AState
         }));
     }
 
-
-
-    //uploading to the leaderboard
+    /// <summary>
+    /// Uploading to the online leaderboard
+    /// </summary>
     public void SetLeaderboardEntry(string username, int scoreToUpload)
     {
         Debug.Log("Puntuación antes de subir: " + scoreToUpload);
@@ -102,29 +101,10 @@ public class LeaderboardGameState : AState
             Debug.Log("Puntuación subida correctamente"+ username + scoreToUpload);
 
             // Actualizar el leaderboard después de subir la puntuación
-            GetLeaderboard();
+            //GetLeaderboard();
         });
-        
-    }
 
-    public void ResetPlayerScore()
-    {
-        PlayerPrefs.DeleteKey("PlayerScore");
-        PlayerPrefs.Save();
-        score = 0; // Reinicia el puntaje en memoria
-        scoreText.text = score.ToString(); // Actualiza la UI si es necesario
-    }
-
-    // Método que actualiza la puntuación cuando el juego acaba
-    public void UpdateScore(int elapsedTimeScore)
-    {
-        score = elapsedTimeScore;  // Asigna el tiempo transcurrido como la puntuación
-                                   // Guardar la puntuación actualizada en PlayerPrefs
-        PlayerPrefs.SetFloat("PlayerScore", score);
-        PlayerPrefs.Save();
-        // Mostrar la puntuación actualizada
-        scoreText.text = score.ToString();
-        Debug.Log("Puntuación actualizada: " + score);
-        SubmitScore();
-    }
+        // Actualizar el leaderboard después de subir la puntuación
+        //GetLeaderboard(); // Supuestamente asegrua q aparezca el nombre con el score
+    }*/
 }
