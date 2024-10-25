@@ -17,7 +17,8 @@ public class Pickable : MonoBehaviour
     // Método para recolectar el objeto
     public void CollectItem()
     {
-        if (npc != null && npc.acceptMission) // Verifica si el NPC acepta la misión
+        //if (npc != null && npc.acceptMission) // Verifica si el NPC acepta la misión
+        if (npc != null)
         {
             // Destruir el objeto cuando se recolecte
             Destroy(gameObject);

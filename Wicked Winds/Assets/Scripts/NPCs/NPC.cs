@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
     [SerializeField] private string message;
-    [SerializeField] public bool acceptMission = false;
+    //[SerializeField] public bool acceptMission = false;
 
 
     void Start()

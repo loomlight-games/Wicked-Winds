@@ -18,6 +18,9 @@ public class MissionIcon : MonoBehaviour
 
     [SerializeField] public bool acceptMission = false;
 
+    //contador para los objetos recogidos
+    public int collectedItemsCount = 0;
+
     // Método para asignar una misión a este ícono
     public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
     {
@@ -127,6 +130,26 @@ public class MissionIcon : MonoBehaviour
             {
                 Debug.LogError("SpriteRenderer o spriteMissionCompleted es nulo en CompleteMission.");
             }
+        }
+    }
+
+
+
+
+
+
+/// RECOGER POCIONES
+
+    public void CollectItem()
+    {
+        collectedItemsCount++;
+        Debug.Log($"Objeto recolectado. Total recolectados: {collectedItemsCount}/3");
+
+        if (collectedItemsCount >= 3)
+        {
+            CompleteMission();
+            Debug.Log("Misión completada.");
+            collectedItemsCount = 0; // Reinicia el contador para futuras misiones
         }
     }
 }

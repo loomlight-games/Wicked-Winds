@@ -205,35 +205,58 @@ public class MissionManager : MonoBehaviour
 
         assignedNPCs.Add(selectedNPC);
         Debug.Log($"Misión {mission.name} asignada correctamente a {selectedNPC.name}");
-
         // Lógica de asignación de misión
         if (mission.missionName == "PotionMission")
         {
+            Debug.Log($"Asignando misión 'PotionMission' al NPC {selectedNPC.name}");
+
             // Generar los ingredientes alrededor del NPC
-        GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(selectedNPC.transform.position, 3);
+            GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(selectedNPC.transform.position, 3);
+
+            // Verifica si los ingredientes han sido generados
+            if (spawnedIngredients != null && spawnedIngredients.Length > 0)
+            {
+                Debug.Log($"PotionMission: Generados {spawnedIngredients.Length} ingredientes alrededor del NPC {selectedNPC.name}");
+            }
+            else
+            {
+                Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
+            }
 
             // Asignar el NPC y el MissionIcon a los objetos generados
             foreach (GameObject ingredient in spawnedIngredients)
             {
+                Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
+
                 Pickable pickable = ingredient.GetComponent<Pickable>();
                 if (pickable != null)
                 {
                     pickable.SetNPC(selectedNPC); // Asignar el NPC al objeto recolectable
+                    Debug.Log($"Ingrediente {ingredient.name} asignado al NPC {selectedNPC.name} como Pickable.");
+                }
+                else
+                {
+                    Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
                 }
 
                 Interactable interactable = ingredient.GetComponent<Interactable>();
                 if (interactable != null)
                 {
                     interactable.missionIcon = missionIcon; // Asignar el MissionIcon al objeto interactuable
+                    Debug.Log($"Ingrediente {ingredient.name} asignado a MissionIcon {missionIcon.name} como Interactable.");
+                }
+                else
+                {
+                    Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Interactable.");
                 }
             }
 
-            Debug.Log("PotionMission: Generados 3 ingredientes alrededor del NPC y asignados al NPC y MissionIcon.");
+            Debug.Log("PotionMission: Asignación completa de 3 ingredientes con NPC y MissionIcon.");
         }
-
     }
 
-    private void SetMissionIconPosition(NPC selectedNPC, MissionIcon missionIcon)
+
+        private void SetMissionIconPosition(NPC selectedNPC, MissionIcon missionIcon)
     {
         Transform bubbleTransform = selectedNPC.transform.Find("Bubble");
         if (bubbleTransform != null)
