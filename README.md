@@ -4,12 +4,13 @@
 # Wicked Winds - Documento de Diseño de Videojuego
 
 <div align="center"><b><i>
-    Versión 0.0.2
+    Versión 0.0.3
 </i></b></div>
 
 <div align="center"><b>
     INTRODUCCIÓN
 </b></div>
+
 - **Título**: Wicked Winds
 - **Desarrollador**: Loomlight
 - **Género**: Juego de esitlo arcade/acción contrarreloj competitivo
