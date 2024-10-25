@@ -56,7 +56,7 @@ public class MissionIconPool
     public void ReleaseIcon(MissionIcon icon)
     {
         Debug.Log("Devolviendo ícono al pool.");
-        
+
         icon.gameObject.SetActive(false); // Desactiva el ícono
         icon.transform.SetParent(iconPoolParent); // Devuelve el ícono al padre del pool
         Debug.Log("Ícono devuelto y desactivado en el pool.");

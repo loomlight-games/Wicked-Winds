@@ -14,15 +14,20 @@ public class RandomNPCMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        // Generar una posición inicial aleatoria
+       /* // Generar una posición inicial aleatoria
         Vector3 randomPosition = GetRandomPositionOnGround();
         if (randomPosition != Vector3.zero)
         {
             transform.position = randomPosition;
+            Debug.Log($"Posición inicial establecida en: {randomPosition}");
         }
-
+        else
+        {
+            Debug.LogWarning("No se pudo encontrar una posición inicial válida.");
+        }
+       */
         // Iniciar el movimiento aleatorio
-        MoveToRandomPosition();
+        SetRandomDestination();
     }
 
     void Update()
@@ -30,49 +35,43 @@ public class RandomNPCMovement : MonoBehaviour
         // Si el NPC ha llegado a su destino, generar una nueva posición
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            MoveToRandomPosition();
+            Debug.Log("NPC ha llegado a su destino. Estableciendo nueva posición.");
+            SetRandomDestination();
         }
     }
 
-    // Método para mover al NPC a una posición aleatoria dentro de un radio
-    void MoveToRandomPosition()
-    {
-        Vector3 randomDirection = Random.insideUnitSphere * moveRadius;
-        randomDirection += transform.position;
 
+    public void SetRandomDestination()
+    {
+        // Definir un rango mínimo y máximo desde la posición actual para evitar destinos demasiado cercanos
+        float minDistance = 5f; // Distancia mínima para evitar destinos cercanos
+        float maxDistance = moveRadius; // Distancia máxima para el rango de movimiento
+
+        Vector3 randomDirection;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomDirection, out hit, moveRadius, NavMesh.AllAreas))
+
+        for (int i = 0; i < 30; i++) // Intentos para encontrar una posición válida
         {
-            agent.SetDestination(hit.position);
-        }
-    }
+            // Generar una dirección aleatoria
+            randomDirection = Random.insideUnitSphere * maxDistance;
+            randomDirection += transform.position;
 
-    // Método para generar una posición aleatoria en el suelo (evitando edificios)
-    Vector3 GetRandomPositionOnGround()
-    {
-        Vector3 randomPosition = Vector3.zero;
-
-        for (int i = 0; i < 30; i++) // Intentar 30 veces encontrar una posición adecuada
-        {
-            Vector3 randomPoint = new Vector3(
-                Random.Range(-detectionRadius, detectionRadius),
-                100f,
-                Random.Range(-detectionRadius, detectionRadius)
-            ); // Generar un punto alto para hacer un raycast hacia abajo
-
-            // Raycast desde arriba hacia abajo para detectar el suelo
-            if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
+            // Verificar que la nueva posición esté en el NavMesh y a una distancia adecuada
+            if (NavMesh.SamplePosition(randomDirection, out hit, maxDistance, NavMesh.AllAreas) &&
+                Vector3.Distance(transform.position, hit.position) >= minDistance)
             {
-                // Verificar si el punto detectado no está sobre un edificio
-                Collider[] hitColliders = Physics.OverlapSphere(hit.point, 0.5f, buildingLayer);
-                if (hitColliders.Length == 0) // Si no hay edificios, es un punto válido
-                {
-                    randomPosition = hit.point;
-                    break; // Salir del loop si encontramos una posición adecuada
-                }
+                agent.SetDestination(hit.position); // Establecer el destino válido
+                Debug.Log($"Destino aleatorio establecido en: {hit.position}");
+                return; // Salir del método al encontrar una posición válida
+            }
+            else
+            {
+                Debug.Log($"Intento {i + 1}: posición aleatoria no válida: {randomDirection}");
             }
         }
 
-        return randomPosition;
+        Debug.LogWarning("No se pudo encontrar un destino válido después de 30 intentos.");
     }
+
+
 }

@@ -10,7 +10,7 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-
+        missionIconPool= MissionIconPoolManager.Instance.GetMissionIconPool();
         if (missionIcon == null) hasMission = false;
         else hasMission = true;
         if (hasMission && movementScript != null)
@@ -18,7 +18,7 @@ public class NPC : MonoBehaviour
             movementScript.enabled = false; // Desactiva el movimiento si tiene misión
             if (bubble != null)
             {
-                bubble.gameObject.SetActive(true); // Mostrar el bubble si tiene misión
+                bubble.SetActive(true); // Mostrar el bubble si tiene misión
             }
         }
         else if (movementScript != null)
@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour
 
             if (bubble != null)
             {
-                bubble.gameObject.SetActive(false); // Ocultar el bubble si no tiene misión
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misión
             }
         }
     }
@@ -44,7 +44,7 @@ public class NPC : MonoBehaviour
             if (missionIcon != null)
             {
                 Debug.Log($"Liberando ícono de misión de {gameObject.name}.");
-                missionIconPool.ReleaseIcon(missionIcon);
+                MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(missionIcon);
                 missionIcon = null;
             }
 
@@ -60,6 +60,24 @@ public class NPC : MonoBehaviour
     {
        if (missionIcon == null) hasMission = false;
         else hasMission = true;
+
+        if (hasMission && movementScript != null)
+        {
+            movementScript.enabled = false; // Desactiva el movimiento si tiene misión
+            if (bubble != null)
+            {
+                bubble.SetActive(true); // Mostrar el bubble si tiene misión
+            }
+        }
+        else if (movementScript != null)
+        {
+            movementScript.enabled = true; // Activa el movimiento si no tiene misión
+
+            if (bubble != null)
+            {
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misión
+            }
+        }
     }
 }
 

@@ -6,7 +6,7 @@ public class MissionManager : MonoBehaviour
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
     public const int numMissionsToAssign = 3; // Número de misiones por ronda
-    public MissionIconPoolManager missionIconPoolManager; // Asigna el GameObject del Pool Manager
+   
     private MissionIconPool missionIconPool;
 
     public List<NPC> assignedNPCs = new List<NPC>();
@@ -21,7 +21,7 @@ public class MissionManager : MonoBehaviour
         allNPCs.AddRange(npcs);
 
         Debug.Log($"Total NPCs encontrados: {allNPCs.Count}"); //
-        missionIconPool = missionIconPoolManager.GetMissionIconPool();
+        missionIconPool = MissionIconPoolManager.Instance.GetMissionIconPool();
         AssignMissions();
     }
 
@@ -192,7 +192,7 @@ public class MissionManager : MonoBehaviour
     private void AssignMissionToNPC(NPC selectedNPC, MissionData mission)//////
     {
         Debug.Log($"Asignando misión {mission.name} a NPC: {selectedNPC.name}");
-        MissionIcon missionIcon = missionIconPool.GetIcon();
+        MissionIcon missionIcon = MissionIconPoolManager.Instance.GetMissionIconPool().GetIcon();
         if (missionIcon == null)
         {
             Debug.LogError("No se pudo obtener un MissionIcon del pool.");
