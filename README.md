@@ -4,29 +4,31 @@
 # Wicked Winds - Documento de Diseño de Videojuego
 
 <div align="center"><b><i>
-    Versión 0.0.1
+    Versión 0.0.2
 </i></b></div>
 
 ## Concepto
 - **Título**: Wicked Winds
 - **Desarrollador**: Loomlight
-- **Género**: Arcade/Acción contrarreloj competitivo
-- **Estilo artístico**: 3D *lowpoly* y *cartoon*
+- **Género**: Juego de esitlo arcade/acción contrarreloj competitivo
+- **Estilo artístico**: 3D *lowpoly* y *cartoon* con temática de magos
+- **Pilares del diseño**: Inmersión, desafío y emoción
 - **Plataforma**: Navegador de internet
 - **Categoría**: Juego rápido de misiones, basado en la acumulación de tiempo, con una mecánica similar a [Crazy Taxi](https://es.wikipedia.org/wiki/Crazy_Taxi), pero ambientado en un mundo de magia.
 - **Cámara**: 3D tercera persona
 - **Periféricos**:
-    - PC: ratón
-    - Dispositivo móvil: pantalla táctil
-- **Controles**: al ser un juego de navegador y multiplataforma, los controles deben basarse en la interacción con su interfaz mediante *clicks*/*taps*. El movimiento del personaje jugable se controla mediante un *joystick* en pantalla.
+    - PC: Ratón
+    - Dispositivo móvil: Pantalla táctil
+- **Controles**: Al ser un juego de navegador y multiplataforma, los controles deben basarse en la interacción con su interfaz mediante *clicks*/*taps*. El movimiento del personaje jugable se controla mediante un *joystick* en pantalla.
 - **Puntuación**: el jugador se clasifica en un *ranking* en línea junto a otros jugadores según el mayor tiempo que dure jugando.
-- **Entorno**: la partida se produce en un escenario urbano que el jugador puede recorrer libremente.
+- **Entorno**: La partida se produce en un escenario urbano que el jugador puede recorrer libremente.
+- **Musica/Sonido**: La música y el diseño sonoro estarán enfocados en generar una atmósfera envolvente, con melodías dinámicas que se adapten al ritmo de la acción y sonidos que refuercen la tensión en momentos clave.
 
 ### Sinopsis
-Lenora es una joven bruja que vive en una ciudad tan encantadora como bulliciosa. Los habitantes de esta siempre necesitan su ayuda para completar tareas urgentes, por lo que Lenora debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
+Ahen es un brujo que vive en una ciudad tan encantadora como bulliciosa. Los habitantes de esta siempre necesitan su ayuda para completar tareas urgentes, por lo que Ashen debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
 
 ### Mecánica del juego
-El jugador se desplaza por el escenario en una escoba encantada para atender cómodamente los recados de los vecino. Debe acercarse a cada vecino para saber sus necesidades y decidir si es un buen momento para ayudarle. Cuando se activa un recado debe ir a otro punto del escenario para recoger algo o realizar una tarea en forma de minijuego, y luego es posible que deba volver a la ubicación de quien le pidió el recado. Para desplazarse más rápido el jugador deberá recoger ciertos objetos repartidos por el escenario que rellenarán poco a poco una barra en el HUD que indica el impulso que puede recibir. Este es limitado por lo que si se acaba se mueve a una velocidad normal. El bonus del impulso puede activarse o desactivarse como quiera el jugador y se gasta mientras está en uso.  
+El jugador se desplaza por el escenario en una escoba encantada para atender cómodamente los recados de los vecinos. Debe acercarse a cada vecino para saber sus necesidades y decidir si es un buen momento para ayudarle. Cuando se activa un recado debe ir a otro punto del escenario para recoger algo o realizar una tarea en forma de minijuego, y luego es posible que deba volver a la ubicación de quien le pidió el recado. Para desplazarse más rápido el jugador deberá recoger ciertos objetos repartidos por el escenario que rellenarán poco a poco una barra en el HUD que indica el impulso que puede recibir. Este es limitado por lo que si se acaba se mueve a una velocidad normal. El bonus del impulso puede activarse o desactivarse como quiera el jugador y se gasta mientras está en uso.  
 
 El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misión completada otorga segundos extra, permitiendo que el jugador siga en acción. Si el tiempo se agota, el juego termina. El objetivo es aguantar el máximo tiempo en partida completando tantas misiones como sea posible antes de que el reloj llegue a cero.
 
@@ -38,7 +40,7 @@ El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misi
 
 ### HITO 1 (3 MESES): Personajes nuevos e implementación de habilidades.
 - **Desarrollo de personajes:** Crear 5 personajes únicos que tengan un diseño coherente con el estilo artístico (3D lowpoly y cartoon). Cada uno debe tener una personalidad visual y una habilidad que ofrezca distintas ventajas durante el juego, como diferentes formas de impulso o poderes mágicos.
-- **Implementación de habilidades:** Cada personaje debe tener una habilidad especial que aporte algo diferente a la mecánica de completar recados o desplazarse por la ciudad (ej. un personaje con mayor velocidad, otro con la habilidad de atraer más power-ups). Lenora también tendrá una habilidad ya que antes de esta actualización no tendría. A partir de este punto se podrán incluir en la tienda diferentes skins para estos nuevos personajes.
+- **Implementación de habilidades:** Cada personaje debe tener una habilidad especial que aporte algo diferente a la mecánica de completar recados o desplazarse por la ciudad (ej. un personaje con mayor velocidad, otro con la habilidad de atraer más power-ups). ashen también tendrá una habilidad ya que antes de esta actualización no tendría. A partir de este punto se podrán incluir en la tienda diferentes skins para estos nuevos personajes.
 
 ### HITO 2 (6 MESES): Mapas nuevos
 - **Diseño de mapas:** Crear 3 nuevas áreas, cada una con una temática única. Esto puede incluir zonas como un poblado helado, un tétrico bosque o una zona desértica.
@@ -88,7 +90,7 @@ Es importante definir el mapa de empatía que nos permita empatizar con el jugad
 #### ¿Cuál es la situación en la que se encuentran?
 - Buscan entretenimiento casual y competitivo, en cortos periodos de tiempo, en plataformas de fácil acceso como móviles y navegadores.
 #### ¿Cuál es su papel en la situación?
-- El jugador asume el rol de Lenora, una bruja aprendiz que completa misiones bajo presión de tiempo para escalar en las clasificaciones y desbloquear nuevos desafíos.
+- El jugador asume el rol de ashen, una bruja aprendiz que completa misiones bajo presión de tiempo para escalar en las clasificaciones y desbloquear nuevos desafíos.
 
 ### ¿Qué necesitan hacer?
 #### ¿Qué necesitan hacer de manera diferente?
@@ -124,7 +126,7 @@ Es importante definir el mapa de empatía que nos permita empatizar con el jugad
 - Temen que el juego se vuelva repetitivo si no hay suficiente variedad en las misiones o mapas.
 - Se frustran cuando pierden porque no logran completar una misión a tiempo, o si la curva de dificultad es demasiado abrupta.
 #### ¿Cuáles son sus deseos, necesidades, esperanzas y sueños?
-- Esperan desbloquear personalizaciones únicas para Lenora y sus habilidades mágicas, como skins de escobas o nuevas misiones y áreas en el mapa.
+- Esperan desbloquear personalizaciones únicas para ashen y sus habilidades mágicas, como skins de escobas o nuevas misiones y áreas en el mapa.
 - Sueñan con escalar a lo más alto de las clasificaciones, mostrando sus habilidades para gestionar el tiempo y dominar los minijuegos.
 - Quieren un flujo constante de nuevas actualizaciones, eventos o retos que mantengan el juego fresco e interesante.
 
@@ -163,10 +165,10 @@ Wicked Winds está diseñado para atraer a un grupo de jugadores que buscan una 
 
 ### Propuestas de Valor
 
-1. Experiencia de Fantasía Inmediata y Accesible: Wicked Winds transporta a los jugadores directamente a un mundo mágico desde su navegador. No requiere instalaciones ni configuraciones complejas. Ofrecemos una experiencia visual vibrante y envolvente que combina la magia, la fantasía y la rapidez, permitiendo a los jugadores convertirse en Lenora, una aprendiz de bruja, realizando misiones por la aldea de Stardust Town.
-2. Competencia Sin Estrés y Personalización: El juego ofrece una clasificación competitiva que permite a los jugadores mejorar a su propio ritmo. No es necesario enfrentarse a otros en tiempo real, eliminando así la presión excesiva. Las recompensas son cosméticas, lo que significa que los jugadores pueden personalizar a Lenora y su escoba sin que ello afecte el desempeño en el juego.
+1. Experiencia de Fantasía Inmediata y Accesible: Wicked Winds transporta a los jugadores directamente a un mundo mágico desde su navegador. No requiere instalaciones ni configuraciones complejas. Ofrecemos una experiencia visual vibrante y envolvente que combina la magia, la fantasía y la rapidez, permitiendo a los jugadores convertirse en ashen, una aprendiz de bruja, realizando misiones por la aldea de Stardust Town.
+2. Competencia Sin Estrés y Personalización: El juego ofrece una clasificación competitiva que permite a los jugadores mejorar a su propio ritmo. No es necesario enfrentarse a otros en tiempo real, eliminando así la presión excesiva. Las recompensas son cosméticas, lo que significa que los jugadores pueden personalizar a ashen y su escoba sin que ello afecte el desempeño en el juego.
 3. Jugar Gratis, Con Opciones de Compra: El contenido principal del juego es completamente gratuito, incluidas las misiones y eventos especiales. Para aquellos jugadores que quieran destacar con un estilo único, ofrecemos opciones de personalización y aspectos cosméticos a precios accesibles. Las compras son opcionales y no ofrecen ventajas competitivas, garantizando que todos los jugadores compitan en igualdad de condiciones.
-4. Personalización Visual Única: Los jugadores pueden expresar su estilo personal a través de la apariencia de Lenora y su escoba. Esto les permite destacarse y hacer que su experiencia de juego sea única, sin influir en las mecánicas de juego o rendimiento, lo que asegura una competencia justa.
+4. Personalización Visual Única: Los jugadores pueden expresar su estilo personal a través de la apariencia de ashen y su escoba. Esto les permite destacarse y hacer que su experiencia de juego sea única, sin influir en las mecánicas de juego o rendimiento, lo que asegura una competencia justa.
 ### Canales
 1. Redes Sociales: Las plataformas como Youtube y X (Twitter) serán clave para interactuar con los jugadores, compartiendo contenido visual del juego, actualizaciones, y memes relacionados con la temática mágica de Wicked Winds. Se planea utilizar estas plataformas para lanzar campañas de anuncios y eventos promocionales.
 2. Eventos Temáticos en el Juego: Wicked Winds planea organizar eventos especiales, como misiones temáticas en fechas como Halloween o Navidad. Estos eventos serán gratuitos, ofreciendo a los jugadores la oportunidad de desbloquear aspectos limitados, aumentando su conexión con el juego y fomentando la participación activa.
@@ -178,7 +180,7 @@ Wicked Winds está diseñado para atraer a un grupo de jugadores que buscan una 
 2. Comunidad Activa y Colaborativa: Fomentamos la creación de una comunidad donde los jugadores puedan compartir contenido, ideas y sugerencias. A través de encuestas, los jugadores también podrán participar en decisiones sobre futuras actualizaciones, haciéndolos sentir parte del desarrollo del juego.
 3. Notificaciones y Promociones Personalizadas: Se utilizarán notificaciones automáticas dentro del juego para alertar a los jugadores sobre eventos, promociones y actualizaciones. Esta estrategia se adaptará a las preferencias de cada jugador, maximizando el engagement sin ser invasiva.
 ### Fuentes de Ingreso
-1. Venta de Activos Cosméticos: El principal ingreso proviene de la venta de aspectos cosméticos. Los jugadores pueden comprar skins para Lenora, nuevas escobas con efectos visuales únicos, o trajes temáticos. Todo el contenido cosmético no afecta el rendimiento del juego, manteniendo la competencia justa.
+1. Venta de Activos Cosméticos: El principal ingreso proviene de la venta de aspectos cosméticos. Los jugadores pueden comprar skins para ashen, nuevas escobas con efectos visuales únicos, o trajes temáticos. Todo el contenido cosmético no afecta el rendimiento del juego, manteniendo la competencia justa.
 2. Colaboraciones y Publicidad: La publicidad en la tienda para conseguir más monedas genera beneficios económicos. Además, habrá oportunidades para introducir publicidad no intrusiva en eventos especiales patrocinados o colaboraciones con marcas que se alineen con la temática del juego. Estas colaboraciones pueden ofrecer objetos de marca dentro del juego.
 ### Recursos Clave
 1. Recursos Físicos: Necesitamos servidores robustos y servicios en la nube que puedan manejar el tráfico en línea y garantizar un rendimiento rápido y estable. Además, contar con oficinas o espacios colaborativos para el equipo de desarrollo es esencial.
