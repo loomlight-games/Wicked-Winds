@@ -6,7 +6,6 @@
 <div align="center"><b><i>
     Versión 0.0.1
 </i></b></div>
----
 
 ## Concepto
 - **Título**: Wicked Winds
