@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using Dan.Main;
@@ -75,7 +75,7 @@ public class ScoreManager : MonoBehaviour
     {
         submitScoreEvent.Invoke(inputName.text, score);  // Enviar la puntuación
     }
-    */
+    
 }
-   
+   */
 

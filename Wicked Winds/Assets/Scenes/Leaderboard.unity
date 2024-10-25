@@ -542,6 +542,9 @@ MonoBehaviour:
   - {fileID: 1827823672}
   - {fileID: 246929392}
   - {fileID: 1795420837}
+  inputName: {fileID: 2067996602}
+  scoreText: {fileID: 334465385}
+  score: 0
 --- !u!4 &262522526
 Transform:
   m_ObjectHideFlags: 0
@@ -1161,7 +1164,6 @@ GameObject:
   - component: {fileID: 648547417}
   - component: {fileID: 648547416}
   - component: {fileID: 648547415}
-  - component: {fileID: 648547418}
   m_Layer: 5
   m_Name: SummitButton
   m_TagString: Untagged
@@ -1233,8 +1235,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1754992193}
-        m_TargetAssemblyTypeName: ScoreManager, Assembly-CSharp
+      - m_Target: {fileID: 262522525}
+        m_TargetAssemblyTypeName: Leaderboard, Assembly-CSharp
         m_MethodName: SubmitScore
         m_Mode: 1
         m_Arguments:
@@ -1283,36 +1285,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 648547413}
   m_CullTransparentMesh: 1
---- !u!114 &648547418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648547413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7102a065c9a0a4a8c6d7d769d85fef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  inputName: {fileID: 2067996602}
-  scoreText: {fileID: 334465385}
-  submitScoreEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 262522525}
-        m_TargetAssemblyTypeName: Leaderboard, Assembly-CSharp
-        m_MethodName: SetLeaderboardEntry
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &660844115
 GameObject:
   m_ObjectHideFlags: 0
