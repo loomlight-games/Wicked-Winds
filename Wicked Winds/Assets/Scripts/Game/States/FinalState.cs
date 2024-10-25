@@ -7,7 +7,7 @@ using static UnityEditor.VersionControl.Asset;
 
 public class FinalState : AState
 {
-    GameObject finalMenu, defeat, retryButton, mainMenuButton, UI, statesUI;
+    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
     TextMeshProUGUI scoreText;
 
     public override void Enter()
@@ -19,6 +19,7 @@ public class FinalState : AState
         defeat = finalMenu.transform.Find("Defeat").gameObject;
         retryButton = finalMenu.transform.Find("RetryButton").gameObject;
         mainMenuButton = finalMenu.transform.Find("MainMenuButton").gameObject;
+        leaderboardButton = finalMenu.transform.Find("LeaderboardButton").gameObject;
         scoreText = finalMenu.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
 
         // Mostrar el menú de final de juego
@@ -26,10 +27,11 @@ public class FinalState : AState
         defeat.SetActive(true);
         retryButton.SetActive(true);
         mainMenuButton.SetActive(true);
+        leaderboardButton.SetActive(true);
 
         // Mostrar la puntuación final
-        float playerScore = GameManager.Instance.playerScore;
-        scoreText.text = "Your Score: " + Mathf.FloorToInt(playerScore).ToString();
+        float playerScore = PlayerManager.Instance.score;
+        scoreText.text = "Your Score: " + playerScore.ToString();
 
 
         Time.timeScale = 0f; // Pausar el juego

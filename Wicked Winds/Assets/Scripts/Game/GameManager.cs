@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// Manages the game states
@@ -9,7 +12,6 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
-    private float playerScore;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -19,6 +21,15 @@ public class GameManager : AStateController
     public readonly CreditsState creditsState = new();
     public readonly SettingsState settingsState = new();
     public readonly ShopState shopState = new();
+    public readonly LeaderboardGameState leaderboardState = new();
+    #endregion
+
+    [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
+
+    #region LEADERBOARD
+    [Header("Leaderboard")]
+    public string publicLeaderboardKey =
+        "d79d438f30ad962bdf7ba1f9ef19bc37bc77c16c165f95f90bc3dff59716a850";
     #endregion
 
     public override void Awake()
@@ -37,6 +48,8 @@ public class GameManager : AStateController
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
             SetState(shopState);
+        else if (SceneManager.GetActiveScene().name == "Leaderboard")
+            SetState(leaderboardState);
         else
             SetState(playState);
         
@@ -57,11 +70,15 @@ public class GameManager : AStateController
             case "Resume":
                 SwitchState(playState);
                 break;
-            case "RetryButton":
+            case "Retry":
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "Main menu":
                 SceneManager.LoadScene("Main menu");
+                break;
+            case "Leaderboard":
+                // SwitchState(endState);
+                SceneManager.LoadScene("Leaderboard");
                 break;
             case "Credits":
                 SwitchState(creditsState);
@@ -76,23 +93,26 @@ public class GameManager : AStateController
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
+            case "Submit":
+                if (currentState == leaderboardState)
+                {
+                    leaderboardState.SubmitScore();
+                }
+                break;
             default:
                 break;
         }
     }
 
-
+    /*
     // end game 
     public void GameOver(float elapsedTime)
     {
-        playerScore = elapsedTime; // save played time as score
-        SwitchState(endState); 
+        playerScore = (int)elapsedTime; // save played time as score
+        SwitchState(endState);
     }
+    */
 
-    public float GetPlayerScore()
-    {
-        return playerScore;
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////
     public void DestroyGO(GameObject gameObject){
         Destroy(gameObject);

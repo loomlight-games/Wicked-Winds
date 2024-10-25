@@ -20,6 +20,8 @@ public class GameplayHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //if (gameOverTriggered) return;
+
         if (remainingTime > 0){
 
             remainingTime -= Time.deltaTime;
@@ -47,10 +49,13 @@ public class GameplayHUD : MonoBehaviour
     {
         gameOverTriggered = true;  // avoids double calls
 
+        PlayerManager.Instance.score = (int) elapsedTime;
+
         // Guardar el tiempo transcurrido como puntuaci�n en PlayerPrefs
-        PlayerPrefs.SetFloat("PlayerScore", elapsedTime);
-        PlayerPrefs.Save();  // Asegurarse de que el valor se guarda correctamente
-        
+        // PlayerPrefs.SetFloat("PlayerScore", elapsedTime);
+
+        //PlayerPrefs.Save();  // Asegurarse de que el valor se guarda correctamente
+
         // Env�a la puntuaci�n al ScoreManager (pasa elapsedTime)
         /*if (ScoreManager.Instance != null)
         {
@@ -59,10 +64,11 @@ public class GameplayHUD : MonoBehaviour
             ScoreManager.Instance.SubmitScore();  // Submit the score
         }
         */
-
-        GameManager.Instance.GameOver(elapsedTime);
-        // switch to defeat state
+        PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
+        //GameManager.Instance.GameOver(elapsedTime);
+        // switch to defeat state
+        //GameManager.Instance.SwitchState(GameManager.Instance.endState);
         timerText.color = Color.red;
     }
     /// <summary>

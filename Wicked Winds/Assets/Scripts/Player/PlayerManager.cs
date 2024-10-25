@@ -15,6 +15,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, canRun, flyKey;
     [HideInInspector] public Vector2 movement2D;
+    [HideInInspector] public int score;
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
@@ -29,6 +30,7 @@ public class PlayerManager : AStateController
     public readonly ControllablePlayerState controllableState = new();// On ground
     //public readonly FlyingPlayerState flyingState = new();// Flying
     public readonly AtShopPlayerState atShopState = new();// At shop
+    public readonly FinalPlayerState finalState = new();
     #endregion
 
     #region HABILITIES
