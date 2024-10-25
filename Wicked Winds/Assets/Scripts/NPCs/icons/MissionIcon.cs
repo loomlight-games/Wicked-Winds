@@ -9,24 +9,28 @@ public class MissionIcon : MonoBehaviour
 
     public MissionData currentMission; // La misión asignada a este ícono
     private MissionManager missionManager; // Referencia al MissionManager
-    private NPC assignedNPC; // Referencia al NPC asignado para este icono (nuevo cambio)
     private MissionIconPool missionIconPool;
+    private NPC assignedNPC; // Añadimos una referencia al NPC
 
 
 
     // Método para asignar una misión a este ícono
-    public void AssignMission(MissionData mission, MissionManager manager) // Añadido NPC como parámetro
+    public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
     {
+        Debug.Log("Asignando misión...");
+
         currentMission = mission;
         missionManager = manager;
-        
+        assignedNPC = npc; // Asignamos el NPC
+
 
         // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
         // Verifica si el componente SpriteRenderer existe
         if (spriteRenderer != null && spriteMission != null)
         {
-            // Asigna el nuevo sprite al SpriteRenderer
+            Debug.Log("Asignando sprite de misión.");
             spriteRenderer.sprite = spriteMission;
         }
         else
@@ -34,84 +38,57 @@ public class MissionIcon : MonoBehaviour
             Debug.LogError("SpriteRenderer o newSprite es nulo.");
         }
     }
-    
+
     // Este método es llamado cuando el objeto es tomado del pool
     public void OnObjectSpawn()
     {
-        // Restablecer el estado de los íconos
+        Debug.Log("OnObjectSpawn llamado.");
+
         if (currentMission != null)
         {
             // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             if (spriteRenderer != null && spriteMission != null)
             {
-                // Asigna el nuevo sprite al SpriteRenderer
+                Debug.Log("Restableciendo el sprite de misión en OnObjectSpawn.");
                 spriteRenderer.sprite = spriteMission;
             }
             else
             {
-                Debug.LogError("SpriteRenderer o newSprite es nulo.");
+                Debug.LogError("SpriteRenderer o newSprite es nulo en OnObjectSpawn.");
             }
 
             currentMission.isCompleted = false;
+            Debug.Log("Estado de la misión restablecido: isCompleted = false.");
         }
-
     }
 
     // Llamar cuando la misión se complete
     public void CompleteMission()
     {
-        if (currentMission != null && !currentMission.isCompleted)
-        {
-            // Marcar la misión como completada
-            currentMission.isCompleted = true;
+        Debug.Log("Completar misión llamado.");
 
-            // Cambiar el sprite al de misión completada
+        if (currentMission != null)
+        {
+            //aqui como que se completa to
+            /*Debug.Log("Marcando misión como completada.");
+            currentMission.isCompleted = true;*/
+
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
             if (spriteRenderer != null && spriteMissionCompleted != null)
             {
-                spriteRenderer.sprite = spriteMissionCompleted; // Cambia al sprite de completada
+                Debug.Log("Cambiando al sprite de misión completada.");
+                spriteRenderer.sprite = spriteMissionCompleted;
+                currentMission = null;
+                assignedNPC.OnObjectReturn();
+                
             }
             else
             {
                 Debug.LogError("SpriteRenderer o spriteMissionCompleted es nulo.");
             }
-
-            /*// Actualiza el estado del NPC asignado a este MissionIcon
-            if (assignedNPC != null)
-            {
-                assignedNPC.bubble.SetActive(false); // Desactiva la burbuja del NPC
-            }*/
-    
         }
     }
-    
-    // Este método es llamado cuando el objeto es devuelto al pool
-    public void OnObjectReturn()
-    {
-        Debug.Log($"se quiere devolver el missionIcon al `pool de : {assignedNPC}");
-        // Si hay un NPC asignado, limpia su ícono de misión
-        if (assignedNPC != null)
-        {
-            Debug.Log($"El mision icon q se quiere devolver es : {assignedNPC.missionIcon}");
-            // Verifica que el NPC tenga un ícono de misión antes de limpiarlo
-            if (assignedNPC.missionIcon != null)
-            {
-                // Devuelve el ícono de misión al pool
-                missionIconPool.ReleaseIcon(assignedNPC.missionIcon);
-                assignedNPC.missionIcon = null; // Limpia la referencia del ícono de misión en el NPC
-            }
 
-            assignedNPC.hasMission = false; // Actualiza el estado del NPC
-        }
-
-        // Limpia la referencia al NPC
-        assignedNPC = null;
-
-        // Establece currentMission a null si es necesario (aquí asumiendo que se requiere)
-        currentMission = null; // Limpia la referencia a la misión actual
-    }
-
-
+   
 }
-

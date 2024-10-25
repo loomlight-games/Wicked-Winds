@@ -199,7 +199,7 @@ public class MissionManager : MonoBehaviour
             return;
         }
 
-        missionIcon.AssignMission(mission, this);
+        missionIcon.AssignMission(mission, this, selectedNPC);
         SetMissionIconPosition(selectedNPC, missionIcon);
         selectedNPC.missionIcon = missionIcon;
         selectedNPC.hasMission = true; // Actualiza el estado de hasMission

@@ -6,9 +6,11 @@ public class NPC : MonoBehaviour
     public bool hasMission; // Indica si el NPC tiene una misión
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
+    public MissionIconPool missionIconPool; // Agrega esta línea
 
     void Start()
     {
+
         if (missionIcon == null) hasMission = false;
         else hasMission = true;
         if (hasMission && movementScript != null)
@@ -30,9 +32,33 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // Este método es llamado cuando el objeto es devuelto al pool
+    public void OnObjectReturn()
+    {
+        Debug.Log("Devolviendo MissionIcon al pool.");
+
+        if (missionIcon != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
+        {
+            Debug.Log($"Devolviendo MissionIcon de {gameObject.name} al pool.");
+
+            if (missionIcon != null)
+            {
+                Debug.Log($"Liberando ícono de misión de {gameObject.name}.");
+                missionIconPool.ReleaseIcon(missionIcon);
+                missionIcon = null;
+            }
+
+            this.hasMission = false;
+            Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
+        }
+
+       
+        Debug.Log("Referencias limpiadas en OnObjectReturn.");
+    }
+
     private void Update()
     {
-        if (missionIcon == null) hasMission = false;
+       if (missionIcon == null) hasMission = false;
         else hasMission = true;
     }
 }

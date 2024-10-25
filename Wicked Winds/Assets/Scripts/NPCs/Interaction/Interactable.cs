@@ -45,9 +45,9 @@ public class Interactable : MonoBehaviour
         // Si se presiona la tecla 'C' y se ha interactuado con un NPC
         if (Input.GetKeyDown(KeyCode.C) && activeNPC != null && missionIcon != null)
         {
-            Debug.LogError("interactuando de nuevo ");
+            Debug.Log("interactuando de nuevo ");
             missionIcon.CompleteMission(); // Completa la misión del NPC actual
-            missionIcon.OnObjectReturn();
+            
         }
     }
 }
