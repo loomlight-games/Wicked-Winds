@@ -7,7 +7,9 @@
     Versión 0.0.2
 </i></b></div>
 
-## **CONCEPTO**
+<div align="center"><b>
+    INTRODUCCIÓN
+</b></div>
 - **Título**: Wicked Winds
 - **Desarrollador**: Loomlight
 - **Género**: Juego de esitlo arcade/acción contrarreloj competitivo
@@ -32,47 +34,22 @@ El jugador se desplaza por el escenario en una escoba encantada para atender có
 
 El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misión completada otorga segundos extra, permitiendo que el jugador siga en acción. Si el tiempo se agota, el juego termina. El objetivo es aguantar el máximo tiempo en partida completando tantas misiones como sea posible antes de que el reloj llegue a cero.
 
-## **MODELO DE NEGOCIO**
-## Roadmap 2 años vista
-<p align="center">
-  <img src="https://i.postimg.cc/wjf4mngQ/TIME-LINE-5.png">
-</p>
+<div align="center"><b>
+    MODELO DE NEGOCIO
+</b></div>
+## Monetización
+Wicked Winds es un videojuego freemium, ya que es gratis pero incluye una tienda donde el jugador puede realizar micropagos para obtener más monedas que le permitan comprar ítems y *skins* para personalizar su partida. Cabe destacar que las compras realizadas en la tienda nunca supondrán una ventaja del jugador frente a los demás, ya que las clasificaciones de los jugadores deben ser justas.
 
-### HITO 1 (3 MESES): Personajes nuevos e implementación de habilidades.
-- **Desarrollo de personajes:** Crear 5 personajes únicos que tengan un diseño coherente con el estilo artístico (3D lowpoly y cartoon). Cada uno debe tener una personalidad visual y una habilidad que ofrezca distintas ventajas durante el juego, como diferentes formas de impulso o poderes mágicos.
-- **Implementación de habilidades:** Cada personaje debe tener una habilidad especial que aporte algo diferente a la mecánica de completar recados o desplazarse por la ciudad (ej. un personaje con mayor velocidad, otro con la habilidad de atraer más power-ups). ashen también tendrá una habilidad ya que antes de esta actualización no tendría. A partir de este punto se podrán incluir en la tienda diferentes skins para estos nuevos personajes.
+Aparte de con micropagos, las monedas de tienda también se pueden conseguir: jugando, ya que se pueden encontrar unas pocas repartidas por el escenario en cada partida; o viendo anuncios, que aunque darán más monedas que jugando, sigue siendo una menor cantidad comparada con las que se pueden conseguir comprándolas directamente con micropagos.
 
-### HITO 2 (6 MESES): Mapas nuevos
-- **Diseño de mapas:** Crear 3 nuevas áreas, cada una con una temática única. Esto puede incluir zonas como un poblado helado, un tétrico bosque o una zona desértica.
-- **Mecánicas únicas de los mapas:** estos nuevos mapas tendrán mecánicas especiales tales como un fuerte viento que aparece aleatoriamente en algunas calles y puede dificultar el desplazamiento.
+En un futuro se podrían aumentar los beneficios económicos del juego con:
+- Implementación de más tipos de monedas/objetos especiales, lo que permitiría justificar más micropagos opcionales.
+- Creación y distribución de *merchandising* de Wicked Winds.
+- Colaboraciones publicitarias con marcas conocidas que se alineen con la temática del juego.
 
-### HITO 3 (9 MESES): Power Ups, Pase de batalla y Misiones.
-- **Power-ups:** Introducir una variedad de nuevos power-ups que ofrezcan mecánicas adicionales como un boost de velocidad, escudos protectores, y habilidades de recolección automática de recados.
-- **Pase de Batalla:** Desarrollar un sistema de recompensas por temporadas que motive a los jugadores a cumplir con objetivos específicos para desbloquear cosméticos, personajes nuevos o monedas del juego. Este pase tendrá una parte gratuita y patria de pago, siendo la de pago la que mejores cosas ofrezca.
-- **Misiones:** Al incluirse el pase, se añadirán misiones tanto diarias como semanales con las que el jugador pueda conseguir puntos para seguir avanzando en el pase.
-
-### HITO 4 (1 AÑO): Modo multijugador colaborativo y Housing
-- **Multijugador colaborativo:** Implementar un sistema donde los jugadores puedan trabajar juntos para completar recados en equipo. Este modo podría incluir la posibilidad de repartir tareas entre jugadores o compartir power-ups. Sería un modo con un ranking diferente al del modo singleplayer y se jugaría cooperativo con un amigo o mediante emparejamiento aleatorio.
-- **Modo Housing:** Crear una función donde los jugadores puedan personalizar su propia casa dentro de la ciudad, desbloqueando decoración y objetos según progresen en el juego. Además los jugadores que tengas agregados a tu lista de amigos podrán visitar tu casa. Los muebles y decoraciones se podrán comprar con la moneda del juego y algunos se darán de forma exclusiva en el pase de batalla.
-
-### HITO 5 (15 MESES): Eventos temporales (Halloween, Navidad, etc.)
-- **Eventos especiales:** Crear eventos temáticos donde la ciudad cambie de ambiente y se ofrezcan misiones y recompensas exclusivas de tiempo limitado (ej. misiones de temática de Halloween que den distintas recompensas como muebles, skins o monedas del juego).
-- **Contenido estacional:** Añadir elementos visuales como pequeñas decoraciones navideñas en el mapa durante el evento de Navidad. También en la tienda se podrán comprar distintos muebles y skins de la temática del evento.
-
-### HITO 6 (18 MESES): Modos multijugador competitivos
-- **Modos competitivos:** Crear nuevos modos donde los jugadores compitan directamente, como un modo donde los jugadores se enfrenten para ver quien consigue hacer más recados en un tiempo límite (jugando cada uno en su mapa), un modo donde cada cierto tiempo se vayan eliminando a los jugadores con menor puntuación hasta que solo quede uno o un modo donde 4 o 5 jugadores jueguen en el mismo mapa y puedan estorbarse el uno al otro mediante el uso de habilidades u objetos.
-- **Ranking de ligas:** El principal de estos modos tendría un ranking especial, ya que sería un ranking dividido en diferentes ligas (bronce, plata, oro, etc) donde para ascender de liga tendrás que alcanzar un número de puntos y ganar en las partidas de ascenso.
-
-### HITO 7 (21 MESES): Merchandising del juego
-- **Diseño de productos:** Desarrollar artículos promocionales como camisetas, figuras de personajes, pósters y otros productos basados en el juego.
-- **Tienda en línea:** Crear una plataforma dentro de la página oficial del juego donde los fans puedan comprar el merchandising oficial.
-- **Marketing:** Promocionar el merchandising a través de las redes sociales oficiales del juego y dentro del propio juego.
-
-### HITO 8 (2 AÑOS): Creación de un torneo competitivo
-- **Torneo oficial:** Organizar un torneo presencial donde los jugadores compitan por premios y reconocimiento, centrado en los modos competitivos introducidos en el Hito 6.
-- **Reglas:** Definir reglas claras para la competición que hagan que esta sea lo más justa posible así como evitar diversas trampas por parte de los competidores.
-- **Promoción y difusión:** Publicitar el evento en redes sociales y con la comunidad del juego para atraer la mayor cantidad de jugadores posible.
-
+<div align="center"><b>
+    PLANIFICACIÓN Y COSTES
+</b></div>
 ## Información de usuarios
 #### Perfil demográfico
 Wicked Wings es un juego casual multiplataforma, cuyo público posee un rango de edad bastante amplio (10 - 40 años) y un género mixto, debido a que es una experiencia dinámica y amena que puede ser disfrutada por cualquier persona. Sin embargo, el rango de más alto interés puede estar entre los 14 - 25, debido a las mecánicas de juego de gestión del tiempo. Se espera principalmente el éxito del videojuego en América, Europa y Asia, donde los juegos de navegador y móviles tienen una alta tasa de adopción.
@@ -131,7 +108,6 @@ Es importante definir el mapa de empatía que nos permita empatizar con el jugad
 - Quieren un flujo constante de nuevas actualizaciones, eventos o retos que mantengan el juego fresco e interesante.
 
 ## Caja de herramientas
-
 ### Bloques
 - **La empresa (Loomlight):** Desarrolladora indie responsable de la creación, publicación y monetización del juego.
 - **Proveedores (Recursos tecnológicos y financieros):** Empresas que proporcionan diferentes tecnologías; motores de juego (Unity), servicios en la nube, herramientas de monetización, y posibles financiadores.
@@ -158,58 +134,54 @@ Es importante definir el mapa de empatía que nos permita empatizar con el jugad
 5. El gobierno y reguladores aseguran que la empresa cumple con las normativas de protección de datos y regulación del mercado de juegos.
 
 ## Modelo de lienzo
-Segmento de Clientes
+
+###Segmento de Clientes
 Wicked Winds está diseñado para atraer a un grupo de jugadores que buscan una experiencia rápida y accesible en un entorno mágico, sin las complicaciones típicas de los juegos descargables. Nuestros segmentos clave incluyen:
 1. Jugadores Casual de Navegador: Este subgrupo está compuesto por personas que juegan de manera ocasional y que prefieren juegos accesibles desde el navegador, sin necesidad de descargar aplicaciones adicionales. Son jugadores que buscan entretenimiento rápido en sus momentos libres, ya sea en sus ordenadores o dispositivos móviles, sin compromiso con sesiones largas.
 2. Jugadores Competitivos de Bajo Estrés: Jugadores que disfrutan la competitividad, pero sin las tensiones asociadas con los juegos multijugador en tiempo real. Prefieren el desafío personal y la progresión basada en rankings globales. Les atraen los juegos que ofrecen recompensas cosméticas sin influir en el rendimiento, lo que les permite competir sin pagar por ventajas injustas.
 
 ### Propuestas de Valor
-
 1. Experiencia de Fantasía Inmediata y Accesible: Wicked Winds transporta a los jugadores directamente a un mundo mágico desde su navegador. No requiere instalaciones ni configuraciones complejas. Ofrecemos una experiencia visual vibrante y envolvente que combina la magia, la fantasía y la rapidez, permitiendo a los jugadores convertirse en ashen, una aprendiz de bruja, realizando misiones por la aldea de Stardust Town.
 2. Competencia Sin Estrés y Personalización: El juego ofrece una clasificación competitiva que permite a los jugadores mejorar a su propio ritmo. No es necesario enfrentarse a otros en tiempo real, eliminando así la presión excesiva. Las recompensas son cosméticas, lo que significa que los jugadores pueden personalizar a ashen y su escoba sin que ello afecte el desempeño en el juego.
 3. Jugar Gratis, Con Opciones de Compra: El contenido principal del juego es completamente gratuito, incluidas las misiones y eventos especiales. Para aquellos jugadores que quieran destacar con un estilo único, ofrecemos opciones de personalización y aspectos cosméticos a precios accesibles. Las compras son opcionales y no ofrecen ventajas competitivas, garantizando que todos los jugadores compitan en igualdad de condiciones.
 4. Personalización Visual Única: Los jugadores pueden expresar su estilo personal a través de la apariencia de ashen y su escoba. Esto les permite destacarse y hacer que su experiencia de juego sea única, sin influir en las mecánicas de juego o rendimiento, lo que asegura una competencia justa.
+
 ### Canales
 1. Redes Sociales: Las plataformas como Youtube y X (Twitter) serán clave para interactuar con los jugadores, compartiendo contenido visual del juego, actualizaciones, y memes relacionados con la temática mágica de Wicked Winds. Se planea utilizar estas plataformas para lanzar campañas de anuncios y eventos promocionales.
 2. Eventos Temáticos en el Juego: Wicked Winds planea organizar eventos especiales, como misiones temáticas en fechas como Halloween o Navidad. Estos eventos serán gratuitos, ofreciendo a los jugadores la oportunidad de desbloquear aspectos limitados, aumentando su conexión con el juego y fomentando la participación activa.
 3. Streaming en Vivo: Se buscarán colaboraciones con streamers populares en plataformas como Twitch y YouTube para que jueguen Wicked Winds, mostrando su competitividad y compartiendo sus impresiones en vivo. Este enfoque ayudará a aumentar la visibilidad del juego y atraerá a una nueva audiencia.
 4. Comunidades en Línea: Crear foros oficiales, grupos de Discord y subreddits permitirá que los jugadores compartan sus experiencias, estrategias, fanart, y sugerencias para el juego. Fomentar la interacción entre los jugadores y el equipo de desarrollo asegurará una retroalimentación continua y una comunidad activa.
 5. Boletines Electrónicos: Un boletín mensual mantendrá informada a la comunidad sobre las novedades del juego, incluyendo teasers de nuevos aspectos, historias cortas del mundo de Stardust Town, y anuncios de eventos especiales. Esto mantendrá a los jugadores conectados con el juego incluso cuando no estén jugando.
+
 ### Relaciones con los Clientes
 1. Asistencia Directa y Personalizada: Ofreceremos soporte a los jugadores a través de chats en línea y correos electrónicos, asegurándonos de que cualquier problema técnico o consulta sea resuelto rápidamente. Queremos que cada jugador sienta que tiene un apoyo confiable para mejorar su experiencia de juego.
 2. Comunidad Activa y Colaborativa: Fomentamos la creación de una comunidad donde los jugadores puedan compartir contenido, ideas y sugerencias. A través de encuestas, los jugadores también podrán participar en decisiones sobre futuras actualizaciones, haciéndolos sentir parte del desarrollo del juego.
 3. Notificaciones y Promociones Personalizadas: Se utilizarán notificaciones automáticas dentro del juego para alertar a los jugadores sobre eventos, promociones y actualizaciones. Esta estrategia se adaptará a las preferencias de cada jugador, maximizando el engagement sin ser invasiva.
+
 ### Fuentes de Ingreso
 1. Venta de Activos Cosméticos: El principal ingreso proviene de la venta de aspectos cosméticos. Los jugadores pueden comprar skins para ashen, nuevas escobas con efectos visuales únicos, o trajes temáticos. Todo el contenido cosmético no afecta el rendimiento del juego, manteniendo la competencia justa.
 2. Colaboraciones y Publicidad: La publicidad en la tienda para conseguir más monedas genera beneficios económicos. Además, habrá oportunidades para introducir publicidad no intrusiva en eventos especiales patrocinados o colaboraciones con marcas que se alineen con la temática del juego. Estas colaboraciones pueden ofrecer objetos de marca dentro del juego.
+
 ### Recursos Clave
 1. Recursos Físicos: Necesitamos servidores robustos y servicios en la nube que puedan manejar el tráfico en línea y garantizar un rendimiento rápido y estable. Además, contar con oficinas o espacios colaborativos para el equipo de desarrollo es esencial.
 2. Recursos Intelectuales: El equipo debe proteger la propiedad intelectual del juego, incluidos los diseños de personajes, las mecánicas de juego, y la narrativa del mundo mágico. También es vital desarrollar una marca sólida que resuene con la audiencia y genere lealtad.
 3. Recursos Humanos: Nuestro equipo incluye desarrolladores, artistas, diseñadores de juegos y escritores, así como profesionales de marketing y soporte al cliente. Este equipo multidisciplinario es clave para desarrollar, mantener y promocionar el juego.
 4. Recursos Económicos: El financiamiento inicial y el acceso a capital adicional serán necesarios para cubrir los costos de desarrollo, infraestructura tecnológica, y campañas de marketing. Esto asegura que podamos seguir desarrollando y actualizando el juego después de su lanzamiento.
+
 ### Actividades Clave
 1. Desarrollo Continuo del Juego: Además de crear el juego base, es esencial realizar actualizaciones frecuentes, agregar contenido nuevo y corregir errores que puedan surgir. Mantener el interés de los jugadores requiere una evolución constante del mundo y las misiones de Wicked Winds.
 2. Marketing y Promoción: Implementar campañas de marketing digital efectivas de autopromoción, y en un futuro colaborando con influencers y creando eventos en redes sociales que impulsen la visibilidad del juego y atraigan a nuevos jugadores.
 3. Gestión de la Comunidad: Desarrollar y mantener una comunidad activa es clave para la longevidad del juego. A través de eventos, foros y encuestas, nos aseguramos de que los jugadores se sientan involucrados y escuchados.
 4. Soporte y Feedback: Ofrecer soporte técnico y atención al cliente es fundamental para asegurar que los jugadores disfruten de una experiencia sin interrupciones. También se trabajará en la recopilación de feedback de los jugadores para implementar mejoras continuas.
+
 ### Asociaciones Clave
 1. Colaboración con Plataformas de Juegos en Línea: Asociarnos con plataformas de juegos como Itch.io o Kongregate nos permitirá aprovechar sus audiencias establecidas y atraer más jugadores a Wicked Winds. También podemos colaborar con marketplaces para ofrecer promociones conjuntas.
 2. Socios en Marketing: Trabajaremos con agencias de marketing digital especializadas en videojuegos para crear campañas dirigidas a los segmentos de jugadores casuales y competitivos. También colaboraremos con streamers e influencers de la industria para promocionar el juego.
 3. Servicios Técnicos y Hosting: Necesitamos proveedores confiables para gestionar los servidores y mantener el juego en línea sin interrupciones. Esto también incluye servicios de soporte técnico para resolver cualquier problema que surja durante el desarrollo y el mantenimiento del juego.
+
 ### Estructura de Costos
 1. Costes Fijos: Los principales costos fijos incluyen los salarios del equipo de desarrollo, los gastos de hosting y servidores, y las licencias de software necesarias para la creación del juego. Estos costos son esenciales para el funcionamiento continuo del proyecto.
 2. Costes Variables: Los gastos en marketing y publicidad pueden variar según las campañas activas y las colaboraciones con influencers. También habrá costos asociados a la creación de eventos especiales dentro del juego, así como la producción de contenido cosmético.
-
-
-## Monetización
-Wicked Winds es un videojuego freemium, ya que es gratis pero incluye una tienda donde el jugador puede realizar micropagos para obtener más monedas que le permitan comprar ítems y *skins* para personalizar su partida. Cabe destacar que las compras realizadas en la tienda nunca supondrán una ventaja del jugador frente a los demás, ya que las clasificaciones de los jugadores deben ser justas.
-
-Aparte de con micropagos, las monedas de tienda también se pueden conseguir: jugando, ya que se pueden encontrar unas pocas repartidas por el escenario en cada partida; o viendo anuncios, que aunque darán más monedas que jugando, sigue siendo una menor cantidad comparada con las que se pueden conseguir comprándolas directamente con micropagos.
-
-En un futuro se podrían aumentar los beneficios económicos del juego con:
-- Implementación de más tipos de monedas/objetos especiales, lo que permitiría justificar más micropagos opcionales.
-- Creación y distribución de *merchandising* de Wicked Winds.
-- Colaboraciones publicitarias con marcas conocidas que se alineen con la temática del juego.
 
 #### Marketing
 En principio, el marketing del juego se lleva a cabo por autopromoción a través de las redes sociales y página web de Loomlight, aunque si se consigue una buena repercusión, se espera que Wicked Winds aparezca en blogs especializados en juegos indie españoles. También se organizarían apariciones en pequeños eventos de juegos y colaboraciones con *influencers* de videojuegos o *streamers* que ayuden a aumentar la repercusión del juego.
@@ -243,6 +215,108 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Engagement:** Los jugadores disfrutan de la posibilidad de personalizar su experiencia mediante las monedas adquiridas, y no se ven demasiado afectados por los anuncios, lo que mejora el compromiso con el juego.
 - **Retención:** Un 35% de los jugadores permanecen después de 7 días.
 - **Resultado:** El juego se convierte en un éxito moderado, generando ingresos suficientes para ampliar el contenido, agregar nuevas skins e ítems, y mejorar la experiencia de usuario.
+
+<div align="center"><b>
+    MECÁNICAS Y ELEMENTOS DE JUEGO
+</b></div>
+<p align="center">
+    
+### Descripción detallada del concepto de juego
+    
+### Descripción detallada de las mecánicas de juego
+
+### Controles
+
+### Niveles y misiones
+
+### Objetos, armas y power ups
+
+### Arquitectura del software
+
+
+<div align="center"><b>
+    TRASFONDO
+</b></div>
+<p align="center">
+    
+### Descripción detallada de la historia y la trama
+    
+### Personajes
+
+### Entornos y lugares
+
+
+<div align="center"><b>
+    ARTE
+</b></div>
+<p align="center">
+    
+### Estética general del juego
+    
+### Apartado visual
+
+#### Concept Art
+###Personaje
+
+### Escenario
+
+### Modelo 3D
+#### Personaje
+
+#### Escenario
+
+
+<div align="center"><b>
+    Interfaz
+</b></div>
+<p align="center">
+    
+### Diseños básicos de los menús
+    
+### Diagrama de flujo
+
+
+<div align="center"><b>
+    HOJA DE RUTA DEL DESARROLLO
+</b></div>
+<p align="center">
+  <img src="https://i.postimg.cc/wjf4mngQ/TIME-LINE-5.png">
+</p>
+
+### HITO 1 (3 MESES): Personajes nuevos e implementación de habilidades.
+- **Desarrollo de personajes:** Crear 5 personajes únicos que tengan un diseño coherente con el estilo artístico (3D lowpoly y cartoon). Cada uno debe tener una personalidad visual y una habilidad que ofrezca distintas ventajas durante el juego, como diferentes formas de impulso o poderes mágicos.
+- **Implementación de habilidades:** Cada personaje debe tener una habilidad especial que aporte algo diferente a la mecánica de completar recados o desplazarse por la ciudad (ej. un personaje con mayor velocidad, otro con la habilidad de atraer más power-ups). ashen también tendrá una habilidad ya que antes de esta actualización no tendría. A partir de este punto se podrán incluir en la tienda diferentes skins para estos nuevos personajes.
+
+### HITO 2 (6 MESES): Mapas nuevos
+- **Diseño de mapas:** Crear 3 nuevas áreas, cada una con una temática única. Esto puede incluir zonas como un poblado helado, un tétrico bosque o una zona desértica.
+- **Mecánicas únicas de los mapas:** estos nuevos mapas tendrán mecánicas especiales tales como un fuerte viento que aparece aleatoriamente en algunas calles y puede dificultar el desplazamiento.
+
+### HITO 3 (9 MESES): Power Ups, Pase de batalla y Misiones.
+- **Power-ups:** Introducir una variedad de nuevos power-ups que ofrezcan mecánicas adicionales como un boost de velocidad, escudos protectores, y habilidades de recolección automática de recados.
+- **Pase de Batalla:** Desarrollar un sistema de recompensas por temporadas que motive a los jugadores a cumplir con objetivos específicos para desbloquear cosméticos, personajes nuevos o monedas del juego. Este pase tendrá una parte gratuita y patria de pago, siendo la de pago la que mejores cosas ofrezca.
+- **Misiones:** Al incluirse el pase, se añadirán misiones tanto diarias como semanales con las que el jugador pueda conseguir puntos para seguir avanzando en el pase.
+
+### HITO 4 (1 AÑO): Modo multijugador colaborativo y Housing
+- **Multijugador colaborativo:** Implementar un sistema donde los jugadores puedan trabajar juntos para completar recados en equipo. Este modo podría incluir la posibilidad de repartir tareas entre jugadores o compartir power-ups. Sería un modo con un ranking diferente al del modo singleplayer y se jugaría cooperativo con un amigo o mediante emparejamiento aleatorio.
+- **Modo Housing:** Crear una función donde los jugadores puedan personalizar su propia casa dentro de la ciudad, desbloqueando decoración y objetos según progresen en el juego. Además los jugadores que tengas agregados a tu lista de amigos podrán visitar tu casa. Los muebles y decoraciones se podrán comprar con la moneda del juego y algunos se darán de forma exclusiva en el pase de batalla.
+
+### HITO 5 (15 MESES): Eventos temporales (Halloween, Navidad, etc.)
+- **Eventos especiales:** Crear eventos temáticos donde la ciudad cambie de ambiente y se ofrezcan misiones y recompensas exclusivas de tiempo limitado (ej. misiones de temática de Halloween que den distintas recompensas como muebles, skins o monedas del juego).
+- **Contenido estacional:** Añadir elementos visuales como pequeñas decoraciones navideñas en el mapa durante el evento de Navidad. También en la tienda se podrán comprar distintos muebles y skins de la temática del evento.
+
+### HITO 6 (18 MESES): Modos multijugador competitivos
+- **Modos competitivos:** Crear nuevos modos donde los jugadores compitan directamente, como un modo donde los jugadores se enfrenten para ver quien consigue hacer más recados en un tiempo límite (jugando cada uno en su mapa), un modo donde cada cierto tiempo se vayan eliminando a los jugadores con menor puntuación hasta que solo quede uno o un modo donde 4 o 5 jugadores jueguen en el mismo mapa y puedan estorbarse el uno al otro mediante el uso de habilidades u objetos.
+- **Ranking de ligas:** El principal de estos modos tendría un ranking especial, ya que sería un ranking dividido en diferentes ligas (bronce, plata, oro, etc) donde para ascender de liga tendrás que alcanzar un número de puntos y ganar en las partidas de ascenso.
+
+### HITO 7 (21 MESES): Merchandising del juego
+- **Diseño de productos:** Desarrollar artículos promocionales como camisetas, figuras de personajes, pósters y otros productos basados en el juego.
+- **Tienda en línea:** Crear una plataforma dentro de la página oficial del juego donde los fans puedan comprar el merchandising oficial.
+- **Marketing:** Promocionar el merchandising a través de las redes sociales oficiales del juego y dentro del propio juego.
+
+### HITO 8 (2 AÑOS): Creación de un torneo competitivo
+- **Torneo oficial:** Organizar un torneo presencial donde los jugadores compitan por premios y reconocimiento, centrado en los modos competitivos introducidos en el Hito 6.
+- **Reglas:** Definir reglas claras para la competición que hagan que esta sea lo más justa posible así como evitar diversas trampas por parte de los competidores.
+- **Promoción y difusión:** Publicitar el evento en redes sociales y con la comunidad del juego para atraer la mayor cantidad de jugadores posible.
 
 
 # This is an H1 header
