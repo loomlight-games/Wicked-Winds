@@ -11,15 +11,23 @@ public class Interactions : MonoBehaviour
         {
             float interactRange = 2f;
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
-            foreach (Collider collider in colliderArray) {
-                
+            Debug.Log($"Attempting to interact. Found {colliderArray.Length} colliders within range."); // Log para contar colisionadores encontrados
 
-                if(collider.TryGetComponent(out  Interactable interactable))
+            foreach (Collider collider in colliderArray)
+            {
+                if (collider.TryGetComponent(out Interactable interactable))
                 {
+                    Debug.Log($"Interacting with interactable: {collider.name}"); // Log para el objeto interactuable
                     interactable.Interact();
+                }
+
+                if (collider.TryGetComponent(out Interactable interactable2) && collider.TryGetComponent(out Pickable pickableObject))
+                {
+                    Debug.Log($"Attempting to collect item: {pickableObject.name}"); // Log para objeto recogible
+                    interactable2.CollectItem();
+                    pickableObject.CollectItem();
                 }
             }
         }
-
     }
 }

@@ -18,7 +18,7 @@ public class NPCSpawner : MonoBehaviour
             SpawnNPC();
         }
 
-        Debug.Log("Generación de NPCs completada.");
+        //Debug.Log("Generación de NPCs completada.");
     }
 
     void SpawnNPC()
@@ -26,25 +26,25 @@ public class NPCSpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomPositionOnGround();
         if (spawnPosition != Vector3.zero)
         {
-            Debug.Log($"Posición de generación válida encontrada en {spawnPosition}.");
+            //Debug.Log($"Posición de generación válida encontrada en {spawnPosition}.");
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
             NPC npcComponent = npc.GetComponent<NPC>();
 
             // Asigna si el NPC tiene una misión
             bool hasMission = Random.value > 0.5f;
             npcComponent.hasMission = hasMission;
-            Debug.Log($"NPC generado en {spawnPosition} con misión: {hasMission}");
+           // Debug.Log($"NPC generado en {spawnPosition} con misión: {hasMission}");
         }
         else
         {
-            Debug.LogWarning("No se encontró una posición válida para generar un NPC.");
+            //Debug.LogWarning("No se encontró una posición válida para generar un NPC.");
         }
     }
 
     Vector3 GetRandomPositionOnGround()
     {
         Vector3 randomPosition = Vector3.zero;
-        Debug.Log("Buscando posición aleatoria en el suelo.");
+        //Debug.Log("Buscando posición aleatoria en el suelo.");
 
         for (int i = 0; i < 30; i++) // Intentar 30 veces encontrar una posición adecuada
         {
@@ -53,29 +53,29 @@ public class NPCSpawner : MonoBehaviour
                 100f,
                 Random.Range(-detectionRadius, detectionRadius)
             );
-            Debug.Log($"Intento {i + 1}: Punto aleatorio generado en {randomPoint}.");
+            //Debug.Log($"Intento {i + 1}: Punto aleatorio generado en {randomPoint}.");
 
             // Raycast desde arriba hacia abajo para detectar el suelo
             if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
             {
-                Debug.Log($"Suelo detectado en {hit.point}.");
+               // Debug.Log($"Suelo detectado en {hit.point}.");
 
                 // Verificar si el punto detectado no está sobre un edificio
                 Collider[] hitColliders = Physics.OverlapSphere(hit.point, 0.5f, buildingLayer);
                 if (hitColliders.Length == 0) // Si no hay edificios, es un punto válido
                 {
-                    Debug.Log($"Posición válida encontrada en {hit.point}, sin colisiones de edificios.");
+                   // Debug.Log($"Posición válida encontrada en {hit.point}, sin colisiones de edificios.");
                     randomPosition = hit.point;
                     break;
                 }
                 else
                 {
-                    Debug.Log("Posición inválida debido a la presencia de un edificio.");
+                   // Debug.Log("Posición inválida debido a la presencia de un edificio.");
                 }
             }
             else
             {
-                Debug.Log("No se detectó suelo en esta posición.");
+              //  Debug.Log("No se detectó suelo en esta posición.");
             }
         }
 

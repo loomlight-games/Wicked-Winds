@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
@@ -7,9 +8,18 @@ public class NPC : MonoBehaviour
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
     public MissionIconPool missionIconPool; // Agrega esta línea
+    [SerializeField] private string npcname;
+    private NPCNameManager nameManager;
+    private MessageGenerator messageGenerator;
+    [SerializeField] private string message;
+    [SerializeField] public bool acceptMission = false;
+
 
     void Start()
     {
+        nameManager = NPCNameManager.Instance;
+        npcname = nameManager.GetRandomNPCName();
+        
         missionIconPool= MissionIconPoolManager.Instance.GetMissionIconPool();
         if (missionIcon == null) hasMission = false;
         else hasMission = true;
@@ -30,6 +40,8 @@ public class NPC : MonoBehaviour
                 bubble.SetActive(false); // Ocultar el bubble si no tiene misión
             }
         }
+
+
     }
 
     // Este método es llamado cuando el objeto es devuelto al pool

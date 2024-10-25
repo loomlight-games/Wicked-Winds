@@ -13,20 +13,6 @@ public class RandomNPCMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-
-       /* // Generar una posición inicial aleatoria
-        Vector3 randomPosition = GetRandomPositionOnGround();
-        if (randomPosition != Vector3.zero)
-        {
-            transform.position = randomPosition;
-            Debug.Log($"Posición inicial establecida en: {randomPosition}");
-        }
-        else
-        {
-            Debug.LogWarning("No se pudo encontrar una posición inicial válida.");
-        }
-       */
-        // Iniciar el movimiento aleatorio
         SetRandomDestination();
     }
 
@@ -35,7 +21,7 @@ public class RandomNPCMovement : MonoBehaviour
         // Si el NPC ha llegado a su destino, generar una nueva posición
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            Debug.Log("NPC ha llegado a su destino. Estableciendo nueva posición.");
+            //Debug.Log("NPC ha llegado a su destino. Estableciendo nueva posición.");
             SetRandomDestination();
         }
     }
@@ -61,12 +47,12 @@ public class RandomNPCMovement : MonoBehaviour
                 Vector3.Distance(transform.position, hit.position) >= minDistance)
             {
                 agent.SetDestination(hit.position); // Establecer el destino válido
-                Debug.Log($"Destino aleatorio establecido en: {hit.position}");
+                //Debug.Log($"Destino aleatorio establecido en: {hit.position}");
                 return; // Salir del método al encontrar una posición válida
             }
             else
             {
-                Debug.Log($"Intento {i + 1}: posición aleatoria no válida: {randomDirection}");
+                //Debug.Log($"Intento {i + 1}: posición aleatoria no válida: {randomDirection}");
             }
         }
 
