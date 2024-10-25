@@ -6,6 +6,30 @@
 <div align="center"><b><i>
     Versión 0.0.1
 </i></b></div>
+---
+
+## Concepto
+- **Título**: Wicked Winds
+- **Desarrollador**: Loomlight
+- **Género**: Arcade/Acción contrarreloj competitivo
+- **Estilo artístico**: 3D *lowpoly* y *cartoon*
+- **Plataforma**: Navegador de internet
+- **Categoría**: Juego rápido de misiones, basado en la acumulación de tiempo, con una mecánica similar a [Crazy Taxi](https://es.wikipedia.org/wiki/Crazy_Taxi), pero ambientado en un mundo de magia.
+- **Cámara**: 3D tercera persona
+- **Periféricos**:
+    - PC: ratón
+    - Dispositivo móvil: pantalla táctil
+- **Controles**: al ser un juego de navegador y multiplataforma, los controles deben basarse en la interacción con su interfaz mediante *clicks*/*taps*. El movimiento del personaje jugable se controla mediante un *joystick* en pantalla.
+- **Puntuación**: el jugador se clasifica en un *ranking* en línea junto a otros jugadores según el mayor tiempo que dure jugando.
+- **Entorno**: la partida se produce en un escenario urbano que el jugador puede recorrer libremente.
+
+### Sinopsis
+Lenora es una joven bruja que vive en una ciudad tan encantadora como bulliciosa. Los habitantes de esta siempre necesitan su ayuda para completar tareas urgentes, por lo que Lenora debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
+
+### Mecánica del juego
+El jugador se desplaza por el escenario en una escoba encantada para atender cómodamente los recados de los vecino. Debe acercarse a cada vecino para saber sus necesidades y decidir si es un buen momento para ayudarle. Cuando se activa un recado debe ir a otro punto del escenario para recoger algo o realizar una tarea en forma de minijuego, y luego es posible que deba volver a la ubicación de quien le pidió el recado. Para desplazarse más rápido el jugador deberá recoger ciertos objetos repartidos por el escenario que rellenarán poco a poco una barra en el HUD que indica el impulso que puede recibir. Este es limitado por lo que si se acaba se mueve a una velocidad normal. El bonus del impulso puede activarse o desactivarse como quiera el jugador y se gasta mientras está en uso.  
+
+El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misión completada otorga segundos extra, permitiendo que el jugador siga en acción. Si el tiempo se agota, el juego termina. El objetivo es aguantar el máximo tiempo en partida completando tantas misiones como sea posible antes de que el reloj llegue a cero.
 
 ## **MODELO DE NEGOCIO**
 ## Roadmap 2 años vista
@@ -218,31 +242,6 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Engagement:** Los jugadores disfrutan de la posibilidad de personalizar su experiencia mediante las monedas adquiridas, y no se ven demasiado afectados por los anuncios, lo que mejora el compromiso con el juego.
 - **Retención:** Un 35% de los jugadores permanecen después de 7 días.
 - **Resultado:** El juego se convierte en un éxito moderado, generando ingresos suficientes para ampliar el contenido, agregar nuevas skins e ítems, y mejorar la experiencia de usuario.
-
----
-
-## Concepto
-- **Título**: Wicked Winds
-- **Desarrollador**: Loomlight
-- **Género**: Arcade/Acción contrarreloj competitivo
-- **Estilo artístico**: 3D *lowpoly* y *cartoon*
-- **Plataforma**: Navegador de internet
-- **Categoría**: Juego rápido de misiones, basado en la acumulación de tiempo, con una mecánica similar a [Crazy Taxi](https://es.wikipedia.org/wiki/Crazy_Taxi), pero ambientado en un mundo de magia.
-- **Cámara**: 3D tercera persona
-- **Periféricos**:
-    - PC: ratón
-    - Dispositivo móvil: pantalla táctil
-- **Controles**: al ser un juego de navegador y multiplataforma, los controles deben basarse en la interacción con su interfaz mediante *clicks*/*taps*. El movimiento del personaje jugable se controla mediante un *joystick* en pantalla.
-- **Puntuación**: el jugador se clasifica en un *ranking* en línea junto a otros jugadores según el mayor tiempo que dure jugando.
-- **Entorno**: la partida se produce en un escenario urbano que el jugador puede recorrer libremente.
-
-### Sinopsis
-Lenora es una joven bruja que vive en una ciudad tan encantadora como bulliciosa. Los habitantes de esta siempre necesitan su ayuda para completar tareas urgentes, por lo que Lenora debe desplazarse lo antes posible de un punto a otro con su escoba para completar los recados antes de que el tiempo se acabe. Con cada recado completado, gana unos valiosos segundos para mantener el reloj en marcha, pero si el tiempo llega a cero, ¡el juego termina!
-
-### Mecánica del juego
-El jugador se desplaza por el escenario en una escoba encantada para atender cómodamente los recados de los vecino. Debe acercarse a cada vecino para saber sus necesidades y decidir si es un buen momento para ayudarle. Cuando se activa un recado debe ir a otro punto del escenario para recoger algo o realizar una tarea en forma de minijuego, y luego es posible que deba volver a la ubicación de quien le pidió el recado. Para desplazarse más rápido el jugador deberá recoger ciertos objetos repartidos por el escenario que rellenarán poco a poco una barra en el HUD que indica el impulso que puede recibir. Este es limitado por lo que si se acaba se mueve a una velocidad normal. El bonus del impulso puede activarse o desactivarse como quiera el jugador y se gasta mientras está en uso.  
-
-El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misión completada otorga segundos extra, permitiendo que el jugador siga en acción. Si el tiempo se agota, el juego termina. El objetivo es aguantar el máximo tiempo en partida completando tantas misiones como sea posible antes de que el reloj llegue a cero.
 
 
 # This is an H1 header
