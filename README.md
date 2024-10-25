@@ -138,7 +138,7 @@ Es importante definir el mapa de empatía que nos permita empatizar con el jugad
 
 ## Modelo de lienzo
 
-###Segmento de Clientes
+### Segmento de Clientes
 Wicked Winds está diseñado para atraer a un grupo de jugadores que buscan una experiencia rápida y accesible en un entorno mágico, sin las complicaciones típicas de los juegos descargables. Nuestros segmentos clave incluyen:
 1. Jugadores Casual de Navegador: Este subgrupo está compuesto por personas que juegan de manera ocasional y que prefieren juegos accesibles desde el navegador, sin necesidad de descargar aplicaciones adicionales. Son jugadores que buscan entretenimiento rápido en sus momentos libres, ya sea en sus ordenadores o dispositivos móviles, sin compromiso con sesiones largas.
 2. Jugadores Competitivos de Bajo Estrés: Jugadores que disfrutan la competitividad, pero sin las tensiones asociadas con los juegos multijugador en tiempo real. Prefieren el desafío personal y la progresión basada en rankings globales. Les atraen los juegos que ofrecen recompensas cosméticas sin influir en el rendimiento, lo que les permite competir sin pagar por ventajas injustas.
@@ -258,12 +258,12 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
     
 ### Apartado visual
 
-#### Concept Art
-###Personaje
+### Concept Art:
+#### Personaje
 
-### Escenario
+#### Escenario
 
-### Modelo 3D
+### Modelo 3D:
 #### Personaje
 
 #### Escenario
