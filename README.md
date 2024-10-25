@@ -38,6 +38,7 @@ El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misi
 <div align="center"><b>
     MODELO DE NEGOCIO
 </b></div>
+
 ## Monetización
 Wicked Winds es un videojuego freemium, ya que es gratis pero incluye una tienda donde el jugador puede realizar micropagos para obtener más monedas que le permitan comprar ítems y *skins* para personalizar su partida. Cabe destacar que las compras realizadas en la tienda nunca supondrán una ventaja del jugador frente a los demás, ya que las clasificaciones de los jugadores deben ser justas.
 
@@ -51,6 +52,7 @@ En un futuro se podrían aumentar los beneficios económicos del juego con:
 <div align="center"><b>
     PLANIFICACIÓN Y COSTES
 </b></div>
+
 ## Información de usuarios
 #### Perfil demográfico
 Wicked Wings es un juego casual multiplataforma, cuyo público posee un rango de edad bastante amplio (10 - 40 años) y un género mixto, debido a que es una experiencia dinámica y amena que puede ser disfrutada por cualquier persona. Sin embargo, el rango de más alto interés puede estar entre los 14 - 25, debido a las mecánicas de juego de gestión del tiempo. Se espera principalmente el éxito del videojuego en América, Europa y Asia, donde los juegos de navegador y móviles tienen una alta tasa de adopción.
