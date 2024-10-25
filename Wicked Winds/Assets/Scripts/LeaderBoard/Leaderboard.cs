@@ -5,6 +5,7 @@ using TMPro;
 using Dan.Main;
 using System.Collections;
 using UnityEngine.SocialPlatforms.Impl;
+using System;
 
 
 public class Leaderboard : MonoBehaviour
@@ -65,24 +66,24 @@ public class Leaderboard : MonoBehaviour
     }
     public void GetLeaderboard()
     {
-        //after getting leaderboard data, runs callback function (msg contains leaderboard data)
-        //in order to access names and scores
-        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>
+        // Obtener los datos del leaderboard desde la API
+        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, false, ((msg) =>
         {
-            int loopLength = (msg.Length < names.Count ? msg.Length : names.Count); 
-            // GetLeaderboar -> returns a value accessed by the msg parameter
-            // pass the names and scores to the leaderboard
+            
+
+            int loopLength = (msg.Length< names.Count)? msg.Length: names.Count;
+
             for (int i = 0; i < loopLength; i++)
             {
                 Debug.Log($"Usuario: {msg[i].Username}, Puntaje: {msg[i].Score}");
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
-                Debug.Log("Asignando: " + msg[i].Username + " - " + msg[i].Score);
-
             }
+
             Canvas.ForceUpdateCanvases();
-        }) );
+        }));
     }
+
 
 
     //uploading to the leaderboard
@@ -98,4 +99,13 @@ public class Leaderboard : MonoBehaviour
             GetLeaderboard();
         });
     }
+
+    public void ResetPlayerScore()
+    {
+        PlayerPrefs.DeleteKey("PlayerScore");
+        PlayerPrefs.Save();
+        score = 0; // Reinicia el puntaje en memoria
+        scoreText.text = score.ToString(); // Actualiza la UI si es necesario
+    }
+
 }
