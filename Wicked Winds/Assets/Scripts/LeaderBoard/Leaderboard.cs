@@ -67,7 +67,7 @@ public class Leaderboard : MonoBehaviour
     public void GetLeaderboard()
     {
         // Obtener los datos del leaderboard desde la API
-        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, false, ((msg) =>
+        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>
         {
             
 
@@ -80,7 +80,6 @@ public class Leaderboard : MonoBehaviour
                 scores[i].text = msg[i].Score.ToString();
             }
 
-            Canvas.ForceUpdateCanvases();
         }));
     }
 
@@ -93,11 +92,12 @@ public class Leaderboard : MonoBehaviour
 
         LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username, scoreToUpload, (msg) =>
         {
-            Debug.Log("Puntuación subida correctamente");
+            Debug.Log("Puntuación subida correctamente"+ username + scoreToUpload);
 
             // Actualizar el leaderboard después de subir la puntuación
             GetLeaderboard();
         });
+        
     }
 
     public void ResetPlayerScore()
