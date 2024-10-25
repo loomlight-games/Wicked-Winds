@@ -1,11 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
-// Manages the gameplay stages
+/// <summary>
+/// Manages the game states
+/// </summary>
 public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
@@ -13,13 +12,13 @@ public class GameManager : AStateController
     private float playerScore;
 
     #region STATES
-    readonly GamePauseState pauseState = new();
-    readonly MainMenuState mainMenuState = new();
-    readonly GamePlayState playState = new();
+    public readonly GamePauseState pauseState = new();
+    public readonly MainMenuState mainMenuState = new();
+    public readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
-    readonly CreditsState creditsState = new();
-    readonly SettingsState settingsState = new();
-    readonly ShopState shopState = new();
+    public readonly CreditsState creditsState = new();
+    public readonly SettingsState settingsState = new();
+    public readonly ShopState shopState = new();
     #endregion
 
     public override void Awake()
@@ -34,7 +33,6 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        //if not in main menu, it's in the playing state
         if (SceneManager.GetActiveScene().name == "Main menu")
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
@@ -94,5 +92,14 @@ public class GameManager : AStateController
     public float GetPlayerScore()
     {
         return playerScore;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    public void DestroyGO(GameObject gameObject){
+        Destroy(gameObject);
+    }
+
+    public GameObject InstantiateGO(GameObject prefab, Vector3 position, Quaternion rotation, Transform bodyPartTransform)
+    {
+        return Instantiate(prefab, position, rotation, bodyPartTransform);
     }
 }

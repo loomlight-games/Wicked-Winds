@@ -20,10 +20,9 @@ public class PlayerCustomizationUI : MonoBehaviour
 
         bodyParts1.SetActive(true);
 
-        // Find player
-        player = GameObject.Find("Player").GetComponent<CustomizableCharacter> ();
-
-        coinsNum = player.coins;
+        player = PlayerManager.Instance.customizable;
+        
+        coinsNum = PlayerManager.Instance.coins;
     }
 
     // Update is called once per frame

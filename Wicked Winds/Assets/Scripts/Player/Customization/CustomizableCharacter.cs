@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class CustomizableCharacter : MonoBehaviour {
-    const string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
-    const string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
-    const string PLAYER_COINS_FILE = "PlayerCoins";
-
+public class CustomizableCharacter
+{
     // Types of body parts, basically of items
     [Serializable]
     public enum BodyPart{
@@ -19,7 +16,10 @@ public class CustomizableCharacter : MonoBehaviour {
     }
 
     // Positions for items GOs
-    public Transform headTransform, upperBodyTransform, lowerBodyTransform, shoesTransform;
+    readonly Transform headTransform, 
+        upperBodyTransform, 
+        lowerBodyTransform, 
+        shoesTransform;
     
     // Dictionary that maintains the relation between each bodypart and its item with its GO
     public Dictionary<BodyPart, CustomizableItem> currentCustomization = new(){
@@ -29,15 +29,18 @@ public class CustomizableCharacter : MonoBehaviour {
         {BodyPart.Shoes, null},
     };
 
-    // List of purchased items
-    public List<CustomizableItem> purchasedItems = new();
-
-    public int coins;
-
     /////////////////////////////////////////////////////////////////////////////////////////////
-    void Awake()
+    public CustomizableCharacter(Transform headTransform, Transform upperBodyTransform, Transform lowerBodyTransform, Transform shoesTransform)
     {
-        // Load customization and purchased items
+        this.headTransform = headTransform;
+        this.upperBodyTransform = upperBodyTransform;
+        this.lowerBodyTransform = lowerBodyTransform;
+        this.shoesTransform = shoesTransform;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    public void Awake()
+    {
+        // Load customization,  purchased items and coins
         Load();
     }
 
@@ -51,7 +54,7 @@ public class CustomizableCharacter : MonoBehaviour {
         // Current item not null
         if (currentItem != null){
             // Destroys it
-            Destroy(currentItem.instance);
+            GameManager.Instance.DestroyGO(currentItem.instance);
 
             // Is the same one wearing
             if(currentItem == newItem)
@@ -68,7 +71,7 @@ public class CustomizableCharacter : MonoBehaviour {
 
         // Adds item to purchased list if new
         if (!newItem.isPurchased){
-            purchasedItems.Add(newItem);
+            PlayerManager.Instance.purchasedItems.Add(newItem);
             newItem.isPurchased = true;
         }
 
@@ -85,7 +88,7 @@ public class CustomizableCharacter : MonoBehaviour {
         Transform bodyPartTransform = GetBodyPartTransform(item.bodyPart);
 
         // Instantiates a copy of the prefab in that transform as a child of it
-        GameObject prefabCopy = Instantiate(item.prefab,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
+        GameObject prefabCopy = GameManager.Instance.InstantiateGO(item.prefab,bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
         prefabCopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
         
         // Defines item reference to the copy
@@ -109,7 +112,7 @@ public class CustomizableCharacter : MonoBehaviour {
 
     internal void UpdateCoins(int coins)
     {
-        this.coins = coins;
+        PlayerManager.Instance.coins = coins;
         SaveCoins();
     }
 
@@ -131,8 +134,8 @@ public class CustomizableCharacter : MonoBehaviour {
     /// </summary>
     public void SaveCoins()
     {
-        PlayerPrefs.SetInt(PLAYER_COINS_FILE, coins);
-        Debug.Log("Saved coins: " + coins);
+        PlayerPrefs.SetInt(PlayerManager.Instance.PLAYER_COINS_FILE, PlayerManager.Instance.coins);
+        Debug.Log("Saved coins: " + PlayerManager.Instance.coins);
     }
 
     /// <summary>
@@ -142,7 +145,7 @@ public class CustomizableCharacter : MonoBehaviour {
     {
         List<ItemData> dataList = new();
 
-        foreach (var item in purchasedItems)
+        foreach (var item in PlayerManager.Instance.purchasedItems)
         {
             ItemData data = new ()
             {
@@ -156,7 +159,7 @@ public class CustomizableCharacter : MonoBehaviour {
 
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new PurchasedItemsList(dataList));
-        PlayerPrefs.SetString(PLAYER_PURCHASED_ITEMS_FILE, json);
+        PlayerPrefs.SetString(PlayerManager.Instance.PLAYER_PURCHASED_ITEMS_FILE, json);
         Debug.Log("Saved purchased items: " + json);
     }
 
@@ -186,7 +189,7 @@ public class CustomizableCharacter : MonoBehaviour {
 
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new CustomizationList(dataList));
-        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
+        PlayerPrefs.SetString(PlayerManager.Instance.PLAYER_CUSTOMIZATION_FILE, json);
         
         Debug.Log("Saved Customization: " + json);
     }
@@ -196,14 +199,14 @@ public class CustomizableCharacter : MonoBehaviour {
     /// </summary>
     public void LoadCoins()
     {
-        if (!PlayerPrefs.HasKey(PLAYER_COINS_FILE))
+        if (!PlayerPrefs.HasKey(PlayerManager.Instance.PLAYER_COINS_FILE))
         {
             Debug.LogWarning("No coins found.");
             return;
         }
 
-        coins = PlayerPrefs.GetInt(PLAYER_COINS_FILE, 0); // Default to 0 if no data is found
-        Debug.Log("Loaded coins: " + coins);
+        PlayerManager.Instance.coins = PlayerPrefs.GetInt(PlayerManager.Instance.PLAYER_COINS_FILE, 0); // Default to 0 if no data is found
+        Debug.Log("Loaded coins: " + PlayerManager.Instance.coins);
     }
 
     /// <summary>
@@ -211,7 +214,7 @@ public class CustomizableCharacter : MonoBehaviour {
     /// </summary>
     public void LoadPurchasedItems()
     {
-        string json = PlayerPrefs.GetString(PLAYER_PURCHASED_ITEMS_FILE, "");
+        string json = PlayerPrefs.GetString(PlayerManager.Instance.PLAYER_PURCHASED_ITEMS_FILE, "");
 
         if (string.IsNullOrEmpty(json))
         {
@@ -236,7 +239,7 @@ public class CustomizableCharacter : MonoBehaviour {
                     // Get the CustomizableItem component attached to the prefab
                     CustomizableItem loadedItem = prefab.GetComponent<CustomizableItem>();
                     
-                    purchasedItems.Add(loadedItem);
+                    PlayerManager.Instance.purchasedItems.Add(loadedItem);
                 }
                 else
                 {
@@ -252,7 +255,7 @@ public class CustomizableCharacter : MonoBehaviour {
     /// </summary>
     public void LoadCustomization()
     {
-        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE, "");
+        string json = PlayerPrefs.GetString(PlayerManager.Instance.PLAYER_CUSTOMIZATION_FILE, "");
 
         if (string.IsNullOrEmpty(json))
         {

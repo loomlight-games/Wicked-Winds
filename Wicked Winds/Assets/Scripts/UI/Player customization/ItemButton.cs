@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class ItemButton : MonoBehaviour
 {
     public CustomizableItem item;
-    public float rotationSpeed = 0.1f,
+    public float rotationSpeed,
         scaleUp = 1.5f;
 
     Vector3 initialItemScale;
@@ -35,7 +35,7 @@ public class ItemButton : MonoBehaviour
         shopUI = UI.GetComponent<PlayerCustomizationUI>();
 
         // Find player
-        player = GameObject.Find("Player").GetComponent<CustomizableCharacter> ();
+        player = PlayerManager.Instance.customizable;
         
         // Item must be first child and price panel named like that
         try{
@@ -93,13 +93,15 @@ public class ItemButton : MonoBehaviour
 
         try{
              // Check if item is in the the purchased items list of player
-            foreach (CustomizableItem purchasedItem in player.purchasedItems){
+            foreach (CustomizableItem purchasedItem in PlayerManager.Instance.purchasedItems){
                 if (purchasedItem.name == item.name) item.isPurchased = true;
             }
         }catch{
             Debug.LogWarning("No purchased items");
         }
 
+        rotationSpeed = PlayerManager.Instance.rotatorySpeedAtShop;
+        
         // Rotates item
         item.transform.Rotate(0, 360 * rotationSpeed * Time.deltaTime, 0);
     }

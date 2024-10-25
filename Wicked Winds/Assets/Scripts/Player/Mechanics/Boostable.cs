@@ -4,30 +4,32 @@ using UnityEngine;
 /// <summary>
 /// Implements boost consumption
 /// </summary>
-public class Boostable : MonoBehaviour
+public class Boostable
 {
     public event EventHandler <float> BoostValueEvent;
-    public float lossPerSecond = 1f;
+    readonly float boostLossPerSecond;
     const float MAX_STAMINA = 100;
-    public float currentBoost = MAX_STAMINA;
+    float currentBoost = MAX_STAMINA;
 
-    // TO IMPLEMENT WITH STATECONTROLLER
-    // public Boostable(float staminaLoss)
-    // {
-    //     lossPerSecond = Math.Abs(staminaLoss);// Always positive
-    //     currentBoost = MAX_STAMINA;
-    // }
-
-    void Awake(){
-        Movable movable= GetComponent<Movable>();
-
-        // Needs to know when its running
-        movable.RunningEvent += BoostLoss; 
+    public Boostable(float boostLossPerSecond)
+    {
+        this.boostLossPerSecond = boostLossPerSecond;
     }
 
-    void Update(){
+    ///////////////////////////////////////////////////////////////////////
+    public void Start(){
+        // Needs to know when its running
+        PlayerManager.Instance.movable.RunningEvent += BoostLoss; 
+    }
+
+    public void Update(){
         // Sends value every frame
         BoostValueEvent?.Invoke(this, currentBoost);
+    }
+
+    public void ResetBoost ()
+    {
+        currentBoost = MAX_STAMINA;
     }
 
     /// <summary>
@@ -35,13 +37,12 @@ public class Boostable : MonoBehaviour
     /// </summary>
     public void BoostLoss(object sender, EventArgs any)
     {
-        currentBoost -= lossPerSecond * Time.deltaTime;
+        currentBoost -= boostLossPerSecond * Time.deltaTime;
     }
 
     /// <summary>
     /// Refills boost when boost object is triggered
     /// </summary>
-    /// <param name="other"></param>
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("RunBoost"))
@@ -54,10 +55,5 @@ public class Boostable : MonoBehaviour
             //Deactivates it
             other.gameObject.SetActive(false);
         }
-    }
-
-    public void resetBoost ()
-    {
-        currentBoost = MAX_STAMINA;
     }
 }

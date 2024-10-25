@@ -8,15 +8,13 @@ public class GameplayHUD : MonoBehaviour
     public TextMeshProUGUI timerText, elapsedText, boostText;
     public float remainingTime, elapsedTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
-    public GameObject player;
     private bool gameOverTriggered = false; //in order to not recall the method
 
 
     void Awake()
     {
         // Needs to know boost value
-        Boostable boostable = player.GetComponent<Boostable>();
-        boostable.BoostValueEvent += OnBoostChangeEvent;
+        PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
     }
 
     // Update is called once per frame
@@ -49,11 +47,11 @@ public class GameplayHUD : MonoBehaviour
     {
         gameOverTriggered = true;  // avoids double calls
 
-        // Guardar el tiempo transcurrido como puntuación en PlayerPrefs
+        // Guardar el tiempo transcurrido como puntuaciï¿½n en PlayerPrefs
         PlayerPrefs.SetFloat("PlayerScore", elapsedTime);
         PlayerPrefs.Save();  // Asegurarse de que el valor se guarda correctamente
         
-        // Envía la puntuación al ScoreManager (pasa elapsedTime)
+        // Envï¿½a la puntuaciï¿½n al ScoreManager (pasa elapsedTime)
         /*if (ScoreManager.Instance != null)
         {
             Debug.Log("scoremanager is not nuuuuull");

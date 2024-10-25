@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1686797990633799436}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.088, z: 0}
+  m_LocalPosition: {x: 0, y: 1.088, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 2262752980498651582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0.6, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 2979568934908376215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -104,8 +104,9 @@ GameObject:
   - component: {fileID: 618694654738858141}
   - component: {fileID: 526009619674639312}
   - component: {fileID: 4228864829277328864}
+  - component: {fileID: 91444003552585511}
   m_Layer: 0
-  m_Name: Player placeholder 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,8 +186,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
+      - m_Target: {fileID: 91444003552585511}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: OnWalk
         m_Mode: 0
         m_Arguments:
@@ -201,8 +202,8 @@ MonoBehaviour:
     m_ActionName: Player movement/Input
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
+      - m_Target: {fileID: 91444003552585511}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: OnRun
         m_Mode: 0
         m_Arguments:
@@ -217,8 +218,8 @@ MonoBehaviour:
     m_ActionName: Player movement/Run[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
+      - m_Target: {fileID: 91444003552585511}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: OnStick
         m_Mode: 0
         m_Arguments:
@@ -233,9 +234,9 @@ MonoBehaviour:
     m_ActionName: Player movement/Joystick
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Movable, Assembly-CSharp
-        m_MethodName: OnJump
+      - m_Target: {fileID: 91444003552585511}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: OnFly
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -252,6 +253,40 @@ MonoBehaviour:
   m_DefaultActionMap: Player movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &91444003552585511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372127748781726271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f4226715319a4340a8fb4bf5a06cff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verticalVelocity: 0
+  controller: {fileID: 0}
+  runKey: 0
+  runJoystick: 0
+  canRun: 0
+  flyKey: 0
+  movement2D: {x: 0, y: 0}
+  purchasedItems: []
+  coins: 0
+  walkSpeed: 5
+  boostSpeed: 13
+  rotationSpeed: 5
+  flyForce: 2
+  gravity: 5
+  heightLimit: 10
+  joystickScale: 2
+  boostLossPerSecond: 5
+  head: {fileID: 2704812343487967150}
+  upperBody: {fileID: 6048926237755012986}
+  lowerBody: {fileID: 6707048652853015250}
+  shoes: {fileID: 8719714696576116835}
+  rotatorySpeedAtShop: 0.1
 --- !u!1 &8850018019970270506
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 8850018019970270506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.117, z: 0}
+  m_LocalPosition: {x: 0, y: 2.117, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

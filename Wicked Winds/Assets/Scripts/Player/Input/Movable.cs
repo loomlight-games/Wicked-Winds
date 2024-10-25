@@ -6,70 +6,51 @@ using UnityEngine.InputSystem;
 /// Detects inputs (joystick and keyboard) and moves object
 /// Only runs when enough boost
 /// </summary>
-[RequireComponent(typeof(CharacterController))]
-public class Movable : MonoBehaviour
-{
-// Properties ////////////////////////////////////////////////////
-    // Input
-    bool runKey,runJoystick, jumpKey;
-    CharacterController controller;
-    // Movement
-    public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
-    public Transform cameraTransform; // Isometric camera
-    Vector2 movement2D;
-    Vector3 movement3D, lookAtPosition;
-    Quaternion lookAtRotation;
-    float verticalVelocity, movementSpeed;
-    float joystickScale = 2f;
-    bool canRun;
-    // Inspector
-    public float walkSpeed = 10f;
-    public float runSpeed = 15f;
-    public float rotationSpeed = 5f;
-    public float jumpForce = 2f;
-    public float gravity = 9.8f;
-    public float heightLimit = 10f;
 
-    
+public class Movable
+{
+    public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
+
+    Transform cameraTransform; // Isometric camera
+
+    Vector3 movement3D, 
+        lookAtPosition;
+
+    Quaternion lookAtRotation;
+
+    float movementSpeed;
+
+    readonly float walkSpeed, 
+        boostSpeed, 
+        rotationSpeed;
+
+    readonly CharacterController controller;
+
     ///////////////////////////////////////////////////////////////////////
-    void Awake()
+    public Movable(CharacterController controller, float walkSpeed, float boostSpeed, float rotationSpeed)
     {
-        controller = GetComponent<CharacterController>();
+        this.controller = controller;
+        this.walkSpeed = walkSpeed;
+        this.boostSpeed = boostSpeed;
+        this.rotationSpeed = rotationSpeed;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    public void Start()
+    {
+        cameraTransform = Camera.main.transform;
 
         // Needs to know boost value
-        Boostable boostable = GetComponent<Boostable>();
-        boostable.BoostValueEvent += OnBoostChangeEvent;
+        PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        Fly();
         Move();
         Rotate();
     }
 
     ///////////////////////////////////////////////////////////////////////
-    /// <summary>
-    /// Gravity calculation and flying behavior
-    /// </summary>
-    void Fly()
-    {
-        if (controller.isGrounded) {
-            verticalVelocity = -1f; // Slight downward force to keep grounded
-            
-            // If jump is pressed and height limit hasn't been reached
-            if (jumpKey && transform.position.y < heightLimit)
-                verticalVelocity = jumpForce; // Apply jump force
-        }
-        else {
-            // If jump is pressed and height limit hasn't been reached
-            if (jumpKey && transform.position.y < heightLimit)
-                 verticalVelocity += jumpForce * Time.deltaTime; // Gradually increase altitude
-            else // Apply gravity when jump is not pressed
-                verticalVelocity -= gravity * Time.deltaTime; // Descend naturally
-        }
-    }
 
     /// <summary>
     /// Moves player in isometric perspective.
@@ -91,29 +72,26 @@ public class Movable : MonoBehaviour
 
         // 3DMovement based on 2D input and camera's orientation, 
         // Without vertical velicity applied bc will be affected by running
-        movement3D = right * movement2D.x + forward * movement2D.y;
+        movement3D = right * PlayerManager.Instance.movement2D.x + forward * PlayerManager.Instance.movement2D.y;
         
         // Check if the player is running
-        if (runKey || runJoystick){
-            if (canRun) { // If able to run (boost available)
-                if (movement2D.sqrMagnitude != 0) // Is moving
+        if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick){
+            if (PlayerManager.Instance.canRun) { // If able to run (boost available)
+                if (PlayerManager.Instance.movement2D.sqrMagnitude != 0) // Is moving
                     RunningEvent?.Invoke(this, null); // Trigger running event
                 
-                movementSpeed = runSpeed;
+                movementSpeed = boostSpeed;
             }
             else  // If not able to run, walk
                 movementSpeed = walkSpeed;
         } else
             movementSpeed = walkSpeed;
 
-        // Move character applying vertical velocity
-        controller.Move((movement3D * movementSpeed + verticalVelocity * Vector3.up) * Time.deltaTime);
-        
         // Apply both movement and vertical (jump/gravity) logic together
-        Vector3 movementWithJump = movement3D * movementSpeed + verticalVelocity * Vector3.up;
+        Vector3 movementWithFly = movement3D * movementSpeed + PlayerManager.Instance.verticalVelocity * Vector3.up;
     
         // Move the character based on combined movement and jump
-        controller.Move(movementWithJump * Time.deltaTime);
+        controller.Move(movementWithFly * Time.deltaTime);
     }
 
     /// <summary>
@@ -127,15 +105,17 @@ public class Movable : MonoBehaviour
             lookAtPosition = new Vector3(movement3D.x, 0, movement3D.z); // Movement direction
             lookAtRotation = Quaternion.LookRotation(lookAtPosition); // Rotation to movement direction
             // From current rotation to movement rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookAtRotation, rotationSpeed * Time.deltaTime);
+            PlayerManager.Instance.transform.rotation = Quaternion.Slerp(PlayerManager.Instance.transform.rotation, lookAtRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
-        /// <summary>
+    /// <summary>
     /// Check if joystick has passed keyboard limits to run
     /// </summary>
-    private void CheckJoystick()
+    void CheckJoystick()
     {
+        Vector2 movement2D = PlayerManager.Instance.movement2D;
+
         // Keyboard inputs are normalized (-1>0<1)
         if (movement2D.x > 1 || movement2D.y > 1 || 
             movement2D.x < -1 || movement2D.y < -1){
@@ -150,48 +130,11 @@ public class Movable : MonoBehaviour
             else if (movement2D.y < -1)
                 movement2D.y = -1.1f;
 
-            runJoystick = true;
+            PlayerManager.Instance.runJoystick = true;
         }
         else{
-            runJoystick = false;
+            PlayerManager.Instance.runJoystick = false;
         }
-    }
-
-    /// <summary>
-    /// Detects joystick inputs
-    /// </summary>
-    public void OnStick(InputAction.CallbackContext context)
-    {
-        movement2D = context.ReadValue<Vector2>();
-        movement2D *= joystickScale; // Must be bigger than keyboard scake (1.0)
-
-
-        // Ensure joystick running is still detected
-        CheckJoystick();
-    }
-
-    /// <summary>
-    /// Detects walk inputs
-    /// </summary>
-    public void OnWalk(InputAction.CallbackContext context)
-    {
-        movement2D = context.ReadValue<Vector2>();
-    }
-
-    /// <summary>
-    /// Detects run inputs
-    /// </summary>
-    public void OnRun(InputAction.CallbackContext context)
-    {
-        runKey = context.ReadValueAsButton();
-    }
-
-    /// <summary>
-    /// Detects jump inputs
-    /// </summary>
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        jumpKey = context.ReadValueAsButton();
     }
 
     /// <summary>
@@ -201,8 +144,8 @@ public class Movable : MonoBehaviour
     {
         // All consumed
         if (currentBoost <= 0)
-            canRun = false; // Can't run
+            PlayerManager.Instance.canRun = false; // Can't run
         else
-            canRun = true;
+            PlayerManager.Instance.canRun = true;
     }
 }

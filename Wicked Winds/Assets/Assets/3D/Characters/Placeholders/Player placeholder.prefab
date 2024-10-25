@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 618694654738858141}
   - component: {fileID: 526009619674639312}
   - component: {fileID: 4228864829277328864}
-  - component: {fileID: 2301791791081920114}
-  - component: {fileID: 1386592556044285793}
   m_Layer: 0
   m_Name: Player placeholder
   m_TagString: Untagged
@@ -90,7 +88,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2301791791081920114}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnWalk
         m_Mode: 0
@@ -106,7 +104,7 @@ MonoBehaviour:
     m_ActionName: Player movement/Input
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2301791791081920114}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnRun
         m_Mode: 0
@@ -122,7 +120,7 @@ MonoBehaviour:
     m_ActionName: Player movement/Run[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2301791791081920114}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnStick
         m_Mode: 0
@@ -138,7 +136,7 @@ MonoBehaviour:
     m_ActionName: Player movement/Joystick
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2301791791081920114}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Movable, Assembly-CSharp
         m_MethodName: OnJump
         m_Mode: 0
@@ -157,39 +155,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2301791791081920114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372127748781726271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d421d02712b264fa21f100744a18cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 0}
-  walkSpeed: 5
-  runSpeed: 15
-  rotationSpeed: 5
-  jumpForce: 2
-  gravity: 5
-  heightLimit: 10
---- !u!114 &1386592556044285793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372127748781726271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f11faa6909acd8f4c97c6e21143156e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lossPerSecond: 10
-  currentBoost: 100
 --- !u!1001 &8411576254791481665
 PrefabInstance:
   m_ObjectHideFlags: 0

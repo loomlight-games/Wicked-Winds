@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopState : AState
+public class AtShopPlayerState : AState
 {
-    GameObject UI, player;
-
     public override void Enter()
     {
-        Time.timeScale = 1f; // Resumes simulation
 
-        UI = GameObject.Find("UI");
     }
 
     public override void Update()
     {
-        
+        // Rotates item
+        PlayerManager.Instance.transform.Rotate(0, 360 * PlayerManager.Instance.rotatorySpeedAtShop * Time.deltaTime, 0);
     }
 
     public override void Exit()
