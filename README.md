@@ -7,7 +7,7 @@
     Versión 0.0.2
 </i></b></div>
 
-## Concepto
+## **CONCEPTO**
 - **Título**: Wicked Winds
 - **Desarrollador**: Loomlight
 - **Género**: Juego de esitlo arcade/acción contrarreloj competitivo
@@ -32,7 +32,7 @@ El jugador se desplaza por el escenario en una escoba encantada para atender có
 
 El jugador comienza con una cantidad fija de tiempo (ej. 60 segundos). Cada misión completada otorga segundos extra, permitiendo que el jugador siga en acción. Si el tiempo se agota, el juego termina. El objetivo es aguantar el máximo tiempo en partida completando tantas misiones como sea posible antes de que el reloj llegue a cero.
 
-## **Modelo de negocio**
+## **MODELO DE NEGOCIO**
 ## Roadmap 2 años vista
 <p align="center">
   <img src="https://i.postimg.cc/wjf4mngQ/TIME-LINE-5.png">
