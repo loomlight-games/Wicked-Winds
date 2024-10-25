@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Unity.VisualStudio.Editor;
@@ -8,12 +9,15 @@ using UnityEngine.UI;
 public class ItemButton : MonoBehaviour
 {
     public CustomizableItem item;
-    
+    public float rotationSpeed = 0.1f,
+        scaleUp = 1.5f;
+
+    Vector3 initialItemScale;
     TextMeshProUGUI priceText;
     CustomizableCharacter player; //Player.Instance.customizable
     PlayerCustomizationUI shopUI;
     Button button;
-    GameObject pricePanel;
+    GameObject pricePanel, center;
 
     Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f), // 50% transparent white
         semiTransparentRed = new (1f, 0.5f, 0.5f, 0.5f), // 50% transparent red
@@ -32,20 +36,21 @@ public class ItemButton : MonoBehaviour
 
         // Find player
         player = GameObject.Find("Player").GetComponent<CustomizableCharacter> ();
-
+        
         // Item must be first child and price panel named like that
         try{
             // Get item and price panel
             item = transform.GetComponentInChildren<CustomizableItem>();
+            initialItemScale = item.transform.localScale;
+
             pricePanel = transform.Find("Price panel").gameObject;
             priceText = pricePanel.transform.GetComponentInChildren<TextMeshProUGUI>();
+            center = transform.Find("Center").gameObject;
 
             priceText.text = item.price.ToString();
         } catch {
             Debug.LogError("Item is not first child or price panel is not 'Price panel'");
         }
-
-
     }
 
     // Update is called once per frame
@@ -58,6 +63,12 @@ public class ItemButton : MonoBehaviour
         if(item.isPurchased){
             // Hide price panel
             pricePanel.SetActive(false);
+
+            // Move item to center
+            item.transform.position = Vector3.MoveTowards(item.transform.position, center.transform.position, 2f * Time.deltaTime);
+
+            // Scale it up a little
+            item.transform.localScale = Vector3.Lerp(item.transform.localScale, initialItemScale * scaleUp, 2f * Time.deltaTime);
 
             // Character is wearing smth of that body part
             if (player.currentCustomization[item.bodyPart] != null){
@@ -81,12 +92,15 @@ public class ItemButton : MonoBehaviour
         }
 
         try{
-            // Check if item is in the the purchased items list of player
+             // Check if item is in the the purchased items list of player
             foreach (CustomizableItem purchasedItem in player.purchasedItems){
                 if (purchasedItem.name == item.name) item.isPurchased = true;
             }
         }catch{
             Debug.LogWarning("No purchased items");
         }
+
+        // Rotates item
+        item.transform.Rotate(0, 360 * rotationSpeed * Time.deltaTime, 0);
     }
 }
