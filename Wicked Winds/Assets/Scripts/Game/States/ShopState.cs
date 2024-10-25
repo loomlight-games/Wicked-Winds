@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class ShopState : AState
 {
-    GameObject UI;
+    GameObject UI, player;
 
     public override void Enter()
     {
         UI = GameObject.Find("UI");
-        //Time.timeScale = 0f; // Stops simulation
+
+        // Find player
+        player = GameObject.Find("Player");
+    }
+
+    public override void Update()
+    {
+        // Rotates item
+        player.transform.Rotate(0, 360 * 0.1f * Time.deltaTime, 0);
     }
 
     public override void Exit()
     {
-        //Time.timeScale = 1f; // Restores simulation
+        
     }
 }

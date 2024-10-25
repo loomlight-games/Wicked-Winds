@@ -23,5 +23,6 @@ public class GamePauseState : AState
     {
         // Hide pause menu
         pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f; // Reactivates simulation
     }
 }
