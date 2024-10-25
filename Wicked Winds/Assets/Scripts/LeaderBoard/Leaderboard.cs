@@ -74,13 +74,16 @@ public class Leaderboard : MonoBehaviour
             // pass the names and scores to the leaderboard
             for (int i = 0; i < loopLength; i++)
             {
+                Debug.Log($"Usuario: {msg[i].Username}, Puntaje: {msg[i].Score}");
                 names[i].text = msg[i].Username;
                 scores[i].text = msg[i].Score.ToString();
                 Debug.Log("Asignando: " + msg[i].Username + " - " + msg[i].Score);
 
             }
+            Canvas.ForceUpdateCanvases();
         }) );
     }
+
 
     //uploading to the leaderboard
     public void SetLeaderboardEntry(string username, int scoreToUpload)
