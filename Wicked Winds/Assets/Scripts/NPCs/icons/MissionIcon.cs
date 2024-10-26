@@ -58,7 +58,7 @@ public class MissionIcon : MonoBehaviour
 
         messageGenerator = new();
         // Generar el mensaje para la misión
-        message = messageGenerator.GenerateMessage(currentMission);
+        message = messageGenerator.GenerateMessage(currentMission,assignedNPC);
 
         // Log para el mensaje generado
         Debug.Log($"Mensaje generado: {message}");

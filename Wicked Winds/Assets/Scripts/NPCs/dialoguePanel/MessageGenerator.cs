@@ -1,10 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class MessageGenerator 
+public class MessageGenerator
 {
-    public string GenerateMessage(MissionData mission)
+    public string GenerateMessage(MissionData mission, NPC currentNPC)
     {
-
         // Check if the mission has messages
         if (mission.npcMessages == null || mission.npcMessages.Count == 0)
         {
@@ -37,13 +37,38 @@ public class MessageGenerator
         // Check if the selected message template contains {NPC_NAME}
         if (randomMessageTemplate.Contains("{NPC_NAME}"))
         {
-            // Get a random NPC name
-            string randomNPCName = NPCNameManager.Instance.GetRandomNPCName(); // Ensure this method is available in your NPC class
+            // Get a list of all NPCs in the scene
+            NPC[] allNPCs = GetAllNPCs();
 
-            // Replace {NPC_NAME} with the random NPC name
-            randomMessageTemplate = randomMessageTemplate.Replace("{NPC_NAME}", randomNPCName);
+            // Create a list to hold NPC names, excluding the current NPC
+            List<string> npcNames = new List<string>();
+
+            foreach (var npc in allNPCs)
+            {
+                if (npc != currentNPC) // Exclude the current NPC
+                {
+                    npcNames.Add(npc.name); // Add the name to the list
+                }
+            }
+
+            // Select a random NPC name from the list, if available
+            if (npcNames.Count > 0)
+            {
+                string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
+                randomMessageTemplate = randomMessageTemplate.Replace("{NPC_NAME}", randomNPCName);
+            }
+            else
+            {
+                Debug.LogWarning("No other NPCs available to replace {NPC_NAME}.");
+            }
         }
 
         return randomMessageTemplate; // Return the message (with or without NPC name)
+    }
+
+
+    public static NPC[] GetAllNPCs()
+    {
+        return GameObject.FindObjectsOfType<NPC>(); // Asegúrate de usar el tipo correcto aquí
     }
 }

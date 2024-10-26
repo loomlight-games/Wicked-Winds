@@ -58,26 +58,7 @@ public class Interactable : MonoBehaviour
         Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}."); // Log para aceptar la misión
     }
 
-    public void CollectItem(int count)
-    {
-        if (this.missionIcon != null) // Verifica si el NPC acepta la misión
-        {
-            int collectedItemsCount = this.missionIcon.collectedItemsCount;
-            collectedItemsCount++;
-            Debug.Log($"Objeto recolectado. Total recolectados: {collectedItemsCount}/3");
-
-            if (collectedItemsCount >= count)
-            {
-                missionIcon.CompleteMission();
-                Debug.Log("Misión completada.");
-                collectedItemsCount = 0; // Reinicia el contador para futuras misiones
-            }
-        }
-        else
-        {
-            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
-        }
-    }
+    
 
     private void Update()
     {
