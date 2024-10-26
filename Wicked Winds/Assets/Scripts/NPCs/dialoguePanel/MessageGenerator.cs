@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class MessageGenerator
 {
-    public string GenerateMessage(MissionData mission, NPC currentNPC)
+    public string GenerateMessage(MissionData mission, NPC currentNPC, MissionIcon missionIcon)
     {
         // Check if the mission has messages
         if (mission.npcMessages == null || mission.npcMessages.Count == 0)
@@ -34,41 +34,21 @@ public class MessageGenerator
         // Select a random message template
         string randomMessageTemplate = messageTemplates[Random.Range(0, messageTemplates.Length)];
 
-        // Check if the selected message template contains {NPC_NAME}
-        if (randomMessageTemplate.Contains("{NPC_NAME}"))
-        {
-            // Get a list of all NPCs in the scene
-            NPC[] allNPCs = GetAllNPCs();
+        /* // Check if the selected message template contains {NPC_NAME}
+         if (randomMessageTemplate.Contains("{NPC_NAME}"))
+         {
 
-            // Create a list to hold NPC names, excluding the current NPC
-            List<string> npcNames = new List<string>();
+                 randomMessageTemplate = randomMessageTemplate.Replace("{NPC_NAME}", missionIcon.addressee);
+         }
+         else
+         {
+             Debug.LogWarning("No other NPCs available to replace {NPC_NAME}.");
+         }
 
-            foreach (var npc in allNPCs)
-            {
-                if (npc != currentNPC) // Exclude the current NPC
-                {
-                    npcNames.Add(npc.name); // Add the name to the list
-                }
-            }
-
-            // Select a random NPC name from the list, if available
-            if (npcNames.Count > 0)
-            {
-                string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
-                randomMessageTemplate = randomMessageTemplate.Replace("{NPC_NAME}", randomNPCName);
-            }
-            else
-            {
-                Debug.LogWarning("No other NPCs available to replace {NPC_NAME}.");
-            }
-        }
-
+        */
         return randomMessageTemplate; // Return the message (with or without NPC name)
     }
-
-
-    public static NPC[] GetAllNPCs()
-    {
-        return GameObject.FindObjectsOfType<NPC>(); // Asegúrate de usar el tipo correcto aquí
-    }
 }
+
+
+        
