@@ -40,8 +40,9 @@ public class GameManager : AStateController
         {
             Destroy(gameObject);
         }
-            
+
         //StartClientService();
+        PanelManager.Open("Leaderboard");
 
     }
 
