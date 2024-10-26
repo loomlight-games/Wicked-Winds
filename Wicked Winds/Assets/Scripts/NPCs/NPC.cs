@@ -8,17 +8,21 @@ public class NPC : MonoBehaviour
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
     public MissionIconPool missionIconPool; // Agrega esta línea
-    [SerializeField] private string npcname;
+    [SerializeField] public string npcname;
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
-    [SerializeField] private string message;
-    
+    [SerializeField] public string message;
 
-
-    void Start()
+    private void Awake()
     {
         nameManager = NPCNameManager.Instance;
         npcname = nameManager.GetRandomNPCName();
+
+    }
+
+    void Start()
+    {
+        
         
         missionIconPool= MissionIconPoolManager.Instance.GetMissionIconPool();
         if (missionIcon == null) hasMission = false;
@@ -61,6 +65,7 @@ public class NPC : MonoBehaviour
             }
 
             this.hasMission = false;
+            this.message = string.Empty;
             Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
         }
 

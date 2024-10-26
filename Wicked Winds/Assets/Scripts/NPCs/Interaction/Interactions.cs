@@ -21,7 +21,7 @@ public class Interactions
                     interactable.Interact();
                 }
 
-                if (collider.TryGetComponent(out Interactable interactable2) && collider.TryGetComponent(out Pickable pickableObject))
+                if (collider.TryGetComponent(out Pickable pickableObject))
                 {
                     Debug.Log($"Attempting to collect item: {pickableObject.name}"); // Log para objeto recogible
                     pickableObject.CollectItem();
