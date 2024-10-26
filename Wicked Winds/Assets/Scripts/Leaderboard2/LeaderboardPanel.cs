@@ -17,7 +17,7 @@ public class LeaderboardPanel : Panel
     [SerializeField] public TextMeshProUGUI pageText = null;
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
-    [SerializeField] private Button mainMenuButton = null;
+
 
     //prueba
     [SerializeField] private Button addScoreButton = null;
