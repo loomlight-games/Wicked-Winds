@@ -62,6 +62,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e1d1857-bca2-443a-9d3d-7d6e43e42290"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,39 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14869e0a-a27d-4463-91b9-1db6fc7ea1b0"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec26c9c8-b3c4-44e8-bd68-d143f66b4a8d"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e0c0c72-e70a-4eb2-ae58-dce107a82d88"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -242,6 +284,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Playermovement_Walk = m_Playermovement.FindAction("Walk", throwIfNotFound: true);
         m_Playermovement_Run = m_Playermovement.FindAction("Run", throwIfNotFound: true);
         m_Playermovement_Jump = m_Playermovement.FindAction("Jump", throwIfNotFound: true);
+        m_Playermovement_Interact = m_Playermovement.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -312,6 +355,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Playermovement_Walk;
     private readonly InputAction m_Playermovement_Run;
     private readonly InputAction m_Playermovement_Jump;
+    private readonly InputAction m_Playermovement_Interact;
     public struct PlayermovementActions
     {
         private @InputActions m_Wrapper;
@@ -320,6 +364,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Walk => m_Wrapper.m_Playermovement_Walk;
         public InputAction @Run => m_Wrapper.m_Playermovement_Run;
         public InputAction @Jump => m_Wrapper.m_Playermovement_Jump;
+        public InputAction @Interact => m_Wrapper.m_Playermovement_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Playermovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,6 +386,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayermovementActions instance)
@@ -357,6 +405,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayermovementActions instance)
@@ -407,5 +458,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
