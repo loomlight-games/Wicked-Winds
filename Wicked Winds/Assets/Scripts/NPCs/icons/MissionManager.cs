@@ -15,7 +15,10 @@ public class MissionManager : MonoBehaviour
     private int currentRound = 1; // Empezamos con la primera ronda
     private int missionsCompleted = 0;
 
-    
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
