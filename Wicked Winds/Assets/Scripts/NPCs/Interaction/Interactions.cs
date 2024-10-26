@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Interactions
 {
+    public 
     // Update is called once per frame
-    public void Update()
+     void Update()
     {
         if (PlayerManager.Instance.interactKey)
         {
@@ -23,7 +24,7 @@ public class Interactions
                 if (collider.TryGetComponent(out Interactable interactable2) && collider.TryGetComponent(out Pickable pickableObject))
                 {
                     Debug.Log($"Attempting to collect item: {pickableObject.name}"); // Log para objeto recogible
-                    interactable2.CollectItem();
+                    interactable2.CollectItem(3);
                     pickableObject.CollectItem();
                 }
             }

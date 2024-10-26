@@ -5,7 +5,7 @@ public class Interactable : MonoBehaviour
     private NPC npc; // Referencia al NPC con el que se interactúa
     public MissionIcon missionIcon; // Referencia al ícono de misión del NPC
     private NPC activeNPC; // Referencia al NPC con el que se está interactuando actualmente
-    [SerializeField] public int collectedItemsCount = 0; // Contador de objetos recolectados
+    
 
     //private Player player; // Referencia al jugador
 
@@ -58,11 +58,20 @@ public class Interactable : MonoBehaviour
         Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}."); // Log para aceptar la misión
     }
 
-    public void CollectItem()
+    public void CollectItem(int count)
     {
         if (this.missionIcon != null) // Verifica si el NPC acepta la misión
         {
-            missionIcon.CollectItem(); // Llama al método de MissionIcon para contar el objeto recolectado
+            int collectedItemsCount = this.missionIcon.collectedItemsCount;
+            collectedItemsCount++;
+            Debug.Log($"Objeto recolectado. Total recolectados: {collectedItemsCount}/3");
+
+            if (collectedItemsCount >= count)
+            {
+                missionIcon.CompleteMission();
+                Debug.Log("Misión completada.");
+                collectedItemsCount = 0; // Reinicia el contador para futuras misiones
+            }
         }
         else
         {
@@ -72,11 +81,6 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        // Si se presiona la tecla 'C' y se ha interactuado con un NPC
-        if (Input.GetKeyDown(KeyCode.C) && activeNPC != null && missionIcon != null)
-        {
-            Debug.Log("Interacting again with the NPC.");
-            missionIcon.CompleteMission();
-        }
+        
     }
 }

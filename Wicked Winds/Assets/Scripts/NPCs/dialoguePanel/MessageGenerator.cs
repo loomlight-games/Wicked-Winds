@@ -1,33 +1,10 @@
 using UnityEngine;
 
-public class MessageGenerator : MonoBehaviour
+public class MessageGenerator 
 {
-    private NPCNameManager nameManager; // Reference to the NPC manager
-    private static MessageGenerator instance;
-    public static MessageGenerator Instance { get { return instance; } } // con el patron singleton hacemos que 
-    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
-    // y campos desde otros scripts
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-    }
-
-    void Start()
-    {
-        nameManager = NPCNameManager.Instance; // Get the NPCManager instance
-    }
-
     public string GenerateMessage(MissionData mission)
     {
+
         // Check if the mission has messages
         if (mission.npcMessages == null || mission.npcMessages.Count == 0)
         {

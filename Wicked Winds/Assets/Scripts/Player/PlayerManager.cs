@@ -13,9 +13,10 @@ public class PlayerManager : AStateController
 
     [HideInInspector] public float verticalVelocity;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, hasActiveMission;
+    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
+    public bool hasActiveMission;
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";

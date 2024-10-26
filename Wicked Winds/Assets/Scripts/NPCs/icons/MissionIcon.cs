@@ -12,11 +12,12 @@ public class MissionIcon : MonoBehaviour
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
     private NPC assignedNPC; // Añadimos una referencia al NPC
+    public MessageGenerator messageGenerator;
 
-    private MessageGenerator messageGenerator;
+   
     [SerializeField] private string message;
 
-    [SerializeField] public bool acceptMission = false;
+    
 
     //contador para los objetos recogidos
     public int collectedItemsCount = 0;
@@ -55,7 +56,7 @@ public class MissionIcon : MonoBehaviour
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
 
-        messageGenerator = MessageGenerator.Instance;   
+        messageGenerator = new();
         // Generar el mensaje para la misión
         message = messageGenerator.GenerateMessage(currentMission);
 
@@ -106,50 +107,23 @@ public class MissionIcon : MonoBehaviour
 
         if (currentMission != null)
         {
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null && spriteMissionCompleted != null)
-            {
-                Debug.Log("Cambiando al sprite de misión completada.");
-                spriteRenderer.sprite = spriteMissionCompleted; //Ahora mismo no se ve la imagen de completada
-                                                                //porque directamente en OnObject return se elimina el icono
+            // Eliminar el NPC de la lista de assignedNPCs en MissionManager
+            Debug.Log($"Eliminando NPC {assignedNPC.name} de la lista de NPCs asignados.");
+            missionManager.assignedNPCs.Remove(assignedNPC);
+            assignedNPC.OnObjectReturn();
 
-                // Eliminar el NPC de la lista de assignedNPCs en MissionManager
-                Debug.Log($"Eliminando NPC {assignedNPC.name} de la lista de NPCs asignados.");
-                missionManager.assignedNPCs.Remove(assignedNPC);
-                assignedNPC.OnObjectReturn();
+            Debug.Log("Restableciendo valores de currentMission y assignedNPC a null.");
+            currentMission = null;
+            assignedNPC = null;
+            PlayerManager.Instance.hasActiveMission = false;
 
-                Debug.Log("Restableciendo valores de currentMission y assignedNPC a null.");
-                currentMission = null;
-                assignedNPC = null;
-
-                // Asigna una nueva misión al completar la actual
-                Debug.Log("Asignando nueva misión después de completar la misión actual.");
-                missionManager.AssignNewMission(1);
-            }
-            else
-            {
-                Debug.LogError("SpriteRenderer o spriteMissionCompleted es nulo en CompleteMission.");
-            }
+            // Asigna una nueva misión al completar la actual
+            Debug.Log("Asignando nueva misión después de completar la misión actual.");
+            missionManager.AssignNewMission(1);
+            
+            
         }
     }
 
 
-
-
-
-
-/// RECOGER POCIONES
-
-    public void CollectItem()
-    {
-        collectedItemsCount++;
-        Debug.Log($"Objeto recolectado. Total recolectados: {collectedItemsCount}/3");
-
-        if (collectedItemsCount >= 3)
-        {
-            CompleteMission();
-            Debug.Log("Misión completada.");
-            collectedItemsCount = 0; // Reinicia el contador para futuras misiones
-        }
-    }
 }
