@@ -54,6 +54,7 @@ public class ErrorPanel : Panel
     private void ButtonAction()
     {
         Close();
+        Debug.Log("action none");
         
         switch (action)
         {

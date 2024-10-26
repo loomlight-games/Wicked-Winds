@@ -7,6 +7,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 /// <summary>
 /// Manages the game states
@@ -48,7 +49,7 @@ public class GameManager : AStateController
         }
 
         StartClientService();
-        PanelManager.Open("Leaderboard");
+        //PanelManager.Open("Leaderboard");
   
     }
 
@@ -142,6 +143,8 @@ public class GameManager : AStateController
             //to avoid repeating the authentificaction process
             if (AuthenticationService.Instance.SessionTokenExists)
             {
+                //if user already sign in
+                Debug.Log("session token exists");
                 SignInAnonymouslyAsync();
             }
             else
@@ -167,7 +170,7 @@ public class GameManager : AStateController
         {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
-        // something si wrong with the credentials
+        // something is wrong with the credentials
         catch (AuthenticationException exception)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign in.", "OK");
@@ -178,30 +181,41 @@ public class GameManager : AStateController
             ShowError(ErrorPanel.Action.SignIn, "Failed to connect to the network.", "Retry");
         }
     }
-    /* later implementation
+
     public void SingOut()
     {
         AuthenticationService.Instance.SignOut();
         PanelManager.CloseAll();
         PanelManager.Open("auth");
-    ¨*/
+    }
+
     private void SetupEvents()
     {
         eventsInitialized = true;
         AuthenticationService.Instance.SignedIn += () =>
         {
             SignInConfirmAsync();
+            // Shows how to get a playerID
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            // Shows how to get an access token
+            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+
+        };
+        AuthenticationService.Instance.SignInFailed += (err) => {
+            Debug.LogError(err);
         };
 
         AuthenticationService.Instance.SignedOut += () =>
         {
             PanelManager.CloseAll();
             PanelManager.Open("auth");
+            Debug.Log("Player signed out.");
         };
         
         AuthenticationService.Instance.Expired += () =>
         {
             SignInAnonymouslyAsync();
+            Debug.Log("Player session could not be refreshed and expired.");
         };
     }
 
