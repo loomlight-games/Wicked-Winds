@@ -1,14 +1,14 @@
 {
-    "name": "Input actions",
+    "name": "PlayerInputs",
     "maps": [
         {
-            "name": "Player movement",
-            "id": "d729c354-131a-4515-9149-8a5dc1cf8f75",
+            "name": "Player",
+            "id": "280f9e3b-1ef5-410d-85ea-ee0b61b7b34c",
             "actions": [
                 {
                     "name": "Joystick",
                     "type": "Value",
-                    "id": "33f270d9-9dd5-4a85-a6ee-261095cc90b8",
+                    "id": "ce0bdc92-2740-465e-8b1b-fa7a2c9b5926",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -17,7 +17,7 @@
                 {
                     "name": "Walk",
                     "type": "Value",
-                    "id": "fd0ae92a-914c-4639-8e80-144eb0d2eb92",
+                    "id": "32102226-eded-4cc2-9d4d-e3e937d875ce",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -26,16 +26,16 @@
                 {
                     "name": "Run",
                     "type": "Button",
-                    "id": "982fbb0a-a3b0-4bab-9333-65af1ca6ea67",
+                    "id": "97849673-3608-4c75-905e-700d20bf7b18",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Jump",
+                    "name": "Fly",
                     "type": "Button",
-                    "id": "f1908700-a436-43d5-9d63-9f41ee18699b",
+                    "id": "9e9627b9-9eff-4946-adf3-ab9f0a51e1dd",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -44,7 +44,7 @@
                 {
                     "name": "Interact",
                     "type": "Button",
-                    "id": "9e1d1857-bca2-443a-9d3d-7d6e43e42290",
+                    "id": "ef8af87c-3d11-4da1-8e7f-fc283215a75d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -53,8 +53,19 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
-                    "id": "26abf1ba-4bf0-4d0d-a250-166218005da3",
+                    "name": "",
+                    "id": "bf526858-36c3-4fb0-9270-6dd4e86e03c4",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "WASD",
+                    "id": "0fa84c7f-c657-4527-8bfa-61c85d8cc4dc",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -65,172 +76,116 @@
                 },
                 {
                     "name": "up",
-                    "id": "f7fd1721-d188-4833-aea0-27ddbc3a6c02",
+                    "id": "acc69566-f682-430c-80dc-04754686f221",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "fe8c6714-5f85-4edc-aee1-dd083315a29c",
+                    "id": "a34067e6-d9c5-4e56-b5d4-884c933b9bcb",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "d691f2e2-6486-447f-9a3b-f630293b22e6",
+                    "id": "ea96b996-4cd3-48e3-a045-00a5f07badfb",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "c8303023-6bb5-4aad-851b-b9656cd8b5d3",
+                    "id": "73ee5352-be80-4bbc-9969-4459507a9f32",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "043ba3a2-71a0-4dfa-b26e-dd30cc5f9773",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d2013112-5b78-4731-9803-21b65ba3b080",
+                    "id": "9aa54dd9-7f77-4b50-aec0-c78e2a51852a",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard;Touch",
+                    "groups": "",
                     "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "d4530d38-db05-4fd6-a1ff-07172ba2fcc4",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3f184c70-eba1-495d-9324-2570b59e477e",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Touch",
-                    "action": "Joystick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1dbf3a73-eeb3-406c-98a6-73d2d9304ad8",
+                    "id": "f828211a-49b9-4196-87e8-a951c8305412",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
-                    "action": "Jump",
+                    "groups": "",
+                    "action": "Fly",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4f2cb462-2abf-4ba0-b1a5-553cbb6f18bc",
+                    "id": "ce6fb662-8ef9-4f85-812a-a7da23c51f7f",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad;Touch",
-                    "action": "Jump",
+                    "groups": "",
+                    "action": "Fly",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "14869e0a-a27d-4463-91b9-1db6fc7ea1b0",
+                    "id": "39817e9c-16f7-4bbf-8865-1e5f3198d749",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard;Touch",
+                    "groups": "",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3e0c0c72-e70a-4eb2-ae58-dce107a82d88",
+                    "id": "4764e5c6-16a5-413d-9e54-9c993856f99a",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e83263be-dc82-4358-8175-fa0362a2b5f4",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Joystick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": [
-        {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
-            "devices": [
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Touch",
-            "bindingGroup": "Touch",
-            "devices": [
-                {
-                    "devicePath": "<Touchscreen>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "Gamepad",
-            "bindingGroup": "Gamepad",
-            "devices": [
-                {
-                    "devicePath": "<Gamepad>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        }
-    ]
+    "controlSchemes": []
 }
