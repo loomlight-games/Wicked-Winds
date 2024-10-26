@@ -13,7 +13,6 @@ public class MissionIcon : MonoBehaviour
     private MissionIconPool missionIconPool;
     private NPC assignedNPC; // Añadimos una referencia al NPC
     public MessageGenerator messageGenerator;
-    public string addressee = null;
 
    
     [SerializeField] private string message;
@@ -59,16 +58,8 @@ public class MissionIcon : MonoBehaviour
 
         messageGenerator = new();
         // Generar el mensaje para la misión
-        message = messageGenerator.GenerateMessage(currentMission,assignedNPC,assignedNPC.missionIcon);
-        // Check if the selected message template contains {NPC_NAME}
-         if (message.Contains("{NPC_NAME}"))
-         {
+        message = messageGenerator.GenerateMessage(currentMission,assignedNPC);
 
-                 message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addressee);
-         }
-         
-
-        
         // Log para el mensaje generado
         Debug.Log($"Mensaje generado: {message}");
 

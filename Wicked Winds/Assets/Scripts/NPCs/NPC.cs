@@ -8,21 +8,17 @@ public class NPC : MonoBehaviour
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
     public MissionIconPool missionIconPool; // Agrega esta línea
-    [SerializeField] public string npcname;
+    [SerializeField] private string npcname;
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
     [SerializeField] private string message;
+    
 
-    private void Awake()
-    {
-        nameManager = NPCNameManager.Instance;
-        npcname = nameManager.GetRandomNPCName();
-
-    }
 
     void Start()
     {
-        
+        nameManager = NPCNameManager.Instance;
+        npcname = nameManager.GetRandomNPCName();
         
         missionIconPool= MissionIconPoolManager.Instance.GetMissionIconPool();
         if (missionIcon == null) hasMission = false;
