@@ -56,7 +56,7 @@ public class ErrorPanel : Panel
     {
         Close();
         Debug.Log("action none");
-        AuthenticationService.Instance.SignOut();
+        //AuthenticationService.Instance.SignOut();
         switch (action)
         {
             case Action.StartService:

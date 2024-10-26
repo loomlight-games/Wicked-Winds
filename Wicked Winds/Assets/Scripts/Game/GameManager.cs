@@ -89,9 +89,7 @@ public class GameManager : AStateController
                 SceneManager.LoadScene("Main menu");
                 break;
             case "Leaderboard":
-                // SwitchState(endState);
                 SceneManager.LoadScene("Leaderboard2");
-                OpenLeaderboards();
                 break;
             case "Credits":
                 SwitchState(creditsState);
@@ -113,11 +111,8 @@ public class GameManager : AStateController
  
    /////////////////////////////////////////////////////////////////////////////////////////
    //UNITY SERVICES ZONE (LEADERBOARD)
-  private void OpenLeaderboards()
-    {//funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
-        PanelManager.Open("LeaderboardElapsedTime");
-    }
-    
+ 
+
     /// <summary>
     /// starts the authentification function for leaderbaord and users
     /// </summary>
@@ -143,9 +138,11 @@ public class GameManager : AStateController
             //to avoid repeating the authentificaction process
             if (AuthenticationService.Instance.SessionTokenExists)
             {
+                AuthenticationService.Instance.SignOut();
                 //if user already sign in
-                Debug.Log("session token exists");
-                SignInAnonymouslyAsync();
+                Debug.Log("Session token existed, user signed out");
+                //SignInAnonymouslyAsync();
+                
             }
             else
             {

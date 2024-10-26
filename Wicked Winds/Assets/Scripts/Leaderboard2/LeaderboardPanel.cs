@@ -17,7 +17,7 @@ public class LeaderboardPanel : Panel
     [SerializeField] public TextMeshProUGUI pageText = null;
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
-
+    [SerializeField] private Button closeButton = null;
 
     //prueba
     [SerializeField] private Button addScoreButton = null;
@@ -33,6 +33,7 @@ public class LeaderboardPanel : Panel
             return;
         }
         ClearPlayersList();
+        closeButton.onClick.AddListener(ClosePanel);
         nextButton.onClick.AddListener(NextPage);
         prevButton.onClick.AddListener(PrevPage);
         addScoreButton.onClick.AddListener(AddScore);
@@ -105,6 +106,11 @@ public class LeaderboardPanel : Panel
         nextButton.interactable = currentPage < totalPages && totalPages > 1;
         prevButton.interactable = currentPage > 1 && totalPages > 1;
     }
+
+    private void ClosePanel()
+    {
+        PanelManager.Open("profile");
+    }
     /// <summary>
     /// clear the list of players
     /// </summary>
@@ -119,6 +125,7 @@ public class LeaderboardPanel : Panel
             }
         }
     }
+
     /// <summary>
     /// control the leaderboard pages
     /// </summary>

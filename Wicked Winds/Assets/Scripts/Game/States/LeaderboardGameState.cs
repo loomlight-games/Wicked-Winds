@@ -7,8 +7,16 @@ using UnityEngine.UIElements;
 
 public class LeaderboardGameState : AState
 {
-     
-    
+
+    public override void Enter()
+    {
+        //funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
+        PanelManager.Open("Leaderboard");
+        Debug.Log("openleaderboards");
+
+    }
+
+
     /*
     static int size = 7;
     TextMeshProUGUI[] entriesText = new TextMeshProUGUI[size];
