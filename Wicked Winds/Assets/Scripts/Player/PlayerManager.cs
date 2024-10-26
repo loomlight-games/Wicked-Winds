@@ -11,34 +11,34 @@ public class PlayerManager : AStateController
 {
     public static PlayerManager Instance { get; private set;} // Only one player
 
+    [HideInInspector] public int score, coins;
     [HideInInspector] public float verticalVelocity;
+    [HideInInspector] public bool runKey, 
+                                runJoystick, 
+                                canRun, 
+                                flyKey, 
+                                interactKey,
+                                hasActiveMission;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey;
     [HideInInspector] public Vector2 movement2D;
-    [HideInInspector] public int score;
-    public bool hasActiveMission;
+    [HideInInspector]public List<CustomizableItem> purchasedItems = new();
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
     [HideInInspector] public readonly string PLAYER_COINS_FILE = "PlayerCoins";
 
-    // List of purchased items
-    public List<CustomizableItem> purchasedItems = new();
-
-    [HideInInspector] public int coins;
-
     #region STATES
-    public readonly ControllablePlayerState controllableState = new();// On ground
-    //public readonly FlyingPlayerState flyingState = new();// Flying
-    public readonly AtShopPlayerState atShopState = new();// At shop
+    public readonly ControllablePlayerState controllableState = new();
+    public readonly AtShopPlayerState atShopState = new();
     public readonly FinalPlayerState finalState = new();
     #endregion
 
     #region HABILITIES
-    public Movable movable; // Movable
-    public Boostable boostable; // Boostable
-    public Flying flying; // Flying
-    public CustomizableCharacter customizable; // Customizable
+    public PlayerController playerController;
+    public Movable movable;
+    public Boostable boostable;
+    public Flying flying;
+    public CustomizableCharacter customizable;
     public Interactions interactions;
     #endregion
 
@@ -75,12 +75,14 @@ public class PlayerManager : AStateController
             Destroy(gameObject);
 
         controller = GetComponent<CharacterController>();
-
-        movable = new (controller, walkSpeed, boostSpeed, rotationSpeed);
+        
+        playerController = new(controller, walkSpeed, boostSpeed, flyForce, gravity, heightLimit, rotationSpeed);
         boostable = new (boostLossPerSecond);
-        flying = new (controller, flyForce, gravity, heightLimit);
         customizable = new (head, upperBody, lowerBody, shoes);
         interactions = new ();
+
+        movable = new (controller, walkSpeed, boostSpeed, rotationSpeed);
+        flying = new (controller, flyForce, gravity, heightLimit);
 
         hasActiveMission = false;
 
@@ -144,5 +146,4 @@ public class PlayerManager : AStateController
         interactKey = context.ReadValueAsButton();
             
     }
-
 }
