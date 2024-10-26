@@ -71,6 +71,7 @@ public class MissionIcon : MonoBehaviour
         
         // Log para el mensaje generado
         Debug.Log($"Mensaje generado: {message}");
+        assignedNPC.message= message;
 
         // Log para el nombre del NPC asignado para verificación
         if (assignedNPC != null)

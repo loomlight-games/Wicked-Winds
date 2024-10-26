@@ -34,10 +34,10 @@ public class MessageGenerator
         // Select a random message template
         string randomMessageTemplate = messageTemplates[Random.Range(0, messageTemplates.Length)];
 
-
+     
         return randomMessageTemplate; // Return the message (with or without NPC name)
     }
 }
 
 
-
+        

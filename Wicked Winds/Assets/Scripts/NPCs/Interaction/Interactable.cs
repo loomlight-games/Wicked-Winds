@@ -4,10 +4,8 @@ public class Interactable : MonoBehaviour
 {
     private NPC npc; // Referencia al NPC con el que se interactúa
     public MissionIcon missionIcon; // Referencia al ícono de misión del NPC
-    private NPC activeNPC; // Referencia al NPC con el que se está interactuando actualmente
-    
-
-    //private Player player; // Referencia al jugador
+    private NPC activeNPC; // Referencia al NPC con el que se está interactuando
+    public NewBehaviourScript textBubble; // Referencia al script del bocadillo de texto
 
     private void Start()
     {
@@ -33,7 +31,7 @@ public class Interactable : MonoBehaviour
         // Verifica si el jugador ya tiene una misión activa
         if (PlayerManager.Instance.hasActiveMission)
         {
-            Debug.Log($"{PlayerManager.Instance.name} already has an active mission and cannot accept a new one."); // Log si ya tiene misión activa
+            Debug.Log($"{PlayerManager.Instance.name} already has an active mission and cannot accept a new one.");
             return; // Sale del método si ya hay una misión activa
         }
 
@@ -54,14 +52,14 @@ public class Interactable : MonoBehaviour
             }
         }
 
+        // Iniciar el diálogo con el mensaje del NPC
+        if (textBubble != null)
+        {
+            textBubble.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
+            textBubble.StartDialogue(activeNPC); // Inicia el diálogo
+        }
+
         PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misión activa
-        Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}."); // Log para aceptar la misión
-    }
-
-    
-
-    private void Update()
-    {
-        
+        Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}.");
     }
 }

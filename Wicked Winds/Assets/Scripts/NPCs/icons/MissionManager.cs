@@ -264,7 +264,7 @@ public class MissionManager : MonoBehaviour
 
             foreach (var npc in allNPCs)
             {
-                if (npc != selectedNPC) // Exclude the current NPC
+                if (npc != selectedNPC && npc.missionIcon == null) // Exclude the current NPC and npcs carriers of a mission
                 {
                     Debug.Log($"Adding NPC name: {npc.npcname}");
                     if (!string.IsNullOrEmpty(npc.npcname)) // Check if the name is not null or empty
