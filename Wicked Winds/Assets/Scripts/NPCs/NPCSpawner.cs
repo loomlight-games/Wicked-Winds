@@ -4,7 +4,7 @@ public class NPCSpawner : MonoBehaviour
 {
     public GameObject npcPrefab; // Prefab del NPC
     public int npcCount = 10; // Número total de NPCs a generar
-    public float detectionRadius = 100f; // Radio para detectar el suelo
+    public float detectionRadius = 10f; // Radio para detectar el suelo
     public LayerMask groundLayer; // Capa del suelo
     public LayerMask buildingLayer; // Capa de edificios
 

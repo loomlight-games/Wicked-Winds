@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -198,7 +198,7 @@ public class MissionManager : MonoBehaviour
         }
 
         missionIcon.AssignMission(mission, this, selectedNPC);
-        missionIcon.AssignMissionText(mission, this, selectedNPC);
+        
         SetMissionIconPosition(selectedNPC, missionIcon);
         selectedNPC.missionIcon = missionIcon;
         selectedNPC.hasMission = true;
@@ -253,10 +253,54 @@ public class MissionManager : MonoBehaviour
 
             Debug.Log("PotionMission: Asignación completa de 3 ingredientes con NPC y MissionIcon.");
         }
+
+        if (mission.missionName == "LetterMision")
+        {
+            // Get a list of all NPCs in the scene
+            NPC[] allNPCs = GetAllNPCs();
+
+            // Create a list to hold NPC names, excluding the current NPC
+            List<string> npcNames = new List<string>();
+
+            foreach (var npc in allNPCs)
+            {
+                if (npc != selectedNPC && npc.missionIcon == null) // Exclude the current NPC and npcs carriers of a mission
+                {
+                    Debug.Log($"Adding NPC name: {npc.npcname}");
+                    if (!string.IsNullOrEmpty(npc.npcname)) // Check if the name is not null or empty
+                    {
+                        npcNames.Add(npc.npcname); // Add the name to the list
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Found NPC with empty name.");
+                    }
+                }
+            }
+            // Select a random NPC name from the list, if available
+            
+            if (npcNames.Count > 0)
+            {
+                string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
+                missionIcon.addressee = randomNPCName;
+            }
+            else
+            {
+                Debug.LogWarning("No other NPCs available to be a addresse");
+            }
+
+        }
+
+        missionIcon.AssignMissionText(mission, this, selectedNPC);
+    }
+
+    public static NPC[] GetAllNPCs()
+    {
+        return GameObject.FindObjectsOfType<NPC>(); 
     }
 
 
-        private void SetMissionIconPosition(NPC selectedNPC, MissionIcon missionIcon)
+    private void SetMissionIconPosition(NPC selectedNPC, MissionIcon missionIcon)
     {
         Transform bubbleTransform = selectedNPC.transform.Find("Bubble");
         if (bubbleTransform != null)
