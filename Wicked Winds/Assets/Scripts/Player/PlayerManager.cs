@@ -83,10 +83,10 @@ public class PlayerManager : AStateController
     // Start is called before the first frame update
     public override void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Gameplay")
-            SetState(controllableState);
-        else if (SceneManager.GetActiveScene().name == "Shop")
+        if (SceneManager.GetActiveScene().name == "Shop")
             SetState(atShopState);
+        else
+            SetState(controllableState);
     }
 
     // Update is called once per frame

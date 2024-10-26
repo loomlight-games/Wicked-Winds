@@ -56,7 +56,7 @@ public class GameManager : AStateController
         switch (buttonName)
         {
             case "Play":
-                SceneManager.LoadScene("Gameplay");
+                SceneManager.LoadScene("Gameplay 1");
                 break;
             case "Pause":
                 SwitchState(pauseState);
