@@ -8,7 +8,7 @@ using System;
 
 public class LeaderboardPanel : Panel 
 {
-    string LeaderboardID = "Leaderboard";
+    string LeaderboardID = "ElapsedTime";
     [SerializeField] private int playersPerPage = 25;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 

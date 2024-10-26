@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,7 +56,7 @@ public class ErrorPanel : Panel
     {
         Close();
         Debug.Log("action none");
-        
+        AuthenticationService.Instance.SignOut();
         switch (action)
         {
             case Action.StartService:

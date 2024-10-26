@@ -182,7 +182,40 @@ public class GameManager : AStateController
         }
     }
 
-    public void SingOut()
+    public async void SignInWithUsernameAndPasswordAsync(string username, string password)
+    {
+        PanelManager.Open("loading");
+        try
+        {
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+
+    public async void SignUpWithUsernameAndPasswordAsync(string username, string password)
+    {
+        PanelManager.Open("loading");
+        try
+        {
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign you up.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+    public void SignOut()
     {
         AuthenticationService.Instance.SignOut();
         PanelManager.CloseAll();
@@ -201,9 +234,10 @@ public class GameManager : AStateController
             Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
 
         };
-        AuthenticationService.Instance.SignInFailed += (err) => {
+        /*AuthenticationService.Instance.SignInFailed += (err) => {
             Debug.LogError(err);
-        };
+            AuthenticationService.Instance.SignOut();
+        };*/
 
         AuthenticationService.Instance.SignedOut += () =>
         {
@@ -228,7 +262,7 @@ public class GameManager : AStateController
                 await AuthenticationService.Instance.UpdatePlayerNameAsync("Player");
             }
             PanelManager.CloseAll();
-            PanelManager.Open("main");
+            PanelManager.Open("profile");
         }
         catch
         {
