@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using Unity.Services.Leaderboards;
 using System;
 
-public class LeaderboardMenu : Panel
+public class LeaderboardPanel : Panel 
 {
-    string LeaderboardID = "ElapsedTime";
+    string LeaderboardID = "Leaderboard";
     [SerializeField] private int playersPerPage = 25;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
@@ -17,6 +17,7 @@ public class LeaderboardMenu : Panel
     [SerializeField] public TextMeshProUGUI pageText = null;
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
+    [SerializeField] private Button mainMenuButton = null;
 
     //prueba
     [SerializeField] private Button addScoreButton = null;

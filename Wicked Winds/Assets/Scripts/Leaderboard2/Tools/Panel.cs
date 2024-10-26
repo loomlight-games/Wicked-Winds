@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Panel : MonoBehaviour
 {
-    //ranking id 
+    //Panel id 
     [SerializeField] private string id = ""; public string ID { get { return id; } }
     [SerializeField] private RectTransform container = null; //gameobject cointainer of each table
 
@@ -26,7 +26,7 @@ public class Panel : MonoBehaviour
         Close();
     }
 
-    public virtual void Open()
+    public virtual void Open() //open panel
     {
         if (initialized == false) { Initialize(); }
         transform.SetAsLastSibling();
@@ -34,7 +34,7 @@ public class Panel : MonoBehaviour
         isOpen = true;
     }
 
-    public virtual void Close()
+    public virtual void Close() //close panel
     {
         if (initialized == false) { Initialize(); }
         container.gameObject.SetActive(false);

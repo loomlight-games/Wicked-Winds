@@ -7,6 +7,9 @@ using UnityEngine.UIElements;
 
 public class LeaderboardGameState : AState
 {
+     
+    
+    /*
     static int size = 7;
     TextMeshProUGUI[] entriesText = new TextMeshProUGUI[size];
 
@@ -66,45 +69,5 @@ public class LeaderboardGameState : AState
                 LoadEntries();
         });
     }
-
-    /*
-    /// <summary>
-    /// Get online data from leaderboard and update scene texts
-    /// </summary>
-    public void GetLeaderboard()
-    {
-        // Obtener los datos del leaderboard desde la API
-        LeaderboardCreator.GetLeaderboard(publicLeaderboardKey, ((msg) =>
-        {
-            // Choose the lesser one
-            int loopLength = (msg.Length < names.Count) ? msg.Length : names.Count;
-
-            for (int i = 0; i < loopLength; ++i)
-            {
-                names[i].text = msg[i].Username;
-                scores[i].text = msg[i].Score.ToString();
-
-                Debug.Log($"Usuario: {names[i].text}, Puntaje: {scores[i].text}");
-            }
-        }));
-    }
-
-    /// <summary>
-    /// Uploading to the online leaderboard
-    /// </summary>
-    public void SetLeaderboardEntry(string username, int scoreToUpload)
-    {
-        Debug.Log("Puntuación antes de subir: " + scoreToUpload);
-
-        LeaderboardCreator.UploadNewEntry(publicLeaderboardKey, username, scoreToUpload, (msg) =>
-        {
-            Debug.Log("Puntuación subida correctamente"+ username + scoreToUpload);
-
-            // Actualizar el leaderboard después de subir la puntuación
-            //GetLeaderboard();
-        });
-
-        // Actualizar el leaderboard después de subir la puntuación
-        //GetLeaderboard(); // Supuestamente asegrua q aparezca el nombre con el score
-    }*/
+*/
 }

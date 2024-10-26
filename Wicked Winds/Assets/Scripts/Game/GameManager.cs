@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
@@ -31,10 +33,18 @@ public class GameManager : AStateController
         //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
+            
+        //StartClientService();
+
     }
+
 
     public override void Start()
     {
@@ -42,7 +52,7 @@ public class GameManager : AStateController
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
             SetState(shopState);
-        else if (SceneManager.GetActiveScene().name == "Leaderboard")
+        else if (SceneManager.GetActiveScene().name == "Leaderboard2")
             SetState(leaderboardState);
         else
             SetState(playState);
@@ -88,12 +98,6 @@ public class GameManager : AStateController
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
-            case "Submit":
-                if (currentState == leaderboardState)
-                {
-                    leaderboardState.SubmitScore();
-                }
-                break;
             default:
                 break;
         }
@@ -103,6 +107,42 @@ public class GameManager : AStateController
     {//funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
         PanelManager.Open("LeaderboardElapsedTime");
     }
+    /*
+    /// <summary>
+    /// starts the authentification function for leaderbaord and users
+    /// </summary>
+    public async void StartClientService()
+    {
+        PanelManager.CloseAll();
+        PanelManager.Open("loading");
+        try
+        {
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                var options = new InitializationOptions();
+                options.SetProfile("default_profile");
+                await UnityServices.InitializeAsync();
+            }
+
+            if (!eventsInitialized)
+            {
+                SetupEvents();
+            }
+
+            if (AuthenticationService.Instance.SessionTokenExists)
+            {
+                SignInAnonymouslyAsync();
+            }
+            else
+            {
+                PanelManager.Open("auth");
+            }
+        }
+        catch (Exception exception)
+        {
+            ShowError(ErrorMenu.Action.StartService, "Failed to connect to the network.", "Retry");
+        }
+    }*/
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     public void DestroyGO(GameObject gameObject){
