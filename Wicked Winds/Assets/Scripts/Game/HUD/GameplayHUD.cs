@@ -10,11 +10,11 @@ public class GameplayHUD : MonoBehaviour
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     private bool gameOverTriggered = false; //in order to not recall the method
 
-
     void Awake()
     {
         // Needs to know boost value
         PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
+        //missionmagar.intance.misisonevent += OnMisisonevent;
     }
 
     // Update is called once per frame
@@ -51,31 +51,21 @@ public class GameplayHUD : MonoBehaviour
 
         PlayerManager.Instance.score = (int) elapsedTime;
 
-        // Guardar el tiempo transcurrido como puntuaci�n en PlayerPrefs
-        // PlayerPrefs.SetFloat("PlayerScore", elapsedTime);
-
-        //PlayerPrefs.Save();  // Asegurarse de que el valor se guarda correctamente
-
-        // Env�a la puntuaci�n al ScoreManager (pasa elapsedTime)
-        /*if (ScoreManager.Instance != null)
-        {
-            Debug.Log("scoremanager is not nuuuuull");
-            ScoreManager.Instance.UpdateScore((int)elapsedTime);
-            ScoreManager.Instance.SubmitScore();  // Submit the score
-        }
-        */
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
-        //GameManager.Instance.GameOver(elapsedTime);
-        // switch to defeat state
-        //GameManager.Instance.SwitchState(GameManager.Instance.endState);
+        
         timerText.color = Color.red;
     }
+
     /// <summary>
     /// Called when boost value is modified (only when running)
     /// </summary>
     private void OnBoostChangeEvent(object sender, float currentBoost)
     {
         boostText.text = Mathf.FloorToInt(currentBoost).ToString();
+    }
+
+    void OnMision (object sender, float seconds){
+        elapsedTime += seconds;
     }
 }

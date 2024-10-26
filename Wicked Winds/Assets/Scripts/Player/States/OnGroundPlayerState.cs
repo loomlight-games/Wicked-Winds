@@ -24,6 +24,6 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerEnter(Collider other)
     {
-        PlayerManager.Instance.boostable.Start();
+        PlayerManager.Instance.boostable.OnTriggerEnter(other);
     }
 }
