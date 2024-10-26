@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class RandomNPCMovement : MonoBehaviour
 {
-    public float moveRadius = 10f; // Radio de movimiento aleatorio
-    public float detectionRadius = 100f; // Radio para detectar si la posición es adecuada (dentro del terreno)
-    public LayerMask groundLayer; // Capa del suelo
-    public LayerMask buildingLayer; // Capa de edificios para evitar que se posicione sobre ellos
+    public float moveRadius = 10f;
+    public float detectionRadius = 100f;
+    public LayerMask groundLayer;
+    public LayerMask buildingLayer;
 
     private NavMeshAgent agent;
 
@@ -18,46 +18,42 @@ public class RandomNPCMovement : MonoBehaviour
 
     void Update()
     {
-        // Si el NPC ha llegado a su destino, generar una nueva posición
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            //Debug.Log("NPC ha llegado a su destino. Estableciendo nueva posición.");
             SetRandomDestination();
         }
     }
 
-
     public void SetRandomDestination()
     {
-        // Definir un rango mínimo y máximo desde la posición actual para evitar destinos demasiado cercanos
-        float minDistance = 5f; // Distancia mínima para evitar destinos cercanos
-        float maxDistance = moveRadius; // Distancia máxima para el rango de movimiento
+        float minDistance = 5f;
+        float maxDistance = moveRadius;
 
         Vector3 randomDirection;
         NavMeshHit hit;
 
-        for (int i = 0; i < 30; i++) // Intentos para encontrar una posición válida
+        for (int i = 0; i < 30; i++)
         {
-            // Generar una dirección aleatoria
             randomDirection = Random.insideUnitSphere * maxDistance;
             randomDirection += transform.position;
 
-            // Verificar que la nueva posición esté en el NavMesh y a una distancia adecuada
             if (NavMesh.SamplePosition(randomDirection, out hit, maxDistance, NavMesh.AllAreas) &&
                 Vector3.Distance(transform.position, hit.position) >= minDistance)
             {
-                agent.SetDestination(hit.position); // Establecer el destino válido
-                //Debug.Log($"Destino aleatorio establecido en: {hit.position}");
-                return; // Salir del método al encontrar una posición válida
-            }
-            else
-            {
-                //Debug.Log($"Intento {i + 1}: posición aleatoria no válida: {randomDirection}");
+                // Raycast hacia arriba para asegurarse de que no haya edificios encima
+                if (!Physics.Raycast(hit.position, Vector3.up, 10f, buildingLayer))
+                {
+                    agent.SetDestination(hit.position);
+
+                    // Comprobar que el destino es alcanzable
+                    if (agent.pathStatus == NavMeshPathStatus.PathComplete)
+                    {
+                        return; // Si encuentra un camino válido, establece el destino y sale del método
+                    }
+                }
             }
         }
 
         Debug.LogWarning("No se pudo encontrar un destino válido después de 30 intentos.");
     }
-
-
 }
