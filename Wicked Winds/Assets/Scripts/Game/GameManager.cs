@@ -72,7 +72,8 @@ public class GameManager : AStateController
                 break;
             case "Leaderboard":
                 // SwitchState(endState);
-                SceneManager.LoadScene("Leaderboard");
+                SceneManager.LoadScene("Leaderboard2");
+                OpenLeaderboards();
                 break;
             case "Credits":
                 SwitchState(creditsState);
@@ -98,14 +99,10 @@ public class GameManager : AStateController
         }
     }
 
-    /*
-    // end game 
-    public void GameOver(float elapsedTime)
-    {
-        playerScore = (int)elapsedTime; // save played time as score
-        SwitchState(endState);
+  private void OpenLeaderboards()
+    {//funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
+        PanelManager.Open("LeaderboardElapsedTime");
     }
-    */
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     public void DestroyGO(GameObject gameObject){
