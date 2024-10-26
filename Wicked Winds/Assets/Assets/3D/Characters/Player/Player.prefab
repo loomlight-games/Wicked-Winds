@@ -248,6 +248,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f1908700-a436-43d5-9d63-9f41ee18699b
     m_ActionName: Player movement/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 91444003552585511}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9e1d1857-bca2-443a-9d3d-7d6e43e42290
+    m_ActionName: Player movement/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
@@ -271,9 +287,12 @@ MonoBehaviour:
   runJoystick: 0
   canRun: 0
   flyKey: 0
+  interactKey: 0
   movement2D: {x: 0, y: 0}
+  score: 0
   purchasedItems: []
   coins: 0
+  interactions: {fileID: 0}
   walkSpeed: 5
   boostSpeed: 13
   rotationSpeed: 5

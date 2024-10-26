@@ -15,6 +15,7 @@ public class ControllablePlayerState : AState
         PlayerManager.Instance.movable.Update();
         PlayerManager.Instance.flying.Update();
         PlayerManager.Instance.boostable.Update();
+        PlayerManager.Instance.interactions.Update();
     }
 
     public override void Exit()

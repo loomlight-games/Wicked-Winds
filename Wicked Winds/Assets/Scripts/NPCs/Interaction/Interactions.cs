@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactions : MonoBehaviour
+public class Interactions
 {
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (PlayerManager.Instance.interactKey)
         {
-            float interactRange = 2f;
-            Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
+            Collider[] colliderArray = Physics.OverlapSphere(PlayerManager.Instance.transform.position, PlayerManager.Instance.interactRange); ;
             Debug.Log($"Attempting to interact. Found {colliderArray.Length} colliders within range."); // Log para contar colisionadores encontrados
 
             foreach (Collider collider in colliderArray)

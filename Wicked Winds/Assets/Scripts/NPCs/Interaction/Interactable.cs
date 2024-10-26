@@ -7,13 +7,12 @@ public class Interactable : MonoBehaviour
     private NPC activeNPC; // Referencia al NPC con el que se está interactuando actualmente
     [SerializeField] public int collectedItemsCount = 0; // Contador de objetos recolectados
 
-    private Player player; // Referencia al jugador
+    //private Player player; // Referencia al jugador
 
     private void Start()
     {
         // Busca el NPC en el GameObject padre o en los hijos
         npc = GetComponent<NPC>();
-        player = FindObjectOfType<Player>(); // Encuentra el jugador en la escena
         if (npc != null)
         {
             missionIcon = npc.missionIcon; // Obtiene el icono de misión del NPC
@@ -32,9 +31,9 @@ public class Interactable : MonoBehaviour
         Debug.Log($"Interacted with NPC: {npc.name}");
 
         // Verifica si el jugador ya tiene una misión activa
-        if (player.hasActiveMission)
+        if (PlayerManager.Instance.hasActiveMission)
         {
-            Debug.Log($"{player.name} already has an active mission and cannot accept a new one."); // Log si ya tiene misión activa
+            Debug.Log($"{PlayerManager.Instance.name} already has an active mission and cannot accept a new one."); // Log si ya tiene misión activa
             return; // Sale del método si ya hay una misión activa
         }
 
@@ -55,8 +54,8 @@ public class Interactable : MonoBehaviour
             }
         }
 
-        player.hasActiveMission = true; // Marca que el jugador tiene una misión activa
-        Debug.Log($"{player.name} accepted a new mission from {npc.name}."); // Log para aceptar la misión
+        PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misión activa
+        Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}."); // Log para aceptar la misión
     }
 
     public void CollectItem()

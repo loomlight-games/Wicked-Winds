@@ -13,7 +13,7 @@ public class PlayerManager : AStateController
 
     [HideInInspector] public float verticalVelocity;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey;
+    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
 
@@ -38,6 +38,7 @@ public class PlayerManager : AStateController
     public Boostable boostable; // Boostable
     public Flying flying; // Flying
     public CustomizableCharacter customizable; // Customizable
+    public Interactions interactions;
     #endregion
 
     #region PROPERTIES
@@ -52,6 +53,8 @@ public class PlayerManager : AStateController
 
     [Header("Mechanics")]
     [SerializeField] float boostLossPerSecond = 5f;
+    [SerializeField] public float interactRange = 2f;
+
 
     [Header("Customizable")]
     [SerializeField] Transform head;
@@ -76,6 +79,9 @@ public class PlayerManager : AStateController
         boostable = new (boostLossPerSecond);
         flying = new (controller, flyForce, gravity, heightLimit);
         customizable = new (head, upperBody, lowerBody, shoes);
+        interactions = new ();
+
+        hasActiveMission = false;
 
         customizable.Awake();
     }
@@ -132,4 +138,10 @@ public class PlayerManager : AStateController
     public void OnUpdateBodyPart(CustomizableItem newItem){
         customizable.UpdateBodyPart(newItem);
     }
+
+    public void OnInteract(InputAction.CallbackContext context){
+        interactKey = context.ReadValueAsButton();
+            
+    }
+
 }
