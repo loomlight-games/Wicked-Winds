@@ -142,7 +142,7 @@ CharacterController:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -220,22 +220,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 91444003552585511}
         m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: OnStick
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 33f270d9-9dd5-4a85-a6ee-261095cc90b8
-    m_ActionName: Player movement/Joystick
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 91444003552585511}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
         m_MethodName: OnFly
         m_Mode: 0
         m_Arguments:
@@ -290,9 +274,9 @@ MonoBehaviour:
   interactKey: 0
   movement2D: {x: 0, y: 0}
   score: 0
+  hasActiveMission: 0
   purchasedItems: []
   coins: 0
-  interactions: {fileID: 0}
   walkSpeed: 5
   boostSpeed: 10
   rotationSpeed: 2
@@ -301,6 +285,7 @@ MonoBehaviour:
   heightLimit: 20
   joystickScale: 2
   boostLossPerSecond: 2
+  interactRange: 2
   head: {fileID: 2704812343487967150}
   upperBody: {fileID: 6048926237755012986}
   lowerBody: {fileID: 6707048652853015250}

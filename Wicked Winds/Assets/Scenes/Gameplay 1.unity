@@ -1188,7 +1188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254990661}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33047536, y: -0.053459268, z: 0.0187525, w: 0.9421128}
+  m_LocalRotation: {x: 0.33023793, y: -0.064286426, z: 0.02255046, w: 0.941436}
   m_LocalPosition: {x: 0, y: 7.6099997, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -1295,7 +1295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33047536, y: -0.053459268, z: 0.0187525, w: 0.9421128}
+  m_LocalRotation: {x: 0.33023793, y: -0.064286426, z: 0.02255046, w: 0.941436}
   m_LocalPosition: {x: 0, y: 7.6099997, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowDebugText: 1
+  m_ShowDebugText: 0
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
@@ -2251,7 +2251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &599857483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3104,12 +3104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3174,7 +3174,7 @@ MonoBehaviour:
   timerText: {fileID: 1716697217}
   elapsedText: {fileID: 789135154}
   boostText: {fileID: 1334886079}
-  remainingTime: 2
+  remainingTime: 90
   elapsedTime: 0
 --- !u!1 &789917998
 GameObject:
@@ -4588,11 +4588,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 526009619674639312, guid: a8e601ec32ff272429126298d2a73b27,
-        type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 618694654738858141, guid: a8e601ec32ff272429126298d2a73b27,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4643,6 +4638,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4228864829277328864, guid: a8e601ec32ff272429126298d2a73b27,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 8372127748781726271, guid: a8e601ec32ff272429126298d2a73b27,
         type: 3}
       propertyPath: m_Name
@@ -5992,11 +5992,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MovementRange: 230
   m_DynamicOriginRange: 150
-  m_ControlPath: <Touchscreen>/position
+  m_ControlPath: <Gamepad>/leftStick
   m_Behaviour: 0
   m_UseIsolatedInputActions: 0
   m_PointerDownAction:
-    m_Name: 
+    m_Name: Pointer Down
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 1888c693-3bc0-498e-8fb2-7e7400fe671e
@@ -6005,7 +6005,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   m_PointerMoveAction:
-    m_Name: 
+    m_Name: Pointer Move
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: fe656d54-a48d-4a12-8b5e-9f2872cd40d6
@@ -6072,16 +6072,16 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.93207544, g: 0.42031327, b: 0.91275436, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.80367565, g: 0.51023495, b: 0.9245283, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 7472a91faa8f6154092d017a6cfe03ef, type: 3}
+    m_PressedSprite: {fileID: 0}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
