@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.VersionControl.Asset;
 
 public class FinalState : AState
-{
-    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
+{    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
     TextMeshProUGUI scoreText;
 
     public override void Enter()
@@ -22,14 +17,14 @@ public class FinalState : AState
         leaderboardButton = finalMenu.transform.Find("LeaderboardButton").gameObject;
         scoreText = finalMenu.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
 
-        // Mostrar el menú de final de juego
+        // Mostrar el menï¿½ de final de juego
         finalMenu.SetActive(true);
         defeat.SetActive(true);
         retryButton.SetActive(true);
         mainMenuButton.SetActive(true);
         leaderboardButton.SetActive(true);
 
-        // Mostrar la puntuación final
+        // Mostrar la puntuaciï¿½n final
         float playerScore = PlayerManager.Instance.score;
         scoreText.text = "Your Score: " + playerScore.ToString();
 

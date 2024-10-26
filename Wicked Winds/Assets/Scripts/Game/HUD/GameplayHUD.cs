@@ -10,7 +10,7 @@ public class GameplayHUD : MonoBehaviour
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     private bool gameOverTriggered = false; //in order to not recall the method
 
-    void Awake()
+    void Start()
     {
         // Needs to know boost value
         PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
