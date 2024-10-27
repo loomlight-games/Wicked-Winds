@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
-    public TextMeshProUGUI text = null; // Para mostrar el diálogo
+    public TextMeshProUGUI text = null; // Para mostrar el diï¿½logo
     public TextMeshProUGUI npcName = null;   // Para mostrar el nombre del NPC
-    public string[] lines;        // Las líneas del diálogo
+    public string[] lines;        // Las lï¿½neas del diï¿½logo
     public float textSpeed;       // Velocidad del texto
 
     private int index;
@@ -20,15 +20,15 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Asegúrate de que lines tenga contenido antes de verificar el índice
+        // Asegï¿½rate de que lines tenga contenido antes de verificar el ï¿½ndice
         if (lines.Length == 0)
         {
-            return; // Sale del método si lines está vacío
+            return; // Sale del mï¿½todo si lines estï¿½ vacï¿½o
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (PlayerManager.Instance.nextLineKey)
         {
-            if (index <= lines.Length) // Verifica que el índice esté dentro del rango
+            if (index <= lines.Length) // Verifica que el ï¿½ndice estï¿½ dentro del rango
             {
                 if (text.text == lines[index])
                 {
@@ -39,53 +39,55 @@ public class NewBehaviourScript : MonoBehaviour
                     StopAllCoroutines();
                     text.text = lines[index];
                 }
-                AdjustTextBox(); // Llama a la función para ajustar el cuadro de texto
+                //AdjustTextBox(); // Llama a la funciï¿½n para ajustar el cuadro de texto
             }
             else
             {
-                Debug.LogWarning("Índice fuera de los límites del arreglo 'lines'.");
+                Debug.LogWarning("ï¿½ndice fuera de los lï¿½mites del arreglo 'lines'.");
             }
         }
     }
 
-    // Método para iniciar el diálogo y mostrar el nombre del NPC
+    // Mï¿½todo para iniciar el diï¿½logo y mostrar el nombre del NPC
     public void StartDialogue(NPC npc)
     {
         text.text = string.Empty;
         npcName.text = string.Empty;
 
-        index = 0; // Reinicia el índice aquí
+        index = 0; // Reinicia el ï¿½ndice aquï¿½
         npcName.text = npc.npcname; // Muestra el nombre del NPC
 
-        // Divide el mensaje del NPC en líneas y las almacena en el arreglo lines
+        // Divide el mensaje del NPC en lï¿½neas y las almacena en el arreglo lines
         lines = npc.message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         if (lines.Length == 0)
         {
-            //Debug.LogWarning("El arreglo 'lines' está vacío. No hay diálogos para mostrar.");
-            return; // Sale del método si no hay líneas
+            //Debug.LogWarning("El arreglo 'lines' estï¿½ vacï¿½o. No hay diï¿½logos para mostrar.");
+            return; // Sale del mï¿½todo si no hay lï¿½neas
         }
 
         ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        StartCoroutine(TypeLine());
+        NextLine();
+        //StartCoroutine(TypeLine());
     }
 
-    // Nuevo método para iniciar el diálogo sin el nombre del NPC
+    // Nuevo mï¿½todo para iniciar el diï¿½logo sin el nombre del NPC
     public void StartDialogue(string message)
     {
         
-        index = 0; // Reinicia el índice
+        index = 0; // Reinicia el ï¿½ndice
 
-        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en líneas
+        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en lï¿½neas
 
         if (lines.Length == 0)
         {
-            Debug.LogWarning("El arreglo 'lines' está vacío. No hay diálogos para mostrar.");
-            return; // Sale del método si no hay líneas
+            Debug.LogWarning("El arreglo 'lines' estï¿½ vacï¿½o. No hay diï¿½logos para mostrar.");
+            return; // Sale del mï¿½todo si no hay lï¿½neas
         }
 
         ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        StartCoroutine(TypeLine());
+        NextLine();
+        //StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
@@ -95,16 +97,18 @@ public class NewBehaviourScript : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        //AdjustTextBox(); // Ajusta el cuadro de texto después de escribir la línea
+        //AdjustTextBox(); // Ajusta el cuadro de texto despuï¿½s de escribir la lï¿½nea
     }
 
     void NextLine()
     {
         if (index < lines.Length - 1)
         {
-            index++;
             text.text = string.Empty;
-            StartCoroutine(TypeLine());
+            text.text = lines[index];
+            index++;
+            //text.text = string.Empty;
+            //StartCoroutine(TypeLine());
         }
         else
         {
@@ -112,9 +116,11 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    // Método para activar todos los hijos del objeto padre
+    // Mï¿½todo para activar todos los hijos del objeto padre
     void ActivateAllChildren()
     {
+        GameManager.Instance.tabButton.SetActive(true);
+
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true); // Activa cada hijo
@@ -124,16 +130,17 @@ public class NewBehaviourScript : MonoBehaviour
     
     void DeactivateAllChildren()
     {
+        GameManager.Instance.tabButton.SetActive(false);
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false); 
         }
     }
 
-    // Método para ajustar el cuadro de texto
+    // Mï¿½todo para ajustar el cuadro de texto
     void AdjustTextBox()
     {
-        text.ForceMeshUpdate(); // Fuerza una actualización del texto
-        text.GetComponent<RectTransform>().sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight); // Ajusta el tamaño del cuadro de texto
+        text.ForceMeshUpdate(); // Fuerza una actualizaciï¿½n del texto
+        text.GetComponent<RectTransform>().sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight); // Ajusta el tamaï¿½o del cuadro de texto
     }
 }

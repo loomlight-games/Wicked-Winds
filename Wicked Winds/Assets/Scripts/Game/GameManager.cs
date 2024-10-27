@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 /// <summary>
 /// Manages the game states
@@ -16,6 +12,9 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
+    
+    public GameObject tabButton;
+    public TextMeshProUGUI feddBackText;
 
     #region STATES
     public readonly GamePauseState pauseState = new();

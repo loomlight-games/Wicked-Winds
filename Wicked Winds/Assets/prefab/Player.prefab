@@ -25,7 +25,38 @@ Transform:
   m_GameObject: {fileID: 1415407235068034284}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.117, z: 1}
+  m_LocalPosition: {x: 0, y: 1.882, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5205250628666565822}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1867596961402802924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3593533240418902687}
+  m_Layer: 0
+  m_Name: Compass
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3593533240418902687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867596961402802924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -125,6 +156,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3593533240418902687}
   - {fileID: 4187150942500112065}
   - {fileID: 6884557027795835833}
   - {fileID: 6537866431313153884}
@@ -225,6 +257,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: a662d466-f7a4-4e91-8b2d-020534a5aedf
     m_ActionName: Player/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 577c62bd-2dcf-4c6f-b393-841dc58fffc5
+    m_ActionName: Player/NextLine[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
@@ -249,10 +285,12 @@ MonoBehaviour:
   canRun: 0
   flyKey: 0
   interactKey: 0
+  nextLineKey: 0
   movement2D: {x: 0, y: 0}
   score: 0
   hasActiveMission: 0
   currentTargets: []
+  target: {fileID: 0}
   activeMission: {fileID: 0}
   purchasedItems: []
   coins: 0
@@ -265,6 +303,7 @@ MonoBehaviour:
   joystickScale: 2
   boostLossPerSecond: 2
   interactRange: 2
+  compassTransform: {fileID: 3593533240418902687}
   head: {fileID: 6884557027795835833}
   upperBody: {fileID: 6537866431313153884}
   lowerBody: {fileID: 3710789265273226225}
