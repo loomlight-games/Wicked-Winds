@@ -166,6 +166,14 @@ La tabla de ranking es una característica esencial de Wicked Winds, diseñada p
 
 La inclusión de la tabla de ranking no solo añade un elemento de competencia, sino que también permite a los jugadores conectar con otros en la comunidad y compartir sus logros.
 
+### 8. Brújula
+Una mecánica clave del juego es la brújula de misiones, que facilita la navegación y mejora la experiencia del jugador. Una vez que se acepta una misión, aparece una flecha sobre el personaje que indica claramente hacia dónde debe dirigirse.
+
+Esta flecha se ajusta dinámicamente a medida que el jugador se desplaza, guiándolo hacia el objetivo de la misión. Esto permite a los jugadores concentrarse en la acción sin tener que preocuparse por perderse.
+
+Esta mecánica no solo simplifica el proceso de búsqueda de misiones, sino que también añade un elemento de fluidez al juego, haciendo que la experiencia de ayuda a los ciudadanos sea más inmersiva y menos frustrante.
+
+
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
 Ashen es un joven brujo audaz y servicial que se ha convertido en el héroe no oficial de su ciudad mágica. Con su escoba siempre a mano, ayuda a sus vecinos con problemas que van desde la entrega de ingredientes místicos hasta la recolección de objetos mágicos. La ciudad es un lugar vibrante y encantado, habitado por personajes excéntricos con historias sorprendentes que influyen en las tareas que le piden a Ashen.
