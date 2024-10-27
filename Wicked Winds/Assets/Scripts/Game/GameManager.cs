@@ -143,8 +143,9 @@ public class GameManager : AStateController
             if (AuthenticationService.Instance.SessionTokenExists)
             {
                 AuthenticationService.Instance.SignOut();
+                AuthenticationService.Instance.ClearSessionToken();
                 //if user already sign in
-                Debug.Log("Session token existed, user signed out");
+                
                 //SignInAnonymouslyAsync();
                 
             }
@@ -208,6 +209,8 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+            string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
         }
         catch (AuthenticationException exception)
         {
@@ -221,6 +224,7 @@ public class GameManager : AStateController
     public void SignOut()
     {
         AuthenticationService.Instance.SignOut();
+        Debug.Log("cierra sesion");
         PanelManager.CloseAll();
         SceneManager.LoadScene("Main menu");
         //PanelManager.Open("auth");
@@ -265,7 +269,6 @@ public class GameManager : AStateController
             if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
             {
                 string username =PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
-
 
                 await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
             }

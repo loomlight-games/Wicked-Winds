@@ -66,6 +66,7 @@ public class AuthentificationPanel : Panel
         if (isValid)
         {
             GameManager.Instance.SignInWithUsernameAndPasswordAsync(user, pass);
+            PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE, user);
         }
         /*
         if (string.IsNullOrEmpty(user) == false && string.IsNullOrEmpty(pass) == false)
