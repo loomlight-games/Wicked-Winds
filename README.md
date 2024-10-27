@@ -133,7 +133,7 @@ La partida inicia con un tiempo límite (por ejemplo, 60 segundos), y cada misi�
 - **Final del Juego:** Si el tiempo llega a cero, la partida finaliza automáticamente, y el jugador puede ver la tabla de clasificación.
 
 ### 4. Sistema de *Power-ups*
-Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, estos objetos recargan la barra de impulso cuando se recolectan, permitiendo que el jugador pueda activar el modo de desplazamiento rápido para cumplir misiones más eficientemente.
+Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, estos objetos recargan la barra de impulso cuando se recolectan, permitiendo que el jugador pueda activar el modo de desplazamiento rápido para cumplir misiones más eficientemente. Para usarlo, el jugador debe pulsar la tecla *shift*, si no la pulsa el personaje avanzará más lentamente pero no gastará el *boost*.
 
 ### 5. Tienda de Aspectos
 - **Personalización del Personaje:** Los jugadores pueden visitar una tienda dentro del juego para adquirir aspectos estéticos para su personaje (cabeza, parte superior, parte inferior, zapatos). Estas mejoras son puramente estéticas y no afectan las mecánicas de juego.
@@ -155,6 +155,16 @@ Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, e
 
     - **Dispositivos Móviles:** El juego se controla de forma táctil, utilizando un joystick en pantalla para el movimiento del personaje. Los jugadores pueden realizar taps en la pantalla para interactuar con objetos y personajes, así como para acceder a menús.
 
+### 7. Tabla de Clasificación
+La tabla de ranking es una característica esencial de Wicked Winds, diseñada para fomentar la competencia y el progreso entre los jugadores. Para acceder a esta funcionalidad, los jugadores deben crear una cuenta o iniciar sesión si ya poseen una. Esto permite a los usuarios llevar un seguimiento de su rendimiento y compararlo con el de otros jugadores.
+
+- **Creación de Cuenta:** Al iniciar el juego por primera vez, los jugadores tienen la opción de registrarse, proporcionando un nombre de usuario y una dirección de correo electrónico. Este proceso es rápido y sencillo, permitiendo una integración fluida en la comunidad del juego.
+
+- **Iniciar Sesión:** Los jugadores que ya tienen una cuenta pueden iniciar sesión de forma fácil, asegurando que sus progresos y logros se guarden y se reflejen en la tabla de clasificación.
+
+- **Visualización de la Clasificación:** Una vez que los jugadores han iniciado sesión, pueden acceder a la tabla de ranking, donde se muestran las puntuaciones de todos los jugadores. Esta tabla se actualiza regularmente, permitiendo que los jugadores vean su posición actual y se motiven a mejorar su rendimiento en las misiones.
+
+La inclusión de la tabla de ranking no solo añade un elemento de competencia, sino que también permite a los jugadores conectar con otros en la comunidad y compartir sus logros.
 
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
