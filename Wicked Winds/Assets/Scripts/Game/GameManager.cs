@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// Manages the game states
@@ -12,6 +12,9 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
+    
+    public GameObject tabButton;
+    public TextMeshProUGUI feddBackText;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -24,6 +27,11 @@ public class GameManager : AStateController
     public readonly LeaderboardGameState leaderboardState = new();
     #endregion
 
+    #region CLOUD SERVICES
+    private bool eventsInitialized = false;
+    [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
+    #endregion
+
     [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
 
     public override void Awake()
@@ -31,10 +39,19 @@ public class GameManager : AStateController
         //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
+        }
+
+        StartClientService();
+        //PanelManager.Open("Leaderboard");
+  
     }
+
 
     public override void Start()
     {
@@ -42,7 +59,7 @@ public class GameManager : AStateController
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
             SetState(shopState);
-        else if (SceneManager.GetActiveScene().name == "Leaderboard")
+        else if (SceneManager.GetActiveScene().name == "Leaderboard2")
             SetState(leaderboardState);
         else
             SetState(playState);
@@ -70,10 +87,12 @@ public class GameManager : AStateController
             case "Main menu":
                 SceneManager.LoadScene("Main menu");
                 break;
+            case "Main menu Leaderboard":
+                AuthenticationService.Instance.SignOut();
+                SceneManager.LoadScene("Main menu");
+                break;
             case "Leaderboard":
-                // SwitchState(endState);
                 SceneManager.LoadScene("Leaderboard2");
-                OpenLeaderboards();
                 break;
             case "Credits":
                 SwitchState(creditsState);
@@ -88,23 +107,187 @@ public class GameManager : AStateController
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
-            case "Submit":
-                if (currentState == leaderboardState)
-                {
-                    leaderboardState.SubmitScore();
-                }
-                break;
             default:
                 break;
         }
     }
+ 
+   /////////////////////////////////////////////////////////////////////////////////////////
+   //UNITY SERVICES ZONE (LEADERBOARD)
+ 
 
-  private void OpenLeaderboards()
-    {//funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
-        PanelManager.Open("LeaderboardElapsedTime");
+    /// <summary>
+    /// starts the authentification function for leaderbaord and users
+    /// </summary>
+    public async void StartClientService()
+    {
+        PanelManager.CloseAll();
+        PanelManager.Open("loading");
+        try
+        {   // check if the service is inicialized
+            if (UnityServices.State != ServicesInitializationState.Initialized)
+            {
+                var options = new InitializationOptions();
+                options.SetProfile("default_profile");
+                await UnityServices.InitializeAsync();
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            }
+            
+            if (!eventsInitialized)
+            {
+                SetupEvents();
+            }
+
+            //to avoid repeating the authentificaction process
+            if (AuthenticationService.Instance.SessionTokenExists)
+            {
+                AuthenticationService.Instance.SignOut();
+                AuthenticationService.Instance.ClearSessionToken();
+                //if user already sign in
+                
+                //SignInAnonymouslyAsync();
+                
+            }
+            else
+            {
+                PanelManager.Open("auth");
+            }
+        }
+        catch (Exception exception)
+        {
+            ShowError(ErrorPanel.Action.StartService, "Failed to connect to the network.", "Retry");
+        }
+    }
+
+
+    /// <summary>
+    ///  Sign in without username
+    ///  if you already log in w username (you have a session token) it loges automatically w that provider
+    /// </summary>
+    public async void SignInAnonymouslyAsync()
+    {
+        PanelManager.Open("loading");
+        try
+        {
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+        // something is wrong with the credentials
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign in.", "OK");
+        }
+        //somethings wrong with the connection
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorPanel.Action.SignIn, "Failed to connect to the network.", "Retry");
+        }
+    }
+
+    public async void SignInWithUsernameAndPasswordAsync(string username, string password)
+    {
+        PanelManager.Open("loading");
+        try
+        {
+            await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+            
+            
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+
+    public async void SignUpWithUsernameAndPasswordAsync(string username, string password)
+    {
+        PanelManager.Open("loading");
+        try
+        {
+            await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+            string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
+        }
+        catch (AuthenticationException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign you up.", "OK");
+        }
+        catch (RequestFailedException exception)
+        {
+            ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
+        }
+    }
+    public void SignOut()
+    {
+        AuthenticationService.Instance.SignOut();
+        Debug.Log("cierra sesion");
+        PanelManager.CloseAll();
+        SceneManager.LoadScene("Main menu");
+        //PanelManager.Open("auth");
+    }
+
+    private void SetupEvents()
+    {
+        eventsInitialized = true;
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            SignInConfirmAsync();
+
+            // Shows how to get a playerID
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            // Shows how to get an access token
+            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+
+        };
+        /*AuthenticationService.Instance.SignInFailed += (err) => {
+            Debug.LogError(err);
+            AuthenticationService.Instance.SignOut();
+        };*/
+
+        AuthenticationService.Instance.SignedOut += () =>
+        {
+            PanelManager.CloseAll();
+            PanelManager.Open("auth");
+            Debug.Log("Player signed out.");
+        };
+        
+        AuthenticationService.Instance.Expired += () =>
+        {
+            SignInAnonymouslyAsync();
+            Debug.Log("Player session could not be refreshed and expired.");
+        };
+    }
+
+    private async void SignInConfirmAsync()
+    {
+        try
+        {   
+            if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
+            {
+                string username =PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
+            }
+            PanelManager.CloseAll();
+            PanelManager.Open("profile");
+        }
+        catch
+        {
+
+        }
+    }
+    private void ShowError(ErrorPanel.Action action = ErrorPanel.Action.None, string error = "", string button = "")
+    {
+        PanelManager.Close("loading");
+        ErrorPanel panel = (ErrorPanel)PanelManager.GetSingleton("error");
+        panel.Open(action, error, button);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
+
     public void DestroyGO(GameObject gameObject){
         Destroy(gameObject);
     }

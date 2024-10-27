@@ -3,41 +3,45 @@ using System.Collections.Generic;
 
 public class MessageGenerator
 {
-    public string GenerateMessage(MissionData mission, NPC currentNPC, MissionIcon missionIcon)
+    public (string, string) GenerateMessage(MissionData mission, NPC currentNPC, MissionIcon missionIcon)
     {
         // Check if the mission has messages
         if (mission.npcMessages == null || mission.npcMessages.Count == 0)
         {
             Debug.LogWarning("No messages available for this mission.");
-            return "No message available.";
+            return ("No message available.", "No response available.");
         }
 
         // Select a random message template based on the mission type
         string[] messageTemplates;
+        string[] answerTemplates;
 
         switch (mission.missionName.ToLower()) // Use .ToLower() to ensure case-insensitive comparison
         {
             case "lettermision":
-                messageTemplates = mission.npcMessages["letter"];
+                messageTemplates = mission.npcMessages["LetterMision"];
+                answerTemplates = mission.npcAnswers["LetterMision"];
                 break;
             case "catmission":
-                messageTemplates = mission.npcMessages["cat"];
+                messageTemplates = mission.npcMessages["CatMission"];
+                answerTemplates = mission.npcAnswers["CatMission"];
                 break;
             case "potionmission":
-                messageTemplates = mission.npcMessages["potion"];
+                messageTemplates = mission.npcMessages["PotionMission"];
+                answerTemplates = mission.npcAnswers["PotionMission"];
                 break;
             default:
                 Debug.LogWarning("Unknown mission type.");
-                return "No message available.";
+                return ("No message available.", "No response available.");
         }
 
-        // Select a random message template
-        string randomMessageTemplate = messageTemplates[Random.Range(0, messageTemplates.Length)];
+        // Select a random index
+        int randomIndex = Random.Range(0, messageTemplates.Length);
 
-     
-        return randomMessageTemplate; // Return the message (with or without NPC name)
+        // Get the random message and the corresponding answer
+        string randomMessageTemplate = messageTemplates[randomIndex];
+        string responseMessage = answerTemplates[randomIndex];
+
+        return (randomMessageTemplate, responseMessage); // Return the message and the response
     }
 }
-
-
-        

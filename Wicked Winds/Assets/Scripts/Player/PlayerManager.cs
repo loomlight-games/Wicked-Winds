@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Manages the player states and information
@@ -9,44 +10,50 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : AStateController
 {
+    public event EventHandler MissionCompleteEvent;
+
     public static PlayerManager Instance { get; private set;} // Only one player
 
-    [HideInInspector] public int score, coins;
     [HideInInspector] public float verticalVelocity;
-    [HideInInspector] public bool runKey, 
-                                runJoystick, 
-                                canRun, 
-                                flyKey, 
-                                interactKey,
-                                hasActiveMission;
     [HideInInspector] public CharacterController controller;
+    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey;
     [HideInInspector] public Vector2 movement2D;
-    [HideInInspector]public List<CustomizableItem> purchasedItems = new();
+    [HideInInspector] public int score;
+    public bool hasActiveMission;
+    public List<GameObject> currentTargets = new ();
+    public Transform target;
+    public MissionIcon activeMission;
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
     [HideInInspector] public readonly string PLAYER_COINS_FILE = "PlayerCoins";
 
+    // List of purchased items
+    public List<CustomizableItem> purchasedItems = new();
+
+    [HideInInspector] public int coins;
+
     #region STATES
-    public readonly ControllablePlayerState controllableState = new();
-    public readonly AtShopPlayerState atShopState = new();
+    public readonly ControllablePlayerState controllableState = new();// On ground
+    //public readonly FlyingPlayerState flyingState = new();// Flying
+    public readonly AtShopPlayerState atShopState = new();// At shop
     public readonly FinalPlayerState finalState = new();
     #endregion
 
     #region HABILITIES
-    public PlayerController playerController;
-    public Movable movable;
-    public Boostable boostable;
-    public Flying flying;
-    public CustomizableCharacter customizable;
+    public Movable movable; // Movable
+    public Boostable boostable; // Boostable
+    public Flying flying; // Flying
+    public CustomizableCharacter customizable; // Customizable
     public Interactions interactions;
+    public Compass compass;
     #endregion
 
     #region PROPERTIES
     [Header("Movement")]
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float boostSpeed = 13f;
-    [SerializeField] float rotationSpeed = 5f;
+    [SerializeField] public float rotationSpeed = 5f;
     [SerializeField] float flyForce = 2f;
     [SerializeField] float gravity = 5f;
     [SerializeField] float heightLimit = 10f;
@@ -55,6 +62,7 @@ public class PlayerManager : AStateController
     [Header("Mechanics")]
     [SerializeField] float boostLossPerSecond = 5f;
     [SerializeField] public float interactRange = 2f;
+    [SerializeField] public Transform compassTransform;
 
 
     [Header("Customizable")]
@@ -75,14 +83,13 @@ public class PlayerManager : AStateController
             Destroy(gameObject);
 
         controller = GetComponent<CharacterController>();
-        
-        playerController = new(controller, walkSpeed, boostSpeed, flyForce, gravity, heightLimit, rotationSpeed);
-        boostable = new (boostLossPerSecond);
-        customizable = new (head, upperBody, lowerBody, shoes);
-        interactions = new ();
 
         movable = new (controller, walkSpeed, boostSpeed, rotationSpeed);
+        boostable = new (boostLossPerSecond);
         flying = new (controller, flyForce, gravity, heightLimit);
+        customizable = new (head, upperBody, lowerBody, shoes);
+        interactions = new ();
+        compass = new();
 
         hasActiveMission = false;
 
@@ -101,7 +108,7 @@ public class PlayerManager : AStateController
     // Update is called once per frame
     public override void UpdateFrame()
     {
-        
+
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -144,6 +151,32 @@ public class PlayerManager : AStateController
 
     public void OnInteract(InputAction.CallbackContext context){
         interactKey = context.ReadValueAsButton();
-            
+    }
+
+    public void OnNextLine(InputAction.CallbackContext context){
+        nextLineKey = context.ReadValueAsButton();
+    }
+
+
+    public void AddTarget(GameObject target)
+    {
+        if (!currentTargets.Contains(target))
+        {
+            currentTargets.Add(target);
+            Debug.Log($"Added {target.name} to current targets.");
+        }
+    }
+
+    public void RemoveTarget(GameObject target)
+    {
+        if (currentTargets.Contains(target))
+        {
+            currentTargets.Remove(target);
+            Debug.Log($"Removed {target.name} from current targets.");
+        }
+    }
+
+    public void OnMissionCompleted(){
+        MissionCompleteEvent?.Invoke(this,null);
     }
 }

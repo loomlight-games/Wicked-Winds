@@ -5,49 +5,87 @@ using UnityEngine;
 public class Pickable : MonoBehaviour
 {
     // Referencia al NPC asociado
-    private NPC npc;
-    public MissionIcon missionIcon; // Referencia al ícono de misión del NPC
+    public NPC npc;
+    public MissionIcon missionIcon; // Referencia al ï¿½cono de misiï¿½n del NPC
     public int numOfObjectsToCollect;
+    public Dialogue playerTextBubble; // Referencia al bocadillo de texto
+    
 
-    // Método para establecer el NPC
+    // Mï¿½todo para establecer el NPC
+
+    private void Update()
+    {
+        // Verifica si la misiï¿½n del objeto es la misma que la misiï¿½n activa del jugador y que ambas misiones no sean nulas
+        if (this.missionIcon != null && PlayerManager.Instance.activeMission != null &&
+            this.missionIcon == PlayerManager.Instance.activeMission)
+        {
+            PlayerManager.Instance.AddTarget(gameObject);
+        }
+
+    }
     public void SetNPC(NPC assignedNPC)
     {
         npc = assignedNPC;
-        Debug.Log($"Assigned NPC to pickable item: {npc.name}"); // Log para asignación de NPC
+        Debug.Log($"Assigned NPC to pickable item: {npc.name}"); // Log para asignaciï¿½n de NPC
     }
 
-    // Método para recolectar el objeto
+    // Mï¿½todo para recolectar el objeto
     public void CollectItem()
     {
-        //if (npc != null && npc.acceptMission) // Verifica si el NPC acepta la misión
-        if (npc != null)
+        if (npc != null && PlayerManager.Instance.currentTargets != null)
         {
-            missionIcon = npc.missionIcon; // Obtiene el icono de misión del NPC
-            if (this.missionIcon != null) // Verifica si el NPC acepta la misión
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
-                this.missionIcon.collectedItemsCount++; ;
-                
-                Debug.Log($"Objeto recolectado. Total recolectados: {this.missionIcon.collectedItemsCount}/3");
-
-                if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
+                missionIcon = npc.missionIcon;
+                if (this.missionIcon != null)
                 {
-                    this.missionIcon.collectedItemsCount = 0;// Reinicia el contador para futuras misiones
-                    missionIcon.CompleteMission();
-                    Debug.Log("Misión completada.");
-                     
+                    this.missionIcon.collectedItemsCount++;
+                    Debug.Log($"Objeto recolectado. Total recolectados: {this.missionIcon.collectedItemsCount}/{numOfObjectsToCollect}");
+
+                    if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
+                    {
+                        // Reinicia el contador para futuras misiones
+                        this.missionIcon.collectedItemsCount = 0;
+
+                        // Aï¿½ade el NPC como nuevo objetivo en `currentTargets`
+                        PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
+
+                        Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la misiï¿½n.");
+                        // Activa el bocadillo de texto y muestra el mensaje
+                        if (playerTextBubble != null)
+                        {
+                            Debug.Log("no hay player text bubble");
+                            string texto = "Todos los objetos recolectados. Regresa al NPC para completar la misiï¿½n.\n";
+                            playerTextBubble.StartDialogue(texto); // Inicia el diï¿½logo en el bocadillo de texto
+                        }
+
+                    }
                 }
+            
             }
             else
             {
                 Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
             }
-            // Destruir el objeto cuando se recolecte
-            Destroy(gameObject);
-            Debug.Log($"{npc.name} collected the item: {gameObject.name}"); // Log de objeto recogido
+
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject)){
+                // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
+                PlayerManager.Instance.RemoveTarget(gameObject);
+                Destroy(gameObject);
+                Debug.Log($"{npc.name} collected the item: {gameObject.name}");
+
+
+            }
+            else
+            {
+                Debug.Log($"Este ingrediente aï¿½n no se ha marcado como objetivo por lo q no se puede recoger");
+            }
+            
         }
         else
         {
-            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false."); // Log si no se puede recoger
+            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
         }
     }
+
 }

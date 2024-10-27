@@ -58,6 +58,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3603374532198481566, guid: c1a31cec0aa399d49b1d987f71d53da7,
+        type: 3}
+      propertyPath: bubble
+      value: 
+      objectReference: {fileID: 2492813812020445530}
+    - target: {fileID: 3603374532198481566, guid: c1a31cec0aa399d49b1d987f71d53da7,
+        type: 3}
+      propertyPath: movementScript
+      value: 
+      objectReference: {fileID: 8597868268812028505}
     - target: {fileID: 4496672846902782984, guid: c1a31cec0aa399d49b1d987f71d53da7,
         type: 3}
       propertyPath: textBubble
@@ -69,6 +79,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1688748061238991769, guid: 7e02ceb2d0cb6bc4b94f798b32525c72,
         type: 3}
+    - target: {fileID: 4496672846902782984, guid: c1a31cec0aa399d49b1d987f71d53da7,
+        type: 3}
+      propertyPath: dialoguePanel
+      value: 
+      objectReference: {fileID: 6631377121822706995}
     - target: {fileID: 8623520466582528032, guid: c1a31cec0aa399d49b1d987f71d53da7,
         type: 3}
       propertyPath: m_Name
@@ -90,19 +105,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9156519798351197072}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8623520466582528032, guid: c1a31cec0aa399d49b1d987f71d53da7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3749490096226469969}
-    - targetCorrespondingSourceObject: {fileID: 8623520466582528032, guid: c1a31cec0aa399d49b1d987f71d53da7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8597868268812028505}
-    - targetCorrespondingSourceObject: {fileID: 8623520466582528032, guid: c1a31cec0aa399d49b1d987f71d53da7,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7407445220720339385}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1a31cec0aa399d49b1d987f71d53da7, type: 3}
 --- !u!4 &1771561285409204118 stripped
 Transform:
@@ -110,72 +113,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1405389030818307348}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7218170469500960052 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8623520466582528032, guid: c1a31cec0aa399d49b1d987f71d53da7,
+--- !u!114 &8597868268812028505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7264642940306397005, guid: c1a31cec0aa399d49b1d987f71d53da7,
     type: 3}
   m_PrefabInstance: {fileID: 1405389030818307348}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3749490096226469969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218170469500960052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ccff8a4df03b14409ad1484a052a7c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  missionIcon: {fileID: 0}
-  hasMission: 0
-  movementScript: {fileID: 8597868268812028505}
-  bubble: {fileID: 2492813812020445530}
-  npcname: 
-  message: 
---- !u!114 &8597868268812028505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218170469500960052}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a4f2b157ccb8c746aba5f0de96b1fdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRadius: 300
-  detectionRadius: 5
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  buildingLayer:
-    serializedVersion: 2
-    m_Bits: 128
---- !u!195 &7407445220720339385
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218170469500960052}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1001 &5454436912448962786
 PrefabInstance:
   m_ObjectHideFlags: 0
