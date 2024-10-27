@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    private NPC npc; // Referencia al NPC con el que se interactúa
-    public MissionIcon missionIcon; // Referencia al ícono de misión del NPC
-    private NPC activeNPC; // Referencia al NPC con el que se está interactuando
-    public NewBehaviourScript textBubble; // Referencia al script del bocadillo de texto
+    private NPC npc; // Referencia al NPC con el que se interactï¿½a
+    public MissionIcon missionIcon; // Referencia al ï¿½cono de misiï¿½n del NPC
+    private NPC activeNPC; // Referencia al NPC con el que se estï¿½ interactuando
+    public Dialogue textBubble; // Referencia al script del bocadillo de texto
 
     private void Start()
     {
@@ -14,11 +14,11 @@ public class Interactable : MonoBehaviour
         npc = GetComponent<NPC>();
         if (npc != null)
         {
-            missionIcon = npc.missionIcon; // Obtiene el icono de misión del NPC
+            missionIcon = npc.missionIcon; // Obtiene el icono de misiï¿½n del NPC
         }
     }
 
-    // Método para manejar la interacción con el NPC
+    // Mï¿½todo para manejar la interacciï¿½n con el NPC
     public void Interact()
     {
         
@@ -29,57 +29,67 @@ public class Interactable : MonoBehaviour
         }
 
         Debug.Log($"Interacted with NPC: {npc.name}");
-        npc.OnInteractAfterCollection(); 
 
-        // Verifica si el jugador ya tiene una misión activa
+        // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)
         {
+            // If NPC is target
+            if (PlayerManager.Instance.currentTargets.Contains(npc.gameObject))
+                npc.OnInteractAfterCollection();
+            // NPC is the assigned but not objects have been found
+            else{
+                Debug.Log("AÃºn necesitas recolectar todos los objetos antes de completar la misiÃ³n.");
+            }
+                // completa
+            // si es q se lo ha asignaio
+                // aparece otra vez solo conversaciÃ³n
+            // si no es ninguno
+                // aviso de que no puede tener otra
             
-            Debug.Log($"{PlayerManager.Instance.name} already has an active mission and cannot accept a new one.");
-            return; // Sale del método si ya hay una misión activa
         }
-
-        activeNPC = npc; // Guarda el NPC con el que se interactúa
-
-        // Cambia el sprite del icono de misión al sprite de la misión
-        if (missionIcon != null && missionIcon.currentMission != null)
+        // No mission assigned
+        else
         {
-            SpriteRenderer spriteRenderer = missionIcon.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            // empiezan conversaciÃ³n
+            activeNPC = npc; // Guarda el NPC con el que se interactï¿½a
+
+            // Cambia el sprite del icono de misiï¿½n al sprite de la misiï¿½n
+            if (missionIcon != null && missionIcon.currentMission != null)
             {
-                spriteRenderer.sprite = missionIcon.currentMission.missionIconSprite;
-                
-                Debug.Log($"Changed mission icon sprite to: {missionIcon.currentMission.missionIconSprite.name}");
-            }
-            else
-            {
-                Debug.LogError("SpriteRenderer es nulo en Interactable.");
-            }
-
-        }
-
-
-        
-
-        // Iniciar el diálogo con el mensaje del NPC
-        if (textBubble != null && activeNPC.message != null)
-        {
-            textBubble.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
-            textBubble.StartDialogue(activeNPC); // Inicia el diálogo
-        }
-
-        PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misión activa
-        PlayerManager.Instance.activeMission = missionIcon;
-        Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}.");
-        if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
-        {
-            string objetivo = activeNPC.missionIcon.addressee;
-            NPC[] allNPCS = FindObjectsOfType<NPC>();
-            foreach (NPC npc in allNPCS)
-            {
-                if (npc.npcname == objetivo)
+                SpriteRenderer spriteRenderer = missionIcon.GetComponent<SpriteRenderer>();
+                if (spriteRenderer != null)
                 {
-                    PlayerManager.Instance.AddTarget(npc.gameObject);
+                    spriteRenderer.sprite = missionIcon.currentMission.missionIconSprite;
+                    
+                    Debug.Log($"Changed mission icon sprite to: {missionIcon.currentMission.missionIconSprite.name}");
+                }
+                else
+                {
+                    Debug.LogError("SpriteRenderer es nulo en Interactable.");
+                }
+
+            }
+            
+            // Iniciar el diï¿½logo con el mensaje del NPC
+            if (textBubble != null && activeNPC.message != null)
+            {
+                textBubble.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
+                textBubble.StartDialogue(activeNPC); // Inicia el diï¿½logo
+            }
+
+            PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misiï¿½n activa
+            PlayerManager.Instance.activeMission = missionIcon;
+            Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}.");
+            if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
+            {
+                string objetivo = activeNPC.missionIcon.addressee;
+                NPC[] allNPCS = FindObjectsOfType<NPC>();
+                foreach (NPC npc in allNPCS)
+                {
+                    if (npc.npcname == objetivo)
+                    {
+                        PlayerManager.Instance.AddTarget(npc.gameObject);
+                    }
                 }
             }
         }

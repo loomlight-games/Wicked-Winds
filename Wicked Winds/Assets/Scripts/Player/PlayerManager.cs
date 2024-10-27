@@ -13,7 +13,7 @@ public class PlayerManager : AStateController
 
     [HideInInspector] public float verticalVelocity;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey;
+    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
     public bool hasActiveMission;
@@ -144,7 +144,10 @@ public class PlayerManager : AStateController
 
     public void OnInteract(InputAction.CallbackContext context){
         interactKey = context.ReadValueAsButton();
-            
+    }
+
+    public void OnNextLine(InputAction.CallbackContext context){
+        nextLineKey = context.ReadValueAsButton();
     }
 
 
