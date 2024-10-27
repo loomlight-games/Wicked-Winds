@@ -67,7 +67,8 @@ public class Dialogue : MonoBehaviour
         }
 
         ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        StartCoroutine(TypeLine());
+        NextLine();
+        //StartCoroutine(TypeLine());
     }
 
     // Nuevo m�todo para iniciar el di�logo sin el nombre del NPC
@@ -85,7 +86,8 @@ public class Dialogue : MonoBehaviour
         }
 
         ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        StartCoroutine(TypeLine());
+        NextLine();
+        //StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
@@ -102,9 +104,11 @@ public class Dialogue : MonoBehaviour
     {
         if (index < lines.Length - 1)
         {
-            index++;
             text.text = string.Empty;
-            StartCoroutine(TypeLine());
+            text.text = lines[index];
+            index++;
+            //text.text = string.Empty;
+            //StartCoroutine(TypeLine());
         }
         else
         {
