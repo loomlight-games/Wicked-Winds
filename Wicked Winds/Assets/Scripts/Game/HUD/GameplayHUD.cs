@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,7 @@ public class GameplayHUD : MonoBehaviour
     {
         // Needs to know boost value
         PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
-        //missionmagar.intance.misisonevent += OnMisisonevent;
+        PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
     }
 
     // Update is called once per frame
@@ -63,6 +64,11 @@ public class GameplayHUD : MonoBehaviour
     private void OnBoostChangeEvent(object sender, float currentBoost)
     {
         boostText.text = Mathf.FloorToInt(currentBoost).ToString();
+    }
+
+    private void OnMissionCompleteEvent(object sender, EventArgs e)
+    {
+        remainingTime += 20f;
     }
 
     void OnMision (object sender, float seconds){

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
+    
     public MissionIcon missionIcon = null; // Referencia al �cono que ser� asignado a este NPC
     public bool hasMission; // Indica si el NPC tiene una misi�n
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
@@ -114,8 +116,6 @@ public class NPC : MonoBehaviour
                 bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
             }
         }
-
-
     }
 
     public void OnInteractAfterLetter()
@@ -163,6 +163,8 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
 
         PlayerManager.Instance.hasActiveMission = false;
+
+        PlayerManager.Instance.OnMissionCompleted();
     }
 }
 
