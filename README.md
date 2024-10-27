@@ -397,8 +397,8 @@ En principio, el marketing del juego se lleva a cabo por autopromoción a travé
 Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar con Wicked Winds:
 
 ### Escenario Pesimista
-- **Base de Jugadores:** 5,000 usuarios activos mensuales.
-- **Micropagos (Monedas):** Tasa de conversión del 0.3%, lo que equivale a 15 jugadores comprando monedas, con un gasto promedio de 1,50 € por compra.
+- **Base de Jugadores:** 5.000 usuarios activos mensuales.
+- **Micropagos (Monedas):** Tasa de conversión del 0.3%, lo que equivale a 15 jugadores comprando monedas, con un gasto promedio de 1.50 € por compra.
 - **Ingresos por Anuncios:** Ingresos muy bajos debido a pocos clics y visualizaciones en los anuncios, generando entre 20 € y 50 € al mes.
 - **Ingresos Totales:** Entre 40 € y 70 € al mes (micropagos + anuncios).
 - **Engagement:** Los jugadores encuentran poco atractiva la relación esfuerzo-recompensa, y los anuncios resultan molestos, aumentando la tasa de abandono.
@@ -406,24 +406,31 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Resultado:** El juego apenas genera ingresos suficientes para mantenerse y necesita ajustes importantes en su monetización o diseño.
 
 ### Escenario Normal
-- **Base de Jugadores:** 25,000 usuarios activos mensuales.
+- **Base de Jugadores:** 25.000 usuarios activos mensuales.
 - **Micropagos (Monedas):** Tasa de conversión del 1.5%, con 375 jugadores comprando monedas, con un gasto promedio de 2 € por compra.
 - **Ingresos por Anuncios:** Ingresos moderados con una mayor cantidad de visualizaciones y clics en los anuncios, generando entre 200 € y 500 € al mes.
-- **Ingresos Totales:** Entre 950 € y 1,250 € al mes (micropagos + anuncios).
+- **Ingresos Totales:** Entre 950 € y 1.250 € al mes (micropagos + anuncios).
 - **Engagement:** Los jugadores interactúan con la tienda y las monedas adicionales obtenidas por micropagos, y toleran los anuncios, aunque algunos siguen abandonando el juego.
 - **Retención:** Aproximadamente un 20% de los jugadores siguen jugando después de 7 días.
 - **Resultado:** El juego es sostenible, cubre los costos operativos y permite actualizaciones periódicas de contenido y nuevas skins o ítems.
 
 ### Escenario Optimista
-- **Base de Jugadores:** 100,000 usuarios activos mensuales.
+- **Base de Jugadores:** 100.000 usuarios activos mensuales.
 - **Micropagos (Monedas):** Tasa de conversión del 3%, con 3,000 jugadores comprando monedas, con un gasto promedio de 3 € por compra.
-- **Ingresos por Anuncios:** Ingresos elevados debido a la gran cantidad de impresiones y clics en los anuncios, generando entre 1,000 € y 2,000 € al mes.
-- **Ingresos Totales:** Entre 10,500 € y 12,000 € al mes (micropagos + anuncios).
+- **Ingresos por Anuncios:** Ingresos elevados debido a la gran cantidad de impresiones y clics en los anuncios, generando entre 1.000 € y 2.000 € al mes.
+- **Ingresos Totales:** Entre 10.500 € y 12.000 € al mes (micropagos + anuncios).
 - **Engagement:** Los jugadores disfrutan de la posibilidad de personalizar su experiencia mediante las monedas adquiridas, y no se ven demasiado afectados por los anuncios, lo que mejora el compromiso con el juego.
 - **Retención:** Un 35% de los jugadores permanecen después de 7 días.
 - **Resultado:** El juego se convierte en un éxito moderado, generando ingresos suficientes para ampliar el contenido, agregar nuevas skins e ítems, y mejorar la experiencia de usuario.
 
+# 10. Post-Mortem
+## Aspectos Positivos
 
+## Aspectos Negativos
+
+## Lecciones aprendidas
+
+## Conclusión
 
 # This is an H1 header
 ## This is an H2 header
