@@ -29,23 +29,12 @@ public class Interactable : MonoBehaviour
         }
 
         Debug.Log($"Interacted with NPC: {npc.name}");
-        npc.OnInteractAfterCollection(); //miro a ver si es el target y si lo es completara la mision
+        npc.OnInteractAfterCollection(); 
 
         // Verifica si el jugador ya tiene una misión activa
         if (PlayerManager.Instance.hasActiveMission)
         {
-            if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
-            {
-                string objetivo = activeNPC.missionIcon.addressee;
-                NPC[] allNPCS = FindObjectsOfType<NPC>();
-                foreach (NPC npc in allNPCS)
-                {
-                    if (npc.npcname == objetivo)
-                    {
-                        PlayerManager.Instance.AddTarget(npc.gameObject);
-                    }
-                }
-            }
+            
             Debug.Log($"{PlayerManager.Instance.name} already has an active mission and cannot accept a new one.");
             return; // Sale del método si ya hay una misión activa
         }
@@ -82,5 +71,17 @@ public class Interactable : MonoBehaviour
         PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misión activa
         PlayerManager.Instance.activeMission = missionIcon;
         Debug.Log($"{PlayerManager.Instance.name} accepted a new mission from {npc.name}.");
+        if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
+        {
+            string objetivo = activeNPC.missionIcon.addressee;
+            NPC[] allNPCS = FindObjectsOfType<NPC>();
+            foreach (NPC npc in allNPCS)
+            {
+                if (npc.npcname == objetivo)
+                {
+                    PlayerManager.Instance.AddTarget(npc.gameObject);
+                }
+            }
+        }
     }
 }

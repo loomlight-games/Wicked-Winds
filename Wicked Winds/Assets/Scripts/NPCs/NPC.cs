@@ -124,6 +124,10 @@ public class NPC : MonoBehaviour
         // Verifica si el NPC es el último objetivo en currentTargets
         if (PlayerManager.Instance.currentTargets.Contains(gameObject))
         {// Mostrar el mensaje antes de completar la misión
+            if (agent.isStopped == false)
+            {
+                StopMovement();
+            }
             if (!string.IsNullOrEmpty(responseMessage))
             {
                 gameObject.GetComponent<Interactable>().textBubble.StartDialogue(responseMessage);
