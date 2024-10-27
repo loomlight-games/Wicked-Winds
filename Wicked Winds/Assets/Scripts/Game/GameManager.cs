@@ -29,7 +29,7 @@ public class GameManager : AStateController
 
     #region CLOUD SERVICES
     private bool eventsInitialized = false;
-
+    [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
     #endregion
 
     [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
@@ -142,8 +142,9 @@ public class GameManager : AStateController
             if (AuthenticationService.Instance.SessionTokenExists)
             {
                 AuthenticationService.Instance.SignOut();
+                AuthenticationService.Instance.ClearSessionToken();
                 //if user already sign in
-                Debug.Log("Session token existed, user signed out");
+                
                 //SignInAnonymouslyAsync();
                 
             }
@@ -188,6 +189,8 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+            
+            
         }
         catch (AuthenticationException exception)
         {
@@ -205,6 +208,8 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+            string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
         }
         catch (AuthenticationException exception)
         {
@@ -218,6 +223,7 @@ public class GameManager : AStateController
     public void SignOut()
     {
         AuthenticationService.Instance.SignOut();
+        Debug.Log("cierra sesion");
         PanelManager.CloseAll();
         SceneManager.LoadScene("Main menu");
         //PanelManager.Open("auth");
@@ -229,6 +235,7 @@ public class GameManager : AStateController
         AuthenticationService.Instance.SignedIn += () =>
         {
             SignInConfirmAsync();
+
             // Shows how to get a playerID
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
             // Shows how to get an access token
@@ -260,7 +267,9 @@ public class GameManager : AStateController
         {   
             if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
             {
-                await AuthenticationService.Instance.UpdatePlayerNameAsync("Player");
+                string username =PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
             }
             PanelManager.CloseAll();
             PanelManager.Open("profile");

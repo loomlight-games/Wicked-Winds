@@ -9,7 +9,7 @@ using System;
 public class LeaderboardPanel : Panel 
 {
     string LeaderboardID = "ElapsedTime";
-    [SerializeField] private int playersPerPage = 25;
+    [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
     //for asigning the playersItems prefabs (contents's children)
@@ -51,11 +51,17 @@ public class LeaderboardPanel : Panel
         ClearPlayersList();
         currentPage = 1;
         totalPages = 0;
-        //LoadPlayers(1);
-        LoadPlayersWithoutSignIn(1);
+        LoadPlayers(1);
+        //LoadPlayersWithoutSignIn(1);
+        AddGameScore();
 
     }
 
+    //add the player score from the gameplay scene
+    private void AddGameScore()
+    {
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
+    }
     private void AddScore()
     {
         AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE,0));
