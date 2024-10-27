@@ -9,6 +9,7 @@ public class Pickable : MonoBehaviour
     public MissionIcon missionIcon; // Referencia al �cono de misi�n del NPC
     public int numOfObjectsToCollect;
     public Dialogue playerTextBubble; // Referencia al bocadillo de texto
+    
 
     // M�todo para establecer el NPC
 

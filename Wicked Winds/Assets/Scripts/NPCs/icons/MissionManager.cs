@@ -222,7 +222,7 @@ public class MissionManager : MonoBehaviour
                 Debug.Log($"Asignando misión 'PotionMission' al NPC {npc.npcname}");
 
                 // Generar los ingredientes alrededor del NPC
-                GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 3);
+                GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 4);
 
                 // Verifica si los ingredientes han sido generados
                 if (spawnedIngredients != null && spawnedIngredients.Length > 0)
