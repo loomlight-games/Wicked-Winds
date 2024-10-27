@@ -88,6 +88,10 @@ public class GameManager : AStateController
             case "Main menu":
                 SceneManager.LoadScene("Main menu");
                 break;
+            case "Main menu Leaderboard":
+                AuthenticationService.Instance.SignOut();
+                SceneManager.LoadScene("Main menu");
+                break;
             case "Leaderboard":
                 SceneManager.LoadScene("Leaderboard2");
                 break;
@@ -216,7 +220,8 @@ public class GameManager : AStateController
     {
         AuthenticationService.Instance.SignOut();
         PanelManager.CloseAll();
-        PanelManager.Open("auth");
+        SceneManager.LoadScene("Main menu");
+        //PanelManager.Open("auth");
     }
 
     private void SetupEvents()

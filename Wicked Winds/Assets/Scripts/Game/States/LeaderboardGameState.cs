@@ -11,7 +11,7 @@ public class LeaderboardGameState : AState
     public override void Enter()
     {
         //funcion con idea de hacer un swithc que diferencie los diferentes rankings, de momento solo hay uno
-        PanelManager.Open("Leaderboard");
+        PanelManager.Open("auth");
         Debug.Log("openleaderboards");
 
     }
