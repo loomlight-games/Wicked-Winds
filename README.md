@@ -1,3 +1,5 @@
+<img src="https://i.postimg.cc/zfdc68td/New-Logo-removebg-preview.png">
+
 > ### Presentación
 > Somos Loomlight, un grupo de estudiantes de diseño y desarrollo de videojuegos y creadores de Wicked Winds. Se trata de un proyecto conjunto entre varias asignaturas del curso con el que tratamos de crear un videojuego de navegador de internet que consiga ser completo y divertido, y nos permita acercarnos a la realidad del mercado de los videojuegos.
 > ### Miembros
@@ -11,6 +13,10 @@
 > 
 > Paula González Stradiotto
 
+<p align="center">
+  <img src="https://i.postimg.cc/tRzxjJtC/Wicked-Winds-T-tulo.png">
+</p>
+
 # Wicked Winds - Documento de Diseño de Juego
 
 <div align="center"><b><i>
@@ -18,7 +24,6 @@
 </i></b></div>
 
 # 1. INTRODUCCIÓN
-
 - **Título**: Wicked Winds
 - **Desarrollador**: Loomlight
 - **Género**: Juego de estilo **arcade**/**acción** contrarreloj competitivo
@@ -173,7 +178,6 @@ Esta flecha se ajusta dinámicamente a medida que el jugador se desplaza, guián
 
 Esta mecánica no solo simplifica el proceso de búsqueda de misiones, sino que también añade un elemento de fluidez al juego, haciendo que la experiencia de ayuda a los ciudadanos sea más inmersiva y menos frustrante.
 
-
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
 Ashen es un joven brujo audaz y servicial que se ha convertido en el héroe no oficial de su ciudad mágica. Con su escoba siempre a mano, ayuda a sus vecinos con problemas que van desde la entrega de ingredientes místicos hasta la recolección de objetos mágicos. La ciudad es un lugar vibrante y encantado, habitado por personajes excéntricos con historias sorprendentes que influyen en las tareas que le piden a Ashen.
@@ -182,6 +186,9 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 
 ## Personajes
 - **Ashen - El protagonista:** Un joven brujo que ha ganado reputación por su habilidad para resolver problemas. Alegre y siempre dispuesto a ayudar, utiliza su escoba mágica para moverse por la ciudad. Su personalidad enérgica y curiosa le permite ganarse la confianza de los habitantes.
+<img src="https://i.postimg.cc/C1sVzWmk/Concept04.jpg"/>
+<img src="https://i.postimg.cc/kGMP8fpZ/Concept05.jpg"/>
+<img src="https://i.postimg.cc/G2KhZ80W/Recolors.jpg"/>
 
 - **Habitantes de la ciudad:** Cada NPC tiene características y necesidades únicas; algunos son cómicos, otros misteriosos, cada uno con tareas relacionadas con sus personalidades. Las interacciones con ellos pueden revelar conexiones sorprendentes entre sus historias.
 
@@ -189,12 +196,19 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 
 ## Entornos y Lugares
 - **Ciudad mágica:** Inspirada en la arquitectura medieval, con influencias mágicas. Las calles están adornadas con farolas, árboles, calderos mágicos y edificaciones que dan un toque fantástico.
+<img src="https://i.postimg.cc/L5FMXmtH/Unity4.jpg"/>
+<img src="https://i.postimg.cc/1X01VbBD/Unity5.jpg"/>
+<img src="https://i.postimg.cc/yYBHCY6j/Unity6.jpg"/>
 
 - **Plaza central:** Uno de los lugares más concurridos, donde los habitantes suelen congregarse. Aquí suelen comenzar y terminar varias misiones.
+<img src="https://i.postimg.cc/7LckF3bJ/Unity1.jpg"/>
 
 - **Mercadillo:** Ubicado en la plaza central, lleno de puestos de vendedores de ingredientes y herramientas mágicas, es uno de los lugares favoritos de Ashen para realizar sus recados.
+<img src="https://i.postimg.cc/BZ20z13t/Unity2.jpg"/>
 
 - **Lugares adicionales:** El bosque encantado, el pantano y la torre de hechicería ofrecen más oportunidades de exploración y aventuras que conectan con la narrativa principal.
+<img src="https://i.postimg.cc/xCz2nXbx/Unity3.jpg"/>
+
 
 # 6. ARTE
 ## Estética General del Juego
