@@ -9,7 +9,7 @@ public class MissionManager : MonoBehaviour
 {
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
-    public int numMissionsToAssign = 3; // Número de misiones por ronda
+    public int numMissionsToAssign = 3; // Nï¿½mero de misiones por ronda
 
     private MissionIconPool missionIconPool;
     public List<NPC> assignedNPCs = new List<NPC>();
@@ -34,7 +34,7 @@ public class MissionManager : MonoBehaviour
 
     public void AssignMissions(int numMissionsToAssign)
     {
-        Debug.Log("Iniciando la asignación de misiones...");
+        Debug.Log("Iniciando la asignaciï¿½n de misiones...");
 
         if (!CanAssignMissions())
             return;
@@ -43,9 +43,9 @@ public class MissionManager : MonoBehaviour
         int numEasyMissions, numMediumMissions, numHardMissions;
         GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions);
 
-        Debug.Log($"Número de misiones a asignar: Fácil: {numEasyMissions}, Media: {numMediumMissions}, Difícil: {numHardMissions}");
+        Debug.Log($"Nï¿½mero de misiones a asignar: Fï¿½cil: {numEasyMissions}, Media: {numMediumMissions}, Difï¿½cil: {numHardMissions}");
         AssignMissionsToNPCs(missionLists, numEasyMissions, numMediumMissions, numHardMissions);
-        Debug.Log("Finalizada la asignación de misiones.");
+        Debug.Log("Finalizada la asignaciï¿½n de misiones.");
     }
 
     private bool CanAssignMissions()
@@ -73,40 +73,40 @@ public class MissionManager : MonoBehaviour
 
         foreach (MissionData mission in availableMissions)
         {
-            Debug.Log($"Analizando misión: {mission.name} con dificultad: {mission.difficulty}");
+            Debug.Log($"Analizando misiï¿½n: {mission.name} con dificultad: {mission.difficulty}");
             if (mission.difficulty == 0)
             {
                 missionLists["easy"].Add(mission);
-                Debug.Log($"Misión fácil añadida: {mission.name}");
+                Debug.Log($"Misiï¿½n fï¿½cil aï¿½adida: {mission.name}");
             }
             else if (mission.difficulty == 1)
             {
                 missionLists["medium"].Add(mission);
-                Debug.Log($"Misión media añadida: {mission.name}");
+                Debug.Log($"Misiï¿½n media aï¿½adida: {mission.name}");
             }
             else if (mission.difficulty == 2)
             {
                 missionLists["hard"].Add(mission);
-                Debug.Log($"Misión difícil añadida: {mission.name}");
+                Debug.Log($"Misiï¿½n difï¿½cil aï¿½adida: {mission.name}");
             }
         }
 
-        Debug.Log($"Misiones fáciles disponibles: {missionLists["easy"].Count}");
+        Debug.Log($"Misiones fï¿½ciles disponibles: {missionLists["easy"].Count}");
         Debug.Log($"Misiones medias disponibles: {missionLists["medium"].Count}");
-        Debug.Log($"Misiones difíciles disponibles: {missionLists["hard"].Count}");
+        Debug.Log($"Misiones difï¿½ciles disponibles: {missionLists["hard"].Count}");
 
         return missionLists;
     }
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        Debug.Log("Calculando el número de misiones por dificultad...");
+        Debug.Log("Calculando el nï¿½mero de misiones por dificultad...");
         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
-        Debug.Log($"Número calculado de misiones: Fácil: {numEasyMissions}, Media: {numMediumMissions}, Difícil: {numHardMissions}");
+        Debug.Log($"Nï¿½mero calculado de misiones: Fï¿½cil: {numEasyMissions}, Media: {numMediumMissions}, Difï¿½cil: {numHardMissions}");
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
@@ -122,21 +122,21 @@ public class MissionManager : MonoBehaviour
             NPC selectedNPC = GetRandomNPC(shuffledNPCs);
             if (selectedNPC == null)
             {
-                Debug.Log("No se pudo seleccionar un NPC adecuado, continuando con la siguiente iteración...");
+                Debug.Log("No se pudo seleccionar un NPC adecuado, continuando con la siguiente iteraciï¿½n...");
                 continue;
             }
 
-            Debug.Log($"NPC seleccionado para asignación: {selectedNPC.name}");
+            Debug.Log($"NPC seleccionado para asignaciï¿½n: {selectedNPC.name}");
             MissionData mission = SelectMission(missionLists, ref assignedCount, numEasyMissions, numMediumMissions);
             if (mission == null)
             {
-                Debug.Log("No se encontró una misión adecuada para asignar al NPC.");
+                Debug.Log("No se encontrï¿½ una misiï¿½n adecuada para asignar al NPC.");
                 continue;
             }
 
             AssignMissionToNPC(selectedNPC, mission);
             assignedCount++;
-            Debug.Log($"Misión asignada. Total de misiones asignadas: {assignedCount}/{numMissionsToAssign}");
+            Debug.Log($"Misiï¿½n asignada. Total de misiones asignadas: {assignedCount}/{numMissionsToAssign}");
             shuffledNPCs.Remove(selectedNPC);
         }
 
@@ -152,7 +152,7 @@ public class MissionManager : MonoBehaviour
 
         if (selectedNPC.missionIcon != null)
         {
-            Debug.Log($"El NPC {selectedNPC.name} ya tiene una misión. Eliminando de la lista.");
+            Debug.Log($"El NPC {selectedNPC.name} ya tiene una misiï¿½n. Eliminando de la lista.");
             shuffledNPCs.RemoveAt(randomIndex);
             return null;
         }
@@ -163,23 +163,23 @@ public class MissionManager : MonoBehaviour
 
     private MissionData SelectMission(Dictionary<string, List<MissionData>> missionLists, ref int assignedCount, int numEasyMissions, int numMediumMissions)
     {
-        Debug.Log("Seleccionando misión...");
+        Debug.Log("Seleccionando misiï¿½n...");
         MissionData mission = null;
 
         if (assignedCount < numEasyMissions && missionLists["easy"].Count > 0)
         {
             mission = GetRandomMission(missionLists["easy"]);
-            Debug.Log($"Misión fácil seleccionada: {mission.name}");
+            Debug.Log($"Misiï¿½n fï¿½cil seleccionada: {mission.name}");
         }
         else if (assignedCount < numEasyMissions + numMediumMissions && missionLists["medium"].Count > 0)
         {
             mission = GetRandomMission(missionLists["medium"]);
-            Debug.Log($"Misión media seleccionada: {mission.name}");
+            Debug.Log($"Misiï¿½n media seleccionada: {mission.name}");
         }
         else if (missionLists["hard"].Count > 0)
         {
             mission = GetRandomMission(missionLists["hard"]);
-            Debug.Log($"Misión difícil seleccionada: {mission.name}");
+            Debug.Log($"Misiï¿½n difï¿½cil seleccionada: {mission.name}");
         }
         else
         {
@@ -191,7 +191,7 @@ public class MissionManager : MonoBehaviour
 
     private void AssignMissionToNPC(NPC selectedNPC, MissionData mission)
     {
-        Debug.Log($"Asignando misión {mission.name} a NPC: {selectedNPC.name}");
+        Debug.Log($"Asignando misiï¿½n {mission.name} a NPC: {selectedNPC.name}");
         MissionIcon missionIcon = MissionIconPoolManager.Instance.GetMissionIconPool().GetIcon();
         if (missionIcon == null)
         {
@@ -206,8 +206,8 @@ public class MissionManager : MonoBehaviour
         selectedNPC.hasMission = true;
 
         assignedNPCs.Add(selectedNPC);
-        Debug.Log($"Misión {mission.name} asignada correctamente a {selectedNPC.name}");
-        // Lógica de asignación de misión
+        Debug.Log($"Misiï¿½n {mission.name} asignada correctamente a {selectedNPC.name}");
+        // Lï¿½gica de asignaciï¿½n de misiï¿½n
 
       
    
@@ -219,7 +219,7 @@ public class MissionManager : MonoBehaviour
         {
             if (npc.missionType == "PotionMission")
             {
-                Debug.Log($"Asignando misión 'PotionMission' al NPC {npc.npcname}");
+                Debug.Log($"Asignando misiï¿½n 'PotionMission' al NPC {npc.npcname}");
 
                 // Generar los ingredientes alrededor del NPC
                 GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 4);
@@ -265,7 +265,7 @@ public class MissionManager : MonoBehaviour
                     }
                 }
 
-                Debug.Log("PotionMission: Asignación completa de 3 ingredientes con NPC y MissionIcon.");
+                Debug.Log("PotionMission: Asignaciï¿½n completa de 3 ingredientes con NPC y MissionIcon.");
             }
 
             if (npc.missionType == "LetterMision")
@@ -329,7 +329,7 @@ public class MissionManager : MonoBehaviour
 
             missionIcon.transform.localPosition = desiredPosition;
             missionIcon.transform.localScale = desiredScale;
-            Debug.Log($"Icono de misión asignado a {selectedNPC.name} dentro de Bubble.");
+            Debug.Log($"Icono de misiï¿½n asignado a {selectedNPC.name} dentro de Bubble.");
         }
         else
         {
@@ -340,7 +340,7 @@ public class MissionManager : MonoBehaviour
     private MissionData GetRandomMission(List<MissionData> missions)
     {
         int randomIndex = UnityEngine.Random.Range(0, missions.Count);
-        Debug.Log($"Misión aleatoria seleccionada: {missions[randomIndex].name}");
+        Debug.Log($"Misiï¿½n aleatoria seleccionada: {missions[randomIndex].name}");
         return missions[randomIndex];
     }
 
@@ -350,7 +350,7 @@ public class MissionManager : MonoBehaviour
         missionsCompleted++;
         currentRound = (missionsCompleted / 5) + 1;
 
-        Debug.Log($"Misión completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}");
+        Debug.Log($"Misiï¿½n completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}");
         AssignMissions(numMissionsToAssign);
     }
 }

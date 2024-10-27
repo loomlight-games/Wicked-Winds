@@ -154,11 +154,14 @@ public class NPC : MonoBehaviour
     {
         if (this.missionIcon != null)
             missionIcon.CompleteMission();
-        if(sender.missionIcon != null)
-        {
-            sender.missionIcon.CompleteMission();
+        
+        if (sender!=null){
+            if(sender.missionIcon != null)
+            {
+                sender.missionIcon.CompleteMission();
+                sender = null;
+            }
         }
-
         // Quita al NPC de la lista de objetivos al completar la misi�n
         PlayerManager.Instance.RemoveTarget(gameObject);
 
