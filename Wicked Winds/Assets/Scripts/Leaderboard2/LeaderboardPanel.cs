@@ -51,11 +51,17 @@ public class LeaderboardPanel : Panel
         ClearPlayersList();
         currentPage = 1;
         totalPages = 0;
-        //LoadPlayers(1);
-        LoadPlayersWithoutSignIn(1);
+        LoadPlayers(1);
+        //LoadPlayersWithoutSignIn(1);
+        AddGameScore();
 
     }
 
+    //add the player score from the gameplay scene
+    private void AddGameScore()
+    {
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
+    }
     private void AddScore()
     {
         AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE,0));
