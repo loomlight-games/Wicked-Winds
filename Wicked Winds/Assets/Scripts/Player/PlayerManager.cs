@@ -18,6 +18,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public int score;
     public bool hasActiveMission;
     public List<GameObject> currentTargets= new List<GameObject>();
+    public Transform target;
     public MissionIcon activeMission;
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
@@ -42,13 +43,14 @@ public class PlayerManager : AStateController
     public Flying flying; // Flying
     public CustomizableCharacter customizable; // Customizable
     public Interactions interactions;
+    public Compass compass;
     #endregion
 
     #region PROPERTIES
     [Header("Movement")]
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float boostSpeed = 13f;
-    [SerializeField] float rotationSpeed = 5f;
+    [SerializeField] public float rotationSpeed = 5f;
     [SerializeField] float flyForce = 2f;
     [SerializeField] float gravity = 5f;
     [SerializeField] float heightLimit = 10f;
@@ -57,6 +59,7 @@ public class PlayerManager : AStateController
     [Header("Mechanics")]
     [SerializeField] float boostLossPerSecond = 5f;
     [SerializeField] public float interactRange = 2f;
+    [SerializeField] public Transform compassTransform;
 
 
     [Header("Customizable")]
@@ -83,6 +86,7 @@ public class PlayerManager : AStateController
         flying = new (controller, flyForce, gravity, heightLimit);
         customizable = new (head, upperBody, lowerBody, shoes);
         interactions = new ();
+        compass = new();
 
         hasActiveMission = false;
 
