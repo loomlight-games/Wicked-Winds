@@ -12,7 +12,7 @@ public class Compass
     //public float speed = 2f; // Velocidad de rotación del jugador
     // LookCoroutine
     Transform compass, target;
-    GameObject compassPrefab;
+    GameObject compassPrefab, prefabInstance;
 
     bool isIstanciated = false;
     
@@ -41,11 +41,11 @@ public class Compass
             // Not instantiated compass
             if (!isIstanciated){
                 // Instantiates a copy of the prefab in that transform as a child of it
-                GameObject prefabInstance = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
+                prefabInstance = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
                 compass = prefabInstance.transform;
                 isIstanciated = true;
-                compassPrefab = prefabInstance;
             }
+            prefabInstance.SetActive(true);
 
             // Target is first target of list
             if (PlayerManager.Instance.currentTargets[0] != null)
@@ -61,9 +61,8 @@ public class Compass
             // Instantiated compass
             if (isIstanciated){
                 // Destroys it
-                GameManager.Instance.DestroyGO(compassPrefab);
-                isIstanciated = false;
-                compass = null;
+                //GameManager.Instance.DestroyGO(prefabInstance);
+                prefabInstance.SetActive(false);
             }
         }
     }
