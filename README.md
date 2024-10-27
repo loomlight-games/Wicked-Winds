@@ -209,7 +209,7 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 - **Ciudad mágica:** Inspirada en la arquitectura medieval, con influencias mágicas. Las calles están adornadas con farolas, árboles, calderos mágicos y edificaciones que dan un toque fantástico.
 
 <p align="center">
-<img src="https://i.postimg.cc/L5FMXmtH/Unity4.jpg"/>
+<img src="https://i.postimg.cc/1X01VbBD/Unity5.jpg"/>
 </p>
 
 <p align="center"> 
