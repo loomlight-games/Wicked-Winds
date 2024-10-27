@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -140,6 +141,7 @@ public class MissionManager : MonoBehaviour
         }
 
         Debug.Log("Todas las misiones han sido asignadas a los NPCs.");
+        specialMissionGeneration(assignedNPCs);
     }
 
     private NPC GetRandomNPC(List<NPC> shuffledNPCs)
@@ -206,96 +208,106 @@ public class MissionManager : MonoBehaviour
         assignedNPCs.Add(selectedNPC);
         Debug.Log($"Misión {mission.name} asignada correctamente a {selectedNPC.name}");
         // Lógica de asignación de misión
-        if (mission.missionName == "PotionMission")
+
+      
+   
+    }
+
+    public void  specialMissionGeneration(List<NPC> assignedNpcs)
+    {
+        foreach (NPC npc in assignedNpcs)
         {
-            Debug.Log($"Asignando misión 'PotionMission' al NPC {selectedNPC.name}");
-
-            // Generar los ingredientes alrededor del NPC
-            GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(selectedNPC.transform.position, 3);
-
-            // Verifica si los ingredientes han sido generados
-            if (spawnedIngredients != null && spawnedIngredients.Length > 0)
+            if (npc.missionType == "PotionMission")
             {
-                Debug.Log($"PotionMission: Generados {spawnedIngredients.Length} ingredientes alrededor del NPC {selectedNPC.name}");
-            }
-            else
-            {
-                Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
-            }
+                Debug.Log($"Asignando misión 'PotionMission' al NPC {npc.npcname}");
 
-            // Asignar el NPC y el MissionIcon a los objetos generados
-            foreach (GameObject ingredient in spawnedIngredients)
-            {
-                // Añadir el ingrediente a la lista de objetivos
-                PlayerManager.Instance.AddTarget(gameObject);
+                // Generar los ingredientes alrededor del NPC
+                GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 3);
 
-                Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
-
-                Pickable pickable = ingredient.GetComponent<Pickable>();
-                if (pickable != null)
+                // Verifica si los ingredientes han sido generados
+                if (spawnedIngredients != null && spawnedIngredients.Length > 0)
                 {
-                    pickable.SetNPC(selectedNPC); // Asignar el NPC al objeto recolectable
-                    Debug.Log($"Ingrediente {ingredient.name} asignado al NPC {selectedNPC.name} como Pickable.");
+                    Debug.Log($"PotionMission: Generados {spawnedIngredients.Length} ingredientes alrededor del NPC {npc.npcname}");
                 }
                 else
                 {
-                    Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
+                    Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
                 }
 
-                Interactable interactable = ingredient.GetComponent<Interactable>();
-                if (interactable != null)
+                // Asignar el NPC y el MissionIcon a los objetos generados
+                foreach (GameObject ingredient in spawnedIngredients)
                 {
-                    interactable.missionIcon = missionIcon; // Asignar el MissionIcon al objeto interactuable
-                    Debug.Log($"Ingrediente {ingredient.name} asignado a MissionIcon {missionIcon.name} como Interactable.");
-                }
-                else
-                {
-                    Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Interactable.");
-                }
-            }
+                    // Añadir el ingrediente a la lista de objetivos
+                    PlayerManager.Instance.AddTarget(gameObject);
 
-            Debug.Log("PotionMission: Asignación completa de 3 ingredientes con NPC y MissionIcon.");
-        }
+                    Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
 
-        if (mission.missionName == "LetterMision")
-        {
-            // Get a list of all NPCs in the scene
-            NPC[] allNPCs = GetAllNPCs();
-
-            // Create a list to hold NPC names, excluding the current NPC and those with a mission icon
-            List<string> npcNames = new List<string>();
-
-            foreach (var npc in allNPCs)
-            {
-                // Exclude the current NPC and those with a mission icon
-                if (npc != selectedNPC && (npc.missionIcon == null || npc.missionIcon.currentMission == null))
-                {
-                    Debug.Log($"Adding NPC name: {npc.npcname}");
-                    if (!string.IsNullOrEmpty(npc.npcname)) // Check if the name is not null or empty
+                    Pickable pickable = ingredient.GetComponent<Pickable>();
+                    if (pickable != null)
                     {
-                        npcNames.Add(npc.npcname); // Add the name to the list
+                        pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
+                        Debug.Log($"Ingrediente {ingredient.name} asignado al NPC {npc.npcname} como Pickable.");
                     }
                     else
                     {
-                        Debug.LogWarning("Found NPC with empty name.");
+                        Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
                     }
+
+                    Interactable interactable = ingredient.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        interactable.missionIcon = npc.missionIcon; // Asignar el MissionIcon al objeto interactuable
+                        Debug.Log($"Ingrediente {ingredient.name} asignado a MissionIcon {npc.missionIcon.name} como Interactable.");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Interactable.");
+                    }
+                }
+
+                Debug.Log("PotionMission: Asignación completa de 3 ingredientes con NPC y MissionIcon.");
+            }
+
+            if (npc.missionType == "LetterMision")
+            {
+                // Get a list of all NPCs in the scene
+                NPC[] allNPCs = GetAllNPCs();
+
+                // Create a list to hold NPC names, excluding the current NPC and those with a mission icon
+                List<string> npcNames = new List<string>();
+
+                foreach (var Npc in allNPCs)
+                {
+                    // Exclude the current NPC and those with a mission icon
+                    if (!assignedNPCs.Contains(Npc) && Npc != npc)
+                    {
+                        Debug.Log($"Adding NPC name: {Npc.npcname}");
+                        if (!string.IsNullOrEmpty(Npc.npcname)) // Check if the name is not null or empty
+                        {
+                            npcNames.Add(Npc.npcname); // Add the name to the list
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Found NPC with empty name.");
+                        }
+                    }
+                }
+
+                // Select a random NPC name from the list, if available
+                if (npcNames.Count > 0)
+                {
+                    string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
+                    npc.missionIcon.addressee = randomNPCName;
+                }
+                else
+                {
+                    Debug.LogWarning("No other NPCs available to be an addressee.");
                 }
             }
 
-            // Select a random NPC name from the list, if available
-            if (npcNames.Count > 0)
-            {
-                string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
-                missionIcon.addressee = randomNPCName;
-            }
-            else
-            {
-                Debug.LogWarning("No other NPCs available to be an addressee.");
-            }
+            npc.missionIcon.AssignMissionText(npc.missionIcon.currentMission, this, npc);
         }
-
-        missionIcon.AssignMissionText(mission, this, selectedNPC);
-   
+        
     }
 
     public static NPC[] GetAllNPCs()

@@ -12,7 +12,7 @@ public class MissionIcon : MonoBehaviour
     public MissionData currentMission; // La misión asignada a este ícono
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
-    private NPC assignedNPC; // Añadimos una referencia al NPC
+    public NPC assignedNPC; // Añadimos una referencia al NPC
     public MessageGenerator messageGenerator;
     public string addressee = null;
 

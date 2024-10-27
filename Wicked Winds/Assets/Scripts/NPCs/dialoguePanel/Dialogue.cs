@@ -62,7 +62,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         if (lines.Length == 0)
         {
-            Debug.LogWarning("El arreglo 'lines' está vacío. No hay diálogos para mostrar.");
+            //Debug.LogWarning("El arreglo 'lines' está vacío. No hay diálogos para mostrar.");
             return; // Sale del método si no hay líneas
         }
 
@@ -108,7 +108,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
         else
         {
-            gameObject.SetActive(false); // Desactiva el objeto al final del diálogo
+            DeactivateAllChildren();
         }
     }
 
@@ -118,6 +118,15 @@ public class NewBehaviourScript : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true); // Activa cada hijo
+        }
+    }
+
+    
+    void DeactivateAllChildren()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false); 
         }
     }
 

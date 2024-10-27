@@ -34,12 +34,13 @@ public class Pickable : MonoBehaviour
                     this.missionIcon.collectedItemsCount = 0;
 
                     // Añade el NPC como nuevo objetivo en `currentTargets`
-                    PlayerManager.Instance.AddTarget(npc.gameObject);
+                    PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
 
                     Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la misión.");
                     // Activa el bocadillo de texto y muestra el mensaje
                     if (playerTextBubble != null)
                     {
+                        Debug.Log("no hay player text bubble");
                         string texto = "Todos los objetos recolectados. Regresa al NPC para completar la misión." ;
                         playerTextBubble.StartDialogue(texto); // Inicia el diálogo en el bocadillo de texto
                     }
