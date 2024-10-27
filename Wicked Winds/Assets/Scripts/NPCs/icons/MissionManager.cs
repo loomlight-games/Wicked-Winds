@@ -274,17 +274,17 @@ public class MissionManager : MonoBehaviour
                 NPC[] allNPCs = GetAllNPCs();
 
                 // Create a list to hold NPC names, excluding the current NPC and those with a mission icon
-                List<string> npcNames = new List<string>();
+                List<NPC> npcNames = new List<NPC>();
 
                 foreach (var Npc in allNPCs)
                 {
                     // Exclude the current NPC and those with a mission icon
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
-                        Debug.Log($"Adding NPC name: {Npc.npcname}");
+                        Debug.Log($"Adding NPC: {Npc}");
                         if (!string.IsNullOrEmpty(Npc.npcname)) // Check if the name is not null or empty
                         {
-                            npcNames.Add(Npc.npcname); // Add the name to the list
+                            npcNames.Add(Npc); // Add the name to the list
                         }
                         else
                         {
@@ -296,8 +296,10 @@ public class MissionManager : MonoBehaviour
                 // Select a random NPC name from the list, if available
                 if (npcNames.Count > 0)
                 {
-                    string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
-                    npc.missionIcon.addressee = randomNPCName;
+                    NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
+                    npc.missionIcon.addressee = randomNPC.npcname;
+                    randomNPC.sender = npc;
+
                 }
                 else
                 {

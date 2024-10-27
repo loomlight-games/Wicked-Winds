@@ -15,6 +15,7 @@ public class MissionIcon : MonoBehaviour
     public NPC assignedNPC; // Añadimos una referencia al NPC
     public MessageGenerator messageGenerator;
     public string addressee = null;
+    
 
    
     [SerializeField] public string message;
