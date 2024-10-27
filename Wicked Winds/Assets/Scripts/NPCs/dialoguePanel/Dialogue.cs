@@ -95,7 +95,7 @@ public class NewBehaviourScript : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        AdjustTextBox(); // Ajusta el cuadro de texto después de escribir la línea
+        //AdjustTextBox(); // Ajusta el cuadro de texto después de escribir la línea
     }
 
     void NextLine()

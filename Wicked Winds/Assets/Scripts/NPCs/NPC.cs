@@ -118,23 +118,27 @@ public class NPC : MonoBehaviour
 
     }
 
+    public void OnInteractAfterLetter()
+    {
+        if (agent.isStopped == false)
+        {
+            StopMovement();
+        }
+        string response = "Gracias por entregarme esta carta! ";
+        gameObject.GetComponent<Interactable>().textBubble.StartDialogue(response); 
+    }
+
     // Método llamado cuando el jugador interactúa con el NPC
     public void OnInteractAfterCollection()
     {
         // Verifica si el NPC es el último objetivo en currentTargets
         if (PlayerManager.Instance.currentTargets.Contains(gameObject))
         {// Mostrar el mensaje antes de completar la misión
-            if (agent.isStopped == false)
-            {
-                StopMovement();
-            }
             if (!string.IsNullOrEmpty(responseMessage))
             {
                 gameObject.GetComponent<Interactable>().textBubble.StartDialogue(responseMessage);
             }
             this.message = string.Empty;
-
-            ThankPlayer();
             CompleteMission();
         }
         else
@@ -142,6 +146,8 @@ public class NPC : MonoBehaviour
             Debug.Log("Aún necesitas recolectar todos los objetos antes de completar la misión.");
         }
     }
+
+
 
     // Método para completar la misión
     public void CompleteMission()

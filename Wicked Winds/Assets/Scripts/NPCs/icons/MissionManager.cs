@@ -245,6 +245,7 @@ public class MissionManager : MonoBehaviour
                     if (pickable != null)
                     {
                         pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
+                        pickable.missionIcon= npc.missionIcon;
                         Debug.Log($"Ingrediente {ingredient.name} asignado al NPC {npc.npcname} como Pickable.");
                     }
                     else
