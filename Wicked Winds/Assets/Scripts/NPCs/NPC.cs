@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
     public string missionType;
     public string responseMessage;
     private NavMeshAgent agent;
+    public NPC sender; 
 
     private void Awake()
     {
@@ -123,7 +124,7 @@ public class NPC : MonoBehaviour
         ThankPlayer();
         string response = "Gracias por entregarme esta carta! ";
         gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response); 
-        CompleteMission();
+        CompleteMission(sender);
     }
 
     // M�todo llamado cuando el jugador interact�a con el NPC
@@ -143,16 +144,20 @@ public class NPC : MonoBehaviour
         
         this.message = string.Empty;
 
-        CompleteMission();
+        CompleteMission(this);
     }
 
     /// <summary>
     /// Removes target and mission from player
     /// </summary>
-    public void CompleteMission()
+    public void CompleteMission(NPC npc)
     {
-        if (missionIcon != null)
+        if (this.missionIcon != null)
             missionIcon.CompleteMission();
+        if(sender.missionIcon != null)
+        {
+            sender.missionIcon.CompleteMission();
+        }
 
         // Quita al NPC de la lista de objetivos al completar la misi�n
         PlayerManager.Instance.RemoveTarget(gameObject);
