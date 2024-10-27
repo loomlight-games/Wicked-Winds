@@ -12,7 +12,7 @@ public class Compass
     //public float speed = 2f; // Velocidad de rotación del jugador
     // LookCoroutine
     Transform compass, target;
-    GameObject compassPrefab;
+    GameObject compassPrefab, prefabInstance;
 
     bool isIstanciated = false;
     
@@ -36,22 +36,36 @@ public class Compass
     // Update is called once per frame
     public void Update()
     {
+        // Player has mission
         if (PlayerManager.Instance.hasActiveMission){
+            // Not instantiated compass
             if (!isIstanciated){
                 // Instantiates a copy of the prefab in that transform as a child of it
-                GameObject prefabCopy = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
-                compass = prefabCopy.transform;
+                prefabInstance = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
+                compass = prefabInstance.transform;
                 isIstanciated = true;
-                
             }
-
-            target = PlayerManager.Instance.currentTargets[0].transform;
             
-            Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
+            prefabInstance.SetActive(true);
 
-            compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+            // Target is first target of list
+            if (PlayerManager.Instance.currentTargets.Count != 0){
+                target = PlayerManager.Instance.currentTargets[0].transform;
+
+                // Rotation to object
+                Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
+                // Transition rotation
+                compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+            }
         }
-            
-        
+        // No mission
+        else {
+            // Instantiated compass
+            if (isIstanciated){
+                // Destroys it
+                //GameManager.Instance.DestroyGO(prefabInstance);
+                prefabInstance.SetActive(false);
+            }
+        }
     }
 }

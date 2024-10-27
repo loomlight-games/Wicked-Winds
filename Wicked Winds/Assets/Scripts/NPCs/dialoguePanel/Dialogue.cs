@@ -10,7 +10,7 @@ public class Dialogue : MonoBehaviour
     public string[] lines;        // Las l�neas del di�logo
     public float textSpeed;       // Velocidad del texto
 
-    private int index;
+    private int lineIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -28,16 +28,16 @@ public class Dialogue : MonoBehaviour
 
         if (PlayerManager.Instance.nextLineKey)
         {
-            if (index <= lines.Length) // Verifica que el �ndice est� dentro del rango
+            if (lineIndex <= lines.Length) // Verifica que el �ndice est� dentro del rango
             {
-                if (text.text == lines[index])
+                if (text.text == lines[lineIndex])
                 {
                     NextLine();
                 }
                 else
                 {
                     StopAllCoroutines();
-                    text.text = lines[index];
+                    text.text = lines[lineIndex];
                 }
                 //AdjustTextBox(); // Llama a la funci�n para ajustar el cuadro de texto
             }
@@ -54,7 +54,7 @@ public class Dialogue : MonoBehaviour
         text.text = string.Empty;
         npcName.text = string.Empty;
 
-        index = 0; // Reinicia el �ndice aqu�
+        lineIndex = 0; // Reinicia el �ndice aqu�
         npcName.text = npc.npcname; // Muestra el nombre del NPC
 
         // Divide el mensaje del NPC en l�neas y las almacena en el arreglo lines
@@ -74,8 +74,7 @@ public class Dialogue : MonoBehaviour
     // Nuevo m�todo para iniciar el di�logo sin el nombre del NPC
     public void StartDialogue(string message)
     {
-        
-        index = 0; // Reinicia el �ndice
+        lineIndex = 0;
 
         lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en l�neas
 
@@ -90,9 +89,30 @@ public class Dialogue : MonoBehaviour
         //StartCoroutine(TypeLine());
     }
 
+    public void StartDialogue(NPC npc, string message)
+    {
+        text.text = string.Empty;
+        npcName.text = string.Empty;
+
+        lineIndex = 0;
+        npcName.text = npc.npcname;
+
+        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en l�neas
+
+        if (lines.Length == 0)
+        {
+            Debug.LogWarning("No message! Must have messafe");
+            return;
+        }
+
+        ActivateAllChildren(); // Activa todos los hijos del objeto padre
+        NextLine();
+        //StartCoroutine(TypeLine());
+    }
+
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in lines[lineIndex].ToCharArray())
         {
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -102,11 +122,11 @@ public class Dialogue : MonoBehaviour
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (lineIndex < lines.Length - 1)
         {
             text.text = string.Empty;
-            text.text = lines[index];
-            index++;
+            text.text = lines[lineIndex];
+            lineIndex++;
             //text.text = string.Empty;
             //StartCoroutine(TypeLine());
         }
@@ -119,7 +139,6 @@ public class Dialogue : MonoBehaviour
     // M�todo para activar todos los hijos del objeto padre
     void ActivateAllChildren()
     {
-        GameManager.Instance.tabButton.SetActive(true);
 
         foreach (Transform child in transform)
         {
@@ -130,7 +149,7 @@ public class Dialogue : MonoBehaviour
     
     void DeactivateAllChildren()
     {
-        GameManager.Instance.tabButton.SetActive(false);
+
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false); 
