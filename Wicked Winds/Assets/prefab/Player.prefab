@@ -186,69 +186,45 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 985314806116692113}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: OnWalk
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: fd0ae92a-914c-4639-8e80-144eb0d2eb92
-    m_ActionName: Player movement/Input
+      m_Calls: []
+    m_ActionId: ce0bdc92-2740-465e-8b1b-fa7a2c9b5926
+    m_ActionName: Player movement/Joystick
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 985314806116692113}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: OnRun
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 982fbb0a-a3b0-4bab-9333-65af1ca6ea67
+      m_Calls: []
+    m_ActionId: 32102226-eded-4cc2-9d4d-e3e937d875ce
+    m_ActionName: Player movement/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 97849673-3608-4c75-905e-700d20bf7b18
     m_ActionName: Player movement/Run[/Keyboard/leftShift]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 985314806116692113}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: OnFly
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f1908700-a436-43d5-9d63-9f41ee18699b
-    m_ActionName: Player movement/Jump[/Keyboard/space]
+      m_Calls: []
+    m_ActionId: 9e9627b9-9eff-4946-adf3-ab9f0a51e1dd
+    m_ActionName: Player movement/Fly[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 985314806116692113}
-        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
-        m_MethodName: OnInteract
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9e1d1857-bca2-443a-9d3d-7d6e43e42290
+      m_Calls: []
+    m_ActionId: ef8af87c-3d11-4da1-8e7f-fc283215a75d
     m_ActionName: Player movement/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 54d67b7b-b57e-4fec-b8f6-f87a55b977bd
+    m_ActionName: Player/Joystick
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9cb8c8af-e384-456e-9fc6-10a028ff40ac
+    m_ActionName: Player/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9174efd3-a5d2-478d-8912-0647ae8f3de5
+    m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9f1204b-c31a-496a-b617-52d9bc42d2d2
+    m_ActionName: Player/Fly[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a662d466-f7a4-4e91-8b2d-020534a5aedf
+    m_ActionName: Player/Interact[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
@@ -277,6 +253,7 @@ MonoBehaviour:
   score: 0
   hasActiveMission: 0
   currentTargets: []
+  activeMission: {fileID: 0}
   purchasedItems: []
   coins: 0
   walkSpeed: 5
@@ -441,6 +418,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DialogueCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6095367700394721644, guid: 3caa4979a4259254f92dc3dc82651ab6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
