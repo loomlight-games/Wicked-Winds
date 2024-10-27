@@ -4,11 +4,11 @@ using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
-    public MissionIcon missionIcon = null; // Referencia al ícono que será asignado a este NPC
-    public bool hasMission; // Indica si el NPC tiene una misión
+    public MissionIcon missionIcon = null; // Referencia al �cono que ser� asignado a este NPC
+    public bool hasMission; // Indica si el NPC tiene una misi�n
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
-    public MissionIconPool missionIconPool; // Agrega esta línea
+    public MissionIconPool missionIconPool; // Agrega esta l�nea
     [SerializeField] public string npcname;
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
@@ -34,19 +34,19 @@ public class NPC : MonoBehaviour
         else hasMission = true;
         if (hasMission && movementScript != null)
         {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misión
+            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
             if (bubble != null)
             {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misión
+                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
             }
         }
         else if (movementScript != null)
         {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misión
+            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
 
             if (bubble != null)
             {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misión
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
             }
         }
 
@@ -63,11 +63,10 @@ public class NPC : MonoBehaviour
 
     public void ThankPlayer()
     {
-        Debug.Log("Gracias por completarme la misión!");
-        // Aquí puedes activar un bocadillo de agradecimiento o cualquier otro feedback visual
+        GameManager.Instance.feddBackText.text = "Thanks for bringing my letter!";
     }
 
-    // Este método es llamado cuando el objeto es devuelto al pool
+    // Este m�todo es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
         Debug.Log("Devolviendo MissionIcon al pool.");
@@ -78,7 +77,7 @@ public class NPC : MonoBehaviour
 
             if (missionIcon != null)
             {
-                Debug.Log($"Liberando ícono de misión de {gameObject.name}.");
+                Debug.Log($"Liberando �cono de misi�n de {gameObject.name}.");
                 MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(missionIcon);
                 missionIcon = null;
             }
@@ -99,19 +98,19 @@ public class NPC : MonoBehaviour
 
         if (hasMission && movementScript != null)
         {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misión
+            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
             if (bubble != null)
             {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misión
+                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
             }
         }
         else if (movementScript != null)
         {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misión
+            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
 
             if (bubble != null)
             {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misión
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
             }
         }
 
@@ -125,39 +124,48 @@ public class NPC : MonoBehaviour
             StopMovement();
         }
         string response = "Gracias por entregarme esta carta! ";
-        gameObject.GetComponent<Interactable>().textBubble.StartDialogue(response); 
+        gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response); 
     }
 
-    // Método llamado cuando el jugador interactúa con el NPC
+    // M�todo llamado cuando el jugador interact�a con el NPC
     public void OnInteractAfterCollection()
     {
-     // Mostrar el mensaje antes de completar la misión
-            if (!string.IsNullOrEmpty(responseMessage))
-            {
-                gameObject.GetComponent<Interactable>().textBubble.StartDialogue(responseMessage);
-            }
-            this.message = string.Empty;
-            CompleteMission();
-      
+        // Mostrar el mensaje antes de completar la misión
+        if (agent.isStopped == false)
+        {
+            StopMovement();        
+            ThankPlayer();
+        }
+
+        if (!string.IsNullOrEmpty(responseMessage))
+        {
+            gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(responseMessage);
+        }
         
+        this.message = string.Empty;
+
+        CompleteMission();
     }
 
 
 
-    // Método para completar la misión
+    // M�todo para completar la misi�n
     public void CompleteMission()
     {
         if (missionIcon != null)
         {
-            missionIcon.CompleteMission(); // Completa la misión
-            Debug.Log("Misión completada.");
+            missionIcon.CompleteMission(); // Completa la misi�n
+            Debug.Log("Misi�n completada.");
 
-            // Quita al NPC de la lista de objetivos al completar la misión
+            // Quita al NPC de la lista de objetivos al completar la misi�n
             PlayerManager.Instance.RemoveTarget(gameObject);
         }
         else
         {
-            Debug.LogWarning("Este NPC no tiene una misión activa para completar.");
+            Debug.LogWarning("Este NPC no tiene una misi�n activa para completar.");
         }
     }
 }
+
+
+

@@ -42,6 +42,7 @@ public class Compass
                 GameObject prefabCopy = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
                 compass = prefabCopy.transform;
                 isIstanciated = true;
+                
             }
 
             target = PlayerManager.Instance.currentTargets[0].transform;

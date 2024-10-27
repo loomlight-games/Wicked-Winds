@@ -254,8 +254,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 798589017598835330}
-  - component: {fileID: 4496672846902782984}
   - component: {fileID: 2989032420195777418}
+  - component: {fileID: 4496672846902782984}
+  - component: {fileID: 3603374532198481566}
+  - component: {fileID: 7264642940306397005}
+  - component: {fileID: 8452264527194797229}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -279,18 +282,6 @@ Transform:
   - {fileID: 8859706464489157895}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4496672846902782984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8623520466582528032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba9cd4f541a3af458a0de049f3a5816, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &2989032420195777418
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -314,3 +305,79 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4496672846902782984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623520466582528032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba9cd4f541a3af458a0de049f3a5816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionIcon: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+--- !u!114 &3603374532198481566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623520466582528032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccff8a4df03b14409ad1484a052a7c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionIcon: {fileID: 0}
+  hasMission: 0
+  movementScript: {fileID: 0}
+  bubble: {fileID: 0}
+  npcname: 
+  message: 
+  missionType: 
+  responseMessage: 
+--- !u!114 &7264642940306397005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623520466582528032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a4f2b157ccb8c746aba5f0de96b1fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveRadius: 100
+  detectionRadius: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!195 &8452264527194797229
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623520466582528032}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 1
+  m_Acceleration: 2
+  avoidancePriority: 50
+  m_AngularSpeed: 20
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
