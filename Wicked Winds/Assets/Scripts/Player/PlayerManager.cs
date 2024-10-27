@@ -17,7 +17,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
     public bool hasActiveMission;
-    public List<GameObject> currentTargets= new List<GameObject>();
+    public List<GameObject> currentTargets= new ();
     public Transform target;
     public MissionIcon activeMission;
 
