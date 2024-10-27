@@ -1,6 +1,7 @@
 <p align="center">
 <img src="https://i.postimg.cc/zfdc68td/New-Logo-removebg-preview.png">
 </p>
+
 > ### Presentación
 > Somos Loomlight, un grupo de estudiantes de diseño y desarrollo de videojuegos y creadores de Wicked Winds. Se trata de un proyecto conjunto entre varias asignaturas del curso con el que tratamos de crear un videojuego de navegador de internet que consiga ser completo y divertido, y nos permita acercarnos a la realidad del mercado de los videojuegos.
 > ### Miembros
@@ -21,7 +22,7 @@
 # Wicked Winds - Documento de Diseño de Juego
 
 <div align="center"><b><i>
-    Versión 0.0.5
+    Versión 0.1.0
 </i></b></div>
 
 # 1. INTRODUCCIÓN
@@ -187,30 +188,38 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 
 ## Personajes
 - **Ashen - El protagonista:** Un joven brujo que ha ganado reputación por su habilidad para resolver problemas. Alegre y siempre dispuesto a ayudar, utiliza su escoba mágica para moverse por la ciudad. Su personalidad enérgica y curiosa le permite ganarse la confianza de los habitantes.
+
 <p align="center">
 <img src="https://i.postimg.cc/C1sVzWmk/Concept04.jpg"/>
 </p>
+
 <p align="center">
 <img src="https://i.postimg.cc/kGMP8fpZ/Concept05.jpg"/>
 </p>
+
 <p align="center">
 <img src="https://i.postimg.cc/G2KhZ80W/Recolors.jpg"/>
 </p>
+
 - **Habitantes de la ciudad:** Cada NPC tiene características y necesidades únicas; algunos son cómicos, otros misteriosos, cada uno con tareas relacionadas con sus personalidades. Las interacciones con ellos pueden revelar conexiones sorprendentes entre sus historias.
 
 - **Personajes especiales:** A lo largo del juego, Ashen se cruzará con personajes enigmáticos que revelan secretos de la ciudad y ofrecen misiones especiales con grandes recompensas, enriqueciendo la experiencia del jugador.
 
 ## Entornos y Lugares
 - **Ciudad mágica:** Inspirada en la arquitectura medieval, con influencias mágicas. Las calles están adornadas con farolas, árboles, calderos mágicos y edificaciones que dan un toque fantástico.
+
 <p align="center">
 <img src="https://i.postimg.cc/L5FMXmtH/Unity4.jpg"/>
 </p>
+
 <p align="center">
 <img src="https://i.postimg.cc/1X01VbBD/Unity5.jpg"/>
 </p>
+
 <p align="center"> 
 <img src="https://i.postimg.cc/yYBHCY6j/Unity6.jpg"/>
 </p>
+
 - **Plaza central:** Uno de los lugares más concurridos, donde los habitantes suelen congregarse. Aquí suelen comenzar y terminar varias misiones.
 <p align="center">
 <img src="https://i.postimg.cc/7LckF3bJ/Unity1.jpg"/>
@@ -462,13 +471,115 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Resultado:** El juego se convierte en un éxito moderado, generando ingresos suficientes para ampliar el contenido, agregar nuevas skins e ítems, y mejorar la experiencia de usuario.
 
 # 10. Post-Mortem
-## Aspectos Positivos
+## Paula González Stradiotto - ‘Concept Artist’ y ‘3D Model Artist’
+**Trabajo Realizado:**
+Durante el desarrollo de Wicked Winds, mi principal responsabilidad fue la creación del arte del escenario jugable. Mis tareas específicas incluyen:
 
-## Aspectos Negativos
+- **Concept Art en 2D:** Mi primer paso fue desarrollar diversas ilustraciones en 2D que representaran la visión artística del juego, estableciendo la atmósfera mágica y estilo visual que guiaría la estética general de Wicked Winds. Desde bocetos de los distintos tipos de viviendas hasta el diseño de los elementos que decorarían y darían vida a la aldea.
 
-## Lecciones aprendidas
+- **Modelado 3D:** Una vez establecidos los conceptos en 2D, desarrollé cada elemento del escenario en 3D, cuidando los detalles para garantizar una experiencia visual atractiva. Mis principales tareas incluyeron la creación de un suelo donde construir la aldea, con calles, zonas verdes, mercadillos y plazas.
 
-## Conclusión
+- **Construcción en Unity:** Finalmente, integré todos los modelos en Unity y configuré la escena jugable, asegurando que cada elemento se colocara de forma coherente y que la iluminación y los efectos estuvieran en sintonía con el concepto visual del juego.
+
+| Pros     | Contras  |
+|----------|----------|
+| Creación de un entorno visual atractivo que mejora la experiencia del jugador| Algunos elementos del modelado 3D requirieron más tiempo del anticipado, afectando el cronograma|
+| La colaboración con el equipo fue fluida, facilitando la integración de arte y mecánicas  | En ciertos momentos, la falta de comunicación en algunos aspectos del diseño resultó en revisiones adicionales  |
+| El uso de herramientas y técnicas que mejoraron mi habilidad en modelado y texturización    | Las pruebas en Unity revelaron que algunos modelos necesitaban optimización para mejorar el rendimiento   |
+| Feedback positivo del equipo sobre el diseño y la cohesión del entorno    | Hubo desafíos al integrar los elementos en Unity debido a la falta de documentación clara sobre la implementación   |
+
+**Conclusión:** El proceso de desarrollo de Wicked Winds me brindó valiosas lecciones sobre el arte y la colaboración en el ámbito del diseño de videojuegos. Aunque encontré algunos desafíos en el camino, la experiencia me permitió crecer y aprender tanto a nivel técnico como colaborativo. En futuras entregas, planeo aplicar las lecciones aprendidas sobre la comunicación y la planificación de tiempo para optimizar mi flujo de trabajo.
+
+
+## Alfonso del Pino García - ‘Concept Artist’ y Diseñador Web
+**Trabajo Realizado:**
+Durante el desarrollo de Wicked Winds, he trabajado principalmente en el diseño conceptual y la creación de identidad visual para el proyecto. He colaborado en la definición del estilo artístico y visual del juego, así como en la gestión de la presencia digital del proyecto. Mis tareas incluyen:
+
+- **Concept Art en 2D:** Concept art del personaje principal, Ashen, asegurando que su diseño refleje el espíritu y la personalidad del juego. Además he hecho el trunaround del personaje para facilitar su posterior modelado 3D y varias pruebas de color.
+
+- **Logos:** Diseño del logo de LoomLight y del logo y título de Wicked Winds, definiendo así la imagen corporativa y de marca del proyecto.
+
+- **Diseño Itch.io:** Diseño visual de la página del juego en Itch.io, incluyendo la organización de elementos y su personalización para crear una experiencia atractiva para los jugadores.
+  
+- **Web/Portfolio**: Creación y personalización de la página web/portfolio, trabajando en la presentación del proyecto y sus componentes visuales clave.
+
+- **Gestión de redes sociales:** encargándome de la comunicación y promoción del juego, así como de mantener actualizados los perfiles en distintas plataformas.
+
+| Pros     | Contras  |
+|----------|----------|
+| Definición de identidad visual: He logrado establecer una identidad visual sólida y reconocible para el juego|Desafíos en la gestión de redes sociales: Ha sido un reto coordinar las publicaciones de forma continua mientras realizaba las demás tareas|
+| Colaboración efectiva: La comunicación fluida con otros departamentos ha facilitado el flujo de trabajo y ha mejorado la calidad de los resultados  | Limitaciones de tiempo en la página web: El proceso de personalización y ajustes de diseño en la web ha requerido más tiempo del esperado, debido a problemas de carga y ajustes de estilo  |
+| Plazos cumplidos: El compromiso con los tiempos de entrega ha sido fundamental para mantener el proyecto en marcha    |  |
+
+**Conclusión:** El desarrollo de Wicked Winds está siendo una experiencia valiosa que me ha permitido consolidar una identidad visual atractiva y fortalecer la colaboración con el equipo. A pesar de algunos desafíos en la gestión de redes y ajustes de la web, el proyecto avanzó según lo planeado, logrando calidad y cohesión en cada entrega. Esta experiencia ha potenciado mis habilidades en diseño y organización para futuros proyectos.
+
+## Alba Haro Ballesteros - Programadora
+**Trabajo Realizado:**
+- **Desarrollo del sistema de menús y estados del juego:** facilitando la navegación entre pantallas (inicio, opciones, juego, y fin).
+
+- **Interfaces**: Diseño y creación de interfaces de usuario provisionales para garantizar la funcionalidad de las pantallas y la experiencia general de navegación.
+  
+- **Implementación de la tabla de clasificación online:** mostrando las mejores puntuaciones globales de los jugadores.
+
+- **Login:** Desarrollo del sistema de login de usuarios con usuario y contraseña, incluyendo validaciones y gestión de errores.
+
+- **Gestión de errores:** en el sistema de clasificación y login, asegurando un manejo de situaciones como fallas de conexión, intentos de acceso incorrectos, o datos no válidos.
+
+| Pros | Contras |
+|----------|----------|
+|La modularidad del sistema permite flexibilidad en el diseño y facilita cambios rápidos en la estructura de los menús sin afectar la funcionalidad principal del juego   | Dificultad al implementar la tabla de clasificación online. Se probaron diferentes métodos hasta conseguir que funcionara como se requería   |
+|El manejo robusto de errores en el sistema de login y clasificación evita experiencias frustrantes para los usuarios. Los mensajes de error ayudan al usuario y al programador a reconocer el problema   |  |
+| Se ha descubierto algunos servicios de Unity que son de bastante utilidad, como “Leaderboards” y “Player Authentification”   |   |
+
+**Conclusión:** El desarrollo de Wicked Winds ha sido una experiencia de gran aprendizaje, en la que he tenido la oportunidad de implementar sistemas esenciales para la navegación y gestión de usuarios. Aunque el proceso incluyó retos, como la complejidad en la integración de la tabla de clasificación online y el manejo de errores de conexión, estos desafíos reforzaron mis habilidades en programación de sistemas de usuario y gestión de interfaces. La experiencia me ha permitido comprender mejor la importancia de una estructura modular y del manejo de errores robusto en el desarrollo de videojuegos. 
+
+## Cristina Lozano Bautista - Programadora
+**Trabajo Realizado:**
+- **Sistema de misiones:** Los NPCs pueden asignar misiones dinámicamente, como la entrega de cartas y la creación de pociones.
+- **Sistema de burbujas de texto:** con animación de escritura, inspirado en el estilo humorístico de Animal Crossing, que permite respuestas únicas de los NPCs.
+- **Sistema de progreso de dialogo:** que utiliza la tecla Tab en la versión de escritorio y el toque de pantalla en la versión móvil para una interacción intuitiva.
+- **Managers:** Creación de un MissionManager y un PlayerManager que controlan las misiones activas y los objetivos coleccionables.
+- **Detalles misiones:** Adición de detalles personalizados a las misiones, como destinatarios específicos en las cartas y agradecimientos en las misiones de pociones.
+- **Objetivos mixtos:** permitiendo al jugador interactuar con ingredientes y NPCs de formas distintas.
+- **Lógica de interacción:** para que los personajes respondan a diferentes condiciones, como si tienen una misión asignada o esperan una carta.
+
+| Pros | Contras |
+|----------|----------|
+| La creación de condiciones específicas para los NPCs permitió una interacción más inmersiva, personalizando las respuestas y misiones según el personaje    | La implementación de condiciones específicas aumentó la complejidad del código, lo que complicó su programación   |
+| El sistema de misiones dinámicas facilitó la variedad en la experiencia del jugador, al adaptar misiones de cartas y pociones a las interacciones individuales con los NPCs   | La necesidad de crear y probar diferentes condiciones para cada NPC hizo que el proceso de pruebas fuera más largo y demandante  |
+| El progreso del diálogo con tecla ‘Tab’ o toque en pantalla mejoró la accesibilidad en la versión de escritorio y móvil   | Los ajustes en la lógica de interacción entre ingredientes, NPCs y otros objetivos crearon desafíos adicionales para asegurar que las condiciones específicas funcionaran bien en distintos dispositivos  |
+| La implementación de nombres y diálogos personalizados en cada burbuja de texto enriqueció la narrativa y aumentó la inmersión del jugador    | Las condiciones específicas limitaron en cierta medida la flexibilidad del sistema para realizar cambios en la lógica general de interacción   |
+
+**Conclusión:** En general, trabajar en este proyecto ha sido un proceso enriquecedor, lleno de retos y aprendizajes. Crear condiciones específicas para la interacción con los NPCs me permitió experimentar con sistemas de misiones más personalizados y una narrativa más envolvente, lo que aportó profundidad y variedad a la experiencia del jugador. Sin embargo, también me di cuenta de lo complejo que puede volverse el código cuando cada NPC requiere lógica única, lo que aumentó el tiempo necesario para pruebas y ajustes.
+Integrar accesibilidad para distintas plataformas y manejar objetivos variados me ayudó a entender mejor la importancia de un sistema modular y adaptable. En futuros proyectos, aplicaría un enfoque más flexible para optimizar la escalabilidad y reducir la necesidad de ajustes individuales. Esta experiencia ha sido clave para mejorar mis habilidades en Unity y en diseño de gameplay, y me ha dejado una base sólida para enfrentar desarrollos aún más complejos.
+
+
+## Alvaro Moreno García - Programador
+**Trabajo Realizado:**
+Como programador de mecánicas, mi labor en Wicked Winds se enfocó en la creación y ajuste de diversas funcionalidades esenciales para la jugabilidad. Las tareas incluyeron:
+
+- **Sistema de Movimiento y Cámara:** Desarrollé e implementé los sistemas de movimiento para PC y móvil en dos modalidades: andar y volar. Esto incluyó la configuración de la cámara para ambas plataformas, permitiendo una experiencia de juego fluida y adecuada en cada una.
+  
+- **Control del Tiempo y Boost:** Programé la mecánica de control del tiempo, de modo que los jugadores deben gestionar su tiempo en cada misión. Además, desarrollé el sistema de boost, permitiendo a los jugadores activar o desactivar la velocidad extra y ajustar su consumo de recursos.
+  
+- **Tienda:** Implementé una tienda dentro del juego donde los jugadores pueden comprar elementos estéticos (cabeza, parte superior, parte inferior, zapatos) mediante monedas de juego, adquiridas a través de anuncios o micropagos.
+  
+- **Simulación de Anuncios:** Creé el sistema de simulación de anuncios que permite al jugador obtener recompensas al acabarse un temporizador, añadiendo otra forma de progreso a través de micropagos.
+  
+- **Sistema de Estados del Personaje:** Programé el sistema de estados del personaje, asegurando que el personaje pueda cambiar entre estados según las condiciones del juego.
+  
+- **Brújula**: Implementé la mecánica de brújula, que muestra una flecha sobre el personaje al aceptar una misión, guiando al jugador hacia su objetivo.
+
+| Pros | Contras |
+|----------|----------|
+| El sistema de movimiento y cámara se adapta bien a PC y móvil, permitiendo una experiencia fluida en ambas plataformas  | La configuración de controles en dispositivos móviles presentó retos técnicos, lo que demandó tiempo adicional para optimizar la experiencia táctil  |
+| La mecánica de control del tiempo y boost fue bien recibida en las pruebas, aportando dinamismo y estrategia    | La implementación de múltiples estados presentó problemas de sincronización en las primeras pruebas y tuvo que ser refinada   |
+| El sistema de estados del personaje permitió una transición fluida   |   |
+| La brújula facilitó la navegación en el juego, mejorando la experiencia de usuario   | Data 3   |
+| La tienda, junto con la simulación de anuncios, añadió una opción de progreso sin afectar el equilibrio del juego   |    |
+
+**Conclusión:** El trabajo en esta fase de Wicked Winds fue una experiencia enriquecedora, en la cual enfrenté retos técnicos que fortalecieron mis habilidades en la implementación de sistemas de juego complejos. Aunque el proceso implicó superar varios obstáculos, logré implementar cada mecánica de manera funcional y optimizada. En futuros proyectos, planeo mejorar en la planificación de tiempos para el testing de mecánicas en múltiples plataformas y explorar formas de optimización que beneficien tanto el rendimiento como la calidad visual del juego.
+
 
 # This is an H1 header
 ## This is an H2 header
