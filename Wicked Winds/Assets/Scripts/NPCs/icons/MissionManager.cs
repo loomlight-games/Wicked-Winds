@@ -226,6 +226,9 @@ public class MissionManager : MonoBehaviour
             // Asignar el NPC y el MissionIcon a los objetos generados
             foreach (GameObject ingredient in spawnedIngredients)
             {
+                // Añadir el ingrediente a la lista de objetivos
+                PlayerManager.Instance.AddTarget(gameObject);
+
                 Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
 
                 Pickable pickable = ingredient.GetComponent<Pickable>();
@@ -259,12 +262,13 @@ public class MissionManager : MonoBehaviour
             // Get a list of all NPCs in the scene
             NPC[] allNPCs = GetAllNPCs();
 
-            // Create a list to hold NPC names, excluding the current NPC
+            // Create a list to hold NPC names, excluding the current NPC and those with a mission icon
             List<string> npcNames = new List<string>();
 
             foreach (var npc in allNPCs)
             {
-                if (npc != selectedNPC && npc.missionIcon == null) // Exclude the current NPC and npcs carriers of a mission
+                // Exclude the current NPC and those with a mission icon
+                if (npc != selectedNPC && (npc.missionIcon == null || npc.missionIcon.currentMission == null))
                 {
                     Debug.Log($"Adding NPC name: {npc.npcname}");
                     if (!string.IsNullOrEmpty(npc.npcname)) // Check if the name is not null or empty
@@ -277,8 +281,8 @@ public class MissionManager : MonoBehaviour
                     }
                 }
             }
+
             // Select a random NPC name from the list, if available
-            
             if (npcNames.Count > 0)
             {
                 string randomNPCName = npcNames[Random.Range(0, npcNames.Count)];
@@ -286,12 +290,12 @@ public class MissionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No other NPCs available to be a addresse");
+                Debug.LogWarning("No other NPCs available to be an addressee.");
             }
-
         }
 
         missionIcon.AssignMissionText(mission, this, selectedNPC);
+   
     }
 
     public static NPC[] GetAllNPCs()

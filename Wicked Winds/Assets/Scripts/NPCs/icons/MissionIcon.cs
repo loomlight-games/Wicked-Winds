@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using UnityEngine;
 
@@ -16,9 +17,10 @@ public class MissionIcon : MonoBehaviour
     public string addressee = null;
 
    
-    [SerializeField] private string message;
+    [SerializeField] public string message;
+    [SerializeField] private string responseMessage;
 
-    
+
 
     //contador para los objetos recogidos
     public int collectedItemsCount = 0;
@@ -31,6 +33,7 @@ public class MissionIcon : MonoBehaviour
         currentMission = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
+        assignedNPC.missionType = currentMission.missionName;
 
         // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -59,20 +62,30 @@ public class MissionIcon : MonoBehaviour
 
         messageGenerator = new();
         // Generar el mensaje para la misión
-        message = messageGenerator.GenerateMessage(currentMission,assignedNPC,assignedNPC.missionIcon);
+        var (message, response) = messageGenerator.GenerateMessage(currentMission, assignedNPC, assignedNPC.missionIcon);
+
+        
         // Check if the selected message template contains {NPC_NAME}
-         if (message.Contains("{NPC_NAME}"))
+        if (message.Contains("{NPC_NAME}"))
          {
 
                  message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addressee);
          }
-         
 
-        
+        if (response.Contains("{NPC_NAME}"))
+        {
+
+            response = response.Replace("{NPC_NAME}", assignedNPC.missionIcon.addressee);
+        }
+
+
+
+
         // Log para el mensaje generado
         Debug.Log($"Mensaje generado: {message}");
-        assignedNPC.message= message;
-
+        // Luego puedes asignar el mensaje y la respuesta a las propiedades de NPC
+        assignedNPC.message = message;
+        assignedNPC.responseMessage = response;
         // Log para el nombre del NPC asignado para verificación
         if (assignedNPC != null)
         {
@@ -85,6 +98,8 @@ public class MissionIcon : MonoBehaviour
 
        
     }
+
+
 
     // Este método es llamado cuando el objeto es tomado del pool
     public void OnObjectSpawn()

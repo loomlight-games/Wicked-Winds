@@ -12,6 +12,8 @@ public class NPC : MonoBehaviour
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
     [SerializeField] public string message;
+    public string missionType;
+    public string responseMessage;
 
     private void Awake()
     {
@@ -95,7 +97,46 @@ public class NPC : MonoBehaviour
                 bubble.SetActive(false); // Ocultar el bubble si no tiene misión
             }
         }
+
+
+    }
+
+    // Método llamado cuando el jugador interactúa con el NPC
+    public void OnInteractAfterCollection()
+    {
+        // Verifica si el NPC es el último objetivo en currentTargets
+        if (PlayerManager.Instance.currentTargets.Contains(gameObject))
+        {// Mostrar el mensaje antes de completar la misión
+            if (!string.IsNullOrEmpty(responseMessage))
+            {
+                gameObject.GetComponent<Interactable>().textBubble.StartDialogue(responseMessage);
+            }
+            this.message = string.Empty;
+            CompleteMission();
+        }
+        else
+        {
+            Debug.Log("Aún necesitas recolectar todos los objetos antes de completar la misión.");
+        }
+    }
+
+    // Método para completar la misión
+    public void CompleteMission()
+    {
+        if (missionIcon != null)
+        {
+            missionIcon.CompleteMission(); // Completa la misión
+            Debug.Log("Misión completada.");
+
+            // Quita al NPC de la lista de objetivos al completar la misión
+            PlayerManager.Instance.RemoveTarget(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("Este NPC no tiene una misión activa para completar.");
+        }
     }
 }
+
 
 

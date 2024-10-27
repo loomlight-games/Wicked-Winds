@@ -8,6 +8,7 @@ public class Pickable : MonoBehaviour
     private NPC npc;
     public MissionIcon missionIcon; // Referencia al ícono de misión del NPC
     public int numOfObjectsToCollect;
+    public NewBehaviourScript playerTextBubble; // Referencia al bocadillo de texto
 
     // Método para establecer el NPC
     public void SetNPC(NPC assignedNPC)
@@ -19,35 +20,46 @@ public class Pickable : MonoBehaviour
     // Método para recolectar el objeto
     public void CollectItem()
     {
-        //if (npc != null && npc.acceptMission) // Verifica si el NPC acepta la misión
         if (npc != null)
         {
-            missionIcon = npc.missionIcon; // Obtiene el icono de misión del NPC
-            if (this.missionIcon != null) // Verifica si el NPC acepta la misión
+            missionIcon = npc.missionIcon;
+            if (this.missionIcon != null)
             {
-                this.missionIcon.collectedItemsCount++; ;
-                
-                Debug.Log($"Objeto recolectado. Total recolectados: {this.missionIcon.collectedItemsCount}/3");
+                this.missionIcon.collectedItemsCount++;
+                Debug.Log($"Objeto recolectado. Total recolectados: {this.missionIcon.collectedItemsCount}/{numOfObjectsToCollect}");
 
                 if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
                 {
-                    this.missionIcon.collectedItemsCount = 0;// Reinicia el contador para futuras misiones
-                    missionIcon.CompleteMission();
-                    Debug.Log("Misión completada.");
-                     
+                    // Reinicia el contador para futuras misiones
+                    this.missionIcon.collectedItemsCount = 0;
+
+                    // Añade el NPC como nuevo objetivo en `currentTargets`
+                    PlayerManager.Instance.AddTarget(npc.gameObject);
+
+                    Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la misión.");
+                    // Activa el bocadillo de texto y muestra el mensaje
+                    if (playerTextBubble != null)
+                    {
+                        string texto = "Todos los objetos recolectados. Regresa al NPC para completar la misión." ;
+                        playerTextBubble.StartDialogue(texto); // Inicia el diálogo en el bocadillo de texto
+                    }
+
                 }
             }
             else
             {
                 Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
             }
-            // Destruir el objeto cuando se recolecte
+
+            // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
+            PlayerManager.Instance.RemoveTarget(gameObject);
             Destroy(gameObject);
-            Debug.Log($"{npc.name} collected the item: {gameObject.name}"); // Log de objeto recogido
+            Debug.Log($"{npc.name} collected the item: {gameObject.name}");
         }
         else
         {
-            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false."); // Log si no se puede recoger
+            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
         }
     }
+
 }

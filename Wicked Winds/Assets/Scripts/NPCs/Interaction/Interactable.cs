@@ -20,6 +20,7 @@ public class Interactable : MonoBehaviour
     // Método para manejar la interacción con el NPC
     public void Interact()
     {
+        
         if (npc == null)
         {
             Debug.Log("No NPC found for interaction.");
@@ -27,6 +28,7 @@ public class Interactable : MonoBehaviour
         }
 
         Debug.Log($"Interacted with NPC: {npc.name}");
+        npc.OnInteractAfterCollection(); //miro a ver si es el target y si lo es completara la mision
 
         // Verifica si el jugador ya tiene una misión activa
         if (PlayerManager.Instance.hasActiveMission)
@@ -53,7 +55,7 @@ public class Interactable : MonoBehaviour
         }
 
         // Iniciar el diálogo con el mensaje del NPC
-        if (textBubble != null)
+        if (textBubble != null && activeNPC.message != null)
         {
             textBubble.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
             textBubble.StartDialogue(activeNPC); // Inicia el diálogo

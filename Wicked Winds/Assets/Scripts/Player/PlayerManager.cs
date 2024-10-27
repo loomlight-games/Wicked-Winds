@@ -17,6 +17,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
     public bool hasActiveMission;
+    public List<GameObject> currentTargets= new List<GameObject>();
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
@@ -144,5 +145,26 @@ public class PlayerManager : AStateController
         interactKey = context.ReadValueAsButton();
             
     }
+
+
+    public void AddTarget(GameObject target)
+    {
+        if (!currentTargets.Contains(target))
+        {
+            currentTargets.Add(target);
+            Debug.Log($"Added {target.name} to current targets.");
+        }
+    }
+
+    public void RemoveTarget(GameObject target)
+    {
+        if (currentTargets.Contains(target))
+        {
+            currentTargets.Remove(target);
+            Debug.Log($"Removed {target.name} from current targets.");
+        }
+    }
+
+
 
 }

@@ -13,12 +13,15 @@ public class MissionData : ScriptableObject
     // Diccionario para textos graciosos de NPC
     public Dictionary<string, string[]> npcMessages;
 
+    // Diccionario para respuestas de NPC
+    public Dictionary<string, string[]> npcAnswers;
+
     private void OnEnable()
     {
         // Inicializa los mensajes de NPC
         npcMessages = new Dictionary<string, string[]>
         {
-            { "letter", new string[]
+            { "LetterMision", new string[]
                 {
                     "Hey, you lovely mail carrier! Could you send this letter to my grandma? \n" +
                     "Tell her I’m sending hugs along with it! She needs to know I’m still practicing \n" +
@@ -30,24 +33,24 @@ public class MissionData : ScriptableObject
                     "Oh, wonderful mail carrier! This letter is a heart-shaped secret just for {NPC_NAME}! \n" +
                     "Please deliver it with a sprinkle of fairy dust and a wink from me!",
 
-                    "\"Hey there, speedy mail carrier! Could you pop this note in the mailbox for my buddy, {NPC_NAME}? \n" +
-                    "It’s filled with friendship and some silly doodles. Who wouldn’t want that?\"\n",
+                    "Hey there, speedy mail carrier! Could you pop this note in the mailbox for my buddy, {NPC_NAME}? \n" +
+                    "It’s filled with friendship and some silly doodles. Who wouldn’t want that?",
 
-                    "\"Ahoy, dear postal pal! Can you take this festive letter and ensure it lands safely in {NPC_NAME}’s \n" +
-                    "mailbox? It’s stuffed with holiday cheer and some extra jingle bells!\"",
+                    "Ahoy, dear postal pal! Can you take this festive letter and ensure it lands safely in {NPC_NAME}’s \n" +
+                    "mailbox? It’s stuffed with holiday cheer and some extra jingle bells!",
 
                     "Hello, my fabulous mail carrier! I need you to deliver this thank-you note to {NPC_NAME}. \n" +
                     "It’s brimming with gratitude and a few cat stickers for extra cuteness!",
 
-                    "\"Hey there, amazing mail person! Would you mind taking this invitation to my neighbor, {NPC_NAME}? \n" +
-                    "I’m throwing a get-together, and it needs all the fun it can get!\"",
+                    "Hey there, amazing mail person! Would you mind taking this invitation to my neighbor, {NPC_NAME}? \n" +
+                    "I’m throwing a get-together, and it needs all the fun it can get!",
 
                     "Hey, awesome postal friend! Could you drop this reminder off for me? \n" +
                     "It’s a gentle nudge to {NPC_NAME} to come over for tea and some good old gossip!"
                 }
             },
 
-            { "cat", new string[]
+            { "CatMission", new string[]
                 {
                     "Could you help me find my lost cat? \nHe's probably chasing butterflies again!",
                     "Have you seen my cat? \nHe's an expert at hide-and-seek, but this time he’s hiding a bit too well!",
@@ -59,7 +62,7 @@ public class MissionData : ScriptableObject
                 }
             },
 
-            { "potion", new string[]
+            { "PotionMission", new string[]
                 {
                     "Can you whip up a love potion for me? \nI need it to win the heart of my crush—make it extra sparkly!",
                     "I’m in desperate need of a love potion! \nCan you brew one that smells like roses and tastes like happiness?",
@@ -70,6 +73,49 @@ public class MissionData : ScriptableObject
                     "Could you mix me a healing potion? \nI’ve been feeling a bit under the weather!",
                     "Help me create a potion that turns me into a cat! \nI want to see the world from a feline perspective!",
                     "Can you brew a courage potion for me? \nI want to face my fears and finally ride that roller coaster!"
+                }
+            }
+        };
+
+        // Inicializa las respuestas de NPC
+        npcAnswers = new Dictionary<string, string[]>
+        {
+            { "LetterMision", new string[]
+                {
+                    "Thanks for helping me stay in touch with my grandma! You’re the best!",
+                    "You’re a lifesaver! I can’t wait for {NPC_NAME} to see this surprise!",
+                    "Aww, you’re so sweet! {NPC_NAME} will love this heart-shaped letter!",
+                    "Wow, thanks! Your speed is impressive—{NPC_NAME} will appreciate it!",
+                    "You’ve got this! The holiday spirit is in good hands with you!",
+                    "Thank you so much! I’m sure {NPC_NAME} will be thrilled with this note!",
+                    "You rock! I can’t wait for {NPC_NAME} to get this invitation!",
+                    "Thanks a ton! I know {NPC_NAME} will enjoy our tea time together!"
+                }
+            },
+
+            { "CatMission", new string[]
+                {
+                    "Thank you! You’re my only hope in finding my furry friend!",
+                    "You’re amazing! I knew you’d help me track him down!",
+                    "You’ve got a great eye! I’m sure we’ll find him in no time!",
+                    "I appreciate your help! I know he’s out there somewhere!",
+                    "You’re a true friend! I can always count on you for support!",
+                    "Thanks! Without you, I’d be lost without my little buddy!",
+                    "You’re the best! I can’t wait to snuggle with my cat again!"
+                }
+            },
+
+            { "PotionMission", new string[]
+                {
+                    "You’re incredible! This love potion will work wonders!",
+                    "Thank you! This potion will make my crush fall head over heels!",
+                    "You’re a genius! I can feel the charm already bubbling up!",
+                    "I appreciate your help! This will make my studying so much easier!",
+                    "You’re awesome! With this luck potion, I’ll ace my exam!",
+                    "Thanks! This healing potion will get me back to my herb-gathering adventures!",
+                    "You’re fantastic! I’m feeling better already with this potion!",
+                    "You’re the best! I can’t wait to see the world through my cat’s eyes!",
+                    "You’re amazing! With this courage potion, I’m ready for anything!"
                 }
             }
         };
