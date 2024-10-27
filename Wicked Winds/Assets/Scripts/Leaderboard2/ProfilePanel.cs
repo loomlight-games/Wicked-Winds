@@ -31,6 +31,7 @@ public class ProfilePanel : Panel
 
     private void SignOut()
     {
+        Close();
         GameManager.Instance.SignOut();
     }
 
@@ -41,6 +42,7 @@ public class ProfilePanel : Panel
 
     private void Leaderboards()
     {
+        Close();
         PanelManager.Open("Leaderboard");
     }
 }
