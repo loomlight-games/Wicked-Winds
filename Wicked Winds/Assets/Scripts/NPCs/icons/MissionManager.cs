@@ -237,8 +237,7 @@ public class MissionManager : MonoBehaviour
                 // Asignar el NPC y el MissionIcon a los objetos generados
                 foreach (GameObject ingredient in spawnedIngredients)
                 {
-                    // Añadir el ingrediente a la lista de objetivos
-                    PlayerManager.Instance.AddTarget(gameObject);
+                    
 
                     Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
 

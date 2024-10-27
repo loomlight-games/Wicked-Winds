@@ -18,6 +18,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public int score;
     public bool hasActiveMission;
     public List<GameObject> currentTargets= new List<GameObject>();
+    public MissionIcon activeMission;
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";

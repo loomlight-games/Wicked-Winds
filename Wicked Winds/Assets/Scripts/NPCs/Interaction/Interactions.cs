@@ -24,6 +24,7 @@ public class Interactions
                 if (collider.TryGetComponent(out Pickable pickableObject))
                 {
                     Debug.Log($"Attempting to collect item: {pickableObject.name}"); // Log para objeto recogible
+                    
                     pickableObject.CollectItem();
                 }
             }

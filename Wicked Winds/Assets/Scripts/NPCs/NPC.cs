@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class NPC : MonoBehaviour
     [SerializeField] public string message;
     public string missionType;
     public string responseMessage;
+    private NavMeshAgent agent;
 
     private void Awake()
     {
@@ -24,9 +26,10 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        
-        
-        missionIconPool= MissionIconPoolManager.Instance.GetMissionIconPool();
+
+        agent = GetComponent<NavMeshAgent>();
+
+        missionIconPool = MissionIconPoolManager.Instance.GetMissionIconPool();
         if (missionIcon == null) hasMission = false;
         else hasMission = true;
         if (hasMission && movementScript != null)
@@ -48,6 +51,20 @@ public class NPC : MonoBehaviour
         }
 
 
+    }
+
+    public void StopMovement()
+    {
+        if (agent != null)
+        {
+            agent.isStopped = true; // Detiene el movimiento del NPC
+        }
+    }
+
+    public void ThankPlayer()
+    {
+        Debug.Log("Gracias por completarme la misión!");
+        // Aquí puedes activar un bocadillo de agradecimiento o cualquier otro feedback visual
     }
 
     // Este método es llamado cuando el objeto es devuelto al pool

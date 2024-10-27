@@ -141,6 +141,7 @@ public class MissionIcon : MonoBehaviour
             currentMission = null;
             assignedNPC = null;
             PlayerManager.Instance.hasActiveMission = false;
+            PlayerManager.Instance.activeMission = null;
 
             // Asigna una nueva misión al completar la actual
             Debug.Log("Asignando nueva misión después de completar la misión actual.");
