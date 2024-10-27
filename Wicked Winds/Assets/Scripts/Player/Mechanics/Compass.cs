@@ -45,16 +45,18 @@ public class Compass
                 compass = prefabInstance.transform;
                 isIstanciated = true;
             }
+            
             prefabInstance.SetActive(true);
 
             // Target is first target of list
-            if (PlayerManager.Instance.currentTargets[0] != null)
+            if (PlayerManager.Instance.currentTargets.Count != 0){
                 target = PlayerManager.Instance.currentTargets[0].transform;
-            
-            // Rotation to object
-            Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
-            // Transition rotation
-            compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+
+                // Rotation to object
+                Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
+                // Transition rotation
+                compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+            }
         }
         // No mission
         else {

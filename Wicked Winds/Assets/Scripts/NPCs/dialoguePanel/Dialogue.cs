@@ -139,7 +139,6 @@ public class Dialogue : MonoBehaviour
     // M�todo para activar todos los hijos del objeto padre
     void ActivateAllChildren()
     {
-        GameManager.Instance.tabButton.SetActive(true);
 
         foreach (Transform child in transform)
         {
@@ -150,7 +149,7 @@ public class Dialogue : MonoBehaviour
     
     void DeactivateAllChildren()
     {
-        GameManager.Instance.tabButton.SetActive(false);
+
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false); 
