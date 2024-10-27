@@ -51,12 +51,14 @@ public class LeaderboardPanel : Panel
         ClearPlayersList();
         currentPage = 1;
         totalPages = 0;
-        LoadPlayers(1);
+        //LoadPlayers(1);
+        LoadPlayersWithoutSignIn(1);
+
     }
 
     private void AddScore()
     {
-        AddScoreAsync(10);
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE,0));
     }
     public async void AddScoreAsync(int score)
     {
@@ -86,6 +88,38 @@ public class LeaderboardPanel : Panel
             options.Limit = playersPerPage; //limit of records it loads
 
             var scores = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardID, options);
+            ClearPlayersList();
+
+            //for every score it creates an instance of leaderboardsPlayersItem
+            for (int i = 0; i < scores.Results.Count; i++)
+            {
+                LeaderboardsPlayerItem item = Instantiate(playerItemPrefab, playersContainer);
+                item.Initialize(scores.Results[i]);
+            }
+
+            totalPages = Mathf.CeilToInt((float)scores.Total / (float)scores.Limit);
+            currentPage = page;
+        }
+        catch (Exception exception)
+        {
+            Debug.Log(exception.Message);
+        }
+        pageText.text = currentPage.ToString() + "/" + totalPages.ToString();
+        nextButton.interactable = currentPage < totalPages && totalPages > 1;
+        prevButton.interactable = currentPage > 1 && totalPages > 1;
+    }
+    private async void LoadPlayersWithoutSignIn(int page)
+    {
+        nextButton.interactable = false;
+        prevButton.interactable = false;
+        try
+        {
+            //splitting players in different pages
+            GetScoresOptions options = new GetScoresOptions();
+            options.Offset = (page - 1) * playersPerPage; //amount of records ignores
+            options.Limit = playersPerPage; //limit of records it loads
+
+            var scores = await LeaderboardsService.Instance.GetVersionScoresAsync(LeaderboardID, "ElapsedTime");
             ClearPlayersList();
 
             //for every score it creates an instance of leaderboardsPlayersItem
