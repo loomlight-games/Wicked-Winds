@@ -26,17 +26,11 @@ public class Interactable : MonoBehaviour
         {
             // If NPC is target
             if (PlayerManager.Instance.currentTargets.Contains(gameObject))
-                npc.OnInteractAfterCollection();
+                npc.OnMissionCompleted();
             // NPC is the assigned but not objects have been found
             else{
                 GameManager.Instance.feddBackText.text = "You must collect all items of the current mission.";
             }
-                // completa
-            // si es q se lo ha asignaio
-                // aparece otra vez solo conversación
-            // si no es ninguno
-                // aviso de que no puede tener otra
-            
         }
         // No mission assigned
         else

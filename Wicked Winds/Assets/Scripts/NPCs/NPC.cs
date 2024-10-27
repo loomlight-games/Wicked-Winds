@@ -118,23 +118,22 @@ public class NPC : MonoBehaviour
     }
 
     public void OnInteractAfterLetter()
-    {
-        if (agent.isStopped == false)
-        {
-            StopMovement();
-        }
+    {   
+        StopMovement();        
+        ThankPlayer();
         string response = "Gracias por entregarme esta carta! ";
         gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response); 
+        CompleteMission();
     }
 
     // M�todo llamado cuando el jugador interact�a con el NPC
-    public void OnInteractAfterCollection()
+    public void OnMissionCompleted()
     {
         // Mostrar el mensaje antes de completar la misión
         if (agent.isStopped == false)
         {
-            StopMovement();        
-            ThankPlayer();
+            OnInteractAfterLetter();
+            return;
         }
 
         if (!string.IsNullOrEmpty(responseMessage))
@@ -147,23 +146,18 @@ public class NPC : MonoBehaviour
         CompleteMission();
     }
 
-
-
-    // M�todo para completar la misi�n
+    /// <summary>
+    /// Removes target and mission from player
+    /// </summary>
     public void CompleteMission()
     {
         if (missionIcon != null)
-        {
-            missionIcon.CompleteMission(); // Completa la misi�n
-            Debug.Log("Misi�n completada.");
+            missionIcon.CompleteMission();
 
-            // Quita al NPC de la lista de objetivos al completar la misi�n
-            PlayerManager.Instance.RemoveTarget(gameObject);
-        }
-        else
-        {
-            Debug.LogWarning("Este NPC no tiene una misi�n activa para completar.");
-        }
+        // Quita al NPC de la lista de objetivos al completar la misi�n
+        PlayerManager.Instance.RemoveTarget(gameObject);
+
+        PlayerManager.Instance.hasActiveMission = false;
     }
 }
 

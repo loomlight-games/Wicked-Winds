@@ -172,7 +172,4 @@ public class PlayerManager : AStateController
             Debug.Log($"Removed {target.name} from current targets.");
         }
     }
-
-
-
 }

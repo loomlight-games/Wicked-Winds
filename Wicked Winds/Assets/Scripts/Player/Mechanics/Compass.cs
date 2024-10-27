@@ -36,22 +36,35 @@ public class Compass
     // Update is called once per frame
     public void Update()
     {
+        // Player has mission
         if (PlayerManager.Instance.hasActiveMission){
+            // Not instantiated compass
             if (!isIstanciated){
                 // Instantiates a copy of the prefab in that transform as a child of it
-                GameObject prefabCopy = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
-                compass = prefabCopy.transform;
+                GameObject prefabInstance = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
+                compass = prefabInstance.transform;
                 isIstanciated = true;
-                
+                compassPrefab = prefabInstance;
             }
 
-            target = PlayerManager.Instance.currentTargets[0].transform;
+            // Target is first target of list
+            if (PlayerManager.Instance.currentTargets[0] != null)
+                target = PlayerManager.Instance.currentTargets[0].transform;
             
+            // Rotation to object
             Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
-
+            // Transition rotation
             compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
         }
-            
-        
+        // No mission
+        else {
+            // Instantiated compass
+            if (isIstanciated){
+                // Destroys it
+                GameManager.Instance.DestroyGO(compassPrefab);
+                isIstanciated = false;
+                compass = null;
+            }
+        }
     }
 }
