@@ -1,10 +1,12 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+
     public TextMeshProUGUI text = null; // Para mostrar el di�logo
     public TextMeshProUGUI npcName = null;   // Para mostrar el nombre del NPC
     public string[] lines;        // Las l�neas del di�logo

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Manages the player states and information
@@ -9,6 +10,8 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : AStateController
 {
+    public event EventHandler MissionCompleteEvent;
+
     public static PlayerManager Instance { get; private set;} // Only one player
 
     [HideInInspector] public float verticalVelocity;
@@ -105,7 +108,7 @@ public class PlayerManager : AStateController
     // Update is called once per frame
     public override void UpdateFrame()
     {
-        
+
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,5 +174,9 @@ public class PlayerManager : AStateController
             currentTargets.Remove(target);
             Debug.Log($"Removed {target.name} from current targets.");
         }
+    }
+
+    public void OnMissionCompleted(){
+        MissionCompleteEvent?.Invoke(this,null);
     }
 }
