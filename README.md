@@ -576,47 +576,5 @@ Como programador de mecánicas, mi labor en Wicked Winds se enfocó en la creaci
 
 **Conclusión:** El trabajo en esta fase de Wicked Winds fue una experiencia enriquecedora, en la cual enfrenté retos técnicos que fortalecieron mis habilidades en la implementación de sistemas de juego complejos. Aunque el proceso implicó superar varios obstáculos, logré implementar cada mecánica de manera funcional y optimizada. En futuros proyectos, planeo mejorar en la planificación de tiempos para el testing de mecánicas en múltiples plataformas y explorar formas de optimización que beneficien tanto el rendimiento como la calidad visual del juego.
 
-
-# This is an H1 header
-## This is an H2 header
-### This is an H3 header
-
-*Italic text*
-_Italic text_
-
-**Bold text**
-__Bold text__
-
-***Bold and Italic text***
-
-- Item 1
-- Item 2
-    - Subitem 2.1
-    - Subitem 2.2
- 
-1. First item
-2. Second item
-    1. Subitem 2.1
-    2. Subitem 2.2
-
-[GitHub](https://github.com)
-
-![Alt text](image-url.png)
-
-> This is a quote.
-
-Inline code: `example()`
-
-```python
-def example():
-    print("This is a code block")
-```
-
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Row 1    | Data 1   | Data 2   |
-| Row 2    | Data 3   | Data 4   |
-
-
-- [x] Task 1 (Completed)
-- [ ] Task 2 (Not completed)
+## **Conclusión grupal:**
+El desarrollo de Wicked Winds ha sido una experiencia enriquecedora para cada miembro del equipo, destacando el crecimiento individual y el trabajo colaborativo en todos los aspectos del juego. La creación de un entorno visual atractivo, la implementación de sistemas de interacción complejos, y el establecimiento de una identidad visual sólida han sido logros importantes que reflejan el compromiso y la creatividad de todos los involucrados. A pesar de los desafíos encontrados, como la optimización de mecánicas, la integración de múltiples plataformas y la coordinación de tareas, cada dificultad permitió mejorar habilidades técnicas y de organización. La experiencia y las lecciones aprendidas en este proyecto sientan una base sólida para futuros desarrollos, impulsándonos a aplicar prácticas de comunicación más efectivas y un enfoque modular para mejorar la escalabilidad y adaptabilidad en próximos retos​
