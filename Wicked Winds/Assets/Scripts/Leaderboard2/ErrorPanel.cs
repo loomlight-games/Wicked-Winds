@@ -55,7 +55,7 @@ public class ErrorPanel : Panel
     private void ButtonAction()
     {
         Close();
-        Debug.Log("action none");
+        //Debug.Log("action none");
         //AuthenticationService.Instance.SignOut();
         switch (action)
         {

@@ -10,7 +10,7 @@ public class AuthentificationPanel : Panel
     [SerializeField] private TMP_InputField passwordInput = null;
     [SerializeField] private Button signinButton = null;
     [SerializeField] private Button signupButton = null;
-    [SerializeField] Button anonymousButton = null;
+    [SerializeField] Button anonymousButton = null, leaderboardButton;
 
     public override void Initialize()
     {
@@ -21,6 +21,7 @@ public class AuthentificationPanel : Panel
         signinButton.onClick.AddListener(SignIn);
         signupButton.onClick.AddListener(SignUp);
         anonymousButton.onClick.AddListener(AnonymousSignIn);
+        leaderboardButton.onClick.AddListener(Viewtable);
         base.Initialize();
     }
     public override void Open()
@@ -95,6 +96,11 @@ public class AuthentificationPanel : Panel
             }
         }
         return hasUppercase && hasLowercase && hasDigit && hasSymbol;
+    }
+
+    void Viewtable(){
+        Close();
+        PanelManager.Open("Leaderboard");
     }
 }
 
