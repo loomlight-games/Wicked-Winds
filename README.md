@@ -575,7 +575,7 @@ Como programador de mecánicas, mi labor en Wicked Winds se enfocó en la creaci
 | El sistema de movimiento y cámara se adapta bien a PC y móvil, permitiendo una experiencia fluida en ambas plataformas  | La configuración de controles en dispositivos móviles presentó retos técnicos, lo que demandó tiempo adicional para optimizar la experiencia táctil  |
 | La mecánica de control del tiempo y boost fue bien recibida en las pruebas, aportando dinamismo y estrategia    | La implementación de múltiples estados presentó problemas de sincronización en las primeras pruebas y tuvo que ser refinada   |
 | El sistema de estados del personaje permitió una transición fluida   |   |
-| La brújula facilitó la navegación en el juego, mejorando la experiencia de usuario   | Data 3   |
+| La brújula facilitó la navegación en el juego, mejorando la experiencia de usuario   |    |
 | La tienda, junto con la simulación de anuncios, añadió una opción de progreso sin afectar el equilibrio del juego   |    |
 
 **Conclusión:** El trabajo en esta fase de Wicked Winds fue una experiencia enriquecedora, en la cual enfrenté retos técnicos que fortalecieron mis habilidades en la implementación de sistemas de juego complejos. Aunque el proceso implicó superar varios obstáculos, logré implementar cada mecánica de manera funcional y optimizada. En futuros proyectos, planeo mejorar en la planificación de tiempos para el testing de mecánicas en múltiples plataformas y explorar formas de optimización que beneficien tanto el rendimiento como la calidad visual del juego.
