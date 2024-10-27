@@ -1,5 +1,6 @@
+<p align="center">
 <img src="https://i.postimg.cc/zfdc68td/New-Logo-removebg-preview.png">
-
+</p>
 > ### Presentación
 > Somos Loomlight, un grupo de estudiantes de diseño y desarrollo de videojuegos y creadores de Wicked Winds. Se trata de un proyecto conjunto entre varias asignaturas del curso con el que tratamos de crear un videojuego de navegador de internet que consiga ser completo y divertido, y nos permita acercarnos a la realidad del mercado de los videojuegos.
 > ### Miembros
@@ -186,29 +187,44 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 
 ## Personajes
 - **Ashen - El protagonista:** Un joven brujo que ha ganado reputación por su habilidad para resolver problemas. Alegre y siempre dispuesto a ayudar, utiliza su escoba mágica para moverse por la ciudad. Su personalidad enérgica y curiosa le permite ganarse la confianza de los habitantes.
+<p align="center">
 <img src="https://i.postimg.cc/C1sVzWmk/Concept04.jpg"/>
+</p>
+<p align="center">
 <img src="https://i.postimg.cc/kGMP8fpZ/Concept05.jpg"/>
+</p>
+<p align="center">
 <img src="https://i.postimg.cc/G2KhZ80W/Recolors.jpg"/>
-
+</p>
 - **Habitantes de la ciudad:** Cada NPC tiene características y necesidades únicas; algunos son cómicos, otros misteriosos, cada uno con tareas relacionadas con sus personalidades. Las interacciones con ellos pueden revelar conexiones sorprendentes entre sus historias.
 
 - **Personajes especiales:** A lo largo del juego, Ashen se cruzará con personajes enigmáticos que revelan secretos de la ciudad y ofrecen misiones especiales con grandes recompensas, enriqueciendo la experiencia del jugador.
 
 ## Entornos y Lugares
 - **Ciudad mágica:** Inspirada en la arquitectura medieval, con influencias mágicas. Las calles están adornadas con farolas, árboles, calderos mágicos y edificaciones que dan un toque fantástico.
+<p align="center">
 <img src="https://i.postimg.cc/L5FMXmtH/Unity4.jpg"/>
+</p>
+<p align="center">
 <img src="https://i.postimg.cc/1X01VbBD/Unity5.jpg"/>
+</p>
+<p align="center"> 
 <img src="https://i.postimg.cc/yYBHCY6j/Unity6.jpg"/>
-
+</p>
 - **Plaza central:** Uno de los lugares más concurridos, donde los habitantes suelen congregarse. Aquí suelen comenzar y terminar varias misiones.
+<p align="center">
 <img src="https://i.postimg.cc/7LckF3bJ/Unity1.jpg"/>
+</p>
 
 - **Mercadillo:** Ubicado en la plaza central, lleno de puestos de vendedores de ingredientes y herramientas mágicas, es uno de los lugares favoritos de Ashen para realizar sus recados.
+<p align="center">
 <img src="https://i.postimg.cc/BZ20z13t/Unity2.jpg"/>
+</p>
 
 - **Lugares adicionales:** El bosque encantado, el pantano y la torre de hechicería ofrecen más oportunidades de exploración y aventuras que conectan con la narrativa principal.
+<p align="center">
 <img src="https://i.postimg.cc/xCz2nXbx/Unity3.jpg"/>
-
+</p>
 
 # 6. ARTE
 ## Estética General del Juego
