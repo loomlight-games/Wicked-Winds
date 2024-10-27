@@ -133,7 +133,7 @@ La partida inicia con un tiempo límite (por ejemplo, 60 segundos), y cada misi�
 - **Final del Juego:** Si el tiempo llega a cero, la partida finaliza automáticamente, y el jugador puede ver la tabla de clasificación.
 
 ### 4. Sistema de *Power-ups*
-Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, estos objetos recargan la barra de impulso cuando se recolectan, activando el modo de desplazamiento rápido para cumplir misiones más eficientemente.
+Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, estos objetos recargan la barra de impulso cuando se recolectan, permitiendo que el jugador pueda activar el modo de desplazamiento rápido para cumplir misiones más eficientemente.
 
 ### 5. Tienda de Aspectos
 - **Personalización del Personaje:** Los jugadores pueden visitar una tienda dentro del juego para adquirir aspectos estéticos para su personaje (cabeza, parte superior, parte inferior, zapatos). Estas mejoras son puramente estéticas y no afectan las mecánicas de juego.
@@ -143,11 +143,18 @@ Distribuidos por el escenario podemos encontrar diferentes objetos de impulso, e
 ### 6. Controles y compatibilidad multiplataforma
 - **Plataforma de Juego:** Al ser un juego de navegador, se puede jugar tanto en ordenador como en dispositivos móviles, ofreciendo una experiencia accesible para todos los usuarios.
 
-- **Periféricos:**
-    - **PC:** El movimiento se puede controlar usando el ratón y las teclas WASD o un mando.
-    - **Dispositivo Móvil:** El juego utiliza la pantalla táctil para las interacciones, permitiendo al jugador moverse y tocar los elementos de la interfaz para interactuar y aceptar misiones.
+- **Controles:**
+    - **PC:** Navegación de Menús: El jugador puede utilizar el ratón para interactuar con los menús y seleccionar los botones de la interfaz.
 
-- **Controles:** El movimiento del personaje jugable se controla mediante un joystick en pantalla para dispositivos móviles, mientras que en PC, el jugador puede utilizar las teclas para dirigir a Ashen y realizar las interacciones necesarias mediante clics.
+    - **Gameplay:**
+        - **Movimiento del Personaje:** Se utilizan las teclas WASD para mover al personaje.
+        - **Correr:** La tecla Shift permite al jugador correr y desplazarse más rápidamente.
+        - **Interacción:** La tecla E se usa para interactuar con objetos y personajes en el entorno.
+        - **Volar:** La tecla Space permite al jugador volar con su escoba.
+        - **Avance de Texto:** La tecla Tab se usa para avanzar el texto durante los diálogos y las interacciones.
+
+    - **Dispositivos Móviles:** El juego se controla de forma táctil, utilizando un joystick en pantalla para el movimiento del personaje. Los jugadores pueden realizar taps en la pantalla para interactuar con objetos y personajes, así como para acceder a menús.
+
 
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
