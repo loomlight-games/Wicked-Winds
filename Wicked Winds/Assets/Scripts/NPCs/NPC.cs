@@ -133,6 +133,8 @@ public class NPC : MonoBehaviour
                 gameObject.GetComponent<Interactable>().textBubble.StartDialogue(responseMessage);
             }
             this.message = string.Empty;
+
+            ThankPlayer();
             CompleteMission();
         }
         else
