@@ -9,7 +9,7 @@ using System;
 public class LeaderboardPanel : Panel 
 {
     string LeaderboardID = "ElapsedTime";
-    [SerializeField] private int playersPerPage = 25;
+    [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
     //for asigning the playersItems prefabs (contents's children)

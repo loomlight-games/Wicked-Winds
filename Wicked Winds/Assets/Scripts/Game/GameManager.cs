@@ -30,7 +30,7 @@ public class GameManager : AStateController
 
     #region CLOUD SERVICES
     private bool eventsInitialized = false;
-
+    [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
     #endregion
 
     [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
@@ -189,6 +189,8 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+            
+            
         }
         catch (AuthenticationException exception)
         {
@@ -230,6 +232,7 @@ public class GameManager : AStateController
         AuthenticationService.Instance.SignedIn += () =>
         {
             SignInConfirmAsync();
+
             // Shows how to get a playerID
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
             // Shows how to get an access token
@@ -261,7 +264,10 @@ public class GameManager : AStateController
         {   
             if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
             {
-                await AuthenticationService.Instance.UpdatePlayerNameAsync("Player");
+                string username =PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+
+
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
             }
             PanelManager.CloseAll();
             PanelManager.Open("profile");

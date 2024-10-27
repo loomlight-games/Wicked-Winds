@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -95,6 +96,7 @@ public class AuthentificationPanel : Panel
             if (IsPasswordValid(pass))
             {
                 GameManager.Instance.SignUpWithUsernameAndPasswordAsync(user, pass);
+                PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE,user);
             }
             else
             {
@@ -102,6 +104,10 @@ public class AuthentificationPanel : Panel
                 panel.Open(ErrorPanel.Action.None, "Password does not match requirements. Insert at least 1 uppercase, 1 lowercase, 1 digit and 1 symbol. With minimum 8 and a maximum of 30 characters.", "OK");
             }
         }
+    }
+    public void PassingUsername(string username)
+    {
+         username = usernameInput.text.Trim();
     }
     /*
     private void SignUp()
