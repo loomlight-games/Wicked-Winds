@@ -59,7 +59,7 @@ public class GameManager : AStateController
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
             SetState(shopState);
-        else if (SceneManager.GetActiveScene().name == "Leaderboard2")
+        else if (SceneManager.GetActiveScene().name == "Leaderboard")
             SetState(leaderboardState);
         else
             SetState(playState);
@@ -73,7 +73,7 @@ public class GameManager : AStateController
         switch (buttonName)
         {
             case "Play":
-                SceneManager.LoadScene("Gameplay 1");
+                SceneManager.LoadScene("Gameplay");
                 break;
             case "Pause":
                 SwitchState(pauseState);
@@ -92,7 +92,7 @@ public class GameManager : AStateController
                 SceneManager.LoadScene("Main menu");
                 break;
             case "Leaderboard":
-                SceneManager.LoadScene("Leaderboard2");
+                SceneManager.LoadScene("Leaderboard");
                 break;
             case "Credits":
                 SwitchState(creditsState);
@@ -102,10 +102,6 @@ public class GameManager : AStateController
                 break;
             case "Shop":
                 SceneManager.LoadScene("Shop");
-                break;
-            case "Quit":
-                Debug.Log("Quit");
-                Application.Quit();
                 break;
             default:
                 break;

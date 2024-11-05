@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class ItemButton : MonoBehaviour
 {
-    public CustomizableItem item;
+    public Garment item;
     public float rotationSpeed,
         scaleUp = 1.5f;
 
@@ -37,7 +37,7 @@ public class ItemButton : MonoBehaviour
         // Item must be first child and price panel named like that
         try{
             // Get item and price panel
-            item = transform.GetComponentInChildren<CustomizableItem>();
+            item = transform.GetComponentInChildren<Garment>();
             initialItemScale = item.transform.localScale;
 
             pricePanel = transform.Find("Price panel").gameObject;
@@ -90,7 +90,7 @@ public class ItemButton : MonoBehaviour
 
         try{
              // Check if item is in the the purchased items list of player
-            foreach (CustomizableItem purchasedItem in PlayerManager.Instance.purchasedItems){
+            foreach (Garment purchasedItem in PlayerManager.Instance.purchasedItems){
                 if (purchasedItem.name == item.name) item.isPurchased = true;
             }
         }catch{

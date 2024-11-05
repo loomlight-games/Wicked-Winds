@@ -29,7 +29,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public readonly string PLAYER_COINS_FILE = "PlayerCoins";
 
     // List of purchased items
-    public List<CustomizableItem> purchasedItems = new();
+    public List<Garment> purchasedItems = new();
 
     [HideInInspector] public int coins;
 
@@ -145,7 +145,7 @@ public class PlayerManager : AStateController
         flyKey = context.ReadValueAsButton();
     }
 
-    public void OnUpdateBodyPart(CustomizableItem newItem){
+    public void OnUpdateBodyPart(Garment newItem){
         customizable.UpdateBodyPart(newItem);
     }
 
