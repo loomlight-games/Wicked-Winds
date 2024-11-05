@@ -14,7 +14,6 @@ public class PlayerManager : AStateController
 
     public static PlayerManager Instance { get; private set;} // Only one player
 
-    [HideInInspector] public float verticalVelocity;
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
@@ -36,8 +35,6 @@ public class PlayerManager : AStateController
     #endregion
 
     #region HABILITIES
-    public Movable movable; //////////////////////////////////////
-    public Flying flying; ////////////////////////////////////////
     public PlayerController playerController;
     public Boostable boostable;
     public CustomizableCharacter customizable;
@@ -79,11 +76,6 @@ public class PlayerManager : AStateController
             Destroy(gameObject);
 
         controller = GetComponent<CharacterController>();
-
-        /////////////////////////////////////////////////////////////
-        movable = new (controller, walkSpeed, boostSpeed, rotationSpeed);
-        flying = new (controller, flyForce, gravity, heightLimit);
-        /////////////////////////////////////////////////////////////
 
         playerController = new(controller, walkSpeed, boostSpeed, flyForce, gravity, heightLimit, rotationSpeed);
         boostable = new (boostLossPerSecond);
