@@ -16,35 +16,31 @@ public class PlayerManager : AStateController
 
     [HideInInspector] public float verticalVelocity;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey;
+    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
-    [HideInInspector] public int score;
-    public bool hasActiveMission;
-    public List<GameObject> currentTargets = new ();
-    public Transform target;
-    public MissionIcon activeMission;
+    [HideInInspector] public int score, coins;
+    [HideInInspector] public List<GameObject> currentTargets = new ();
+    [HideInInspector] public Transform target;
+    [HideInInspector] public MissionIcon activeMission;
+    [HideInInspector]public List<Garment> purchasedItems = new();
 
     [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
     [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
     [HideInInspector] public readonly string PLAYER_COINS_FILE = "PlayerCoins";
 
-    // List of purchased items
-    public List<Garment> purchasedItems = new();
-
-    [HideInInspector] public int coins;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground
-    //public readonly FlyingPlayerState flyingState = new();// Flying
     public readonly AtShopPlayerState atShopState = new();// At shop
     public readonly FinalPlayerState finalState = new();
     #endregion
 
     #region HABILITIES
-    public Movable movable; // Movable
-    public Boostable boostable; // Boostable
-    public Flying flying; // Flying
-    public CustomizableCharacter customizable; // Customizable
+    public Movable movable; //////////////////////////////////////
+    public Flying flying; ////////////////////////////////////////
+    public PlayerController playerController;
+    public Boostable boostable;
+    public CustomizableCharacter customizable;
     public Interactions interactions;
     public Compass compass;
     #endregion
@@ -84,9 +80,13 @@ public class PlayerManager : AStateController
 
         controller = GetComponent<CharacterController>();
 
+        /////////////////////////////////////////////////////////////
         movable = new (controller, walkSpeed, boostSpeed, rotationSpeed);
-        boostable = new (boostLossPerSecond);
         flying = new (controller, flyForce, gravity, heightLimit);
+        /////////////////////////////////////////////////////////////
+
+        playerController = new(controller, walkSpeed, boostSpeed, flyForce, gravity, heightLimit, rotationSpeed);
+        boostable = new (boostLossPerSecond);
         customizable = new (head, upperBody, lowerBody, shoes);
         interactions = new ();
         compass = new();

@@ -19,7 +19,8 @@ public class Boostable
     ///////////////////////////////////////////////////////////////////////
     public void Start(){
         // Needs to know when its running
-        PlayerManager.Instance.movable.RunningEvent += BoostLoss; 
+        PlayerManager.Instance.movable.RunningEvent += BoostLoss; //////////////////////
+        PlayerManager.Instance.playerController.RunningEvent += BoostLoss;  
     }
 
     public void Update(){

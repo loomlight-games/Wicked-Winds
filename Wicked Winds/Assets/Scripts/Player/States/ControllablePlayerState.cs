@@ -6,18 +6,17 @@ public class ControllablePlayerState : AState
 {
     public override void Enter()
     {
-        //PlayerManager.Instance.playerController.Start();
-        PlayerManager.Instance.movable.Start();
+        PlayerManager.Instance.playerController.Start();
+        //PlayerManager.Instance.movable.Start();
         PlayerManager.Instance.boostable.Start();
         PlayerManager.Instance.compass.Start();
     }
 
     public override void Update()
     {
-        //PlayerManager.Instance.playerController.Update();
-
-        PlayerManager.Instance.movable.Update();
-        PlayerManager.Instance.flying.Update();
+        PlayerManager.Instance.playerController.Update();
+        //PlayerManager.Instance.movable.Update();
+        //PlayerManager.Instance.flying.Update();
         PlayerManager.Instance.boostable.Update();
         PlayerManager.Instance.interactions.Update();
         PlayerManager.Instance.compass.Update();
