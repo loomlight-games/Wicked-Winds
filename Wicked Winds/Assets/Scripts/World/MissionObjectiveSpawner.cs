@@ -5,11 +5,19 @@ using UnityEngine;
 public class MissionObjectiveSpawner : MonoBehaviour
 {
     public List<GameObject> ingredientPrefabs; // Lista que contiene prefabs de los ingredientes a generar.
-    public float minSpawnRadius = 100f; // Distancia mínima desde el centro para generar ingredientes.
-    public float maxSpawnRadius = 250f; // Distancia máxima desde el centro para generar ingredientes.
-    public LayerMask buildingLayerMask; // Máscara de capa para detectar edificios.
-    public LayerMask groundLayerMask; // Máscara de capa para detectar el suelo.
-    public float heightOffset = 0.5f; // Desplazamiento vertical para colocar el ingrediente sobre el suelo o edificio.
+    public float minSpawnRadius = 100f,// Distancia mínima desde el centro para generar ingredientes.
+                 spawnDistance,
+                 maxSpawnRadius = 250f,// Distancia máxima desde el centro para generar ingredientes.
+                 heightOffset = 0.5f;  // Desplazamiento vertical para colocar el ingrediente sobre el suelo o edificio.
+
+    public LayerMask buildingLayerMask, // Máscara de capa para detectar edificios.
+                     groundLayerMask; // Máscara de capa para detectar el suelo.
+    
+    const int maxAttempts = 10; // Número máximo de intentos para encontrar una posición válida.
+    bool validPosition;
+    int attempts;
+    GameObject randomPrefab;
+    Vector3 randomPos, randomDirection;
 
     private static MissionObjectiveSpawner instance;
     public static MissionObjectiveSpawner Instance { get { return instance; } }
@@ -32,20 +40,20 @@ public class MissionObjectiveSpawner : MonoBehaviour
 
         for (int i = 0; i < count; i++) // Itera el número de ingredientes que se quieren generar.
         {
-            GameObject randomPrefab = ingredientPrefabs[Random.Range(0, ingredientPrefabs.Count)];
-            Vector3 randomPos = Vector3.zero;
+            randomPrefab = ingredientPrefabs[Random.Range(0, ingredientPrefabs.Count)];
+            randomPos = Vector3.zero;
 
-            bool validPosition = false; // Bandera para verificar si se encontró una posición válida.
-            int attempts = 0; // Contador de intentos para encontrar una posición.
-            const int maxAttempts = 10; // Número máximo de intentos para encontrar una posición válida.
+            validPosition = false; // Bandera para verificar si se encontró una posición válida.
+            attempts = 0; // Contador de intentos para encontrar una posición.
+            
 
             while (!validPosition && attempts < maxAttempts)
             {
                 attempts++; // Incrementa el contador de intentos.
-                Debug.Log($"Intento {attempts} para el ingrediente {i + 1}/{count}");
+                
 
                 // Genera una dirección aleatoria y una distancia aleatoria.
-                Vector3 randomDirection = Random.insideUnitSphere;
+                 randomDirection = Random.insideUnitSphere;
                 float spawnDistance = Random.Range(minSpawnRadius, maxSpawnRadius);
                 randomPos = centerPosition + randomDirection.normalized * spawnDistance; // Calcula la posición aleatoria en función del centro y la dirección.
                 randomPos.y = centerPosition.y; // Mantiene la misma altura que el centro.
@@ -58,7 +66,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
                 if (Physics.Raycast(randomPos + Vector3.up * 10f, Vector3.down, out buildingHit, Mathf.Infinity, buildingLayerMask)) // Haz el raycast desde más arriba.
                 {
                     highestPoint = buildingHit.point.y + heightOffset; // Ajusta la altura al tope del edificio.
-                    Debug.Log($"Edificio encontrado en {randomPos}. Ajustando altura a {highestPoint}.");
+                    
                 }
                 else
                 {
@@ -67,11 +75,11 @@ public class MissionObjectiveSpawner : MonoBehaviour
                     if (Physics.Raycast(randomPos + Vector3.up * 10f, Vector3.down, out groundHit, Mathf.Infinity, groundLayerMask))
                     {
                         highestPoint = groundHit.point.y + heightOffset; // Ajusta la altura al suelo.
-                        Debug.Log($"Suelo encontrado en {randomPos}. Ajustando altura a {highestPoint}.");
+                       
                     }
                     else
                     {
-                        Debug.Log($"No se encontró suelo en {randomPos}. Reintentando...");
+                        
                         continue; // Salta a la siguiente iteración del bucle para intentar de nuevo.
                     }
                 }
@@ -82,7 +90,6 @@ public class MissionObjectiveSpawner : MonoBehaviour
                 // Asegúrate de que el collider del ingrediente no esté dentro de un edificio.
                 if (Physics.CheckBox(randomPos, randomPrefab.GetComponent<Collider>().bounds.extents, Quaternion.identity, buildingLayerMask))
                 {
-                    Debug.Log($"Posición final para ingrediente {i + 1} está dentro de un edificio. Reintentando...");
                     continue; // Salta a la siguiente iteración del bucle para intentar de nuevo.
                 }
 
@@ -99,11 +106,10 @@ public class MissionObjectiveSpawner : MonoBehaviour
             // Instanciar el ingrediente en la posición válida.
             GameObject spawnedIngredient = Instantiate(randomPrefab, randomPos, Quaternion.identity);
             spawnedIngredients.Add(spawnedIngredient); // Agrega el ingrediente a la lista.
-            Debug.Log($"Ingrediente {i + 1} instanciado en {randomPos}"); // Muestra un mensaje en la consola indicando que el ingrediente fue creado.
+           
         }
 
         // Muestra cuántos ingredientes fueron generados exitosamente.
-        Debug.Log($"SpawnIngredients: Generados {spawnedIngredients.Count} ingredientes de {count} solicitados.");
         return spawnedIngredients.ToArray(); // Devuelve la lista de ingredientes generados como un arreglo.
     }
 }
