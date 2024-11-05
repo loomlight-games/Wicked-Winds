@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameplayHUD : MonoBehaviour
+public class GameplayHUD
 {
     public TextMeshProUGUI timerText, elapsedText, boostText;
     public float remainingTime, elapsedTime;

@@ -66,7 +66,7 @@ public class NPC : MonoBehaviour
 
     public void ThankPlayer()
     {
-        GameManager.Instance.feddBackText.text = "Thanks for bringing my letter!";
+        GameManager.Instance.playState.feedBackText.text = "Thanks for bringing my letter!";
     }
 
     // Este m�todo es llamado cuando el objeto es devuelto al pool

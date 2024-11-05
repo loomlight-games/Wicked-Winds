@@ -31,7 +31,7 @@ public class Interactable : MonoBehaviour
             }
             // NPC is the assigned but not objects have been found
             else{
-                GameManager.Instance.feddBackText.text = "You must collect all items of the current mission.";
+                GameManager.Instance.playState.feedBackText.text = "You must collect all items of the current mission.";
             }
         }
         // No mission assigned
@@ -68,7 +68,7 @@ public class Interactable : MonoBehaviour
 
 
                 PlayerManager.Instance.activeMission = activeNPC.missionIcon;
-                GameManager.Instance.feddBackText.text = $"New mission accepted from {npc.name}: {missionIcon.name}.";
+                GameManager.Instance.playState.feedBackText.text = $"New mission accepted from {npc.name}: {missionIcon.name}.";
                 
                 if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
                 {

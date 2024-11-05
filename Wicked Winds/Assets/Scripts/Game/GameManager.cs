@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
@@ -12,14 +11,11 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> ButtonClicked;
-    
-    public GameObject tabButton;
-    public TextMeshProUGUI feddBackText;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
     public readonly MainMenuState mainMenuState = new();
-    public readonly GamePlayState playState = new();
+    public GamePlayState playState;
     public readonly FinalState endState = new();
     public readonly CreditsState creditsState = new();
     public readonly SettingsState settingsState = new();
@@ -28,33 +24,34 @@ public class GameManager : AStateController
     #endregion
 
     #region CLOUD SERVICES
-    private bool eventsInitialized = false;
+    bool eventsInitialized = false;
     [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
+    [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
     #endregion
 
-    [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
+    #region PROPERTIES
+    [Header("Gameplay")]
+    [SerializeField] float startingTime = 90f;
+    #endregion
 
     public override void Awake()
     { 
         //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
-        {
             Instance = this;
-        }
+        
         else
-        {
             Destroy(gameObject);
-        }
 
         StartClientService();
-        //PanelManager.Open("Leaderboard");
-  
     }
 
 
     public override void Start()
     {
+        playState = new(startingTime);
+
         if (SceneManager.GetActiveScene().name == "Main menu")
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")
@@ -109,9 +106,7 @@ public class GameManager : AStateController
     }
  
    /////////////////////////////////////////////////////////////////////////////////////////
-   //UNITY SERVICES ZONE (LEADERBOARD)
- 
-
+   #region UNITY SERVICES ZONE (LEADERBOARD)
     /// <summary>
     /// starts the authentification function for leaderbaord and users
     /// </summary>
@@ -281,7 +276,7 @@ public class GameManager : AStateController
         ErrorPanel panel = (ErrorPanel)PanelManager.GetSingleton("error");
         panel.Open(action, error, button);
     }
-
+    #endregion
     /////////////////////////////////////////////////////////////////////////////////////////////
 
     public void DestroyGO(GameObject gameObject){
