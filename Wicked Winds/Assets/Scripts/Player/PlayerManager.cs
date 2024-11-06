@@ -104,34 +104,22 @@ public class PlayerManager : AStateController
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    /// <summary>
-    /// Detects joystick inputs
-    /// </summary>
     public void OnStick(InputAction.CallbackContext context)
     {
         movement2D = context.ReadValue<Vector2>();
         movement2D *= joystickScale; // Must be bigger than keyboard scale (1.0)
     }
 
-    /// <summary>
-    /// Detects walk inputs
-    /// </summary>
     public void OnWalk(InputAction.CallbackContext context)
     {
         movement2D = context.ReadValue<Vector2>();
     }
 
-    /// <summary>
-    /// Detects run inputs
-    /// </summary>
     public void OnRun(InputAction.CallbackContext context)
     {
         runKey = context.ReadValueAsButton();
     }
 
-    /// <summary>
-    /// Detects fly inputs
-    /// </summary>
     public void OnFly(InputAction.CallbackContext context)
     {
         flyKey = context.ReadValueAsButton();
