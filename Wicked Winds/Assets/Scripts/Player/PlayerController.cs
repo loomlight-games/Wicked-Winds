@@ -11,10 +11,10 @@ public class PlayerController
 
     float walkSpeed,
         boostSpeed,
-        heightLimit,
+        lowerHeightLimit,
         maxHeightLimit,
         flyForce, 
-        gravityValue,
+        gravityForce,
         rotationSpeed,
         movementSpeed, 
         verticalVelocity, 
@@ -45,8 +45,8 @@ public class PlayerController
         walkSpeed = PlayerManager.Instance.walkSpeed;
         boostSpeed = PlayerManager.Instance.boostSpeed;
         flyForce = PlayerManager.Instance.flyForce;
-        gravityValue = PlayerManager.Instance.gravityValue;
-        heightLimit = PlayerManager.Instance.heightLimit;
+        gravityForce = PlayerManager.Instance.gravityForce;
+        lowerHeightLimit = PlayerManager.Instance.lowerHeightLimit;
         maxHeightLimit = PlayerManager.Instance.maxHeightLimit;
         rotationSpeed = PlayerManager.Instance.rotationSpeed;
         speedPotionLoss = PlayerManager.Instance.speedPotionLossPerSecond;
@@ -80,51 +80,48 @@ public class PlayerController
         // Player on ground
         if (controller.isGrounded){
             // Fly key pressed -> fly
-            if (PlayerManager.Instance.flyKey) verticalVelocity = flyForce;
+            if (PlayerManager.Instance.flyKey) 
+                verticalVelocity = flyForce;
             // Not pressed -> small gravity to keep grounded
-            else verticalVelocity = -1f;
-        // Not on ground
-        } else {
+            else 
+                verticalVelocity = -1f;
+        } // Not on ground
+        else {
             // Fly key pressed
             if (PlayerManager.Instance.flyKey){
-                // Reached max height limit -> gravity
-                if (verticalPosition >= maxHeightLimit) verticalVelocity -= gravityValue * Time.deltaTime;
-                // Not reached
-                else{
-                    // Reached first height limit
-                    if (verticalPosition > heightLimit){
+                // Reached max height limit
+                if (verticalPosition >= maxHeightLimit){
+                    // Enough fly potion -> reduce its value
+                    if (flyPotionValue >= 0f) {
+                        flyPotionValue -= flyPotionLoss * Time.deltaTime;
+                        // Maintain in limit
+                        verticalVelocity = flyForce * Time.deltaTime;
+                    } // No fly potion -> gravity
+                    else 
+                        verticalVelocity -= gravityForce * Time.deltaTime;
+                } // Not reached
+                else {
+                    // Overcomed lower height limit
+                    if (verticalPosition > lowerHeightLimit){
                         // Enough fly potion -> fly and reduce its value
                         if (flyPotionValue >= 0f) {
                             verticalVelocity += flyForce * Time.deltaTime;
                             // Reduce fly potion value
                             flyPotionValue -= flyPotionLoss * Time.deltaTime;
-                        }
-                        // No fly potion -> gravity
-                        else verticalVelocity -= gravityValue * Time.deltaTime;
+                        } // No fly potion -> gravity
+                        else 
+                            verticalVelocity -= gravityForce * Time.deltaTime;
+                    } // Reached and no fly potion -> maintain in limit
+                    else if (lowerHeightLimit - verticalPosition < 0.1f && flyPotionValue <= 0f) 
+                        verticalVelocity = flyForce * Time.deltaTime;
                     // Not reached -> fly
-                    } else verticalVelocity += flyForce * Time.deltaTime;
+                    else if (verticalPosition < lowerHeightLimit) 
+                        verticalVelocity += flyForce * Time.deltaTime;
                 }
             // Not pressed -> gravity
-            } else verticalVelocity -= gravityValue * Time.deltaTime;
+            } else 
+                verticalVelocity -= gravityForce * Time.deltaTime;
         }
-            
-        
-
-        // // Player on ground
-        // if (controller.isGrounded) {
-        //     verticalVelocity = -1f; // Slight downward force to keep grounded
-            
-        //     // If fly is pressed and height limit hasn't been reached
-        //     if (PlayerManager.Instance.flyKey && verticalPosition < heightLimit)
-        //         verticalVelocity = flyForce; // Apply jump force
-        // }
-        // else { // Player flying
-        //     // If fly is pressed and height limit hasn't been reached
-        //     if (PlayerManager.Instance.flyKey && verticalPosition < heightLimit)
-        //         verticalVelocity += flyForce * Time.deltaTime; // Gradually increase altitude
-        //     else // Apply gravity when fly is not pressed
-        //         verticalVelocity -= gravityValue * Time.deltaTime; // Descend naturally
-        // }
     }
 
     /// <summary>

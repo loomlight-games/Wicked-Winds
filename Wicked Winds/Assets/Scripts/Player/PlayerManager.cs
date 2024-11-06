@@ -37,18 +37,18 @@ public class PlayerManager : AStateController
 
     #region PROPERTIES
     [Header("Movement")]
-    public float walkSpeed = 5f;
-    public float boostSpeed = 13f;
-    public float rotationSpeed = 5f;
+    public float walkSpeed = 6f;
+    public float boostSpeed = 12f;
+    public float rotationSpeed = 2f;
     public float flyForce = 2f;
-    public float gravityValue = 5f;
-    public float heightLimit = 7f;
-    public float maxHeightLimit = 17f;
+    public float gravityForce = 3f;
+    public float lowerHeightLimit = 7f;
+    public float maxHeightLimit = 20f;
     public float joystickScale = 1.1f;
 
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
-    public float flyPotionLossPerSecond = 3f;
+    public float flyPotionLossPerSecond = 4f;
     public float interactRange = 2f;
     public Transform compassTransform;
 
