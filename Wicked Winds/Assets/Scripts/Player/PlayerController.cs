@@ -53,13 +53,10 @@ public class PlayerController
         flyPotionLossPerSecond = PlayerManager.Instance.flyPotionLossPerSecond;
         playerBodyTransform = PlayerManager.Instance.transform;
 
-        // Find camera with 'main camera'tag
-        cameraTransform = Camera.main.transform;
+        
+        cameraTransform = Camera.main.transform; // Find camera with 'main camera'tag
         if (cameraTransform == null) Debug.LogWarning("No camera found");
         
-        // Needs to know boost value
-        //PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
-        // Needs to know when to recover value
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
     }

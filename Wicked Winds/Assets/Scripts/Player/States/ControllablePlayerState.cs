@@ -10,14 +10,12 @@ public class ControllablePlayerState : AState
         PlayerManager.Instance.customizable.LoadCoins();
 
         PlayerManager.Instance.playerController.Start();
-        //PlayerManager.Instance.boostable.Start();
         PlayerManager.Instance.compass.Start();
     }
 
     public override void Update()
     {
         PlayerManager.Instance.playerController.Update();
-        //PlayerManager.Instance.boostable.Update();
         PlayerManager.Instance.interactions.Update();
         PlayerManager.Instance.compass.Update();
     }

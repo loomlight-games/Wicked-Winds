@@ -30,7 +30,6 @@ public class PlayerManager : AStateController
 
     #region HABILITIES
     public PlayerController playerController = new();
-    //public Boostable boostable;
     public CustomizableCharacter customizable;
     public Interactions interactions;
     public Compass compass;
@@ -73,7 +72,6 @@ public class PlayerManager : AStateController
 
         controller = GetComponent<CharacterController>();
 
-        //boostable = new (speedPotionLossPerSecond);
         customizable = new (head, upperBody, lowerBody, shoes);
         interactions = new ();
         compass = new();
