@@ -46,7 +46,15 @@ public class GamePlayState : AState
     {
         UpdateTimer();
 
-        speedText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.speedPotionValue).ToString();
+        if (PlayerManager.Instance.playerController.speedPotionValue >= 0)
+            speedText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.speedPotionValue).ToString();
+        else
+            speedText.text = "0";
+        
+        if (PlayerManager.Instance.playerController.flyPotionValue >= 0)
+            flyHighText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.flyPotionValue).ToString();
+        else
+            flyHighText.text = "0";
 
         if (Input.GetKeyDown(KeyCode.Escape))
             GameManager.Instance.ClickButton("Pause");

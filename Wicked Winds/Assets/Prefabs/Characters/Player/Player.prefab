@@ -281,7 +281,6 @@ MonoBehaviour:
   controller: {fileID: 0}
   runKey: 0
   runJoystick: 0
-  canRun: 0
   flyKey: 0
   interactKey: 0
   nextLineKey: 0
@@ -295,10 +294,12 @@ MonoBehaviour:
   boostSpeed: 12
   rotationSpeed: 3
   flyForce: 2
-  gravity: 5
-  heightLimit: 20
+  gravityValue: 5
+  heightLimit: 7
+  maxHeightLimit: 18
   joystickScale: 1.1
-  boostLossPerSecond: 2
+  speedPotionLossPerSecond: 2
+  flyPotionLossPerSecond: 4
   interactRange: 2
   compassTransform: {fileID: 3593533240418902687}
   head: {fileID: 6884557027795835833}
