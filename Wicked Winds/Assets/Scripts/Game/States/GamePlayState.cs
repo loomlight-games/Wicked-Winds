@@ -7,7 +7,7 @@ public class GamePlayState : AState
     public TextMeshProUGUI feedBackText;
 
     GameObject UI, statesUI, gameplayUI, hud;
-    TextMeshProUGUI timerText, elapsedText, boostText;
+    TextMeshProUGUI timerText, elapsedText, speedText, flyHighText;
     float remainingTime, elapsedTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
@@ -33,17 +33,20 @@ public class GamePlayState : AState
 
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
-        boostText = GameObject.Find("Boost").GetComponent<TextMeshProUGUI>();
+        speedText = GameObject.Find("Speed amount").GetComponent<TextMeshProUGUI>();
+        flyHighText = GameObject.Find("Fly amount").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
 
         // Needs to know boost value
-        PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
+        //PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
     }
 
     public override void Update()
     {
         UpdateTimer();
+
+        speedText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.speedPotionValue).ToString();
 
         if (Input.GetKeyDown(KeyCode.Escape))
             GameManager.Instance.ClickButton("Pause");
@@ -55,7 +58,7 @@ public class GamePlayState : AState
         gameplayUI.SetActive(false);
     }
 
-        private void UpdateTimer()
+    private void UpdateTimer()
     {
         if (remainingTime > 0){
 
@@ -97,7 +100,7 @@ public class GamePlayState : AState
     /// </summary>
     private void OnBoostChangeEvent(object sender, float currentBoost)
     {
-        boostText.text = Mathf.FloorToInt(currentBoost).ToString();
+        speedText.text = Mathf.FloorToInt(currentBoost).ToString();
     }
 
     /// <summary>

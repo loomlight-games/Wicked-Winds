@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class ControllablePlayerState : AState
 {
-    public event EventHandler RunBoostCollidedEvent;
+    public event EventHandler SpeedPotionCollected, FlyPotionCollected;
 
     public override void Enter()
     {
         PlayerManager.Instance.customizable.LoadCoins();
 
         PlayerManager.Instance.playerController.Start();
-        PlayerManager.Instance.boostable.Start();
+        //PlayerManager.Instance.boostable.Start();
         PlayerManager.Instance.compass.Start();
     }
 
     public override void Update()
     {
         PlayerManager.Instance.playerController.Update();
-        PlayerManager.Instance.boostable.Update();
+        //PlayerManager.Instance.boostable.Update();
         PlayerManager.Instance.interactions.Update();
         PlayerManager.Instance.compass.Update();
     }
@@ -29,18 +29,32 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerEnter(Collider other)
     {
-        //PlayerManager.Instance.boostable.OnTriggerEnter(other);
-
-        // Its a run boost
-        if (other.gameObject.CompareTag("RunBoost"))
+        // It's a speed potion
+        if (other.gameObject.CompareTag("SpeedPotion"))
         {
-            //Deactivates it
-            other.gameObject.SetActive(false);
+            // Any speed amount has been lost
+            if (PlayerManager.Instance.playerController.speedPotionValue != 100){
+                //Deactivates it
+                other.gameObject.SetActive(false);
 
-            // Notifies boostable
-            RunBoostCollidedEvent?.Invoke(this, null);
+                // Notifies boostable
+                SpeedPotionCollected?.Invoke(this, null);
+            }
         }
-        // Its a run boost
+
+        // It's a fly high potion
+        if (other.gameObject.CompareTag("FlyHighPotion"))
+        {
+            // Any fly high amount has been lost
+            if (PlayerManager.Instance.playerController.flyPotionValue != 100){
+                //Deactivates it
+                other.gameObject.SetActive(false);
+
+                // Notifies boostable
+                FlyPotionCollected?.Invoke(this, null);
+            }
+        }
+        // It's a coin
         else if (other.gameObject.CompareTag("Coin"))
         {
             //Deactivates it

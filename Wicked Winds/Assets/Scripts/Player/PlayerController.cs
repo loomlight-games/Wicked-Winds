@@ -2,57 +2,66 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// Detects inputs (joystick and keyboard) and moves object
-/// Only runs when enough boost
+/// Gives movement, high velocity and high flight (when possible) to player
 /// </summary>
 public class PlayerController
 {
-    public event EventHandler<EventArgs> RunningEvent; // Invoked when run trigger
-    
-    readonly CharacterController controller;
-    readonly float walkSpeed,
+    #region PROPERTIES
+    CharacterController controller;
+
+    float walkSpeed,
         boostSpeed,
         heightLimit,
+        maxHeightLimit,
         flyForce, 
         gravityValue,
-        rotationSpeed;
+        rotationSpeed,
+        movementSpeed, 
+        verticalVelocity, 
+        verticalPosition, 
+        flyPotionLossPerSecond, 
+        speedPotionLossPerSecond;
 
-    float movementSpeed, verticalVelocity, verticalPosition;
-    Vector3 movement3D, forward, right, lookAtPosition;
+    const float MAX_VALUE = 100;
+    public float flyPotionValue = MAX_VALUE, 
+                 speedPotionValue = MAX_VALUE;
+    
+    Vector3 movement3D, 
+        forward, 
+        right, 
+        lookAtPosition;
+
     Vector2 movement2D;
     Quaternion lookAtRotation;
+
     Transform cameraTransform,
             playerBodyTransform;
-    
-    ///////////////////////////////////////////////////////////////////////
-    public PlayerController(CharacterController controller, 
-                            float walkSpeed, 
-                            float boostSpeed, 
-                            float flyForce,
-                            float gravityValue,
-                            float heightLimit,
-                            float rotationSpeed){
-        this.controller = controller;
-        this.walkSpeed = walkSpeed;
-        this.boostSpeed = boostSpeed;
-        this.flyForce = flyForce;
-        this.gravityValue = gravityValue;
-        this.heightLimit = heightLimit;
-        this.rotationSpeed = rotationSpeed;
-    }
-    ///////////////////////////////////////////////////////////////////////
+    #endregion
 
+    ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
+        controller = PlayerManager.Instance.controller;
+        walkSpeed = PlayerManager.Instance.walkSpeed;
+        boostSpeed = PlayerManager.Instance.boostSpeed;
+        flyForce = PlayerManager.Instance.flyForce;
+        gravityValue = PlayerManager.Instance.gravityValue;
+        heightLimit = PlayerManager.Instance.heightLimit;
+        maxHeightLimit = PlayerManager.Instance.maxHeightLimit;
+        rotationSpeed = PlayerManager.Instance.rotationSpeed;
+        speedPotionLossPerSecond = PlayerManager.Instance.speedPotionLossPerSecond;
+        flyPotionLossPerSecond = PlayerManager.Instance.flyPotionLossPerSecond;
+        playerBodyTransform = PlayerManager.Instance.transform;
+
         // Find camera with 'main camera'tag
         cameraTransform = Camera.main.transform;
         if (cameraTransform == null) Debug.LogWarning("No camera found");
-
-        // Body model bust be first child
-        playerBodyTransform = PlayerManager.Instance.transform;//.GetChild(0).transform;
         
         // Needs to know boost value
-        PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
+        //PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
+        // Needs to know when to recover value
+        PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
+        PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
     }
 
     public void Update()
@@ -98,9 +107,10 @@ public class PlayerController
 
         // Check if the player is running
         if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick){
-            if (PlayerManager.Instance.canRun) { // If able to run (boost available)
-                if (PlayerManager.Instance.movement2D.sqrMagnitude != 0) // Is moving
-                    RunningEvent?.Invoke(this, null); // Trigger running event
+            if (speedPotionValue > 1f) { // If able to run (speed potion available)
+                if (movement2D.sqrMagnitude != 0) // Is moving
+                    //SpeedEvent?.Invoke(this, null); // Trigger running event
+                    speedPotionValue -= speedPotionLossPerSecond * Time.deltaTime;
                 
                 movementSpeed = boostSpeed;
             }
@@ -172,14 +182,18 @@ public class PlayerController
     }
 
     /// <summary>
-    /// Called when boost value is modified (only when running)
+    /// Recovers speed potion value
     /// </summary>
-    private void OnBoostChangeEvent(object sender, float currentBoost)
+    public void SpeedPotionGain(object sender, EventArgs e)
     {
-        // All consumed
-        if (currentBoost <= 0)
-            PlayerManager.Instance.canRun = false; // Can't run
-        else
-            PlayerManager.Instance.canRun = true;
+        speedPotionValue = MAX_VALUE;
+    }
+
+    /// <summary>
+    /// Recovers fly potion value
+    /// </summary>
+    private void FlyPotionGain(object sender, EventArgs e)
+    {
+        flyPotionValue = MAX_VALUE;
     }
 }

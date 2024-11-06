@@ -14,7 +14,7 @@ public class GameplayHUD
     void Start()
     {
         // Needs to know boost value
-        PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
+        //PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
     }
 

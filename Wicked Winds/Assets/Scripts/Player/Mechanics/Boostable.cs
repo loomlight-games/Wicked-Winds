@@ -7,42 +7,41 @@ using UnityEngine;
 public class Boostable
 {
     public event EventHandler <float> BoostValueEvent;
-    readonly float boostLossPerSecond;
     const float MAX_VALUE = 100;
-    float currentBoost = MAX_VALUE;
+    public float speedPotionValue = MAX_VALUE;
+    readonly float speedPotionLossPerSecond;
 
-    public Boostable(float boostLossPerSecond)
+    public Boostable(float speedPotionLossPerSecond)
     {
-        this.boostLossPerSecond = boostLossPerSecond;
+        this.speedPotionLossPerSecond = speedPotionLossPerSecond;
     }
 
     ///////////////////////////////////////////////////////////////////////
     public void Start(){
         // Needs to know when its running
-        PlayerManager.Instance.playerController.RunningEvent += BoostLoss;
+        //PlayerManager.Instance.playerController.SpeedEvent += SpeedPotionLoss;
         // Needs to know when to recover value
-        PlayerManager.Instance.controllableState.RunBoostCollidedEvent += BoostGain;
+        PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
     }
 
     public void Update(){
         // Sends value every frame
-        BoostValueEvent?.Invoke(this, currentBoost);
+        BoostValueEvent?.Invoke(this, speedPotionValue);
     }
 
     /// <summary>
     /// Decreases current value
     /// </summary>
-    public void BoostLoss(object sender, EventArgs any)
-    {
-        currentBoost -= boostLossPerSecond * Time.deltaTime;
+    public void SpeedPotionLoss(object sender, EventArgs any) {
+        speedPotionValue -= speedPotionLossPerSecond * Time.deltaTime;
     }
 
     /// <summary>
     /// Recovers max value
     /// </summary>
-    public void BoostGain(object sender, EventArgs any)
+    public void SpeedPotionGain(object sender, EventArgs any)
     {
-        currentBoost = MAX_VALUE;
+        speedPotionValue = MAX_VALUE;
     }
 
     /// <summary>
@@ -55,7 +54,7 @@ public class Boostable
             //currentBoost += other.GetComponent<RunBoost>().recoverValue;
             //Ensures stamina max
             //if (currentBoost > MAX_STAMINA)
-                currentBoost = MAX_VALUE;
+                speedPotionValue = MAX_VALUE;
 
             //Deactivates it
             other.gameObject.SetActive(false);

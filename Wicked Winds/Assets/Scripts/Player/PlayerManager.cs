@@ -15,7 +15,7 @@ public class PlayerManager : AStateController
     public static PlayerManager Instance { get; private set;} // Only one player
 
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey, hasActiveMission;
+    [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
     [HideInInspector] public List<GameObject> currentTargets = new ();
@@ -29,8 +29,8 @@ public class PlayerManager : AStateController
     #endregion
 
     #region HABILITIES
-    public PlayerController playerController;
-    public Boostable boostable;
+    public PlayerController playerController = new();
+    //public Boostable boostable;
     public CustomizableCharacter customizable;
     public Interactions interactions;
     public Compass compass;
@@ -38,26 +38,28 @@ public class PlayerManager : AStateController
 
     #region PROPERTIES
     [Header("Movement")]
-    [SerializeField] float walkSpeed = 5f;
-    [SerializeField] float boostSpeed = 13f;
-    [SerializeField] public float rotationSpeed = 5f;
-    [SerializeField] float flyForce = 2f;
-    [SerializeField] float gravity = 5f;
-    [SerializeField] float heightLimit = 10f;
-    [SerializeField] float joystickScale = 2f;
+    public float walkSpeed = 5f;
+    public float boostSpeed = 13f;
+    public float rotationSpeed = 5f;
+    public float flyForce = 2f;
+    public float gravityValue = 5f;
+    public float heightLimit = 7f;
+    public float maxHeightLimit = 17f;
+    public float joystickScale = 1.1f;
 
     [Header("Mechanics")]
-    [SerializeField] float boostLossPerSecond = 5f;
-    [SerializeField] public float interactRange = 2f;
-    [SerializeField] public Transform compassTransform;
+    public float speedPotionLossPerSecond = 2f;
+    public float flyPotionLossPerSecond = 3f;
+    public float interactRange = 2f;
+    public Transform compassTransform;
 
 
     [Header("Customizable")]
-    [SerializeField] Transform head;
-    [SerializeField] Transform upperBody; 
-    [SerializeField] Transform lowerBody; 
-    [SerializeField] Transform shoes; 
-    [SerializeField] public float rotatorySpeedAtShop = 0.1f;
+    public Transform head;
+    public Transform upperBody; 
+    public Transform lowerBody; 
+    public Transform shoes; 
+    public float rotatorySpeedAtShop = 0.1f;
     #endregion
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,8 +73,7 @@ public class PlayerManager : AStateController
 
         controller = GetComponent<CharacterController>();
 
-        playerController = new(controller, walkSpeed, boostSpeed, flyForce, gravity, heightLimit, rotationSpeed);
-        boostable = new (boostLossPerSecond);
+        //boostable = new (speedPotionLossPerSecond);
         customizable = new (head, upperBody, lowerBody, shoes);
         interactions = new ();
         compass = new();
@@ -94,7 +95,7 @@ public class PlayerManager : AStateController
     // Update is called once per frame
     public override void UpdateFrame()
     {
-
+        
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
