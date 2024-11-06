@@ -17,16 +17,10 @@ public class PlayerManager : AStateController
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, canRun, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
-    [HideInInspector] public int score, coins;
+    [HideInInspector] public int score;
     [HideInInspector] public List<GameObject> currentTargets = new ();
     [HideInInspector] public Transform target;
     [HideInInspector] public MissionIcon activeMission;
-    [HideInInspector]public List<Garment> purchasedItems = new();
-
-    [HideInInspector] public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
-    [HideInInspector] public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
-    [HideInInspector] public readonly string PLAYER_COINS_FILE = "PlayerCoins";
-
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground

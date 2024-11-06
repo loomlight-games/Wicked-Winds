@@ -7,11 +7,11 @@ public class ItemButton : MonoBehaviour
 {
     public Garment item;
     public float rotationSpeed,
-        scaleUp = 1.5f;
+                scaleUp = 1.5f;
 
     Vector3 initialItemScale;
     TextMeshProUGUI priceText;
-    CustomizableCharacter player; //Player.Instance.customizable
+    CustomizableCharacter player;
     PlayerCustomizationUI shopUI;
     Button button;
     GameObject pricePanel, center;
@@ -90,7 +90,7 @@ public class ItemButton : MonoBehaviour
 
         try{
              // Check if item is in the the purchased items list of player
-            foreach (Garment purchasedItem in PlayerManager.Instance.purchasedItems){
+            foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments){
                 if (purchasedItem.name == item.name) item.isPurchased = true;
             }
         }catch{

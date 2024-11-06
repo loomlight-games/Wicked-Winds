@@ -6,6 +6,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class CustomizableCharacter
 {
+    public int coins;
+    public List<Garment> purchasedGarments = new();
+    public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
+    public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
+    public readonly string PLAYER_COINS_FILE = "PlayerCoins";
+
     // Types of body parts, basically of items
     [Serializable]
     public enum BodyPart{
@@ -71,7 +77,7 @@ public class CustomizableCharacter
 
         // Adds item to purchased list if new
         if (!newItem.isPurchased){
-            PlayerManager.Instance.purchasedItems.Add(newItem);
+            purchasedGarments.Add(newItem);
             newItem.isPurchased = true;
         }
 
@@ -112,7 +118,7 @@ public class CustomizableCharacter
 
     internal void UpdateCoins(int coins)
     {
-        PlayerManager.Instance.coins = coins;
+        this.coins = coins;
         SaveCoins();
     }
 
@@ -134,8 +140,8 @@ public class CustomizableCharacter
     /// </summary>
     public void SaveCoins()
     {
-        PlayerPrefs.SetInt(PlayerManager.Instance.PLAYER_COINS_FILE, PlayerManager.Instance.coins);
-        Debug.Log("Saved coins: " + PlayerManager.Instance.coins);
+        PlayerPrefs.SetInt(PLAYER_COINS_FILE, coins);
+        Debug.Log("Saved coins: " + coins);
     }
 
     /// <summary>
@@ -145,7 +151,7 @@ public class CustomizableCharacter
     {
         List<ItemData> dataList = new();
 
-        foreach (var item in PlayerManager.Instance.purchasedItems)
+        foreach (var item in purchasedGarments)
         {
             ItemData data = new ()
             {
@@ -159,7 +165,7 @@ public class CustomizableCharacter
 
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new PurchasedItemsList(dataList));
-        PlayerPrefs.SetString(PlayerManager.Instance.PLAYER_PURCHASED_ITEMS_FILE, json);
+        PlayerPrefs.SetString(PLAYER_PURCHASED_ITEMS_FILE, json);
         Debug.Log("Saved purchased items: " + json);
     }
 
@@ -189,24 +195,24 @@ public class CustomizableCharacter
 
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new CustomizationList(dataList));
-        PlayerPrefs.SetString(PlayerManager.Instance.PLAYER_CUSTOMIZATION_FILE, json);
+        PlayerPrefs.SetString(PLAYER_CUSTOMIZATION_FILE, json);
         
         Debug.Log("Saved Customization: " + json);
     }
 
     /// <summary>
-    /// Load purchased items from PlayerPrefs.
+    /// Load coins amount from PlayerPrefs.
     /// </summary>
     public void LoadCoins()
     {
-        if (!PlayerPrefs.HasKey(PlayerManager.Instance.PLAYER_COINS_FILE))
+        if (!PlayerPrefs.HasKey(PLAYER_COINS_FILE))
         {
             Debug.LogWarning("No coins found.");
             return;
         }
 
-        PlayerManager.Instance.coins = PlayerPrefs.GetInt(PlayerManager.Instance.PLAYER_COINS_FILE, 0); // Default to 0 if no data is found
-        Debug.Log("Loaded coins: " + PlayerManager.Instance.coins);
+        coins = PlayerPrefs.GetInt(PLAYER_COINS_FILE, 0); // Default to 0 if no data is found
+        Debug.Log("Loaded coins: " + coins);
     }
 
     /// <summary>
@@ -214,7 +220,7 @@ public class CustomizableCharacter
     /// </summary>
     public void LoadPurchasedItems()
     {
-        string json = PlayerPrefs.GetString(PlayerManager.Instance.PLAYER_PURCHASED_ITEMS_FILE, "");
+        string json = PlayerPrefs.GetString(PLAYER_PURCHASED_ITEMS_FILE, "");
 
         if (string.IsNullOrEmpty(json))
         {
@@ -239,7 +245,7 @@ public class CustomizableCharacter
                     // Get the CustomizableItem component attached to the prefab
                     Garment loadedItem = prefab.GetComponent<Garment>();
                     
-                    PlayerManager.Instance.purchasedItems.Add(loadedItem);
+                    purchasedGarments.Add(loadedItem);
                 }
                 else
                 {
@@ -255,7 +261,7 @@ public class CustomizableCharacter
     /// </summary>
     public void LoadCustomization()
     {
-        string json = PlayerPrefs.GetString(PlayerManager.Instance.PLAYER_CUSTOMIZATION_FILE, "");
+        string json = PlayerPrefs.GetString(PLAYER_CUSTOMIZATION_FILE, "");
 
         if (string.IsNullOrEmpty(json))
         {

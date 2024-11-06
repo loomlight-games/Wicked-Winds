@@ -22,7 +22,7 @@ public class PlayerCustomizationUI : MonoBehaviour
 
         player = PlayerManager.Instance.customizable;
         
-        coinsNum = PlayerManager.Instance.coins;
+        coinsNum = PlayerManager.Instance.customizable.coins;
     }
 
     // Update is called once per frame
