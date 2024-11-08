@@ -15,7 +15,6 @@ public class ControllablePlayerState : AState
     public override void Update()
     {
         PlayerManager.Instance.playerController.Update();
-        //PlayerManager.Instance.interactions.Update();
         PlayerManager.Instance.compass.Update();
     }
 
@@ -78,5 +77,4 @@ public class ControllablePlayerState : AState
                 // Collects it
                 pickableObject.CollectItem();
     }
-        
 }
