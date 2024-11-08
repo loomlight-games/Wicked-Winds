@@ -8,7 +8,6 @@ public class ControllablePlayerState : AState
     public override void Enter()
     {
         PlayerManager.Instance.customizable.LoadCoins();
-
         PlayerManager.Instance.playerController.Start();
         PlayerManager.Instance.compass.Start();
     }
@@ -16,7 +15,7 @@ public class ControllablePlayerState : AState
     public override void Update()
     {
         PlayerManager.Instance.playerController.Update();
-        PlayerManager.Instance.interactions.Update();
+        //PlayerManager.Instance.interactions.Update();
         PlayerManager.Instance.compass.Update();
     }
 
@@ -29,7 +28,6 @@ public class ControllablePlayerState : AState
     {
         // It's a speed potion
         if (other.gameObject.CompareTag("SpeedPotion"))
-        {
             // Any speed amount has been lost
             if (PlayerManager.Instance.playerController.speedPotionValue != 100){
                 //Deactivates it
@@ -38,11 +36,9 @@ public class ControllablePlayerState : AState
                 // Notifies boostable
                 SpeedPotionCollected?.Invoke(this, null);
             }
-        }
 
         // It's a fly high potion
         if (other.gameObject.CompareTag("FlyHighPotion"))
-        {
             // Any fly high amount has been lost
             if (PlayerManager.Instance.playerController.flyPotionValue != 100){
                 //Deactivates it
@@ -51,9 +47,9 @@ public class ControllablePlayerState : AState
                 // Notifies boostable
                 FlyPotionCollected?.Invoke(this, null);
             }
-        }
+
         // It's a coin
-        else if (other.gameObject.CompareTag("Coin"))
+        if (other.gameObject.CompareTag("Coin"))
         {
             //Deactivates it
             other.gameObject.SetActive(false);
@@ -63,4 +59,24 @@ public class ControllablePlayerState : AState
             PlayerManager.Instance.customizable.SaveCoins();
         }
     }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        // It's an NPC
+        if (other.gameObject.TryGetComponent(out Interactable interactable))
+            // Interact key is pressed
+            if (PlayerManager.Instance.interactKey)
+                //Debug.Log("Interacting with interactable");
+                // Interact with NPC
+                interactable.Interact();
+
+        // It's a mission collectible
+        if (other.gameObject.TryGetComponent(out Pickable pickableObject))
+            // Interact key is pressed
+            if (PlayerManager.Instance.interactKey)
+                //Debug.Log("Interacting with collectible");
+                // Collects it
+                pickableObject.CollectItem();
+    }
+        
 }

@@ -19,7 +19,7 @@ public class Interactable : MonoBehaviour
     // M�todo para manejar la interacci�n con el NPC
     public void Interact()
     {
-        Debug.Log($"Interacted with NPC: {npc.name}");
+        //Debug.Log($"Interacted with NPC: {npc.name}");
 
         // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)

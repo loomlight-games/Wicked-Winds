@@ -31,8 +31,7 @@ public class PlayerManager : AStateController
     #region HABILITIES
     public PlayerController playerController = new();
     public CustomizableCharacter customizable;
-    public Interactions interactions;
-    public Compass compass;
+    public Compass compass = new();
     #endregion
 
     #region PROPERTIES
@@ -73,8 +72,6 @@ public class PlayerManager : AStateController
         controller = GetComponent<CharacterController>();
 
         customizable = new (head, upperBody, lowerBody, shoes);
-        interactions = new ();
-        compass = new();
 
         hasActiveMission = false;
 

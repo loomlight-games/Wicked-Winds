@@ -15,7 +15,7 @@ public class GameManager : AStateController
     #region STATES
     public readonly GamePauseState pauseState = new();
     public readonly MainMenuState mainMenuState = new();
-    public GamePlayState playState;
+    public GamePlayState playState = new();
     public readonly FinalState endState = new();
     public readonly CreditsState creditsState = new();
     public readonly SettingsState settingsState = new();
@@ -31,11 +31,12 @@ public class GameManager : AStateController
 
     #region PROPERTIES
     [Header("Gameplay")]
-    [SerializeField] float startingTime = 90f;
+    public float remainingTime;
     #endregion
 
     public override void Awake()
     { 
+
         //if there's not an instance, it creates one
         // Singleton
         if (Instance == null)
@@ -50,8 +51,6 @@ public class GameManager : AStateController
 
     public override void Start()
     {
-        playState = new(startingTime);
-
         if (SceneManager.GetActiveScene().name == "Main menu")
             SetState(mainMenuState);
         else if (SceneManager.GetActiveScene().name == "Shop")

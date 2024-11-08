@@ -26,6 +26,11 @@ public abstract class AStateController: MonoBehaviour
         currentState.OnTriggerEnter(other);
     }
 
+    public virtual void OnTriggerStay(Collider other)
+    {
+        currentState.OnTriggerStay(other);
+    }
+
     public virtual void OnCollisionEnter(Collision collision)
     {
         currentState.OnCollisionEnter(collision);

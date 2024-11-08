@@ -8,14 +8,9 @@ public class GamePlayState : AState
 
     GameObject UI, statesUI, gameplayUI, hud;
     TextMeshProUGUI timerText, elapsedText, speedText, flyHighText;
-    float remainingTime, elapsedTime;
+    float elapsedTime, remainingTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
-
-    public GamePlayState(float startingTime)
-    {
-        remainingTime = startingTime;
-    }
 
     public override void Enter()
     {
@@ -36,9 +31,7 @@ public class GamePlayState : AState
         speedText = GameObject.Find("Speed amount").GetComponent<TextMeshProUGUI>();
         flyHighText = GameObject.Find("Fly amount").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
-
         // Needs to know boost value
-        //PlayerManager.Instance.boostable.BoostValueEvent += OnBoostChangeEvent;
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
     }
 
@@ -68,12 +61,12 @@ public class GamePlayState : AState
 
     private void UpdateTimer()
     {
-        if (remainingTime > 0){
+        remainingTime = GameManager.Instance.remainingTime;
 
+        if (remainingTime > 0){
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
-        }else if (remainingTime <= 0 && !gameOverTriggered)
-        {
+        }else if (remainingTime <= 0 && !gameOverTriggered){
             remainingTime = 0;
 
             // GAMEOVER when remaining time is over
@@ -89,6 +82,8 @@ public class GamePlayState : AState
 
         timerText.text = string.Format("{0:00}:{1:00}", timerMinutes, timerSeconds);
         elapsedText.text = string.Format("{0:00}:{1:00}", elapsedMinutes, elapsedSeconds);
+
+        GameManager.Instance.remainingTime = remainingTime;
     }
 
     void TriggerGameOver()
