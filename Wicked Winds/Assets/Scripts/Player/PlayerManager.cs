@@ -48,7 +48,6 @@ public class PlayerManager : AStateController
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
     public float flyPotionLossPerSecond = 4f;
-    public float interactRange = 2f;
     public Transform compassTransform;
 
 

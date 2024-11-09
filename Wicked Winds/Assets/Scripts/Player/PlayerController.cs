@@ -42,17 +42,7 @@ public class PlayerController
     public void Start()
     {
         controller = PlayerManager.Instance.controller;
-        walkSpeed = PlayerManager.Instance.walkSpeed;
-        boostSpeed = PlayerManager.Instance.boostSpeed;
-        flyForce = PlayerManager.Instance.flyForce;
-        gravityForce = PlayerManager.Instance.gravityForce;
-        lowerHeightLimit = PlayerManager.Instance.lowerHeightLimit;
-        maxHeightLimit = PlayerManager.Instance.maxHeightLimit;
-        rotationSpeed = PlayerManager.Instance.rotationSpeed;
-        speedPotionLoss = PlayerManager.Instance.speedPotionLossPerSecond;
-        flyPotionLoss = PlayerManager.Instance.flyPotionLossPerSecond;
         playerBodyTransform = PlayerManager.Instance.transform;
-
         
         cameraTransform = Camera.main.transform; // Find camera with 'main camera'tag
         if (cameraTransform == null) Debug.LogWarning("No camera found");
@@ -65,6 +55,15 @@ public class PlayerController
     {
         verticalPosition = PlayerManager.Instance.transform.position.y;
         movement2D = PlayerManager.Instance.movement2D;
+        walkSpeed = PlayerManager.Instance.walkSpeed;
+        boostSpeed = PlayerManager.Instance.boostSpeed;
+        flyForce = PlayerManager.Instance.flyForce;
+        gravityForce = PlayerManager.Instance.gravityForce;
+        lowerHeightLimit = PlayerManager.Instance.lowerHeightLimit;
+        maxHeightLimit = PlayerManager.Instance.maxHeightLimit;
+        rotationSpeed = PlayerManager.Instance.rotationSpeed;
+        speedPotionLoss = PlayerManager.Instance.speedPotionLossPerSecond;
+        flyPotionLoss = PlayerManager.Instance.flyPotionLossPerSecond;
 
         HandleGravity();
         HandleMovement();
@@ -150,6 +149,9 @@ public class PlayerController
         forward = cameraTransform.forward;
         right = cameraTransform.right;
 
+        forward.Normalize();
+        right.Normalize();
+
         // Movement vector from 2D to 3D from camera view
         movement3D = right * movement2D.x + forward * movement2D.y;
 
@@ -170,13 +172,14 @@ public class PlayerController
         // If there is any movement
         // To maintain rotation when stopping
         if (movement2D != Vector2.zero){
-            lookAtPosition = new Vector3(movement3D.x, 0, movement3D.z); // Movement direction
-            lookAtRotation = Quaternion.LookRotation(lookAtPosition); // Rotation to movement direction
-            
-            // From current rotation to movement rotation
-            playerBodyTransform.rotation = Quaternion.Slerp(playerBodyTransform.rotation, 
-                                                            lookAtRotation, 
-                                                            rotationSpeed * Time.deltaTime);
+            // Rotation in y from camera
+            Quaternion newRotation = Quaternion.Euler(new Vector3(playerBodyTransform.localEulerAngles.x,
+                                                            cameraTransform.localEulerAngles.y, 
+                                                            playerBodyTransform.localEulerAngles.z));
+            // Updates body rotation smoothly
+            playerBodyTransform.rotation = Quaternion.Lerp(playerBodyTransform.rotation, 
+                                                            newRotation,
+                                                            Time.deltaTime * rotationSpeed);
         }
     }
 
