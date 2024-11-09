@@ -28,21 +28,21 @@ public class PlayerController
     
     Vector3 movement3D, 
         forward, 
-        right, 
-        lookAtPosition;
+        right;
 
     Vector2 movement2D;
-    Quaternion lookAtRotation;
 
     Transform cameraTransform,
-            playerBodyTransform;
+            player,
+            orientation;
     #endregion
 
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
         controller = PlayerManager.Instance.controller;
-        playerBodyTransform = PlayerManager.Instance.transform;
+        player = PlayerManager.Instance.transform;
+        orientation = PlayerManager.Instance.orientation;
         
         cameraTransform = Camera.main.transform; // Find camera with 'main camera'tag
         if (cameraTransform == null) Debug.LogWarning("No camera found");
@@ -172,14 +172,13 @@ public class PlayerController
         // If there is any movement
         // To maintain rotation when stopping
         if (movement2D != Vector2.zero){
-            // Rotation in y from camera
-            Quaternion newRotation = Quaternion.Euler(new Vector3(playerBodyTransform.localEulerAngles.x,
-                                                            cameraTransform.localEulerAngles.y, 
-                                                            playerBodyTransform.localEulerAngles.z));
-            // Updates body rotation smoothly
-            playerBodyTransform.rotation = Quaternion.Lerp(playerBodyTransform.rotation, 
-                                                            newRotation,
-                                                            Time.deltaTime * rotationSpeed);
+            // Rotate orientation
+            Vector3 viewDir = player.position - new Vector3(cameraTransform.position.x, player.position.y, cameraTransform.position.z);
+            orientation.forward = viewDir.normalized;
+
+            Vector3 inputDir = orientation.forward * movement2D.y + orientation.right * movement2D.x;
+
+            player.forward = Vector3.Slerp(player.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
     }
 

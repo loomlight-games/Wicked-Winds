@@ -14,6 +14,7 @@ public class PlayerManager : AStateController
 
     public static PlayerManager Instance { get; private set;} // Only one player
 
+    public Transform orientation;
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
