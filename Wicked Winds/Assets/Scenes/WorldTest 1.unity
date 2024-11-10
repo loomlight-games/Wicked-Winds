@@ -3455,6 +3455,54 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!1 &651816299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 651816301}
+  - component: {fileID: 651816300}
+  m_Layer: 0
+  m_Name: TownGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &651816300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651816299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67c7cdc1929aff47b6bc9c93ad7e3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileSize: 50
+  townSize: 5
+  tilesPositions: []
+  townTiles: []
+--- !u!4 &651816301
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651816299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.465025, y: -192.00829, z: 262.31265}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &671155328
 GameObject:
   m_ObjectHideFlags: 0
@@ -10658,7 +10706,7 @@ PrefabInstance:
     - target: {fileID: 2920678259452354728, guid: 0982d5f7958dadf488d0a42075f30a96,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1174
+      value: 1192
       objectReference: {fileID: 0}
     - target: {fileID: 3214029951551051039, guid: 0982d5f7958dadf488d0a42075f30a96,
         type: 3}
@@ -11264,6 +11312,7 @@ SceneRoots:
   - {fileID: 679011303}
   - {fileID: 789412743}
   - {fileID: 169997567}
+  - {fileID: 651816301}
   - {fileID: 1734215245}
   - {fileID: 7836177084560793265}
   - {fileID: 682683825}
