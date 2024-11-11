@@ -7,19 +7,20 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Grass
+  m_Name: Stone
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: 9f81b685f31eb044999d0b2b0bda5d5a, type: 2}
   m_ModifiedSerializedProperties: 24
   m_ValidKeywords:
+  - _ALPHATEST_ON
   - _SPECULAR_SETUP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 2450
   stringTagMap:
-    RenderType: Opaque
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -27,14 +28,14 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
-    - _AlphaToMask: 0
+    - _AlphaClip: 1
+    - _AlphaToMask: 1
     - _Cull: 0
-    - _Smoothness: 0.149
+    - _Smoothness: 0.25
     - _WorkflowMode: 0
     m_Colors:
-    - _BaseColor: {r: 0.4306049, g: 0.5660378, b: 0.2803489, a: 1}
-    - _Color: {r: 0.43060488, g: 0.5660378, b: 0.28034887, a: 1}
+    - _BaseColor: {r: 0.6320754, g: 0.5718723, b: 0.5277234, a: 1}
+    - _Color: {r: 0.6320754, g: 0.57187223, b: 0.5277233, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5918529205477445259
 MonoBehaviour:
