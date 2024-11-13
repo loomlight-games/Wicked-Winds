@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class TownTile : MonoBehaviour
 {
-    public enum Type{
-        Residential, Forest, Park, Market, Swamp
-    }
-    public Type type;
-    public bool isUnique, 
-        isCompulsory;
-        //isInstantiated = false;
+    public TownGenerator.TileType type;
+    public bool isUnique;
 }

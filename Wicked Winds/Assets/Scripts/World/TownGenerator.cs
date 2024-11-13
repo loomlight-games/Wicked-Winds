@@ -1,14 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TownGenerator : MonoBehaviour
 {
-    // Tile size
-    public float tileSize = 50f;
+    public enum TileType {Residential, Forest, Park, Market, Swamp}
 
-    // Town size in tiles
-    public float townSize = 5f;
+    public float tileSize = 50f;
+    public int townSize = 4; // In tiles
 
     // List of 3D positions where to spawn town tiles
     //public List<List<Vector3>> tilesPositions = new ();
@@ -16,34 +16,38 @@ public class TownGenerator : MonoBehaviour
     // List of town tiles
     public List<GameObject> townTiles = new();
 
-    public Dictionary<TownTile.Type, bool> isTypeInstantiated = new(){
-        {TownTile.Type.Residential, false},
-        {TownTile.Type.Forest,false},
-        {TownTile.Type.Park,false},
-        {TownTile.Type.Market,false},
-        {TownTile.Type.Swamp,false}
-    };
+    int randomIdx;
+    float currentXpos, currentZpos, initialPos, randomRotation;
+    Vector3 currentPosition;
+    GameObject currentTile;
+    TownTile tileData;
+
+    public Dictionary<TileType, bool> isTypeInstantiated = new();
 
     // Start is called before the first frame update
     void Start()
     {
-        float currentXpos = -tileSize/2 * (townSize-1);
-        float initialZpos = tileSize/2 * (townSize-1);
-        float currentZpos = initialZpos;
-        Vector3 position;
+        // Initialize all tile types in dictionary as false
+        foreach (TileType type in Enum.GetValues(typeof(TileType)))
+            isTypeInstantiated.Add(type,false); // Not instantiated yet
 
-        // Calculate positions - from upper left corner
+        // Calculate initial positions in Z and X axis
+        initialPos = tileSize/2 * (townSize-1);
+        currentZpos = initialPos;
+        currentXpos = -initialPos; // from upper left corner
+
+        // Calculate positions
         for (int column = 0; column < townSize; column++){
             for (int row = 0; row < townSize; row++){
-                position = new (currentXpos, 0f, currentZpos);
+                currentPosition = new Vector3(currentXpos, 0f, currentZpos);
 
-                //tilesPositions[column].Add(position);
+                //tilesPositions[column].Add(currentPosition);
 
-                InstantiateTile(position);
+                InstantiateTile(currentPosition);
 
                 currentZpos -= tileSize;
             }
-            currentZpos = initialZpos;
+            currentZpos = initialPos;
             currentXpos += tileSize;
         }
     }
@@ -52,28 +56,21 @@ public class TownGenerator : MonoBehaviour
     /// Instantiate town tile in given position
     /// </summary>
     void InstantiateTile(Vector3 position){
-        GameObject townTile = CheckTile();
-
-        // Random rotation - 0,90,180,270
-        float randomRotation = Random.Range(0, 4) * 90f; 
-
-        // Instantiate tile in position with random rotation on Y
-        Instantiate(townTile, position, Quaternion.Euler(0, randomRotation, 0), transform);
-    }
-
-    GameObject CheckTile(){
         // Random tile
-        int randomIndex = Random.Range(0, townTiles.Count);
-        GameObject townTile = townTiles[randomIndex];
-        TownTile tileData = townTile.GetComponent<TownTile>();
-        bool isInstantiated = isTypeInstantiated[tileData.type];
+        randomIdx = UnityEngine.Random.Range(0, townTiles.Count);
+        currentTile = townTiles[randomIdx];
+        tileData = currentTile.GetComponent<TownTile>();
 
-        // Check if it's unique but has been already instantiated
-        if (tileData.isUnique && isInstantiated)
-            townTile = CheckTile();
-        
-        isTypeInstantiated[tileData.type] = true;
+        // This type has been already instantiated
+        if (tileData.isUnique && isTypeInstantiated[tileData.type])
+            InstantiateTile(position); // Finds another random tile - RECURSION
+        // Not instantiated yet
+        else{
+            isTypeInstantiated[tileData.type] = true; // Now is instantiated
+            randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
-        return townTile;
+            // Instantiate tile in position with random rotation on Y
+            Instantiate(currentTile, position, Quaternion.Euler(0, randomRotation, 0), transform);
+        }
     }
 }
