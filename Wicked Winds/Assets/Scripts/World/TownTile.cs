@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class TownTile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public enum Type{
+        Residential, Forest, Park, Market, Swamp
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Type type;
+    public bool isUnique, 
+        isCompulsory;
+        //isInstantiated = false;
 }
