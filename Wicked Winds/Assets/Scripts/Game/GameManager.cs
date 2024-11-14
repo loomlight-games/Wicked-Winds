@@ -3,6 +3,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 /// <summary>
 /// Manages the game states
@@ -23,6 +24,10 @@ public class GameManager : AStateController
     public readonly LeaderboardGameState leaderboardState = new();
     #endregion
 
+    #region SUB-MANAGERS
+    public TownGenerator townGenerator = new();
+    #endregion
+
     #region CLOUD SERVICES
     bool eventsInitialized = false;
     [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
@@ -30,15 +35,17 @@ public class GameManager : AStateController
     #endregion
 
     #region PROPERTIES
+    public bool generateTown = true;
     [Header("Gameplay")]
     public float remainingTime;
+    public float tileSize = 50f;
+    public int townSize = 4; // In tiles
+    public List<GameObject> townTiles = new();
     #endregion
 
     public override void Awake()
     { 
-
-        //if there's not an instance, it creates one
-        // Singleton
+        //if there's not an instance, it creates one - SINGLETON
         if (Instance == null)
             Instance = this;
         

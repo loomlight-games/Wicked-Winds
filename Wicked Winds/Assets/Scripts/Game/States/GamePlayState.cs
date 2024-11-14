@@ -31,8 +31,13 @@ public class GamePlayState : AState
         speedText = GameObject.Find("Speed amount").GetComponent<TextMeshProUGUI>();
         flyHighText = GameObject.Find("Fly amount").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
+        
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
+        
+        ///////////////////////////////////////////////////////////////////////////////////
+        if (GameManager.Instance.generateTown) GameManager.Instance.townGenerator.Start();
+        ///////////////////////////////////////////////////////////////////////////////////
     }
 
     public override void Update()

@@ -4,26 +4,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TownGenerator : MonoBehaviour
+public class TownGenerator
 {
     public enum TileType {Residential, Forest, Park, Market, Swamp}
 
-    public float tileSize = 50f;
-    public int townSize = 4; // In tiles
-    public Vector3[,] tilesPositions;
-    public List<GameObject> townTiles = new();
-
-    int randomIdx;
-    float currentXpos, currentZpos, initialPos, randomRotation;
+    int townSize, randomIdx;
+    float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
+    Vector3[,] tilesPositions;
     Vector3 currentPosition;
     GameObject currentTile;
     TownTile tileData;
-
-    public Dictionary<TileType, bool> isTypeInstantiated = new();
-
-    // Start is called before the first frame update
-    void Start()
+    Dictionary<TileType, bool> isTypeInstantiated = new();
+    
+    public void Start()
     {
+        tileSize = GameManager.Instance.tileSize;
+        townSize = GameManager.Instance.townSize;
+
         // Initialize all tile types in dictionary as false
         foreach (TileType type in Enum.GetValues(typeof(TileType)))
             isTypeInstantiated.Add(type,false); // Not instantiated yet
@@ -103,8 +100,8 @@ public class TownGenerator : MonoBehaviour
     void InstantiateTile(Vector3 position)
     {
         // Random tile
-        randomIdx = UnityEngine.Random.Range(0, townTiles.Count);
-        currentTile = townTiles[randomIdx];
+        randomIdx = UnityEngine.Random.Range(0, GameManager.Instance.townTiles.Count);
+        currentTile = GameManager.Instance.townTiles[randomIdx];
         tileData = currentTile.GetComponent<TownTile>();
 
         // This type has been already instantiated
@@ -116,7 +113,7 @@ public class TownGenerator : MonoBehaviour
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
             // Instantiate tile in position with random rotation on Y
-            Instantiate(currentTile, position, Quaternion.Euler(0, randomRotation, 0), transform);
+            GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), GameManager.Instance.transform);
         }
     }
 }
