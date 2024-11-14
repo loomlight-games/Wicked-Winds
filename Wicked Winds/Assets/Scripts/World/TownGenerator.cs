@@ -7,6 +7,7 @@ using UnityEngine;
 public class TownGenerator
 {
     public enum TileType {Residential, Forest, Park, Market, Swamp}
+    public enum MapTheme {Summer, Autumn, Winter}
 
     int townSize, randomIdx;
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
@@ -15,11 +16,18 @@ public class TownGenerator
     GameObject currentTile;
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
+    List<GameObject> townTiles = new();
     
     public void Start()
     {
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
+
+        // Select tiles according to map theme
+        townTiles = GameManager.Instance.mapTheme switch
+        {
+            _ => GameManager.Instance.summerTownTiles,
+        };
 
         // Initialize all tile types in dictionary as false
         foreach (TileType type in Enum.GetValues(typeof(TileType)))
@@ -100,8 +108,8 @@ public class TownGenerator
     void InstantiateTile(Vector3 position)
     {
         // Random tile
-        randomIdx = UnityEngine.Random.Range(0, GameManager.Instance.townTiles.Count);
-        currentTile = GameManager.Instance.townTiles[randomIdx];
+        randomIdx = UnityEngine.Random.Range(0, townTiles.Count);
+        currentTile = townTiles[randomIdx];
         tileData = currentTile.GetComponent<TownTile>();
 
         // This type has been already instantiated

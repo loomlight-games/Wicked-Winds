@@ -16,7 +16,7 @@ public class GamePlayState : AState
     {
         Time.timeScale = 1f; // Resumes simulation
 
-        UI = GameObject.Find("UI");
+        UI = GameObject.Find("Game UI");
 
         hud = UI.transform.Find("HUD").gameObject;
         hud.SetActive(true);

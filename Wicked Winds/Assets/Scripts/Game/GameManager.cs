@@ -40,7 +40,8 @@ public class GameManager : AStateController
     public float remainingTime;
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
-    public List<GameObject> townTiles = new();
+    public TownGenerator.MapTheme mapTheme = TownGenerator.MapTheme.Summer;
+    public List<GameObject> summerTownTiles = new();
     #endregion
 
     public override void Awake()
