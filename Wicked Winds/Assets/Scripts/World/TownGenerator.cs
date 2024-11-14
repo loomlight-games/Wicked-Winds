@@ -13,7 +13,7 @@ public class TownGenerator
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
     Vector3[,] tilesPositions;
     Vector3 currentPosition;
-    GameObject currentTile;
+    GameObject townParent, currentTile;
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
@@ -70,6 +70,9 @@ public class TownGenerator
     /// </summary>
     void InstantiateTiles()
     {
+        // Instantiate tiles parent
+        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0,0,0), Quaternion.Euler(0, 0, 0));
+
         // Starting position near center
         int row = townSize / 2 - 1;
         int col = row;
@@ -121,7 +124,7 @@ public class TownGenerator
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
             // Instantiate tile in position with random rotation on Y
-            GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), GameManager.Instance.transform);
+            GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
         }
     }
 }

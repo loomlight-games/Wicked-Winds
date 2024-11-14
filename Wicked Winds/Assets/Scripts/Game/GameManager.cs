@@ -36,6 +36,7 @@ public class GameManager : AStateController
 
     #region PROPERTIES
     public bool generateTown = true;
+    public GameObject townParent;
     [Header("Gameplay")]
     public float remainingTime;
     public float tileSize = 50f;
@@ -290,8 +291,12 @@ public class GameManager : AStateController
         Destroy(gameObject);
     }
 
-    public GameObject InstantiateGO(GameObject prefab, Vector3 position, Quaternion rotation, Transform bodyPartTransform)
+    public GameObject InstantiateGO(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
     {
-        return Instantiate(prefab, position, rotation, bodyPartTransform);
+        return Instantiate(prefab, position, rotation, parent);
+    }
+    public GameObject InstantiateGO(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+        return Instantiate(prefab, position, rotation);
     }
 }
