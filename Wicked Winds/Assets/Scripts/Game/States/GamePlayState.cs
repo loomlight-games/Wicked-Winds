@@ -36,8 +36,9 @@ public class GamePlayState : AState
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
         
         ///////////////////////////////////////////////////////////////////////////////////
-        if (GameManager.Instance.generateTown) GameManager.Instance.townGenerator.Start();
+        if (GameManager.Instance.generateTown)
         ///////////////////////////////////////////////////////////////////////////////////
+            GameManager.Instance.townGenerator.Start();
     }
 
     public override void Update()

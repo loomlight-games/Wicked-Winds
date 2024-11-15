@@ -7,7 +7,7 @@ using UnityEngine;
 public class TownGenerator
 {
     public enum TileType {Residential, Forest, Park, Market, Swamp}
-    public enum MapTheme {Summer, Autumn, Winter}
+    public enum Town {Summer, Autumn, Winter}
 
     int townSize, randomIdx;
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
@@ -24,8 +24,11 @@ public class TownGenerator
         townSize = GameManager.Instance.townSize;
 
         // Select tiles according to map theme
-        townTiles = GameManager.Instance.mapTheme switch
+        townTiles = GameManager.Instance.town switch
         {
+            Town.Summer => GameManager.Instance.summerTownTiles,
+            Town.Autumn => GameManager.Instance.autumnTownTiles,
+            Town.Winter => GameManager.Instance.winterTownTiles,
             _ => GameManager.Instance.summerTownTiles,
         };
 

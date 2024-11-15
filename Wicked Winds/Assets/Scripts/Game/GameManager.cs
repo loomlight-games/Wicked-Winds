@@ -19,9 +19,9 @@ public class GameManager : AStateController
     public GamePlayState playState = new();
     public readonly FinalState endState = new();
     public readonly CreditsState creditsState = new();
-    public readonly SettingsState settingsState = new();
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
+    public readonly TownSelectionState selectTownState = new();
     #endregion
 
     #region SUB-MANAGERS
@@ -41,8 +41,10 @@ public class GameManager : AStateController
     public float remainingTime;
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
-    public TownGenerator.MapTheme mapTheme = TownGenerator.MapTheme.Summer;
+    public TownGenerator.Town town;
     public List<GameObject> summerTownTiles = new();
+    public List<GameObject> autumnTownTiles = new();
+    public List<GameObject> winterTownTiles = new();
     #endregion
 
     public override void Awake()
@@ -70,6 +72,7 @@ public class GameManager : AStateController
             SetState(playState);
         
     }
+
     public void ClickButton(string buttonName)
     {
         // Send button
@@ -77,6 +80,19 @@ public class GameManager : AStateController
 
         switch (buttonName)
         {
+            case "Summer":
+                town = TownGenerator.Town.Summer;
+                break;
+            case "Autumn":
+                town = TownGenerator.Town.Autumn;
+                break;
+            case "Winter":
+                town = TownGenerator.Town.Winter;
+                break;
+                
+            case "Start":
+                SwitchState(selectTownState);
+                break;
             case "Play":
                 SceneManager.LoadScene("Gameplay");
                 break;
@@ -90,7 +106,7 @@ public class GameManager : AStateController
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "Main menu":
-                SceneManager.LoadScene("Main menu");
+                SwitchState(mainMenuState);
                 break;
             case "Main menu Leaderboard":
                 AuthenticationService.Instance.SignOut();
@@ -100,10 +116,8 @@ public class GameManager : AStateController
                 SceneManager.LoadScene("Leaderboard");
                 break;
             case "Credits":
+                town = TownGenerator.Town.Autumn;
                 SwitchState(creditsState);
-                break;
-            case "Settings":
-                SwitchState(settingsState);
                 break;
             case "Shop":
                 SceneManager.LoadScene("Shop");
@@ -152,7 +166,7 @@ public class GameManager : AStateController
                 PanelManager.Open("auth");
             }
         }
-        catch (Exception exception)
+        catch (Exception)
         {
             ShowError(ErrorPanel.Action.StartService, "Failed to connect to the network.", "Retry");
         }
@@ -171,12 +185,12 @@ public class GameManager : AStateController
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
         // something is wrong with the credentials
-        catch (AuthenticationException exception)
+        catch (AuthenticationException)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign in.", "OK");
         }
         //somethings wrong with the connection
-        catch (RequestFailedException exception)
+        catch (RequestFailedException)
         {
             ShowError(ErrorPanel.Action.SignIn, "Failed to connect to the network.", "Retry");
         }
@@ -191,11 +205,11 @@ public class GameManager : AStateController
             
             
         }
-        catch (AuthenticationException exception)
+        catch (AuthenticationException)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Username or password is wrong.", "OK");
         }
-        catch (RequestFailedException exception)
+        catch (RequestFailedException)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
         }
@@ -210,11 +224,11 @@ public class GameManager : AStateController
             string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
             await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
         }
-        catch (AuthenticationException exception)
+        catch (AuthenticationException)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to sign you up.", "OK");
         }
-        catch (RequestFailedException exception)
+        catch (RequestFailedException)
         {
             ShowError(ErrorPanel.Action.OpenAuthMenu, "Failed to connect to the network.", "OK");
         }
