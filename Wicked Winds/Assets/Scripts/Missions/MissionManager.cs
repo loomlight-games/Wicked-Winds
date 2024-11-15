@@ -106,14 +106,14 @@ public class MissionManager : MonoBehaviour
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
-        Debug.Log($"N�mero calculado de misiones: F�cil: {numEasyMissions}, Media: {numMediumMissions}, Dif�cil: {numHardMissions}");
+        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dif�cil: {numHardMissions}");
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
-        Debug.Log("Asignando misiones a NPCs...");
+       
         List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
-        Debug.Log($"Cantidad de NPCs mezclados: {shuffledNPCs.Count}");
+
 
         int assignedCount = 0;
 
@@ -122,21 +122,20 @@ public class MissionManager : MonoBehaviour
             NPC selectedNPC = GetRandomNPC(shuffledNPCs);
             if (selectedNPC == null)
             {
-                Debug.Log("No se pudo seleccionar un NPC adecuado, continuando con la siguiente iteraci�n...");
+              
                 continue;
             }
 
-            Debug.Log($"NPC seleccionado para asignaci�n: {selectedNPC.name}");
+            Debug.Log($"NPC seleccionado para asignacion: {selectedNPC.name}");
             MissionData mission = SelectMission(missionLists, ref assignedCount, numEasyMissions, numMediumMissions);
             if (mission == null)
             {
-                Debug.Log("No se encontr� una misi�n adecuada para asignar al NPC.");
                 continue;
             }
 
             AssignMissionToNPC(selectedNPC, mission);
             assignedCount++;
-            Debug.Log($"Misi�n asignada. Total de misiones asignadas: {assignedCount}/{numMissionsToAssign}");
+            Debug.Log($"Mision asignada. Total de misiones asignadas: {assignedCount}/{numMissionsToAssign}");
             shuffledNPCs.Remove(selectedNPC);
         }
 
@@ -146,40 +145,38 @@ public class MissionManager : MonoBehaviour
 
     private NPC GetRandomNPC(List<NPC> shuffledNPCs)
     {
-        Debug.Log("Seleccionando NPC aleatorio...");
+    
         int randomIndex = UnityEngine.Random.Range(0, shuffledNPCs.Count);
         NPC selectedNPC = shuffledNPCs[randomIndex];
 
         if (selectedNPC.missionIcon != null)
         {
-            Debug.Log($"El NPC {selectedNPC.name} ya tiene una misi�n. Eliminando de la lista.");
+            
             shuffledNPCs.RemoveAt(randomIndex);
             return null;
         }
 
-        Debug.Log($"NPC aleatorio seleccionado: {selectedNPC.name}");
+       
         return selectedNPC;
     }
 
     private MissionData SelectMission(Dictionary<string, List<MissionData>> missionLists, ref int assignedCount, int numEasyMissions, int numMediumMissions)
     {
-        Debug.Log("Seleccionando misi�n...");
+     
         MissionData mission = null;
 
         if (assignedCount < numEasyMissions && missionLists["easy"].Count > 0)
         {
             mission = GetRandomMission(missionLists["easy"]);
-            Debug.Log($"Misi�n f�cil seleccionada: {mission.name}");
+           
         }
         else if (assignedCount < numEasyMissions + numMediumMissions && missionLists["medium"].Count > 0)
         {
             mission = GetRandomMission(missionLists["medium"]);
-            Debug.Log($"Misi�n media seleccionada: {mission.name}");
         }
         else if (missionLists["hard"].Count > 0)
         {
             mission = GetRandomMission(missionLists["hard"]);
-            Debug.Log($"Misi�n dif�cil seleccionada: {mission.name}");
         }
         else
         {
@@ -191,7 +188,6 @@ public class MissionManager : MonoBehaviour
 
     private void AssignMissionToNPC(NPC selectedNPC, MissionData mission)
     {
-        Debug.Log($"Asignando misi�n {mission.name} a NPC: {selectedNPC.name}");
         MissionIcon missionIcon = MissionIconPoolManager.Instance.GetMissionIconPool().GetIcon();
         if (missionIcon == null)
         {
@@ -206,11 +202,7 @@ public class MissionManager : MonoBehaviour
         selectedNPC.hasMission = true;
 
         assignedNPCs.Add(selectedNPC);
-        Debug.Log($"Misi�n {mission.name} asignada correctamente a {selectedNPC.name}");
-        // L�gica de asignaci�n de misi�n
-
-      
-   
+ 
     }
 
     public void  specialMissionGeneration(List<NPC> assignedNpcs)
@@ -219,41 +211,32 @@ public class MissionManager : MonoBehaviour
         {
             if (npc.missionType == "PotionMission")
             {
-                Debug.Log($"Asignando misi�n 'PotionMission' al NPC {npc.npcname}");
-
                 // Generar los ingredientes alrededor del NPC
                 GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 4);
 
                 // Verifica si los ingredientes han sido generados
-                if (spawnedIngredients != null && spawnedIngredients.Length > 0)
-                {
-                    Debug.Log($"PotionMission: Generados {spawnedIngredients.Length} ingredientes alrededor del NPC {npc.npcname}");
-                }
-                else
+                if (spawnedIngredients == null && spawnedIngredients.Length == 0)
                 {
                     Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
                 }
+              
 
                 // Asignar el NPC y el MissionIcon a los objetos generados
                 foreach (GameObject ingredient in spawnedIngredients)
                 {
-                    
-
-                    Debug.Log($"Asignando propiedades a ingrediente: {ingredient.name}");
-
                     Pickable pickable = ingredient.GetComponent<Pickable>();
                     if (pickable != null)
                     {
                         pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
                         pickable.missionIcon= npc.missionIcon;
-                        Debug.Log($"Ingrediente {ingredient.name} asignado al NPC {npc.npcname} como Pickable.");
+       
                     }
                     else
                     {
                         Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
                     }
 
-                    Interactable interactable = ingredient.GetComponent<Interactable>();
+                   /* Interactable interactable = ingredient.GetComponent<Interactable>();
                     if (interactable != null)
                     {
                         interactable.missionIcon = npc.missionIcon; // Asignar el MissionIcon al objeto interactuable
@@ -262,10 +245,10 @@ public class MissionManager : MonoBehaviour
                     else
                     {
                         Debug.Log($"Ingrediente {ingredient.name} no tiene componente Interactable.");
-                    }
+                    }*/
                 }
 
-                Debug.Log("PotionMission: Asignaci�n completa de 3 ingredientes con NPC y MissionIcon.");
+            
             }
 
             if (npc.missionType == "LetterMision")
@@ -307,9 +290,15 @@ public class MissionManager : MonoBehaviour
                 }
             }
 
+            if(npc.missionType == "CatMission")
+            {
+                
+
+            }
+
             npc.missionIcon.AssignMissionText(npc.missionIcon.currentMission, this, npc);
         }
-        
+ 
     }
 
     public static NPC[] GetAllNPCs()
@@ -349,8 +338,7 @@ public class MissionManager : MonoBehaviour
         numMissionsToAssign= numMissions;
         missionsCompleted++;
         currentRound = (missionsCompleted / 5) + 1;
-
-        Debug.Log($"Misi�n completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}");
+        GameManager.Instance.playState.feedBackText.text = $"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}";
         AssignMissions(numMissionsToAssign);
     }
 }
