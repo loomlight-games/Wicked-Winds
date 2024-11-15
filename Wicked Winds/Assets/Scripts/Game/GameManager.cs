@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
-    public event EventHandler<string> ButtonClicked;
+    public event EventHandler<string> TownSelected;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -50,11 +50,13 @@ public class GameManager : AStateController
     public override void Awake()
     { 
         //if there's not an instance, it creates one - SINGLETON
-        if (Instance == null)
+        if (Instance == null){
             Instance = this;
-        
+            DontDestroyOnLoad(Instance);
+        }
         else
             Destroy(gameObject);
+        
 
         StartClientService();
     }
@@ -76,20 +78,10 @@ public class GameManager : AStateController
     public void ClickButton(string buttonName)
     {
         // Send button
-        ButtonClicked?.Invoke(this, buttonName);
+        TownSelected?.Invoke(this, buttonName);
 
         switch (buttonName)
         {
-            case "Summer":
-                town = TownGenerator.Town.Summer;
-                break;
-            case "Autumn":
-                town = TownGenerator.Town.Autumn;
-                break;
-            case "Winter":
-                town = TownGenerator.Town.Winter;
-                break;
-                
             case "Start":
                 SwitchState(selectTownState);
                 break;

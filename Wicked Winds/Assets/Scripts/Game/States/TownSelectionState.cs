@@ -17,7 +17,7 @@ public class TownSelectionState : AState
 
     public override void Enter()
     {
-        GameManager.Instance.ButtonClicked += ShowTownImage;
+        GameManager.Instance.TownSelected += ShowTownImage;
 
         GameObject UI = GameObject.Find("UI");
         townSelectionMenu = UI.transform.Find("Town selection").gameObject;
@@ -34,28 +34,31 @@ public class TownSelectionState : AState
 
     private void ShowTownImage(object sender, string town)
     {
-        advice.SetActive(false);
+        //advice.SetActive(false);
         townImage.SetActive(false);
         townImage1.SetActive(false);
         townImage2.SetActive(false);
 
         switch (town){
             case "Summer":
+                GameManager.Instance.town = TownGenerator.Town.Summer;
                 townImage.SetActive(true);
                 playButton.interactable = true;
                 break;
             case "Autumn":
+                GameManager.Instance.town = TownGenerator.Town.Autumn;
                 townImage1.SetActive(true);
                 playButton.interactable = true;
                 break;
             case "Winter":
+                GameManager.Instance.town = TownGenerator.Town.Winter;
                 townImage2.SetActive(true);
                 playButton.interactable = true;
                 break;
             default:
-                advice.SetActive(true);
-                playButton.interactable = false;
-            break;
+                //advice.SetActive(true);
+                //playButton.interactable = false;
+                break;
         }
     }
 
