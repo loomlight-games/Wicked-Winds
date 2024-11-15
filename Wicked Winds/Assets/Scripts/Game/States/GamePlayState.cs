@@ -37,10 +37,8 @@ public class GamePlayState : AState
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
         
-        ///////////////////////////////////////////////////////////////////////////////////
-        if (GameManager.Instance.generateTown)
-        ///////////////////////////////////////////////////////////////////////////////////
-            GameManager.Instance.townGenerator.Start();
+        
+        GameManager.Instance.townGenerator.Start();
     }
 
     public override void Update()

@@ -29,22 +29,22 @@ public class TownSelectionState : AState
     private void ShowTownImage(object sender, string town)
     {
         switch (town){
-            case "Summer":
-                GameManager.Instance.town = TownGenerator.Town.Summer;
+            case "Stardust Town":
+                GameManager.Instance.town = TownGenerator.Town.StardustTown;
                 townImage.SetActive(true);
                 townImage1.SetActive(false);
                 townImage2.SetActive(false);
                 playButton.interactable = true;
                 break;
-            case "Autumn":
-                GameManager.Instance.town = TownGenerator.Town.Autumn;
+            case "Sandy Landy":
+                GameManager.Instance.town = TownGenerator.Town.SandyLandy;
                 townImage.SetActive(false);
                 townImage1.SetActive(true);
                 townImage2.SetActive(false);
                 playButton.interactable = true;
                 break;
-            case "Winter":
-                GameManager.Instance.town = TownGenerator.Town.Winter;
+            case "Frostpeak Hollow":
+                GameManager.Instance.town = TownGenerator.Town.FrostpeakHollow;
                 townImage.SetActive(false);
                 townImage1.SetActive(false);
                 townImage2.SetActive(true);

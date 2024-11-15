@@ -7,13 +7,13 @@ using UnityEngine;
 public class TownGenerator
 {
     public enum TileType {Residential, Forest, Park, Market, Swamp}
-    public enum Town {Summer, Autumn, Winter}
+    public enum Town {StardustTown, SandyLandy, FrostpeakHollow}
 
     int townSize, randomIdx;
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
     Vector3[,] tilesPositions;
     Vector3 currentPosition;
-    GameObject townParent, currentTile;
+    GameObject townParent, currentTile, landscape;
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
@@ -26,19 +26,38 @@ public class TownGenerator
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
         {
-            Town.Summer => GameManager.Instance.summerTownTiles,
-            Town.Autumn => GameManager.Instance.autumnTownTiles,
-            Town.Winter => GameManager.Instance.winterTownTiles,
-            _ => GameManager.Instance.summerTownTiles,
+            Town.StardustTown => GameManager.Instance.townTiles1,
+            Town.SandyLandy => GameManager.Instance.townTiles2,
+            Town.FrostpeakHollow => GameManager.Instance.townTiles3,
+            _ => GameManager.Instance.townTiles1,
         };
 
-        // Initialize all tile types in dictionary as false
-        foreach (TileType type in Enum.GetValues(typeof(TileType)))
-            isTypeInstantiated.Add(type,false); // Not instantiated yet
+        // Select landscape according to map theme
+        landscape = GameManager.Instance.town switch
+        {
+            Town.StardustTown => GameManager.Instance.landscape1,
+            Town.SandyLandy => GameManager.Instance.landscape2,
+            Town.FrostpeakHollow => GameManager.Instance.landscape3,
+            _ => GameManager.Instance.landscape1,
+        };
 
+        // Initialize all tile types in dictionary as false - not instantiated yet
+        foreach (TileType type in Enum.GetValues(typeof(TileType)))
+            isTypeInstantiated.Add(type,false);
+
+        // Instantiate town parent
+        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0,0,0), Quaternion.Euler(0, 0, 0));
+        
+        // Instantiate landscape as child of town
+        GameManager.Instance.InstantiateGO(landscape, townParent.transform.position, townParent.transform.rotation, townParent.transform);
+
+        ///////////////////////////////////////////////////////////////////////////////////
+        if (GameManager.Instance.generateTown){ // Delete in the future
+        ///////////////////////////////////////////////////////////////////////////////////
         CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
 
         InstantiateTiles(); // Instantiates a town tile in each position - from center
+        }
     }
 
     /// <summary>
@@ -73,9 +92,6 @@ public class TownGenerator
     /// </summary>
     void InstantiateTiles()
     {
-        // Instantiate tiles parent
-        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0,0,0), Quaternion.Euler(0, 0, 0));
-
         // Starting position near center
         int row = townSize / 2 - 1;
         int col = row;
