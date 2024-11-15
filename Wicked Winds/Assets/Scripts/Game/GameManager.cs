@@ -2,6 +2,7 @@ using System;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ public class GameManager : AStateController
     #region STATES
     public readonly GamePauseState pauseState = new();
     public readonly MainMenuState mainMenuState = new();
-    public GamePlayState playState = new();
+    public readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
     public readonly CreditsState creditsState = new();
     public readonly ShopState shopState = new();
@@ -38,6 +39,7 @@ public class GameManager : AStateController
     public bool generateTown = true;
     public GameObject townParent;
     [Header("Gameplay")]
+    public float initialTime = 120f;
     public float remainingTime;
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
@@ -56,27 +58,46 @@ public class GameManager : AStateController
         }
         else
             Destroy(gameObject);
-        
 
         StartClientService();
+
+        remainingTime = initialTime;
     }
 
 
     public override void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Main menu")
+        // Initialize state based on the currently active scene
+        SetStateBasedOnScene(SceneManager.GetActiveScene());
+    }
+
+    private void SetStateBasedOnScene(Scene scene)
+    {
+        if (scene.name == "Main menu")
             SetState(mainMenuState);
-        else if (SceneManager.GetActiveScene().name == "Shop")
+        else if (scene.name == "Shop")
             SetState(shopState);
-        else if (SceneManager.GetActiveScene().name == "Leaderboard")
+        else if (scene.name == "Leaderboard")
             SetState(leaderboardState);
+        else if(scene.name == "Gameplay")
+            SetState(playState);
         else
             SetState(playState);
-        
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Set the state based on the newly loaded scene
+        SetStateBasedOnScene(scene);
+
+        // Unsubscribe from the event to avoid multiple calls
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void ClickButton(string buttonName)
     {
+        Debug.Log(buttonName);
+
         // Send button
         TownSelected?.Invoke(this, buttonName);
 
@@ -86,6 +107,8 @@ public class GameManager : AStateController
                 SwitchState(selectTownState);
                 break;
             case "Play":
+                remainingTime = initialTime;
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 SceneManager.LoadScene("Gameplay");
                 break;
             case "Pause":
@@ -94,24 +117,30 @@ public class GameManager : AStateController
             case "Resume":
                 SwitchState(playState);
                 break;
-            case "Retry":
+            case "Replay":
+                remainingTime = initialTime;
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "Main menu":
-                SwitchState(mainMenuState);
+                SceneManager.LoadScene("Main menu");
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 break;
-            case "Main menu Leaderboard":
+            case "Main menu leaderboard":
                 AuthenticationService.Instance.SignOut();
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 SceneManager.LoadScene("Main menu");
                 break;
             case "Leaderboard":
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 SceneManager.LoadScene("Leaderboard");
                 break;
             case "Credits":
-                town = TownGenerator.Town.Autumn;
+                Debug.Log("Credits");
                 SwitchState(creditsState);
                 break;
             case "Shop":
+                SceneManager.sceneLoaded += OnSceneLoaded;
                 SceneManager.LoadScene("Shop");
                 break;
             default:

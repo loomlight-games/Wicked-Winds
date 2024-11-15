@@ -7,7 +7,7 @@ public class GamePauseState : AState
     {
         Time.timeScale = 0f; // Stops simulation
 
-        UI = GameObject.Find("UI");
+        UI = GameObject.Find("Game UI");
 
         statesUI = UI.transform.Find("States").gameObject;
         pauseMenuUI = statesUI.transform.Find("PauseMenu").gameObject;

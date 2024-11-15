@@ -261,7 +261,7 @@ public class MissionManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Interactable.");
+                        Debug.Log($"Ingrediente {ingredient.name} no tiene componente Interactable.");
                     }
                 }
 

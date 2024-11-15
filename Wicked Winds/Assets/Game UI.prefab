@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 9102473835606009021}
   - component: {fileID: 7465974893807883439}
   - component: {fileID: 7675655803694635304}
+  - component: {fileID: 7225278577850838478}
   m_Layer: 5
   m_Name: Pause
   m_TagString: Untagged
@@ -529,19 +530,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7465974893807883439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ClickButton
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Pause
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &7225278577850838478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474141461983108363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1688148668286326747
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1326,7 @@ GameObject:
   - component: {fileID: 7117243044319540213}
   - component: {fileID: 4326751089254258347}
   - component: {fileID: 4950892036445622251}
+  - component: {fileID: 7775268004070406690}
   m_Layer: 5
   m_Name: Main menu
   m_TagString: Untagged
@@ -1446,6 +1448,18 @@ MonoBehaviour:
           m_StringArgument: Main menu
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7775268004070406690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645483742480024369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3952973549225532229
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,6 +2660,7 @@ GameObject:
   - component: {fileID: 9177929465470703842}
   - component: {fileID: 7674649146614531612}
   - component: {fileID: 1482445811759534372}
+  - component: {fileID: 127870818163910641}
   m_Layer: 5
   m_Name: RetryButton
   m_TagString: Untagged
@@ -2767,6 +2782,18 @@ MonoBehaviour:
           m_StringArgument: Retry
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &127870818163910641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764867370788328187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6460197645671152663
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,6 +3496,7 @@ GameObject:
   - component: {fileID: 5435174730774455331}
   - component: {fileID: 7933438587430981752}
   - component: {fileID: 1445006691599111152}
+  - component: {fileID: 3752291653318455146}
   m_Layer: 5
   m_Name: MainMenuButton
   m_TagString: Untagged
@@ -3590,6 +3618,18 @@ MonoBehaviour:
           m_StringArgument: Main menu
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3752291653318455146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7753994109140774727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7847539392991888877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3602,6 +3642,7 @@ GameObject:
   - component: {fileID: 8224909476332653011}
   - component: {fileID: 3029379097602538512}
   - component: {fileID: 9050096506709699427}
+  - component: {fileID: 1309808845868509405}
   m_Layer: 5
   m_Name: Resume
   m_TagString: Untagged
@@ -3723,6 +3764,18 @@ MonoBehaviour:
           m_StringArgument: Resume
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1309808845868509405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847539392991888877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7850144388588956958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3788,7 +3841,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retry
+  m_text: Replay
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3869,6 +3922,7 @@ GameObject:
   - component: {fileID: 1179470149154387983}
   - component: {fileID: 7745642961286165084}
   - component: {fileID: 5964240431663100165}
+  - component: {fileID: 7065818380153639998}
   m_Layer: 5
   m_Name: LeaderboardButton
   m_TagString: Untagged
@@ -3990,6 +4044,18 @@ MonoBehaviour:
           m_StringArgument: Leaderboard
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7065818380153639998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931935680166839313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9d7afd2732f04fbb5b9103c2c3964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8182575717173855516
 GameObject:
   m_ObjectHideFlags: 0

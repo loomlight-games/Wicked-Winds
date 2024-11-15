@@ -2,19 +2,20 @@ using TMPro;
 using UnityEngine;
 
 public class FinalState : AState
-{    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
+{    
+    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
     TextMeshProUGUI scoreText;
 
     public override void Enter()
     {
-        UI = GameObject.Find("UI");
+        UI = GameObject.Find("Game UI");
 
         statesUI = UI.transform.Find("States").gameObject;
         finalMenu = statesUI.transform.Find("FinalMenu").gameObject;
         defeat = finalMenu.transform.Find("Defeat").gameObject;
-        retryButton = finalMenu.transform.Find("RetryButton").gameObject;
-        mainMenuButton = finalMenu.transform.Find("MainMenuButton").gameObject;
-        leaderboardButton = finalMenu.transform.Find("LeaderboardButton").gameObject;
+        retryButton = finalMenu.transform.Find("Replay").gameObject;
+        mainMenuButton = finalMenu.transform.Find("Main menu").gameObject;
+        leaderboardButton = finalMenu.transform.Find("Leaderboard").gameObject;
         scoreText = finalMenu.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
 
         // Mostrar el men� de final de juego
