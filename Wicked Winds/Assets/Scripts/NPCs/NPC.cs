@@ -18,7 +18,8 @@ public class NPC : MonoBehaviour
     public string missionType;
     public string responseMessage;
     private NavMeshAgent agent;
-    public NPC sender; 
+    public NPC sender;
+    public CatController cat;
 
     private void Awake()
     {

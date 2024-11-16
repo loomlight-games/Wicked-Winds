@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class MissionManager : MonoBehaviour
 
     public void AssignMissions(int numMissionsToAssign)
     {
-        Debug.Log("Iniciando la asignaci�n de misiones...");
+        Debug.Log("Iniciando la asignacion de misiones...");
 
         if (!CanAssignMissions())
             return;
@@ -43,9 +44,9 @@ public class MissionManager : MonoBehaviour
         int numEasyMissions, numMediumMissions, numHardMissions;
         GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions);
 
-        Debug.Log($"N�mero de misiones a asignar: F�cil: {numEasyMissions}, Media: {numMediumMissions}, Dif�cil: {numHardMissions}");
+        Debug.Log($"N�mero de misiones a asignar: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
         AssignMissionsToNPCs(missionLists, numEasyMissions, numMediumMissions, numHardMissions);
-        Debug.Log("Finalizada la asignaci�n de misiones.");
+        Debug.Log("Finalizada la asignacion de misiones.");
     }
 
     private bool CanAssignMissions()
@@ -73,34 +74,34 @@ public class MissionManager : MonoBehaviour
 
         foreach (MissionData mission in availableMissions)
         {
-            Debug.Log($"Analizando misi�n: {mission.name} con dificultad: {mission.difficulty}");
+            Debug.Log($"Analizando mision: {mission.name} con dificultad: {mission.difficulty}");
             if (mission.difficulty == 0)
             {
                 missionLists["easy"].Add(mission);
-                Debug.Log($"Misi�n f�cil a�adida: {mission.name}");
+                Debug.Log($"Mision f�cil a�adida: {mission.name}");
             }
             else if (mission.difficulty == 1)
             {
                 missionLists["medium"].Add(mission);
-                Debug.Log($"Misi�n media a�adida: {mission.name}");
+                Debug.Log($"Mision media a�adida: {mission.name}");
             }
             else if (mission.difficulty == 2)
             {
                 missionLists["hard"].Add(mission);
-                Debug.Log($"Misi�n dif�cil a�adida: {mission.name}");
+                Debug.Log($"Mision dificil a�adida: {mission.name}");
             }
         }
 
         Debug.Log($"Misiones f�ciles disponibles: {missionLists["easy"].Count}");
         Debug.Log($"Misiones medias disponibles: {missionLists["medium"].Count}");
-        Debug.Log($"Misiones dif�ciles disponibles: {missionLists["hard"].Count}");
+        Debug.Log($"Misiones dificiles disponibles: {missionLists["hard"].Count}");
 
         return missionLists;
     }
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        Debug.Log("Calculando el n�mero de misiones por dificultad...");
+        Debug.Log("Calculando el numero de misiones por dificultad...");
         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
@@ -111,32 +112,45 @@ public class MissionManager : MonoBehaviour
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
-       
         List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
-
+        List<NPC> npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
 
         int assignedCount = 0;
 
-        while (assignedCount < numMissionsToAssign && shuffledNPCs.Count > 0)
+        while (assignedCount < numMissionsToAssign && (shuffledNPCs.Count > 0 || npcsWithCat.Count > 0))
         {
-            NPC selectedNPC = GetRandomNPC(shuffledNPCs);
-            if (selectedNPC == null)
-            {
-              
-                continue;
-            }
-
-            Debug.Log($"NPC seleccionado para asignacion: {selectedNPC.name}");
+            // Seleccionar una misión
             MissionData mission = SelectMission(missionLists, ref assignedCount, numEasyMissions, numMediumMissions);
             if (mission == null)
             {
                 continue;
             }
 
-            AssignMissionToNPC(selectedNPC, mission);
-            assignedCount++;
-            Debug.Log($"Mision asignada. Total de misiones asignadas: {assignedCount}/{numMissionsToAssign}");
-            shuffledNPCs.Remove(selectedNPC);
+            NPC selectedNPC = null;
+
+            // Asignar NPC dependiendo del tipo de misión
+            if (mission.missionName =="CatMission") // Si es una misión de tipo Cat
+            {
+                if (npcsWithCat.Count > 0)
+                {
+                    selectedNPC = GetRandomNPC(npcsWithCat);
+                    npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
+                }
+            }
+            else // Si es una misión de tipo Potion o Letter
+            {
+                if (shuffledNPCs.Count > 0)
+                {
+                    selectedNPC = GetRandomNPC(shuffledNPCs);
+                    shuffledNPCs.Remove(selectedNPC); // Remover el NPC de la lista
+                }
+            }
+
+            if (selectedNPC != null)
+            {
+                AssignMissionToNPC(selectedNPC, mission);
+                assignedCount++;
+            }
         }
 
         Debug.Log("Todas las misiones han sido asignadas a los NPCs.");
@@ -290,11 +304,8 @@ public class MissionManager : MonoBehaviour
                 }
             }
 
-            if(npc.missionType == "CatMission")
-            {
-                
-
-            }
+          
+           
 
             npc.missionIcon.AssignMissionText(npc.missionIcon.currentMission, this, npc);
         }
