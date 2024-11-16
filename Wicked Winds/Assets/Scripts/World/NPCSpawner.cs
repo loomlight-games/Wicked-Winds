@@ -35,13 +35,13 @@ public class NPCSpawner : MonoBehaviour
             bool hasMission = Random.value > 0.5f;
             npcComponent.hasMission = hasMission;
 
-            // Decidir si este NPC tendrá un gato (20% de probabilidad)
-            bool hasCat = Random.value <= 0.2f; // 20% de probabilidades de que tenga gato
+            // Determinar si el NPC tiene un gato (20% de probabilidad)
+            bool hasCat = Random.value < 0.2f; // 20% de probabilidad de tener gato
 
             if (hasCat)
             {
                 // Generar el gato al lado del NPC
-                Vector3 catPosition = spawnPosition + new Vector3(2f, 0f, 2f); // Coloca el gato un poco al lado del NPC (ajusta segun sea necesario)
+                Vector3 catPosition = spawnPosition + new Vector3(2f, 5f, 2f); // Coloca el gato un poco al lado del NPC (ajusta segun sea necesario)
                 GameObject cat = Instantiate(catPrefab, catPosition, Quaternion.identity);
                 CatController catController = cat.GetComponent<CatController>();
 

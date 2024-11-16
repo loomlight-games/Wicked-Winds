@@ -44,7 +44,7 @@ public class MissionManager : MonoBehaviour
         int numEasyMissions, numMediumMissions, numHardMissions;
         GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions);
 
-        Debug.Log($"N�mero de misiones a asignar: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
+        Debug.Log($"Numero de misiones a asignar: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
         AssignMissionsToNPCs(missionLists, numEasyMissions, numMediumMissions, numHardMissions);
         Debug.Log("Finalizada la asignacion de misiones.");
     }
@@ -78,21 +78,21 @@ public class MissionManager : MonoBehaviour
             if (mission.difficulty == 0)
             {
                 missionLists["easy"].Add(mission);
-                Debug.Log($"Mision f�cil a�adida: {mission.name}");
+                Debug.Log($"Mision facil añadida: {mission.name}");
             }
             else if (mission.difficulty == 1)
             {
                 missionLists["medium"].Add(mission);
-                Debug.Log($"Mision media a�adida: {mission.name}");
+                Debug.Log($"Mision media añadida: {mission.name}");
             }
             else if (mission.difficulty == 2)
             {
                 missionLists["hard"].Add(mission);
-                Debug.Log($"Mision dificil a�adida: {mission.name}");
+                Debug.Log($"Mision dificil añadida: {mission.name}");
             }
         }
 
-        Debug.Log($"Misiones f�ciles disponibles: {missionLists["easy"].Count}");
+        Debug.Log($"Misiones faciles disponibles: {missionLists["easy"].Count}");
         Debug.Log($"Misiones medias disponibles: {missionLists["medium"].Count}");
         Debug.Log($"Misiones dificiles disponibles: {missionLists["hard"].Count}");
 
@@ -101,13 +101,12 @@ public class MissionManager : MonoBehaviour
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        Debug.Log("Calculando el numero de misiones por dificultad...");
         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
-        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dif�cil: {numHardMissions}");
+        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
@@ -250,16 +249,7 @@ public class MissionManager : MonoBehaviour
                         Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
                     }
 
-                   /* Interactable interactable = ingredient.GetComponent<Interactable>();
-                    if (interactable != null)
-                    {
-                        interactable.missionIcon = npc.missionIcon; // Asignar el MissionIcon al objeto interactuable
-                        Debug.Log($"Ingrediente {ingredient.name} asignado a MissionIcon {npc.missionIcon.name} como Interactable.");
-                    }
-                    else
-                    {
-                        Debug.Log($"Ingrediente {ingredient.name} no tiene componente Interactable.");
-                    }*/
+                
                 }
 
             
@@ -294,8 +284,10 @@ public class MissionManager : MonoBehaviour
                 if (npcNames.Count > 0)
                 {
                     NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
-                    npc.missionIcon.addressee = randomNPC.npcname;
+                    npc.missionIcon.addresseeName = randomNPC.npcname;
+                    npc.missionIcon.addressee = randomNPC;
                     randomNPC.sender = npc;
+                    
 
                 }
                 else

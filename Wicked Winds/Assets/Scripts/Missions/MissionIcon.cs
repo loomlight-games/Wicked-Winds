@@ -14,7 +14,8 @@ public class MissionIcon : MonoBehaviour
     private MissionIconPool missionIconPool;
     public NPC assignedNPC; // Añadimos una referencia al NPC
     public MessageGenerator messageGenerator;
-    public string addressee = null;
+    public string addresseeName = null;
+    public NPC addressee;
     
 
    
@@ -70,13 +71,13 @@ public class MissionIcon : MonoBehaviour
         if (message.Contains("{NPC_NAME}"))
          {
 
-                 message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addressee);
+                 message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
          }
 
         if (response.Contains("{NPC_NAME}"))
         {
 
-            response = response.Replace("{NPC_NAME}", assignedNPC.missionIcon.addressee);
+            response = response.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
         }
 
 
@@ -86,7 +87,16 @@ public class MissionIcon : MonoBehaviour
         Debug.Log($"Mensaje generado: {message}");
         // Luego puedes asignar el mensaje y la respuesta a las propiedades de NPC
         assignedNPC.message = message;
-        assignedNPC.responseMessage = response;
+        if(mission.missionName == "LetterMision")
+        {
+            assignedNPC.responseMessage = null;
+            addressee.responseMessage = response;
+        }
+        else
+        {
+            assignedNPC.responseMessage = response;
+        }
+        
         // Log para el nombre del NPC asignado para verificación
         if (assignedNPC != null)
         {
