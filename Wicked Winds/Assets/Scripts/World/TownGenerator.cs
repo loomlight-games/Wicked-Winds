@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TownGenerator
@@ -41,9 +39,16 @@ public class TownGenerator
             _ => GameManager.Instance.landscape1,
         };
 
-        // Initialize all tile types in dictionary as false - not instantiated yet
-        foreach (TileType type in Enum.GetValues(typeof(TileType)))
-            isTypeInstantiated.Add(type,false);
+        // Reset all tile types in dictionary as false - not instantiated yet
+        foreach (TileType type in Enum.GetValues(typeof(TileType))){
+            // Adds new types if aren't considered already
+            if (!isTypeInstantiated.ContainsKey(type))
+                isTypeInstantiated.Add(type,false);
+
+            // Not instantiated yet
+            isTypeInstantiated[type] = false;
+        }
+            
 
         // Instantiate town parent
         townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0,0,0), Quaternion.Euler(0, 0, 0));
