@@ -57,6 +57,8 @@ public class GameManager : AStateController
     public float remainingTime;
     #endregion
 
+    [HideInInspector] public string sceneToLoad = "Gameplay";
+
     public override void Awake()
     { 
         //if there's not an instance, it creates one - SINGLETON
@@ -89,11 +91,9 @@ public class GameManager : AStateController
             SetState(leaderboardState);
         else if(scene.name == "Gameplay")
             SetState(playState);
-        else
-            SetState(playState);
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Set the state based on the newly loaded scene
         SetStateBasedOnScene(scene);
@@ -115,9 +115,10 @@ public class GameManager : AStateController
                 SwitchState(selectTownState);
                 break;
             case "Play":
-                remainingTime = initialTime;
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene("Gameplay");
+                LoadingSceneScreen("Gameplay");
+                break;
+            case "Replay":
+                LoadingSceneScreen(SceneManager.GetActiveScene().name);
                 break;
             case "Pause":
                 SwitchState(pauseState);
@@ -125,39 +126,29 @@ public class GameManager : AStateController
             case "Resume":
                 SwitchState(playState);
                 break;
-            case "Replay":
-                remainingTime = initialTime;
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                break;
-            case "Main menu":
-                SceneManager.LoadScene("Main menu");
-                SceneManager.sceneLoaded += OnSceneLoaded;
+            case "Credits":
+                SwitchState(creditsState);
                 break;
             case "Main menu leaderboard":
                 AuthenticationService.Instance.SignOut();
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene("Main menu");
+                LoadSceneDirectly("Main menu");
+                break;
+            case "Main menu":
+                LoadSceneDirectly(buttonName);
                 break;
             case "Leaderboard":
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene("Leaderboard");
-                break;
-            case "Credits":
-                Debug.Log("Credits");
-                SwitchState(creditsState);
+                LoadSceneDirectly(buttonName);
                 break;
             case "Shop":
-                SceneManager.sceneLoaded += OnSceneLoaded;
-                SceneManager.LoadScene("Shop");
+                LoadSceneDirectly(buttonName);
                 break;
             default:
                 break;
         }
     }
  
-   /////////////////////////////////////////////////////////////////////////////////////////
-   #region UNITY SERVICES ZONE (LEADERBOARD)
+    /////////////////////////////////////////////////////////////////////////////////////////
+    #region UNITY SERVICES ZONE (LEADERBOARD)
     /// <summary>
     /// starts the authentification function for leaderbaord and users
     /// </summary>
@@ -329,6 +320,22 @@ public class GameManager : AStateController
     }
     #endregion
     /////////////////////////////////////////////////////////////////////////////////////////////
+
+    /// <summary>
+    /// For scenes that take time to load - through loading screen
+    /// </summary>
+    void LoadingSceneScreen (string sceneName){
+        sceneToLoad = sceneName;
+        SceneManager.LoadScene("Loading screen");
+    }
+
+    /// <summary>
+    /// For scenes that don't take time to load
+    /// </summary>
+    void LoadSceneDirectly(string sceneName){
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadScene(sceneName);
+    }
 
     public void DestroyGO(GameObject gameObject){
         Destroy(gameObject);

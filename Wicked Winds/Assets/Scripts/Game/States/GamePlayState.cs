@@ -34,9 +34,6 @@ public class GamePlayState : AState
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
         highSpeedBar =  GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar =  GameObject.Find("Fly high bar").GetComponent<HUDBar>();
-
-        highSpeedBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
-        flyHighBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
         
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
