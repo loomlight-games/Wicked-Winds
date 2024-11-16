@@ -9,7 +9,7 @@ using System;
 public class AverageLeaderboard : Panel
 {
 
-    string LeaderboardID = "AverageLeaderboard"; //average of time per mision
+    string LeaderboardID = "AverageTimeMision"; //average of time per mision
                                       //(addition each time per mision) / number misions complete
     [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
