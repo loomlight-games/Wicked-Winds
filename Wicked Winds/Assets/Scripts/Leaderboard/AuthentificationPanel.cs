@@ -166,7 +166,7 @@ public class AuthentificationPanel : Panel
 
     void Viewtable(){
         Close();
-        PanelManager.Open("Leaderboard");
+        PanelManager.Open("TotalTimeLeaderboard");
     }
 
     // UI EFFECTS

@@ -43,6 +43,6 @@ public class ProfilePanel : Panel
     private void Leaderboards()
     {
         Close();
-        PanelManager.Open("Leaderboard");
+        PanelManager.Open("TotalTimeLeaderboard");
     }
 }
