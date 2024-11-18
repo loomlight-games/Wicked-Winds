@@ -32,6 +32,8 @@ public class GameManager : AStateController
     bool eventsInitialized = false;
     [HideInInspector] public readonly string PLAYER_USERNAME_FILE = "PlayerUsername";
     [HideInInspector] public readonly string PLAYER_SCORE_FILE = "PlayerScore";
+    [HideInInspector] public readonly string PLAYER_MISSIONTIME_FILE = "PlayerMisionTime"; //average mision/time
+    [HideInInspector] public readonly string PLAYER_MISSIONCOUNT_FILE = "PlayerMisionCount"; //number of missions completed
     #endregion
 
     #region PROPERTIES
@@ -57,6 +59,7 @@ public class GameManager : AStateController
     public float remainingTime;
     public List<float> missionsTimes = new ();
     public float missionTime = 0;
+    public float AverageMissionTime = 0;
 
     #endregion
 

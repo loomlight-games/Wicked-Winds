@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Linq;
 
 public class GamePlayState : AState
 {
@@ -117,6 +118,12 @@ public class GamePlayState : AState
         gameOverTriggered = true;  // avoids double calls
 
         PlayerManager.Instance.score = (int) elapsedTime;
+
+        float SumMissionTime = GameManager.Instance.missionsTimes.Sum();
+        float countMissionsCompleted = MissionManager.Instance.missionsCompleted;
+        GameManager.Instance.AverageMissionTime = SumMissionTime / countMissionsCompleted;
+
+
 
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);

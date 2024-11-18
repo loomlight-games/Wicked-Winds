@@ -8,6 +8,8 @@ using static UnityEditor.PlayerSettings;
 
 public class MissionManager : MonoBehaviour
 {
+    public static MissionManager Instance;
+
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
     public int numMissionsToAssign = 10; // N�mero de misiones por ronda
@@ -15,10 +17,21 @@ public class MissionManager : MonoBehaviour
     private MissionIconPool missionIconPool;
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
-    private int missionsCompleted = 0;
-    
+    public int missionsCompleted = 0;
 
-    
+
+    public void Awake()
+    {
+        //if there's not an instance, it creates one - SINGLETON
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }
+        else
+            Destroy(gameObject);
+
+    }
 
     void Start()
     {

@@ -67,11 +67,11 @@ public class AverageLeaderboard : Panel
     //add the player score from the gameplay scene
     private void AddGameScore()
     {
-        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_MISSIONTIME_FILE, 0));
     }
     private void AddScore()
     {
-        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_MISSIONTIME_FILE, 0));
     }
     public async void AddScoreAsync(int score)
     {
