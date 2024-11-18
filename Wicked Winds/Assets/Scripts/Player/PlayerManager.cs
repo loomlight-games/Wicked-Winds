@@ -18,7 +18,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
-    [HideInInspector] public int score;
+    [HideInInspector] public int score, MAX_VALUE = 100;
     [HideInInspector] public List<GameObject> currentTargets = new ();
     [HideInInspector] public Transform target;
     [HideInInspector] public MissionIcon activeMission;

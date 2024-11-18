@@ -21,8 +21,7 @@ public class PlayerController
         verticalPosition, 
         flyPotionLoss, 
         speedPotionLoss;
-
-    public float MAX_VALUE = 100;
+    
     public float flyPotionValue, speedPotionValue;
     
     Vector3 movement3D, 
@@ -39,8 +38,8 @@ public class PlayerController
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
-        flyPotionValue = MAX_VALUE; 
-        speedPotionValue = MAX_VALUE;
+        flyPotionValue = PlayerManager.Instance.MAX_VALUE; 
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE; ;
         
         controller = PlayerManager.Instance.controller;
         player = PlayerManager.Instance.transform;
@@ -217,7 +216,7 @@ public class PlayerController
     /// </summary>
     public void SpeedPotionGain(object sender, EventArgs e)
     {
-        speedPotionValue = MAX_VALUE;
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
     /// <summary>
@@ -225,6 +224,6 @@ public class PlayerController
     /// </summary>
     private void FlyPotionGain(object sender, EventArgs e)
     {
-        flyPotionValue = MAX_VALUE;
+        flyPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 }
