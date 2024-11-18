@@ -22,6 +22,8 @@ public class PlayerManager : AStateController
     public List<GameObject> currentTargets = new ();
     [HideInInspector] public Transform target;
     public MissionIcon activeMission;
+    public NPC npcMissionActive;
+    public NPC npcObjective;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground

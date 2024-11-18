@@ -56,10 +56,10 @@ public class Dialogue : MonoBehaviour
         text.text = string.Empty;
         npcName.text = string.Empty;
 
-        lineIndex = 0; // Reinicia el �ndice aqu�
+        lineIndex = 0; // Reinicia el indice aqu�
         npcName.text = npc.npcname; // Muestra el nombre del NPC
 
-        // Divide el mensaje del NPC en l�neas y las almacena en el arreglo lines
+        // Divide el mensaje del NPC en lineas y las almacena en el arreglo lines
         lines = npc.message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         if (lines.Length == 0)
@@ -99,7 +99,7 @@ public class Dialogue : MonoBehaviour
         lineIndex = 0;
         npcName.text = npc.npcname;
 
-        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en l�neas
+        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en lineas
 
         if (lines.Length == 0)
         {

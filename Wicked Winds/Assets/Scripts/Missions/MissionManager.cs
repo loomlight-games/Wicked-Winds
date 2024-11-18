@@ -15,7 +15,7 @@ public class MissionManager : MonoBehaviour
     private MissionIconPool missionIconPool;
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
-    private int missionsCompleted = 0;
+    public int missionsCompleted = 0;
     
 
     
@@ -232,26 +232,30 @@ public class MissionManager : MonoBehaviour
                 if (spawnedIngredients == null && spawnedIngredients.Length == 0)
                 {
                     Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
+                   
                 }
-              
-
-                // Asignar el NPC y el MissionIcon a los objetos generados
-                foreach (GameObject ingredient in spawnedIngredients)
+                else
                 {
-                    Pickable pickable = ingredient.GetComponent<Pickable>();
-                    if (pickable != null)
+                    // Asignar el NPC y el MissionIcon a los objetos generados
+                    foreach (GameObject ingredient in spawnedIngredients)
                     {
-                        pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
-                        pickable.missionIcon= npc.missionIcon;
-       
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
-                    }
+                        Pickable pickable = ingredient.GetComponent<Pickable>();
+                        if (pickable != null)
+                        {
+                            pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
+                            pickable.missionIcon = npc.missionIcon;
+                            continue;
 
-                
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
+                        }
+
+
+                    }
                 }
+                
 
             
             }

@@ -6,9 +6,7 @@ public class NPCNameManager : MonoBehaviour
 {
     public List<string> npcNames; // List to hold NPC names
     private static NPCNameManager instance;
-    public static NPCNameManager Instance { get { return instance; } } // con el patron singleton hacemos que 
-    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
-    // y campos desde otros scripts
+    public static NPCNameManager Instance { get { return instance; } } // Singleton pattern
 
     private void Awake()
     {
@@ -20,7 +18,6 @@ public class NPCNameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     void Start()
@@ -40,9 +37,18 @@ public class NPCNameManager : MonoBehaviour
         };
     }
 
+    // Método para obtener un nombre aleatorio de NPC
     public string GetRandomNPCName()
     {
+        if (npcNames.Count == 0)
+        {
+            Debug.LogWarning("No quedan más NPCs disponibles.");
+            return null; // O manejar el caso si no hay nombres disponibles
+        }
+
         int randomIndex = Random.Range(0, npcNames.Count);
-        return npcNames[randomIndex];
+        string randomName = npcNames[randomIndex];
+        npcNames.RemoveAt(randomIndex); // Elimina el nombre para que no se repita
+        return randomName;
     }
 }

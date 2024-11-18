@@ -77,11 +77,11 @@ public class ControllablePlayerState : AState
                 // Collects it
                 pickableObject.CollectItem();
 
-        if (other.gameObject.TryGetComponent(out InteractableCat cat))
+      /*  if (other.gameObject.TryGetComponent(out InteractableCat cat))
             // Interact key is pressed
             if (PlayerManager.Instance.interactKey)
-                //Debug.Log("Interacting with interactable");
-                // Interact with NPC
-                cat.Interact();
+                Debug.Log("Interacting with interactableCat");
+                // Interact with Cat
+                cat.Interact();*/
     }
 }
