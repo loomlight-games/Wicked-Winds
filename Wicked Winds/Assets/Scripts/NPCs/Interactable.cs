@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
     public MissionIcon missionIcon; // Referencia al icono de mision del NPC
     [SerializeField] private NPC activeNPC; // Referencia al NPC con el que se esta interactuando
     public Dialogue dialoguePanel; // Referencia al script del bocadillo de texto
+    float missionTime;
 
     private void Start()
     {
@@ -24,20 +25,32 @@ public class Interactable : MonoBehaviour
         // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)
         {
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject) && gameObject.TryGetComponent<CatController>(out var catController))
-            {
-                catController.InteractWithCat();
-            }
-
+           
             // If NPC is target
             if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
-                // Iniciar el dialogo con el mensaje del NPC
+                Debug.Log("El NPC es el objetivo. Iniciando diálogo...");
+
+                // Iniciar el diálogo con el mensaje del NPC
                 if (dialoguePanel != null && npc.responseMessage != null)
                 {
+                    Debug.Log("El mensaje del NPC existe. Asignando el mensaje al bocadillo...");
+                    dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { npc.responseMessage }; // Asigna el mensaje del NPC al bocadillo
-                    dialoguePanel.StartDialogue(npc); // Inicia el dialogo
+                    dialoguePanel.StartDialogue(npc); // Inicia el diálogo
+                    Debug.Log("Diálogo iniciado.");
                 }
+                else
+                {
+                    if (dialoguePanel == null)
+                        Debug.LogWarning("dialoguePanel es null.");
+
+                    if (npc.responseMessage == null)
+                        Debug.LogWarning("npc.responseMessage es null.");
+                }
+
+                // Completar la misión del NPC
+                Debug.Log("Llamando a OnMissionCompleted...");
                 npc.OnMissionCompleted();
             }
             // NPC is the assigned but not objects have been found
@@ -55,6 +68,7 @@ public class Interactable : MonoBehaviour
             {
                 // Empiezan conversacion
                 activeNPC = npc; // Guarda el NPC con el que se interactua
+                
 
                 // Cambia el sprite del icono de mision al sprite de la mision
                 if (missionIcon != null && missionIcon.currentMission != null)
@@ -72,6 +86,7 @@ public class Interactable : MonoBehaviour
                 // Iniciar el dialogo con el mensaje del NPC
                 if (dialoguePanel != null && activeNPC.message != null)
                 {
+                    dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
                     dialoguePanel.StartDialogue(activeNPC); // Inicia el dialogo
                 }
@@ -90,6 +105,7 @@ public class Interactable : MonoBehaviour
                     {
                         if (npc.npcname == objetivo)
                         {
+
                             PlayerManager.Instance.AddTarget(npc.gameObject);
                         }
                     }

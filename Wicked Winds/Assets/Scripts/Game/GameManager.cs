@@ -55,6 +55,9 @@ public class GameManager : AStateController
     [Header("Gameplay")]
     public float initialTime = 120f;
     public float remainingTime;
+    public List<float> missionsTimes = new ();
+    public float missionTime = 0;
+
     #endregion
 
     public override void Awake()

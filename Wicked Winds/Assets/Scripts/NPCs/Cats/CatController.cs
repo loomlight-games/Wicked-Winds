@@ -75,8 +75,8 @@ public class CatController : MonoBehaviour
     // Nuevo método para interactuar con el gato
     public void InteractWithCat()
     {
-            // Llamar al estado de seguir al jugador o hacer que el gato interactúe con el jugador
-            PlayerManager.Instance.RemoveTarget(gameObject);
+        // Llamar al estado de seguir al jugador o hacer que el gato interactúe con el jugador
+        PlayerManager.Instance.RemoveTarget(gameObject);
         // Aniade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
         ChangeState(followingPlayerState);

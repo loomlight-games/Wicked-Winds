@@ -144,6 +144,8 @@ public class MissionIcon : MonoBehaviour
         if (currentMission != null)
         {
             GameManager.Instance.remainingTime += currentMission.timeBonus;
+            GameManager.Instance.missionsTimes.Add(GameManager.Instance.missionTime);
+            GameManager.Instance.missionTime = 0f;
             // Eliminar el NPC de la lista de assignedNPCs en MissionManager
             Debug.Log($"Eliminando NPC {assignedNPC.name} de la lista de NPCs asignados.");
             missionManager.assignedNPCs.Remove(assignedNPC);

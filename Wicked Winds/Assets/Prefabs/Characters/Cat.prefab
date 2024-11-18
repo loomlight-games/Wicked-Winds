@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3075400461487082050}
   - component: {fileID: -3554532786925844750}
   - component: {fileID: 4700265043925577445}
+  - component: {fileID: 7408444086481017538}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -153,4 +154,21 @@ MonoBehaviour:
   playerApproachSpeed: 1.5
   fleeDistance: 10
   owner: {fileID: 0}
+  previousPlayerPosition: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
   currentStateName: 
+--- !u!114 &7408444086481017538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008101629366272734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f329957802e0c104b85ea42a786e9aa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cat: {fileID: 0}
+  owner: {fileID: 0}
+  dialoguePanel: {fileID: 0}

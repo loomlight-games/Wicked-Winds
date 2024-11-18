@@ -16,6 +16,7 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     private int missionsCompleted = 0;
+    
 
     
 
@@ -344,4 +345,6 @@ public class MissionManager : MonoBehaviour
         GameManager.Instance.playState.feedBackText.text = $"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}";
         AssignMissions(numMissionsToAssign);
     }
+
+
 }
