@@ -9,6 +9,7 @@ public class MissionData : ScriptableObject
     public int difficulty; // 0 fácil, 1 medio, 2 difícil
     public Sprite missionIconSprite; // El ícono específico para esta misión
     public bool isCompleted = false;
+    public int timeBonus;
 
     // Diccionario para textos graciosos de NPC
     public Dictionary<string, string[]> npcMessages;
