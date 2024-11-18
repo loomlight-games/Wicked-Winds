@@ -1,16 +1,18 @@
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
 public class CatController : MonoBehaviour
 {
-    public Transform player; // Referencia al jugador
+    public GameObject playerGameObject; // Referencia al jugador
     public Transform ownerPosition; // Referencia al dueño del gato
     public LayerMask groundLayer, buildingLayer; // Capas de interacción
-    public float detectionRadius = 10f;
-    public float playerSpeedThreshold = 2f; // Velocidad para decidir si el jugador es lento o rápido
+    public float playerApproachSpeed = 1.5f; // Velocidad para diferenciar entre acercamiento rápido o lento
+    public float fleeDistance = 10f;
     public NPC owner;
     private NavMeshAgent agent;
     private ICatState currentState;
+    private Vector3 previousPlayerPosition;
+    Transform player;
 
     // Estados del gato
     public IdleState idleState;
@@ -26,9 +28,9 @@ public class CatController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        GameObject playerGameObject = GameObject.FindGameObjectWithTag("Player");
         player = playerGameObject.transform;
-        ownerPosition = owner.transform; // Asignar el Transform del NPC dueño al catController
+        previousPlayerPosition = player.position;
+        ownerPosition = owner.transform;
 
         // Inicializar estados
         idleState = new IdleState(this, agent);
@@ -39,15 +41,16 @@ public class CatController : MonoBehaviour
         followingOwnerState = new FollowingOwnerState(this, agent, player, ownerPosition, owner);
 
         // Estado inicial
-        currentState = idleState;
+        currentState = followingOwnerState;
         currentState.Enter();
         UpdateCurrentStateName();
     }
 
     void Update()
     {
-        currentState.Update();
+        currentState?.Update();
         UpdateCurrentStateName(); // Actualiza el nombre del estado en cada frame
+        HandlePlayerInteraction();
     }
 
     public void ChangeState(ICatState newState)
@@ -65,5 +68,32 @@ public class CatController : MonoBehaviour
         {
             currentStateName = currentState.GetType().Name; // Guarda el nombre del tipo de estado
         }
+    }
+
+    private void HandlePlayerInteraction()
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Vector3 playerVelocity = (player.position - previousPlayerPosition) / Time.deltaTime;
+        previousPlayerPosition = player.position;
+
+        // Jugador se acerca rápidamente
+        if (distanceToPlayer < fleeDistance && playerVelocity.magnitude > playerApproachSpeed)
+        {
+            ChangeState(fleeingState);
+        }
+        // Jugador se acerca lentamente
+        else if (distanceToPlayer < 2f && PlayerManager.Instance.interactKey)  // Usar interactKey aquí
+        {
+            Debug.Log("¡Miau miau miau! Ahora el gato sigue al jugador.");
+            InteractWithCat();
+        }
+    }
+
+    // Nuevo método para interactuar con el gato
+    public void InteractWithCat()
+    {
+            // Llamar al estado de seguir al jugador o hacer que el gato interactúe con el jugador
+            ChangeState(followingPlayerState);
+      
     }
 }

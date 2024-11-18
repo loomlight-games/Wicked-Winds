@@ -94,6 +94,14 @@ public class Interactable : MonoBehaviour
                     }
                 }
 
+                if (PlayerManager.Instance.activeMission.currentMission.missionName == "CatMission")
+                {
+                    GameObject objetivo = activeNPC.cat.gameObject;
+                    PlayerManager.Instance.AddTarget(objetivo.gameObject);
+                        
+                    
+                }
+
                 PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una mision activa
             }
         }

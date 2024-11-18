@@ -39,7 +39,7 @@ public class Pickable : MonoBehaviour
     {
         if (npc != null && PlayerManager.Instance.currentTargets != null)
         {
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
+            if (PlayerManager.Instance.currentTargets.Contains(this.gameObject))
             {
                 missionIcon = npc.missionIcon;
                 if (this.missionIcon != null)

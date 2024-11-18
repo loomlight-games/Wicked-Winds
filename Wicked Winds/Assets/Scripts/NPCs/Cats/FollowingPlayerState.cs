@@ -32,5 +32,6 @@ public class FollowingPlayerState : ICatState
         agent.SetDestination(player.position);
     }
 
+
     public void Exit() { }
 }

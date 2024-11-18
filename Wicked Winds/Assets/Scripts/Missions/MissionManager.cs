@@ -10,7 +10,7 @@ public class MissionManager : MonoBehaviour
 {
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
-    public int numMissionsToAssign = 3; // N�mero de misiones por ronda
+    public int numMissionsToAssign = 10; // N�mero de misiones por ronda
 
     private MissionIconPool missionIconPool;
     public List<NPC> assignedNPCs = new List<NPC>();
@@ -102,7 +102,7 @@ public class MissionManager : MonoBehaviour
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
-        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound - 1, numMissionsToAssign - numHardMissions));
+        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1 , numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
@@ -321,7 +321,7 @@ public class MissionManager : MonoBehaviour
 
             missionIcon.transform.localPosition = desiredPosition;
             missionIcon.transform.localScale = desiredScale;
-            Debug.Log($"Icono de misi�n asignado a {selectedNPC.name} dentro de Bubble.");
+            Debug.Log($"Icono de mision asignado a {selectedNPC.name} dentro de Bubble.");
         }
         else
         {
@@ -332,7 +332,7 @@ public class MissionManager : MonoBehaviour
     private MissionData GetRandomMission(List<MissionData> missions)
     {
         int randomIndex = UnityEngine.Random.Range(0, missions.Count);
-        Debug.Log($"Misi�n aleatoria seleccionada: {missions[randomIndex].name}");
+        Debug.Log($"Mision aleatoria seleccionada: {missions[randomIndex].name}");
         return missions[randomIndex];
     }
 

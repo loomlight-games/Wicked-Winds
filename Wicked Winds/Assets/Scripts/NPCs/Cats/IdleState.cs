@@ -16,7 +16,7 @@ public class IdleState : ICatState
 
     public void Enter()
     {
-        idleTime = Random.Range(2f, 5f);
+        idleTime = Random.Range(5f, 10f);
         timer = 0f;
         agent.isStopped = true;
     }

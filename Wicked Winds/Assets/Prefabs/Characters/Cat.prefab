@@ -141,7 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638169d55b8c93a449a8289df7d8dc3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerGameObject: {fileID: 6354958810953423510, guid: 2e58d67de17b23644a2bc9824b8f0296,
+    type: 3}
   ownerPosition: {fileID: 0}
   groundLayer:
     serializedVersion: 2
@@ -149,6 +150,7 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 128
-  detectionRadius: 10
-  playerSpeedThreshold: 2
+  playerApproachSpeed: 1.5
+  fleeDistance: 10
   owner: {fileID: 0}
+  currentStateName: 

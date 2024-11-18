@@ -16,10 +16,10 @@ public class FleeingState : ICatState
 
     public void Enter()
     {
-        Vector3 fleeDirection = (catController.transform.position - player.position).normalized * 10f;
+        Vector3 fleeDirection = (catController.transform.position - player.position).normalized * 20f;
         NavMeshHit hit;
 
-        if (NavMesh.SamplePosition(catController.transform.position + fleeDirection, out hit, 10f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(catController.transform.position + fleeDirection, out hit, 20f, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
         }

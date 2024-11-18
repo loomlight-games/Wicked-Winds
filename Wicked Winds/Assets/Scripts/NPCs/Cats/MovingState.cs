@@ -23,15 +23,22 @@ public class MovingState : ICatState
         {
             catController.ChangeState(catController.idleState);
         }
+
+        // Detectar edificios cercanos
+        if (Physics.Raycast(catController.transform.position, Vector3.up, out RaycastHit hit, 5f, catController.buildingLayer))
+        {
+            Debug.Log("Edificio detectado. Cambiando a ClimbingState.");
+            catController.ChangeState(catController.climbingState);
+        }
     }
 
     public void Exit() { }
 
     private void SetRandomDestination()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * 10f + catController.transform.position;
+        Vector3 randomDirection = Random.insideUnitSphere * 15f + catController.transform.position;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomDirection, out hit, 10f, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(randomDirection, out hit, 15f, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
         }

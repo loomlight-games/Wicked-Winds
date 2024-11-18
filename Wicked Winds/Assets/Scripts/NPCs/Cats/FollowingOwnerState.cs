@@ -17,20 +17,19 @@ public class FollowingOwnerState : ICatState
         this.ownerPosition = owner;
         this.ownerNpc = ownerNpc;  // Guardamos la referencia del NPC dueño
     }
-
     public void Enter()
     {
-        // Verificamos si el dueño tiene una misión de tipo CatMission. Si no la tiene, seguimos al dueño.
         if (ownerNpc.missionType != "CatMission")
         {
             agent.SetDestination(ownerPosition.position);
         }
         else
         {
-            // Si tiene una misión de tipo CatMission, el gato huye
+            Debug.Log("Dueño tiene misión de tipo CatMission. Cambiando a RandomMoveState.");
             catController.ChangeState(catController.randomMoveState);
         }
     }
+
 
     public void Update()
     {
