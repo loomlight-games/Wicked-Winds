@@ -9,13 +9,13 @@ public class GamePlayState : AState
     GameObject UI, statesUI, gameplayUI, hud;
     TextMeshProUGUI timerText, elapsedText;
     HUDBar highSpeedBar, flyHighBar;
-    float elapsedTime, remainingTime, missionTime;
+    float elapsedTime, remainingTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
 
     public override void Enter()
     {
-
+        
         Debug.LogWarning("GamePlayState");
 
         Time.timeScale = 1f; // Resumes simulation
@@ -109,7 +109,7 @@ public class GamePlayState : AState
        
         if (remainingTime > 0)
         {
-            missionTime += Time.deltaTime;
+            GameManager.Instance.missionTime += Time.deltaTime;
         }
     }
     void TriggerGameOver()
