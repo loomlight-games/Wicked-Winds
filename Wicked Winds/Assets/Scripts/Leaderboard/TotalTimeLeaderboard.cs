@@ -19,6 +19,7 @@ public class TotalTimeLeaderboard : Panel
     [SerializeField] private Button prevButton = null;
     [SerializeField] private Button ProfileButton = null;
     [SerializeField] private Button AverageButton = null;
+    [SerializeField] private Button misionCountButton = null;   
 
     //prueba
     [SerializeField] private Button addScoreButton = null;
@@ -39,6 +40,7 @@ public class TotalTimeLeaderboard : Panel
         prevButton.onClick.AddListener(PrevPage);
         addScoreButton.onClick.AddListener(AddScore);
         AverageButton.onClick.AddListener(OpenAveragePanel);
+        misionCountButton.onClick.AddListener(OpenMisionCountPanel);
         base.Initialize();
     }
     /// <summary>
@@ -159,6 +161,12 @@ public class TotalTimeLeaderboard : Panel
     {
         PanelManager.Open("AverageLeaderboard");
     }
+    private void OpenMisionCountPanel()
+    {
+        PanelManager.Open("MisionCountLeaderboard");
+
+    }
+
     /// <summary>
     /// clear the list of players
     /// </summary>

@@ -5,13 +5,9 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.Services.Leaderboards;
 using System;
-using UnityEngine.Rendering;
-
-public class AverageLeaderboard : Panel
+public class MisionCountLeaderboard : Panel
 {
-
-    string LeaderboardID = "AverageTimeMision"; //average of time per mision
-                                      //(addition each time per mision) / number misions complete
+    string LeaderboardID = "MisionCount";
     [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
@@ -21,8 +17,8 @@ public class AverageLeaderboard : Panel
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
     [SerializeField] private Button ProfileButton = null;
+    [SerializeField] private Button AverageButton = null;
     [SerializeField] private Button totalTimeButton = null;
-    [SerializeField] private Button misionCountButton = null;
 
     //prueba
     [SerializeField] private Button addScoreButton = null;
@@ -42,8 +38,8 @@ public class AverageLeaderboard : Panel
         nextButton.onClick.AddListener(NextPage);
         prevButton.onClick.AddListener(PrevPage);
         addScoreButton.onClick.AddListener(AddScore);
+        AverageButton.onClick.AddListener(OpenAveragePanel);
         totalTimeButton.onClick.AddListener(OpenTotalTimePanel);
-        misionCountButton.onClick.AddListener(OpenMisionCountPanel);
         base.Initialize();
     }
     /// <summary>
@@ -101,7 +97,6 @@ public class AverageLeaderboard : Panel
             options.Limit = playersPerPage; //limit of records it loads
 
             var scores = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardID, options);
-            Debug.Log("players loaded AVERAGE");
             ClearPlayersList();
 
             //for every score it creates an instance of leaderboardsPlayersItem
@@ -155,6 +150,7 @@ public class AverageLeaderboard : Panel
         prevButton.interactable = currentPage > 1 && totalPages > 1;
     }
 
+    //PANEL MANAGEMENT
     private void ProfilePanel()
     {
         PanelManager.Open("profile");
@@ -165,11 +161,11 @@ public class AverageLeaderboard : Panel
         PanelManager.Open("TotalTimeLeaderboard");
 
     }
-    private void OpenMisionCountPanel()
+    private void OpenAveragePanel()
     {
-        PanelManager.Open("MisionCountLeaderboard");
-
+        PanelManager.Open("AverageLeaderboard");
     }
+
     /// <summary>
     /// clear the list of players
     /// </summary>
@@ -184,6 +180,7 @@ public class AverageLeaderboard : Panel
             }
         }
     }
+
 
     /// <summary>
     /// control the leaderboard pages
@@ -212,3 +209,4 @@ public class AverageLeaderboard : Panel
         }
     }
 }
+
