@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.Services.Leaderboards;
 using System;
+using UnityEngine.Rendering;
 
 public class AverageLeaderboard : Panel
 {
@@ -98,6 +99,7 @@ public class AverageLeaderboard : Panel
             options.Limit = playersPerPage; //limit of records it loads
 
             var scores = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardID, options);
+            Debug.Log("players loaded AVERAGE");
             ClearPlayersList();
 
             //for every score it creates an instance of leaderboardsPlayersItem
