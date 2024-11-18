@@ -2,7 +2,6 @@ using System;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
@@ -36,17 +35,29 @@ public class GameManager : AStateController
     #endregion
 
     #region PROPERTIES
+    [Header("Town generator")]
+    public float tileSize = 50f;
+    public int townSize = 4; // In tiles
     public bool generateTown = true;
+    public TownGenerator.Town town;
     public GameObject townParent;
+    [Header("Stardust Town")]
+    public GameObject landscape1;
+    public List<GameObject> townTiles1 = new();
+    [Header("Sandy Landy")]
+    public GameObject landscape2;
+    public List<GameObject> townTiles2 = new();
+    [Header("Frostpeak Hollow")]
+    public GameObject landscape3;
+    public List<GameObject> townTiles3 = new();
+
+
     [Header("Gameplay")]
     public float initialTime = 120f;
     public float remainingTime;
-    public float tileSize = 50f;
-    public int townSize = 4; // In tiles
-    public TownGenerator.Town town;
-    public List<GameObject> summerTownTiles = new();
-    public List<GameObject> autumnTownTiles = new();
-    public List<GameObject> winterTownTiles = new();
+    public List<float> missionsTimes = new ();
+    public float missionTime = 0;
+
     #endregion
 
     public override void Awake()

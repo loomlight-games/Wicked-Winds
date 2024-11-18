@@ -18,7 +18,8 @@ public class NPC : MonoBehaviour
     public string missionType;
     public string responseMessage;
     private NavMeshAgent agent;
-    public NPC sender; 
+    public NPC sender;
+    public CatController cat;
 
     private void Awake()
     {
@@ -166,7 +167,7 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
 
         PlayerManager.Instance.hasActiveMission = false;
-
+        
         PlayerManager.Instance.OnMissionCompleted();
     }
 }

@@ -16,12 +16,12 @@ public class PlayerManager : AStateController
 
     public Transform orientation;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
+    public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
-    [HideInInspector] public List<GameObject> currentTargets = new ();
+    public List<GameObject> currentTargets = new ();
     [HideInInspector] public Transform target;
-    [HideInInspector] public MissionIcon activeMission;
+    public MissionIcon activeMission;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground

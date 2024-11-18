@@ -7,13 +7,15 @@ public class GamePlayState : AState
     public TextMeshProUGUI feedBackText;
 
     GameObject UI, statesUI, gameplayUI, hud;
-    TextMeshProUGUI timerText, elapsedText, speedText, flyHighText;
+    TextMeshProUGUI timerText, elapsedText;
+    HUDBar highSpeedBar, flyHighBar;
     float elapsedTime, remainingTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
 
     public override void Enter()
     {
+        
         Debug.LogWarning("GamePlayState");
 
         Time.timeScale = 1f; // Resumes simulation
@@ -30,32 +32,36 @@ public class GamePlayState : AState
 
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
-        speedText = GameObject.Find("Speed amount").GetComponent<TextMeshProUGUI>();
-        flyHighText = GameObject.Find("Fly amount").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
+        highSpeedBar =  GameObject.Find("High speed bar").GetComponent<HUDBar>();
+        flyHighBar =  GameObject.Find("Fly high bar").GetComponent<HUDBar>();
+
+        highSpeedBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
+        flyHighBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
         
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
         
-        ///////////////////////////////////////////////////////////////////////////////////
-        if (GameManager.Instance.generateTown)
-        ///////////////////////////////////////////////////////////////////////////////////
-            GameManager.Instance.townGenerator.Start();
+        GameManager.Instance.townGenerator.Start();
     }
 
     public override void Update()
     {
         UpdateTimer();
+        if(PlayerManager.Instance.hasActiveMission)
+        {
+            UpdateMissionTime();
+        }
 
         if (PlayerManager.Instance.playerController.speedPotionValue >= 0)
-            speedText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.speedPotionValue).ToString();
+            highSpeedBar.SetValue(PlayerManager.Instance.playerController.speedPotionValue);
         else
-            speedText.text = "0";
+            highSpeedBar.SetValue(0);
         
         if (PlayerManager.Instance.playerController.flyPotionValue >= 0)
-            flyHighText.text = Mathf.FloorToInt(PlayerManager.Instance.playerController.flyPotionValue).ToString();
+            flyHighBar.SetValue(PlayerManager.Instance.playerController.flyPotionValue);
         else
-            flyHighText.text = "0";
+            flyHighBar.SetValue(0);
 
         if (Input.GetKeyDown(KeyCode.Escape))
             GameManager.Instance.ClickButton("Pause");
@@ -74,7 +80,11 @@ public class GamePlayState : AState
         if (remainingTime > 0){
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
-        }else if (remainingTime <= 0 && !gameOverTriggered){
+            
+
+
+        }
+        else if (remainingTime <= 0 && !gameOverTriggered){
             remainingTime = 0;
 
             // GAMEOVER when remaining time is over
@@ -94,6 +104,14 @@ public class GamePlayState : AState
         GameManager.Instance.remainingTime = remainingTime;
     }
 
+    private void UpdateMissionTime()
+    {
+       
+        if (remainingTime > 0)
+        {
+            GameManager.Instance.missionTime += Time.deltaTime;
+        }
+    }
     void TriggerGameOver()
     {
         gameOverTriggered = true;  // avoids double calls
@@ -104,14 +122,6 @@ public class GamePlayState : AState
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
         
         timerText.color = Color.red;
-    }
-
-    /// <summary>
-    /// Called when boost value is modified (only when running)
-    /// </summary>
-    private void OnBoostChangeEvent(object sender, float currentBoost)
-    {
-        speedText.text = Mathf.FloorToInt(currentBoost).ToString();
     }
 
     /// <summary>

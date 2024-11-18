@@ -4,75 +4,100 @@ using UnityEngine;
 [RequireComponent(typeof(NPC))]
 public class Interactable : MonoBehaviour
 {
-    private NPC npc; // Referencia al NPC con el que se interactï¿½a
-    public MissionIcon missionIcon; // Referencia al ï¿½cono de misiï¿½n del NPC
-    private NPC activeNPC; // Referencia al NPC con el que se estï¿½ interactuando
+    public NPC npc; // Referencia al NPC con el que se interactua
+    public MissionIcon missionIcon; // Referencia al icono de mision del NPC
+    [SerializeField] private NPC activeNPC; // Referencia al NPC con el que se esta interactuando
     public Dialogue dialoguePanel; // Referencia al script del bocadillo de texto
+    float missionTime;
 
     private void Start()
     {
         // Busca el NPC en el GameObject padre o en los hijos
         npc = GetComponent<NPC>();
-        missionIcon = npc.missionIcon; // Obtiene el icono de misiï¿½n del NPC
+       
+        missionIcon = npc.missionIcon; // Obtiene el icono de mision del NPC
     }
 
-    // Mï¿½todo para manejar la interacciï¿½n con el NPC
+    // Metodo para manejar la interaccion con el NPC
     public void Interact()
     {
-        //Debug.Log($"Interacted with NPC: {npc.name}");
 
         // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)
         {
+           
             // If NPC is target
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject)){
-                dialoguePanel.StartDialogue(npc, "Thanks for bringing my letter!");
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
+            {
+                Debug.Log("El NPC es el objetivo. Iniciando diálogo...");
+
+                // Iniciar el diálogo con el mensaje del NPC
+                if (dialoguePanel != null && npc.responseMessage != null)
+                {
+                    Debug.Log("El mensaje del NPC existe. Asignando el mensaje al bocadillo...");
+                    dialoguePanel.lines = null;
+                    dialoguePanel.lines = new string[] { npc.responseMessage }; // Asigna el mensaje del NPC al bocadillo
+                    dialoguePanel.StartDialogue(npc); // Inicia el diálogo
+                    Debug.Log("Diálogo iniciado.");
+                }
+                else
+                {
+                    if (dialoguePanel == null)
+                        Debug.LogWarning("dialoguePanel es null.");
+
+                    if (npc.responseMessage == null)
+                        Debug.LogWarning("npc.responseMessage es null.");
+                }
+
+                // Completar la misión del NPC
+                Debug.Log("Llamando a OnMissionCompleted...");
                 npc.OnMissionCompleted();
             }
             // NPC is the assigned but not objects have been found
-            else{
+            else
+            {
                 GameManager.Instance.playState.feedBackText.text = "You must collect all items of the current mission.";
             }
         }
         // No mission assigned
         else
         {
+           
             // If NPC has mission
-            if (npc.hasMission){
-                // empiezan conversaciÃ³n
-                activeNPC = npc; // Guarda el NPC con el que se interactï¿½a
+            if (npc.hasMission)
+            {
+                // Empiezan conversacion
+                activeNPC = npc; // Guarda el NPC con el que se interactua
+                
 
-                // Cambia el sprite del icono de misiï¿½n al sprite de la misiï¿½n
+                // Cambia el sprite del icono de mision al sprite de la mision
                 if (missionIcon != null && missionIcon.currentMission != null)
                 {
                     SpriteRenderer spriteRenderer = missionIcon.GetComponent<SpriteRenderer>();
                     if (spriteRenderer != null)
                     {
                         spriteRenderer.sprite = missionIcon.currentMission.missionIconSprite;
-                        
+
                         //Debug.Log($"Changed mission icon sprite to: {missionIcon.currentMission.missionIconSprite.name}");
                     }
-                    else
-                    {
-                        //Debug.LogError("SpriteRenderer es nulo en Interactable.");
-                    }
-
+                    
                 }
-                
-                // Iniciar el diï¿½logo con el mensaje del NPC
+
+                // Iniciar el dialogo con el mensaje del NPC
                 if (dialoguePanel != null && activeNPC.message != null)
                 {
+                    dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { activeNPC.message }; // Asigna el mensaje del NPC al bocadillo
-                    dialoguePanel.StartDialogue(activeNPC); // Inicia el diï¿½logo
+                    dialoguePanel.StartDialogue(activeNPC); // Inicia el dialogo
                 }
 
 
                 PlayerManager.Instance.activeMission = activeNPC.missionIcon;
                 GameManager.Instance.playState.feedBackText.text = $"New mission accepted from {npc.name}: {missionIcon.name}.";
-                
+
                 if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
                 {
-                    string objetivo = activeNPC.missionIcon.addressee;
+                    string objetivo = activeNPC.missionIcon.addresseeName;
 
                     NPC[] allNPCS = FindObjectsOfType<NPC>();
 
@@ -80,12 +105,21 @@ public class Interactable : MonoBehaviour
                     {
                         if (npc.npcname == objetivo)
                         {
+
                             PlayerManager.Instance.AddTarget(npc.gameObject);
                         }
                     }
                 }
 
-                PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una misiï¿½n activa
+                if (PlayerManager.Instance.activeMission.currentMission.missionName == "CatMission")
+                {
+                    GameObject objetivo = activeNPC.cat.gameObject;
+                    PlayerManager.Instance.AddTarget(objetivo.gameObject);
+                        
+                    
+                }
+
+                PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una mision activa
             }
         }
     }

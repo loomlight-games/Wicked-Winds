@@ -17,7 +17,7 @@ public class Dialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+
     }
     // Update is called once per frame
     void Update()
@@ -148,13 +148,13 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    
+
     void DeactivateAllChildren()
     {
 
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(false); 
+            child.gameObject.SetActive(false);
         }
     }
 

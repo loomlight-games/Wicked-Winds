@@ -6,16 +6,21 @@ public class Pickable : MonoBehaviour
 {
     // Referencia al NPC asociado
     public NPC npc;
-    public MissionIcon missionIcon; // Referencia al �cono de misi�n del NPC
+    public MissionIcon missionIcon; // Referencia al icono de mision del NPC
     public int numOfObjectsToCollect;
-    public Dialogue playerTextBubble; // Referencia al bocadillo de texto
-    
+    public Dialogue textBubble; // Referencia al bocadillo de texto
 
-    // M�todo para establecer el NPC
+
+    // Metodo para establecer el NPC
+
+    private void Start()
+    {
+         textBubble = FindObjectOfType<Dialogue>();
+    }
 
     private void Update()
     {
-        // Verifica si la misi�n del objeto es la misma que la misi�n activa del jugador y que ambas misiones no sean nulas
+        // Verifica si la mision del objeto es la misma que la mision activa del jugador y que ambas misiones no sean nulas
         if (this.missionIcon != null && PlayerManager.Instance.activeMission != null &&
             this.missionIcon == PlayerManager.Instance.activeMission)
         {
@@ -26,7 +31,7 @@ public class Pickable : MonoBehaviour
     public void SetNPC(NPC assignedNPC)
     {
         npc = assignedNPC;
-        Debug.Log($"Assigned NPC to pickable item: {npc.name}"); // Log para asignaci�n de NPC
+        Debug.Log($"Assigned NPC to pickable item: {npc.name}"); // Log para asignacion de NPC
     }
 
     // M�todo para recolectar el objeto
@@ -34,7 +39,7 @@ public class Pickable : MonoBehaviour
     {
         if (npc != null && PlayerManager.Instance.currentTargets != null)
         {
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
+            if (PlayerManager.Instance.currentTargets.Contains(this.gameObject))
             {
                 missionIcon = npc.missionIcon;
                 if (this.missionIcon != null)
@@ -47,16 +52,16 @@ public class Pickable : MonoBehaviour
                         // Reinicia el contador para futuras misiones
                         this.missionIcon.collectedItemsCount = 0;
 
-                        // A�ade el NPC como nuevo objetivo en `currentTargets`
+                        // Aniade el NPC como nuevo objetivo en `currentTargets`
                         PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
 
-                        Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la misi�n.");
+                        Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la mision.");
                         // Activa el bocadillo de texto y muestra el mensaje
-                        if (playerTextBubble != null)
+                        if (textBubble != null)
                         {
                             Debug.Log("no hay player text bubble");
-                            string texto = "Todos los objetos recolectados. Regresa al NPC para completar la misi�n.\n";
-                            playerTextBubble.StartDialogue(texto); // Inicia el di�logo en el bocadillo de texto
+                            string texto = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
+                            textBubble.StartDialogue(texto); // Inicia el dialogo en el bocadillo de texto
                         }
 
                     }
@@ -78,7 +83,7 @@ public class Pickable : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Este ingrediente a�n no se ha marcado como objetivo por lo q no se puede recoger");
+                Debug.Log($"Este ingrediente aun no se ha marcado como objetivo por lo q no se puede recoger");
             }
             
         }

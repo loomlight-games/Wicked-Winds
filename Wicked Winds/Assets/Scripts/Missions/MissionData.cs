@@ -9,6 +9,7 @@ public class MissionData : ScriptableObject
     public int difficulty; // 0 fácil, 1 medio, 2 difícil
     public Sprite missionIconSprite; // El ícono específico para esta misión
     public bool isCompleted = false;
+    public int timeBonus;
 
     // Diccionario para textos graciosos de NPC
     public Dictionary<string, string[]> npcMessages;
@@ -82,14 +83,14 @@ public class MissionData : ScriptableObject
         {
             { "LetterMision", new string[]
                 {
-                    "Thanks for helping me stay in touch with my grandma! You’re the best!",
-                    "You’re a lifesaver! I can’t wait for {NPC_NAME} to see this surprise!",
-                    "Aww, you’re so sweet! {NPC_NAME} will love this heart-shaped letter!",
-                    "Wow, thanks! Your speed is impressive—{NPC_NAME} will appreciate it!",
-                    "You’ve got this! The holiday spirit is in good hands with you!",
-                    "Thank you so much! I’m sure {NPC_NAME} will be thrilled with this note!",
-                    "You rock! I can’t wait for {NPC_NAME} to get this invitation!",
-                    "Thanks a ton! I know {NPC_NAME} will enjoy our tea time together!"
+                    "Oh, what a delightful surprise! Thank you for delivering this letter from my dear grandchild. It means the world to me!",
+                    "Oh, how wonderful! This birthday message has made my day—thank you so much for bringing it to me!",
+                    "Oh, my heart! This letter is so sweet and full of love! Thank you for delivering it!",
+                    "Oh, look at this! My friend always knows how to cheer me up. Thanks for bringing this to me!",
+                    "Oh, what joy! This festive letter has filled me with holiday cheer. Thank you for delivering it!",
+                    "Oh, a thank-you note with cat stickers! This made my day. Thank you for bringing it to me!",
+                    "Oh, an invitation! How thoughtful of my neighbor—thank you for making sure I got this!",
+                    "Oh, a friendly reminder—how kind! Thank you for delivering this message to me!"
                 }
             },
 
