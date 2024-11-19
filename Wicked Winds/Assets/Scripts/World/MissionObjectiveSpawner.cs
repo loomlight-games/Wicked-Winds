@@ -13,7 +13,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
     public LayerMask buildingLayerMask, // Máscara de capa para detectar edificios.
                      groundLayerMask; // Máscara de capa para detectar el suelo.
     
-    const int maxAttempts = 10; // Número máximo de intentos para encontrar una posición válida.
+    const int maxAttempts = 30; // Número máximo de intentos para encontrar una posición válida.
     bool validPosition;
     int attempts;
     GameObject randomPrefab;

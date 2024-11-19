@@ -258,7 +258,7 @@ public class MissionManager : MonoBehaviour
 
 
                     }
-                    spawnedIngredients.Clear();
+                    
                 }
                 
 
