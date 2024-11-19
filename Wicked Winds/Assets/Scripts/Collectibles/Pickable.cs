@@ -11,6 +11,7 @@ public class Pickable : MonoBehaviour
     public Dialogue textBubble; // Referencia al bocadillo de texto
 
 
+
     // Metodo para establecer el NPC
 
     private void Start()
@@ -20,13 +21,15 @@ public class Pickable : MonoBehaviour
 
     private void Update()
     {
-        // Verifica si la mision del objeto es la misma que la mision activa del jugador y que ambas misiones no sean nulas
-        if (this.missionIcon != null && PlayerManager.Instance.activeMission != null &&
-            this.missionIcon == PlayerManager.Instance.activeMission)
+        if (PlayerManager.Instance.activeMission != null &&
+            this.missionIcon != null &&
+            this.missionIcon.missionID == PlayerManager.Instance.activeMission.missionID)
         {
-            PlayerManager.Instance.AddTarget(gameObject);
+            if (!PlayerManager.Instance.currentTargets.Contains(gameObject))
+            {
+                PlayerManager.Instance.AddTarget(gameObject);
+            }
         }
-
     }
     public void SetNPC(NPC assignedNPC)
     {

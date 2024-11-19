@@ -1,6 +1,4 @@
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
+using System;
 using UnityEngine;
 
 public class MissionIcon : MonoBehaviour
@@ -16,9 +14,10 @@ public class MissionIcon : MonoBehaviour
     public MessageGenerator messageGenerator;
     public string addresseeName = null;
     public NPC addressee;
-    
+    public Guid missionID; // Identificador único para este ícono
 
-   
+
+
     [SerializeField] public string message;
     [SerializeField] private string responseMessage;
 
@@ -36,6 +35,8 @@ public class MissionIcon : MonoBehaviour
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
         assignedNPC.missionType = currentMission.missionName;
+        // Generar un ID único para esta misión
+        missionID = Guid.NewGuid();
 
         // Obtiene el componente SpriteRenderer del GameObject al que está adjunto este script
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -61,6 +62,12 @@ public class MissionIcon : MonoBehaviour
         currentMission = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
+        
+        // Generar IDs únicos para el MissionIcon y NPC si no tienen
+        if (missionID == Guid.Empty) missionID = Guid.NewGuid();
+        if (npc.npcID == Guid.Empty) npc.npcID = Guid.NewGuid();
+
+        Debug.Log($"Misión asignada: MissionID={missionID}, NPCID={npc.npcID}");
 
         messageGenerator = new();
         // Generar el mensaje para la misión

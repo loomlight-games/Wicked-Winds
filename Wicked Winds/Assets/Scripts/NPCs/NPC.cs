@@ -20,11 +20,13 @@ public class NPC : MonoBehaviour
     private NavMeshAgent agent;
     public NPC sender;
     public CatController cat;
+    public Guid npcID; // Identificador único para el NPC
 
     private void Awake()
     {
         nameManager = NPCNameManager.Instance;
         npcname = nameManager.GetRandomNPCName();
+        npcID = Guid.NewGuid(); // Generar un ID único al inicializar el NPC
 
     }
 

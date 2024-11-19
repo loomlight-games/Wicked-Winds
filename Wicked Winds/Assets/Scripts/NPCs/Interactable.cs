@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using UnityEngine;
@@ -100,18 +101,19 @@ public class Interactable : MonoBehaviour
 
                 PlayerManager.Instance.activeMission = PlayerManager.Instance.npcMissionActive.missionIcon;
                 GameManager.Instance.playState.feedBackText.text = $"New mission accepted from {PlayerManager.Instance.npcMissionActive.name}: {PlayerManager.Instance.npcMissionActive.missionIcon.name}.";
-
                 if (PlayerManager.Instance.activeMission.currentMission.missionName == "LetterMision")
                 {
-                    string objetivo = PlayerManager.Instance.npcMissionActive.missionIcon.addresseeName;
+                    // Obtén el ID del NPC objetivo desde la misión activa
+                    Guid objetivoID = PlayerManager.Instance.npcMissionActive.missionIcon.addressee.npcID;
 
-                    NPC[] allNPCS = FindObjectsOfType<NPC>();
+                    // Encuentra todos los NPCs en la escena
+                    NPC[] allNPCs = FindObjectsOfType<NPC>();
 
-                    foreach (NPC npc in allNPCS)
+                    foreach (NPC npc in allNPCs)
                     {
-                        if (npc.npcname == objetivo)
+                        // Compara el ID del NPC con el objetivo
+                        if (npc.npcID == objetivoID)
                         {
-
                             PlayerManager.Instance.AddTarget(npc.gameObject);
                         }
                     }

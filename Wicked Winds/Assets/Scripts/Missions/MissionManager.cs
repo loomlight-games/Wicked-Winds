@@ -5,6 +5,7 @@ using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using System;
 
 public class MissionManager : MonoBehaviour
 {
@@ -16,9 +17,10 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
-    
+   
 
-    
+
+
 
     void Start()
     {
@@ -226,12 +228,13 @@ public class MissionManager : MonoBehaviour
             if (npc.missionType == "PotionMission")
             {
                 // Generar los ingredientes alrededor del NPC
-                GameObject[] spawnedIngredients = MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 4);
+                List<GameObject> spawnedIngredients = new List<GameObject>(MissionObjectiveSpawner.Instance.SpawnIngredients(npc.transform.position, 4));
 
                 // Verifica si los ingredientes han sido generados
-                if (spawnedIngredients == null && spawnedIngredients.Length == 0)
+                if (spawnedIngredients == null || spawnedIngredients.Count == 0)
                 {
                     Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
+                    continue;
                    
                 }
                 else
@@ -244,6 +247,7 @@ public class MissionManager : MonoBehaviour
                         {
                             pickable.SetNPC(npc); // Asignar el NPC al objeto recolectable
                             pickable.missionIcon = npc.missionIcon;
+
                             continue;
 
                         }
@@ -254,6 +258,7 @@ public class MissionManager : MonoBehaviour
 
 
                     }
+                    spawnedIngredients.Clear();
                 }
                 
 
@@ -288,7 +293,7 @@ public class MissionManager : MonoBehaviour
                 // Select a random NPC name from the list, if available
                 if (npcNames.Count > 0)
                 {
-                    NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
+                    NPC randomNPC = npcNames[UnityEngine.Random.Range(0, npcNames.Count)];
                     npc.missionIcon.addresseeName = randomNPC.npcname;
                     npc.missionIcon.addressee = randomNPC;
                     randomNPC.sender = npc;
