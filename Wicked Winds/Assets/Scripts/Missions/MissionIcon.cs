@@ -132,6 +132,8 @@ public class MissionIcon : MonoBehaviour
 
         if (currentMission != null)
         {
+            // Asigna una nueva misión al completar la actual
+            missionManager.AssignNewMission(1);
             GameManager.Instance.remainingTime += currentMission.timeBonus;
             GameManager.Instance.missionsTimes.Add(GameManager.Instance.missionTime);
             GameManager.Instance.missionTime = 0f;
@@ -144,8 +146,7 @@ public class MissionIcon : MonoBehaviour
             PlayerManager.Instance.hasActiveMission = false;
             PlayerManager.Instance.activeMission = null;
 
-            // Asigna una nueva misión al completar la actual
-            missionManager.AssignNewMission(1);
+           
 
 
         }
