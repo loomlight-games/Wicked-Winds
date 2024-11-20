@@ -4,54 +4,45 @@ using UnityEngine;
 
 public class Dialogue : MonoBehaviour
 {
-
-    public TextMeshProUGUI text = null; // Para mostrar el di�logo
+    public TextMeshProUGUI text = null; // Para mostrar el diálogo
     public TextMeshProUGUI npcName = null;   // Para mostrar el nombre del NPC
-    public string[] lines;        // Las l�neas del di�logo
+    public string[] lines;        // Las líneas del diálogo
     public float textSpeed;       // Velocidad del texto
 
     private int lineIndex;
+    private bool isTyping = false; // Indica si se está escribiendo texto
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-    // Update is called once per frame
     void Update()
     {
-        // Aseg�rate de que lines tenga contenido antes de verificar el �ndice
         if (lines.Length == 0)
         {
-            return; // Sale del m�todo si lines est� vac�o
+            return; // Sale si lines está vacío
         }
 
-        if (PlayerManager.Instance.nextLineKey)
+        if (PlayerManager.Instance.nextLineKey && !isTyping) // Solo avanza si no se está escribiendo
         {
-            
-                if (text.text == lines[lineIndex])
-                {
-                    NextLine();
-                }
-                else
-                {
-                    StopAllCoroutines();
-                    text.text = lines[lineIndex];
-                }
-           
+            if (text.text == lines[lineIndex])
+            {
+                NextLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                text.text = lines[lineIndex];
+            }
         }
     }
 
-    // M�todo para iniciar el di�logo y mostrar el nombre del NPC
-    
-
+    // Método para iniciar el diálogo y mostrar el nombre del NPC
     public void StartDialogue(NPC npc, string mensajito)
     {
+        // Activar todos los hijos del objeto
+        ActivateAllChildren();
+        lineIndex = 0;
         // Limpiar cualquier texto previo
         text.text = string.Empty;
         npcName.text = string.Empty;
 
-        
         Debug.Log("Iniciando diálogo...");
 
         // Asignar el nombre del NPC
@@ -68,69 +59,56 @@ public class Dialogue : MonoBehaviour
             return;
         }
 
-        // Activar todos los hijos del objeto
-        ActivateAllChildren();
-        lineIndex = 0;
         StartCoroutine(TypeLine());
         Debug.Log("Se han activado todos los hijos del objeto.");
-
-      
-
-        // Si se usa la animación de escritura, descomentar la siguiente línea:
-        // 
     }
-
 
     IEnumerator TypeLine()
     {
+        isTyping = true; // Inicia la escritura
         foreach (char c in lines[lineIndex].ToCharArray())
         {
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-       
+        isTyping = false; // Termina de escribir
     }
 
     void NextLine()
     {
         if (lineIndex < lines.Length - 1)
         {
-            text.text = string.Empty;
-            text.text = lines[lineIndex];
             lineIndex++;
-            text.text = string.Empty;
-            StartCoroutine(TypeLine());
+            text.text = string.Empty; // Limpia el texto actual
+            StartCoroutine(TypeLine()); // Escribe la siguiente línea
         }
         else
         {
-            DeactivateAllChildren();
+            DeactivateAllChildren(); // Termina el diálogo
         }
     }
 
-    // M�todo para activar todos los hijos del objeto padre
+    // Método para activar todos los hijos del objeto padre
     void ActivateAllChildren()
     {
-
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true); // Activa cada hijo
         }
     }
 
-
     void DeactivateAllChildren()
     {
-
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(false);
+            child.gameObject.SetActive(false); // Desactiva todos los hijos
         }
     }
 
-    // M�todo para ajustar el cuadro de texto
+    // Método para ajustar el cuadro de texto
     void AdjustTextBox()
     {
-        text.ForceMeshUpdate(); // Fuerza una actualizaci�n del texto
-        text.GetComponent<RectTransform>().sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight); // Ajusta el tama�o del cuadro de texto
+        text.ForceMeshUpdate(); // Fuerza una actualización del texto
+        text.GetComponent<RectTransform>().sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight); // Ajusta el tamaño del cuadro de texto
     }
 }
