@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +16,7 @@ public class AuthentificationPanel : Panel
     private Color defaultPlaceholderColor = Color.gray;
     public override void Initialize()
     {
-        if ( IsInitialized)
+        if (IsInitialized)
         {
             return;
         }
@@ -97,7 +94,7 @@ public class AuthentificationPanel : Panel
             if (IsPasswordValid(pass))
             {
                 GameManager.Instance.SignUpWithUsernameAndPasswordAsync(user, pass);
-                PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE,user);
+                PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE, user);
             }
             else
             {
@@ -108,7 +105,7 @@ public class AuthentificationPanel : Panel
     }
     public void PassingUsername(string username)
     {
-         username = usernameInput.text.Trim();
+        username = usernameInput.text.Trim();
     }
     /*
     private void SignUp()
@@ -164,7 +161,8 @@ public class AuthentificationPanel : Panel
         return hasUppercase && hasLowercase && hasDigit && hasSymbol;
     }
 
-    void Viewtable(){
+    void Viewtable()
+    {
         Close();
         PanelManager.Open("Leaderboard");
     }

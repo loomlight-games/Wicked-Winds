@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MissionIconPoolManager : MonoBehaviour
 {
-   
+
 
     public MissionIcon missionIconPrefab; // Asignar el prefab de MissionIcon en el inspector
     public int poolSize = 10; // Tamaño inicial del pool

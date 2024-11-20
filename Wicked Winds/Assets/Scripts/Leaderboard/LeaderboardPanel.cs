@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using Unity.Services.Leaderboards;
 using System;
+using TMPro;
+using Unity.Services.Leaderboards;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class LeaderboardPanel : Panel 
+public class LeaderboardPanel : Panel
 {
     string LeaderboardID = "ElapsedTime";
     [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
     //for asigning the playersItems prefabs (contents's children)
-    [SerializeField] private RectTransform playersContainer = null; 
+    [SerializeField] private RectTransform playersContainer = null;
     [SerializeField] public TextMeshProUGUI pageText = null;
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
@@ -64,7 +62,7 @@ public class LeaderboardPanel : Panel
     }
     private void AddScore()
     {
-        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE,0));
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
     }
     public async void AddScoreAsync(int score)
     {

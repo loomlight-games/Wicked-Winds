@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class PlayerCustomizationUI : MonoBehaviour
 {
@@ -15,13 +15,13 @@ public class PlayerCustomizationUI : MonoBehaviour
     {
         AdPanel panel = adPanel.GetComponent<AdPanel>();
         panel.EarnCoinsEvent += AddCoins;
-        BuyCoinsPanel buyPanel= buyCoinsPanel.GetComponent<BuyCoinsPanel>();
+        BuyCoinsPanel buyPanel = buyCoinsPanel.GetComponent<BuyCoinsPanel>();
         buyPanel.PayCoinsEvent += AddCoins;
 
         bodyParts1.SetActive(true);
 
         player = PlayerManager.Instance.customizable;
-        
+
         coinsNum = PlayerManager.Instance.customizable.coins;
     }
 
@@ -29,8 +29,9 @@ public class PlayerCustomizationUI : MonoBehaviour
     void Update()
     {
         coinsNumText.text = coinsNum.ToString();
-        
-        if (adPanel.activeSelf || buyCoinsPanel.activeSelf){
+
+        if (adPanel.activeSelf || buyCoinsPanel.activeSelf)
+        {
             bodyParts1.SetActive(false);
             bodyParts2.SetActive(false);
 
@@ -38,7 +39,9 @@ public class PlayerCustomizationUI : MonoBehaviour
                 buyCoinsPanel.SetActive(false);
             else if (buyCoinsPanel.activeSelf)
                 adPanel.SetActive(false);
-        }else{
+        }
+        else
+        {
             if (lastPage == 1)
                 bodyParts1.SetActive(true);
             else
@@ -49,14 +52,16 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// <summary>
     /// Receives the button of the item to choose
     /// </summary>
-    public void ChooseItem(ItemButton button){
+    public void ChooseItem(ItemButton button)
+    {
 
         OnCoinsChange?.Invoke(this, coinsNum);
 
         int itemPrice = button.item.price;
 
         // Enough money to buy it or is already purchased
-        if (coinsNum >= itemPrice || button.item.isPurchased){
+        if (coinsNum >= itemPrice || button.item.isPurchased)
+        {
             // Not purchased yet
             if (!button.item.isPurchased)
                 // Reduces coins number
@@ -65,7 +70,7 @@ public class PlayerCustomizationUI : MonoBehaviour
             // Sends it to the player customization
             player.UpdateBodyPart(button.item);
             player.UpdateCoins(coinsNum);
-        }  
+        }
         else
             Debug.Log("Not enough coins");
     }
@@ -74,13 +79,17 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// Change between bodyparts pages
     /// </summary>
     /// <param name="nextPageNum"></param>
-    public void ChangeBodyParts(int nextPageNum){
+    public void ChangeBodyParts(int nextPageNum)
+    {
         lastPage = nextPageNum;
 
-        if (nextPageNum == 1){
+        if (nextPageNum == 1)
+        {
             bodyParts1.SetActive(true);
             bodyParts2.SetActive(false);
-        }else{
+        }
+        else
+        {
             bodyParts1.SetActive(false);
             bodyParts2.SetActive(true);
         }
@@ -100,7 +109,8 @@ public class PlayerCustomizationUI : MonoBehaviour
         OnCoinsChange?.Invoke(this, coinsNum);
     }
 
-    public void Reset(){
+    public void Reset()
+    {
         PlayerPrefs.DeleteAll();
         player.Load();
     }

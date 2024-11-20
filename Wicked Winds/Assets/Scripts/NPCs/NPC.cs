@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
-    
+
     public MissionIcon missionIcon = null; // Referencia al �cono que ser� asignado a este NPC
     public bool hasMission; // Indica si el NPC tiene una misi�n
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
@@ -93,13 +92,13 @@ public class NPC : MonoBehaviour
             Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
         }
 
-       
+
         Debug.Log("Referencias limpiadas en OnObjectReturn.");
     }
 
     private void Update()
     {
-       if (missionIcon == null) hasMission = false;
+        if (missionIcon == null) hasMission = false;
         else hasMission = true;
 
         if (hasMission && movementScript != null)
@@ -122,11 +121,11 @@ public class NPC : MonoBehaviour
     }
 
     public void OnInteractAfterLetter()
-    {   
-        StopMovement();        
+    {
+        StopMovement();
         ThankPlayer();
         string response = "Gracias por entregarme esta carta! ";
-        gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response); 
+        gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response);
         CompleteMission(sender);
     }
 
@@ -144,7 +143,7 @@ public class NPC : MonoBehaviour
         {
             gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(responseMessage);
         }
-        
+
         this.message = string.Empty;
 
         CompleteMission(this);
@@ -157,9 +156,10 @@ public class NPC : MonoBehaviour
     {
         if (this.missionIcon != null)
             missionIcon.CompleteMission();
-        
-        if (sender!=null){
-            if(sender.missionIcon != null)
+
+        if (sender != null)
+        {
+            if (sender.missionIcon != null)
             {
                 sender.missionIcon.CompleteMission();
                 sender = null;
@@ -169,7 +169,7 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
 
         PlayerManager.Instance.hasActiveMission = false;
-        
+
         PlayerManager.Instance.OnMissionCompleted();
     }
 }

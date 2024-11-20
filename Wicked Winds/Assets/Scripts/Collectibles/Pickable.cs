@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pickable : MonoBehaviour
@@ -16,7 +14,7 @@ public class Pickable : MonoBehaviour
 
     private void Start()
     {
-         textBubble = FindObjectOfType<Dialogue>();
+        textBubble = FindObjectOfType<Dialogue>();
     }
 
     private void Update()
@@ -69,14 +67,15 @@ public class Pickable : MonoBehaviour
 
                     }
                 }
-            
+
             }
             else
             {
                 Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
             }
 
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject)){
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
+            {
                 // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
                 PlayerManager.Instance.RemoveTarget(gameObject);
                 Destroy(gameObject);
@@ -88,7 +87,7 @@ public class Pickable : MonoBehaviour
             {
                 Debug.Log($"Este ingrediente aun no se ha marcado como objetivo por lo q no se puede recoger");
             }
-            
+
         }
         else
         {

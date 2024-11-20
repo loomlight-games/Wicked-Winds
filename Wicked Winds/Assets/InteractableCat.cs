@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CatController))]
@@ -23,10 +22,10 @@ public class InteractableCat : MonoBehaviour
         // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)
         {
-            if(PlayerManager.Instance.currentTargets.Contains(gameObject)) 
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
-                
-            
+
+
             }
 
 

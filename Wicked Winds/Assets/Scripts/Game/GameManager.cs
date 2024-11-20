@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 
 /// <summary>
 /// Manages the game states
@@ -55,15 +55,16 @@ public class GameManager : AStateController
     [Header("Gameplay")]
     public float initialTime = 120f;
     public float remainingTime;
-    public List<float> missionsTimes = new ();
+    public List<float> missionsTimes = new();
     public float missionTime = 0;
 
     #endregion
 
     public override void Awake()
-    { 
+    {
         //if there's not an instance, it creates one - SINGLETON
-        if (Instance == null){
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(Instance);
         }
@@ -90,7 +91,7 @@ public class GameManager : AStateController
             SetState(shopState);
         else if (scene.name == "Leaderboard")
             SetState(leaderboardState);
-        else if(scene.name == "Gameplay")
+        else if (scene.name == "Gameplay")
             SetState(playState);
         else
             SetState(playState);
@@ -158,9 +159,9 @@ public class GameManager : AStateController
                 break;
         }
     }
- 
-   /////////////////////////////////////////////////////////////////////////////////////////
-   #region UNITY SERVICES ZONE (LEADERBOARD)
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    #region UNITY SERVICES ZONE (LEADERBOARD)
     /// <summary>
     /// starts the authentification function for leaderbaord and users
     /// </summary>
@@ -177,7 +178,7 @@ public class GameManager : AStateController
                 await UnityServices.InitializeAsync();
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
             }
-            
+
             if (!eventsInitialized)
             {
                 SetupEvents();
@@ -189,9 +190,9 @@ public class GameManager : AStateController
                 AuthenticationService.Instance.SignOut();
                 AuthenticationService.Instance.ClearSessionToken();
                 //if user already sign in
-                
+
                 //SignInAnonymouslyAsync();
-                
+
             }
             else
             {
@@ -234,8 +235,8 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
-            
-            
+
+
         }
         catch (AuthenticationException)
         {
@@ -298,7 +299,7 @@ public class GameManager : AStateController
             PanelManager.Open("auth");
             Debug.Log("Player signed out.");
         };
-        
+
         AuthenticationService.Instance.Expired += () =>
         {
             SignInAnonymouslyAsync();
@@ -309,10 +310,10 @@ public class GameManager : AStateController
     private async void SignInConfirmAsync()
     {
         try
-        {   
+        {
             if (string.IsNullOrEmpty(AuthenticationService.Instance.PlayerName))
             {
-                string username =PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+                string username = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
 
                 await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
             }
@@ -333,7 +334,8 @@ public class GameManager : AStateController
     #endregion
     /////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void DestroyGO(GameObject gameObject){
+    public void DestroyGO(GameObject gameObject)
+    {
         Destroy(gameObject);
     }
 

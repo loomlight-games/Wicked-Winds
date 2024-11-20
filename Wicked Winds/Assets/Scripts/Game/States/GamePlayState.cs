@@ -1,6 +1,6 @@
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class GamePlayState : AState
 {
@@ -15,7 +15,7 @@ public class GamePlayState : AState
 
     public override void Enter()
     {
-        
+
         Debug.LogWarning("GamePlayState");
 
         Time.timeScale = 1f; // Resumes simulation
@@ -33,22 +33,22 @@ public class GamePlayState : AState
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
         elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
-        highSpeedBar =  GameObject.Find("High speed bar").GetComponent<HUDBar>();
-        flyHighBar =  GameObject.Find("Fly high bar").GetComponent<HUDBar>();
+        highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
+        flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
 
         highSpeedBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
         flyHighBar.SetMaxValue(PlayerManager.Instance.playerController.MAX_VALUE);
-        
+
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
-        
+
         GameManager.Instance.townGenerator.Start();
     }
 
     public override void Update()
     {
         UpdateTimer();
-        if(PlayerManager.Instance.hasActiveMission)
+        if (PlayerManager.Instance.hasActiveMission)
         {
             UpdateMissionTime();
         }
@@ -57,7 +57,7 @@ public class GamePlayState : AState
             highSpeedBar.SetValue(PlayerManager.Instance.playerController.speedPotionValue);
         else
             highSpeedBar.SetValue(0);
-        
+
         if (PlayerManager.Instance.playerController.flyPotionValue >= 0)
             flyHighBar.SetValue(PlayerManager.Instance.playerController.flyPotionValue);
         else
@@ -77,14 +77,16 @@ public class GamePlayState : AState
     {
         remainingTime = GameManager.Instance.remainingTime;
 
-        if (remainingTime > 0){
+        if (remainingTime > 0)
+        {
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
-            
+
 
 
         }
-        else if (remainingTime <= 0 && !gameOverTriggered){
+        else if (remainingTime <= 0 && !gameOverTriggered)
+        {
             remainingTime = 0;
 
             // GAMEOVER when remaining time is over
@@ -106,7 +108,7 @@ public class GamePlayState : AState
 
     private void UpdateMissionTime()
     {
-       
+
         if (remainingTime > 0)
         {
             GameManager.Instance.missionTime += Time.deltaTime;
@@ -116,11 +118,11 @@ public class GamePlayState : AState
     {
         gameOverTriggered = true;  // avoids double calls
 
-        PlayerManager.Instance.score = (int) elapsedTime;
+        PlayerManager.Instance.score = (int)elapsedTime;
 
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
-        
+
         timerText.color = Color.red;
     }
 

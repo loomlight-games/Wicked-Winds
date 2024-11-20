@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -15,7 +13,7 @@ public class Compass
     GameObject compassPrefab, prefabInstance;
 
     bool isIstanciated = false;
-    
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -23,13 +21,13 @@ public class Compass
 
 
         // Use Addressables to load the prefab by name/label
-        Addressables.LoadAssetAsync<GameObject>("Compass").Completed += handle => 
+        Addressables.LoadAssetAsync<GameObject>("Compass").Completed += handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
-                    compassPrefab = handle.Result;
-                else
-                    Debug.LogError("Failed to load prefab compass");
-                
+                compassPrefab = handle.Result;
+            else
+                Debug.LogError("Failed to load prefab compass");
+
         };
     }
 
@@ -37,19 +35,22 @@ public class Compass
     public void Update()
     {
         // Player has mission
-        if (PlayerManager.Instance.hasActiveMission){
+        if (PlayerManager.Instance.hasActiveMission)
+        {
             // Not instantiated compass
-            if (!isIstanciated){
+            if (!isIstanciated)
+            {
                 // Instantiates a copy of the prefab in that transform as a child of it
                 prefabInstance = GameManager.Instance.InstantiateGO(compassPrefab, compass.position, compass.rotation, compass);
                 compass = prefabInstance.transform;
                 isIstanciated = true;
             }
-            
+
             prefabInstance.SetActive(true);
 
             // Target is first target of list
-            if (PlayerManager.Instance.currentTargets.Count != 0){
+            if (PlayerManager.Instance.currentTargets.Count != 0)
+            {
                 target = PlayerManager.Instance.currentTargets[0].transform;
 
                 // Rotation to object
@@ -59,9 +60,11 @@ public class Compass
             }
         }
         // No mission
-        else {
+        else
+        {
             // Instantiated compass
-            if (isIstanciated){
+            if (isIstanciated)
+            {
                 // Destroys it
                 //GameManager.Instance.DestroyGO(prefabInstance);
                 prefabInstance.SetActive(false);

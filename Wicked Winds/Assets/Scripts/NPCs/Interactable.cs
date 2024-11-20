@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using UnityEngine;
 
 [RequireComponent(typeof(NPC))]
@@ -8,7 +6,7 @@ public class Interactable : MonoBehaviour
 {
     public NPC npc; // Referencia al NPC con el que se interactua
     public MissionIcon missionIcon; // Referencia al icono de mision del NPC
- 
+
 
     public Dialogue dialoguePanel; // Referencia al script del bocadillo de texto
 
@@ -16,7 +14,7 @@ public class Interactable : MonoBehaviour
     {
         // Busca el NPC en el GameObject padre o en los hijos
         npc = GetComponent<NPC>();
-       
+
         missionIcon = this.npc.missionIcon; // Obtiene el icono de mision del NPC
     }
 
@@ -27,7 +25,7 @@ public class Interactable : MonoBehaviour
         // Has mission assigned
         if (PlayerManager.Instance.hasActiveMission)
         {
-           
+
             // If NPC is target
             if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
@@ -40,7 +38,7 @@ public class Interactable : MonoBehaviour
                     Debug.Log("El mensaje del NPC existe. Asignando el mensaje al bocadillo...");
                     GameManager.Instance.playState.feedBackText.text = PlayerManager.Instance.npcObjective.responseMessage;
                     dialoguePanel.lines = new string[] { PlayerManager.Instance.npcObjective.responseMessage }; // Asigna el mensaje del NPC al bocadillo
-                    dialoguePanel.StartDialogue(PlayerManager.Instance.npcObjective, PlayerManager.Instance.npcObjective.responseMessage ); // Inicia el diálogo
+                    dialoguePanel.StartDialogue(PlayerManager.Instance.npcObjective, PlayerManager.Instance.npcObjective.responseMessage); // Inicia el diálogo
                     Debug.Log("Diálogo iniciado.");
                 }
                 else
@@ -54,7 +52,7 @@ public class Interactable : MonoBehaviour
 
                 // Completar la misión del NPC
                 Debug.Log("Llamando a OnMissionCompleted...");
-               
+
                 PlayerManager.Instance.currentTargets.Remove(PlayerManager.Instance.npcObjective.gameObject);
                 PlayerManager.Instance.npcMissionActive.OnMissionCompleted();
                 PlayerManager.Instance.npcMissionActive = null;
@@ -69,13 +67,13 @@ public class Interactable : MonoBehaviour
         // No mission assigned
         else
         {
-           
+
             // If NPC has mission
             if (npc.hasMission)
             {
                 // Empiezan conversacion
                 PlayerManager.Instance.npcMissionActive = npc; // Guarda el NPC con el que se interactua
-                
+
 
                 // Cambia el sprite del icono de mision al sprite de la mision
                 if (missionIcon != null && missionIcon.currentMission != null)
@@ -87,7 +85,7 @@ public class Interactable : MonoBehaviour
 
                         //Debug.Log($"Changed mission icon sprite to: {missionIcon.currentMission.missionIconSprite.name}");
                     }
-                    
+
                 }
 
                 // Iniciar el dialogo con el mensaje del NPC
@@ -123,8 +121,8 @@ public class Interactable : MonoBehaviour
                 {
                     GameObject objetivo = PlayerManager.Instance.npcMissionActive.cat.gameObject;
                     PlayerManager.Instance.AddTarget(objetivo.gameObject);
-                        
-                    
+
+
                 }
 
                 PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una mision activa

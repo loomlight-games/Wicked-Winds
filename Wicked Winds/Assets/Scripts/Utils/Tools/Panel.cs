@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// This class is a base to create different rankings 

@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 /// <summary>
 /// Gives movement, high velocity and high flight (when possible) to player
@@ -13,20 +13,20 @@ public class PlayerController
         boostSpeed,
         lowerHeightLimit,
         maxHeightLimit,
-        flyForce, 
+        flyForce,
         gravityForce,
         rotationSpeed,
-        movementSpeed, 
-        verticalVelocity, 
-        verticalPosition, 
-        flyPotionLoss, 
+        movementSpeed,
+        verticalVelocity,
+        verticalPosition,
+        flyPotionLoss,
         speedPotionLoss;
 
     public float MAX_VALUE = 100;
     public float flyPotionValue, speedPotionValue;
-    
-    Vector3 movement3D, 
-        forward, 
+
+    Vector3 movement3D,
+        forward,
         right;
 
     Vector2 movement2D;
@@ -39,16 +39,16 @@ public class PlayerController
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
-        flyPotionValue = MAX_VALUE; 
+        flyPotionValue = MAX_VALUE;
         speedPotionValue = MAX_VALUE;
-        
+
         controller = PlayerManager.Instance.controller;
         player = PlayerManager.Instance.transform;
         orientation = PlayerManager.Instance.orientation;
-        
+
         cameraTransform = Camera.main.transform; // Find camera with 'main camera'tag
         if (cameraTransform == null) Debug.LogWarning("No camera found");
-        
+
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
     }
@@ -79,48 +79,57 @@ public class PlayerController
     private void HandleGravity()
     {
         // Player on ground
-        if (controller.isGrounded){
+        if (controller.isGrounded)
+        {
             // Fly key pressed -> fly
-            if (PlayerManager.Instance.flyKey) 
+            if (PlayerManager.Instance.flyKey)
                 verticalVelocity = flyForce;
             // Not pressed -> small gravity to keep grounded
-            else 
+            else
                 verticalVelocity = -1f;
         } // Not on ground
-        else {
+        else
+        {
             // Fly key pressed
-            if (PlayerManager.Instance.flyKey){
+            if (PlayerManager.Instance.flyKey)
+            {
                 // Reached max height limit
-                if (verticalPosition >= maxHeightLimit){
+                if (verticalPosition >= maxHeightLimit)
+                {
                     // Enough fly potion -> reduce its value
-                    if (flyPotionValue >= 0f) {
+                    if (flyPotionValue >= 0f)
+                    {
                         flyPotionValue -= flyPotionLoss * Time.deltaTime;
                         // Maintain in limit
                         verticalVelocity = flyForce * Time.deltaTime;
                     } // No fly potion -> gravity
-                    else 
+                    else
                         verticalVelocity -= gravityForce * Time.deltaTime;
                 } // Not reached
-                else {
+                else
+                {
                     // Overcomed lower height limit
-                    if (verticalPosition > lowerHeightLimit){
+                    if (verticalPosition > lowerHeightLimit)
+                    {
                         // Enough fly potion -> fly and reduce its value
-                        if (flyPotionValue >= 0f) {
+                        if (flyPotionValue >= 0f)
+                        {
                             verticalVelocity += flyForce * Time.deltaTime;
                             // Reduce fly potion value
                             flyPotionValue -= flyPotionLoss * Time.deltaTime;
                         } // No fly potion -> gravity
-                        else 
+                        else
                             verticalVelocity -= gravityForce * Time.deltaTime;
                     } // Reached and no fly potion -> maintain in limit
-                    else if (lowerHeightLimit - verticalPosition < 0.1f && flyPotionValue <= 0f) 
+                    else if (lowerHeightLimit - verticalPosition < 0.1f && flyPotionValue <= 0f)
                         verticalVelocity = flyForce * Time.deltaTime;
                     // Not reached -> fly
-                    else if (verticalPosition < lowerHeightLimit) 
+                    else if (verticalPosition < lowerHeightLimit)
                         verticalVelocity += flyForce * Time.deltaTime;
                 }
-            // Not pressed -> gravity
-            } else 
+                // Not pressed -> gravity
+            }
+            else
                 verticalVelocity -= gravityForce * Time.deltaTime;
         }
     }
@@ -134,17 +143,20 @@ public class PlayerController
         CheckJoystick();
 
         // Check if the player is running
-        if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick){
-            if (speedPotionValue >= 0f) { // If able to run (speed potion available)
+        if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick)
+        {
+            if (speedPotionValue >= 0f)
+            { // If able to run (speed potion available)
                 if (movement2D.sqrMagnitude != 0) // Is moving
                     // Reduce speed potion value
                     speedPotionValue -= speedPotionLoss * Time.deltaTime;
-                
+
                 movementSpeed = boostSpeed;
             }
             else  // If not able to run, walk
                 movementSpeed = walkSpeed;
-        } else
+        }
+        else
             movementSpeed = walkSpeed;
 
         // Get direction in 3D space based on camera orientation
@@ -173,7 +185,8 @@ public class PlayerController
     {
         // If there is any movement
         // To maintain rotation when stopping
-        if (movement2D != Vector2.zero){
+        if (movement2D != Vector2.zero)
+        {
             // Rotate orientation
             Vector3 viewDir = player.position - new Vector3(cameraTransform.position.x, player.position.y, cameraTransform.position.z);
             orientation.forward = viewDir.normalized;
@@ -192,8 +205,9 @@ public class PlayerController
         Vector2 movement2D = PlayerManager.Instance.movement2D;
 
         // Keyboard inputs are normalized (-1>0<1)
-        if (movement2D.x > 1 || movement2D.y > 1 || 
-            movement2D.x < -1 || movement2D.y < -1){
+        if (movement2D.x > 1 || movement2D.y > 1 ||
+            movement2D.x < -1 || movement2D.y < -1)
+        {
             // Limit movement passed keyboard values
             // Ensures the movement difference between both inputs is minimal
             if (movement2D.x > 1)
@@ -207,7 +221,8 @@ public class PlayerController
 
             PlayerManager.Instance.runJoystick = true;
         }
-        else{
+        else
+        {
             PlayerManager.Instance.runJoystick = false;
         }
     }

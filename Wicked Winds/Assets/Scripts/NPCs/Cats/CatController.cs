@@ -1,5 +1,5 @@
-using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CatController : MonoBehaviour
 {
@@ -50,7 +50,7 @@ public class CatController : MonoBehaviour
     {
         currentState?.Update();
         UpdateCurrentStateName(); // Actualiza el nombre del estado en cada frame
-       
+
     }
 
     public void ChangeState(ICatState newState)
@@ -70,7 +70,7 @@ public class CatController : MonoBehaviour
         }
     }
 
- 
+
 
     // Nuevo método para interactuar con el gato
     public void InteractWithCat()
@@ -80,6 +80,6 @@ public class CatController : MonoBehaviour
         // Aniade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
         ChangeState(followingPlayerState);
-      
+
     }
 }

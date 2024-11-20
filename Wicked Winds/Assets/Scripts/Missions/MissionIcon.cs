@@ -62,7 +62,7 @@ public class MissionIcon : MonoBehaviour
         currentMission = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
-        
+
         // Generar IDs únicos para el MissionIcon y NPC si no tienen
         if (missionID == Guid.Empty) missionID = Guid.NewGuid();
         if (npc.npcID == Guid.Empty) npc.npcID = Guid.NewGuid();
@@ -73,13 +73,13 @@ public class MissionIcon : MonoBehaviour
         // Generar el mensaje para la misión
         var (message, response) = messageGenerator.GenerateMessage(currentMission, assignedNPC, assignedNPC.missionIcon);
 
-        
+
         // Check if the selected message template contains {NPC_NAME}
         if (message.Contains("{NPC_NAME}"))
-         {
+        {
 
-                 message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
-         }
+            message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
+        }
 
         if (response.Contains("{NPC_NAME}"))
         {
@@ -94,7 +94,7 @@ public class MissionIcon : MonoBehaviour
         Debug.Log($"Mensaje generado: {message}");
         // Luego puedes asignar el mensaje y la respuesta a las propiedades de NPC
         assignedNPC.message = message;
-        if(mission.missionName == "LetterMision")
+        if (mission.missionName == "LetterMision")
         {
             assignedNPC.responseMessage = null;
             addressee.responseMessage = response;
@@ -103,7 +103,7 @@ public class MissionIcon : MonoBehaviour
         {
             assignedNPC.responseMessage = response;
         }
-        
+
         // Log para el nombre del NPC asignado para verificación
         if (assignedNPC != null)
         {
@@ -114,7 +114,7 @@ public class MissionIcon : MonoBehaviour
             Debug.LogWarning("¡No se ha asignado ningún NPC!");
         }
 
-       
+
     }
 
 
@@ -167,8 +167,8 @@ public class MissionIcon : MonoBehaviour
             // Asigna una nueva misión al completar la actual
             Debug.Log("Asignando nueva misión después de completar la misión actual.");
             missionManager.AssignNewMission(1);
-            
-            
+
+
         }
     }
 

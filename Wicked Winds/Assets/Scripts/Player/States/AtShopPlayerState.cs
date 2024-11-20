@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AtShopPlayerState : AState
@@ -17,6 +15,6 @@ public class AtShopPlayerState : AState
 
     public override void Exit()
     {
-        
+
     }
 }

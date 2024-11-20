@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class BuyCoinsPanel : MonoBehaviour
 {
@@ -10,7 +8,8 @@ public class BuyCoinsPanel : MonoBehaviour
     /// <summary>
     /// Handles panel activation
     /// </summary>
-    public void UpdatePanel (){
+    public void UpdatePanel()
+    {
         // Flips activation
         gameObject.SetActive(!gameObject.activeSelf);
     }
@@ -19,8 +18,9 @@ public class BuyCoinsPanel : MonoBehaviour
     /// Invokes event to buy coins
     /// </summary>
     /// <param name="coins"></param>
-    public void PayCoins(int coins){
+    public void PayCoins(int coins)
+    {
         // Invoke event
-        PayCoinsEvent?.Invoke(this,coins);
+        PayCoinsEvent?.Invoke(this, coins);
     }
 }

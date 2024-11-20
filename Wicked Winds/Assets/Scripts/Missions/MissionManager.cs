@@ -1,11 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using System;
 
 public class MissionManager : MonoBehaviour
 {
@@ -17,7 +13,7 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
-   
+
 
 
 
@@ -105,7 +101,7 @@ public class MissionManager : MonoBehaviour
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
-        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1 , numMissionsToAssign - numHardMissions));
+        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1, numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
@@ -131,7 +127,7 @@ public class MissionManager : MonoBehaviour
             NPC selectedNPC = null;
 
             // Asignar NPC dependiendo del tipo de misión
-            if (mission.missionName =="CatMission") // Si es una misión de tipo Cat
+            if (mission.missionName == "CatMission") // Si es una misión de tipo Cat
             {
                 if (npcsWithCat.Count > 0)
                 {
@@ -161,30 +157,30 @@ public class MissionManager : MonoBehaviour
 
     private NPC GetRandomNPC(List<NPC> shuffledNPCs)
     {
-    
+
         int randomIndex = UnityEngine.Random.Range(0, shuffledNPCs.Count);
         NPC selectedNPC = shuffledNPCs[randomIndex];
 
         if (selectedNPC.missionIcon != null)
         {
-            
+
             shuffledNPCs.RemoveAt(randomIndex);
             return null;
         }
 
-       
+
         return selectedNPC;
     }
 
     private MissionData SelectMission(Dictionary<string, List<MissionData>> missionLists, ref int assignedCount, int numEasyMissions, int numMediumMissions)
     {
-     
+
         MissionData mission = null;
 
         if (assignedCount < numEasyMissions && missionLists["easy"].Count > 0)
         {
             mission = GetRandomMission(missionLists["easy"]);
-           
+
         }
         else if (assignedCount < numEasyMissions + numMediumMissions && missionLists["medium"].Count > 0)
         {
@@ -212,16 +208,16 @@ public class MissionManager : MonoBehaviour
         }
 
         missionIcon.AssignMission(mission, this, selectedNPC);
-        
+
         SetMissionIconPosition(selectedNPC, missionIcon);
         selectedNPC.missionIcon = missionIcon;
         selectedNPC.hasMission = true;
 
         assignedNPCs.Add(selectedNPC);
- 
+
     }
 
-    public void  specialMissionGeneration(List<NPC> assignedNpcs)
+    public void specialMissionGeneration(List<NPC> assignedNpcs)
     {
         foreach (NPC npc in assignedNpcs)
         {
@@ -235,7 +231,7 @@ public class MissionManager : MonoBehaviour
                 {
                     Debug.LogWarning("PotionMission: No se generaron ingredientes. Verifica la instancia de MissionObjectiveSpawner.");
                     continue;
-                   
+
                 }
                 else
                 {
@@ -258,11 +254,11 @@ public class MissionManager : MonoBehaviour
 
 
                     }
-                    
-                }
-                
 
-            
+                }
+
+
+
             }
 
             if (npc.missionType == "LetterMision")
@@ -297,7 +293,7 @@ public class MissionManager : MonoBehaviour
                     npc.missionIcon.addresseeName = randomNPC.npcname;
                     npc.missionIcon.addressee = randomNPC;
                     randomNPC.sender = npc;
-                    
+
 
                 }
                 else
@@ -306,17 +302,17 @@ public class MissionManager : MonoBehaviour
                 }
             }
 
-          
-           
+
+
 
             npc.missionIcon.AssignMissionText(npc.missionIcon.currentMission, this, npc);
         }
- 
+
     }
 
     public static NPC[] GetAllNPCs()
     {
-        return GameObject.FindObjectsOfType<NPC>(); 
+        return GameObject.FindObjectsOfType<NPC>();
     }
 
 
@@ -348,7 +344,7 @@ public class MissionManager : MonoBehaviour
 
     public void AssignNewMission(int numMissions)
     {
-        numMissionsToAssign= numMissions;
+        numMissionsToAssign = numMissions;
         missionsCompleted++;
         currentRound = (missionsCompleted / 5) + 1;
         GameManager.Instance.playState.feedBackText.text = $"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}";

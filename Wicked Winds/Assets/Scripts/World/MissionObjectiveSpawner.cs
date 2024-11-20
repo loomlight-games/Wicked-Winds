@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
 
     public LayerMask buildingLayerMask, // Máscara de capa para detectar edificios.
                      groundLayerMask; // Máscara de capa para detectar el suelo.
-    
+
     const int maxAttempts = 30; // Número máximo de intentos para encontrar una posición válida.
     bool validPosition;
     int attempts;
@@ -45,15 +44,15 @@ public class MissionObjectiveSpawner : MonoBehaviour
 
             validPosition = false; // Bandera para verificar si se encontró una posición válida.
             attempts = 0; // Contador de intentos para encontrar una posición.
-            
+
 
             while (!validPosition && attempts < maxAttempts)
             {
                 attempts++; // Incrementa el contador de intentos.
-                
+
 
                 // Genera una dirección aleatoria y una distancia aleatoria.
-                 randomDirection = Random.insideUnitSphere;
+                randomDirection = Random.insideUnitSphere;
                 float spawnDistance = Random.Range(minSpawnRadius, maxSpawnRadius);
                 randomPos = centerPosition + randomDirection.normalized * spawnDistance; // Calcula la posición aleatoria en función del centro y la dirección.
                 randomPos.y = centerPosition.y; // Mantiene la misma altura que el centro.
@@ -66,7 +65,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
                 if (Physics.Raycast(randomPos + Vector3.up * 10f, Vector3.down, out buildingHit, Mathf.Infinity, buildingLayerMask)) // Haz el raycast desde más arriba.
                 {
                     highestPoint = buildingHit.point.y + heightOffset; // Ajusta la altura al tope del edificio.
-                    
+
                 }
                 else
                 {
@@ -75,11 +74,11 @@ public class MissionObjectiveSpawner : MonoBehaviour
                     if (Physics.Raycast(randomPos + Vector3.up * 10f, Vector3.down, out groundHit, Mathf.Infinity, groundLayerMask))
                     {
                         highestPoint = groundHit.point.y + heightOffset; // Ajusta la altura al suelo.
-                       
+
                     }
                     else
                     {
-                        
+
                         continue; // Salta a la siguiente iteración del bucle para intentar de nuevo.
                     }
                 }
@@ -106,7 +105,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
             // Instanciar el ingrediente en la posición válida.
             GameObject spawnedIngredient = Instantiate(randomPrefab, randomPos, Quaternion.identity);
             spawnedIngredients.Add(spawnedIngredient); // Agrega el ingrediente a la lista.
-           
+
         }
 
         // Muestra cuántos ingredientes fueron generados exitosamente.

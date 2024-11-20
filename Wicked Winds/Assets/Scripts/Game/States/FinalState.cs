@@ -2,8 +2,8 @@ using TMPro;
 using UnityEngine;
 
 public class FinalState : AState
-{    
-    GameObject finalMenu, defeat, retryButton, mainMenuButton,leaderboardButton, UI, statesUI;
+{
+    GameObject finalMenu, defeat, retryButton, mainMenuButton, leaderboardButton, UI, statesUI;
     TextMeshProUGUI scoreText;
 
     public override void Enter()

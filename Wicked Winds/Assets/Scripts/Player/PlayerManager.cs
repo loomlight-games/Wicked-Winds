@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages the player states and information
@@ -12,14 +12,14 @@ public class PlayerManager : AStateController
 {
     public event EventHandler MissionCompleteEvent;
 
-    public static PlayerManager Instance { get; private set;} // Only one player
+    public static PlayerManager Instance { get; private set; } // Only one player
 
     public Transform orientation;
     [HideInInspector] public CharacterController controller;
     public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     [HideInInspector] public int score;
-    public List<GameObject> currentTargets = new ();
+    public List<GameObject> currentTargets = new();
     [HideInInspector] public Transform target;
     public MissionIcon activeMission;
     public NPC npcMissionActive;
@@ -56,9 +56,9 @@ public class PlayerManager : AStateController
 
     [Header("Customizable")]
     public Transform head;
-    public Transform upperBody; 
-    public Transform lowerBody; 
-    public Transform shoes; 
+    public Transform upperBody;
+    public Transform lowerBody;
+    public Transform shoes;
     public float rotatorySpeedAtShop = 0.1f;
     #endregion
 
@@ -73,7 +73,7 @@ public class PlayerManager : AStateController
 
         controller = GetComponent<CharacterController>();
 
-        customizable = new (head, upperBody, lowerBody, shoes);
+        customizable = new(head, upperBody, lowerBody, shoes);
 
         hasActiveMission = false;
 
@@ -92,7 +92,7 @@ public class PlayerManager : AStateController
     // Update is called once per frame
     public override void UpdateFrame()
     {
-        
+
     }
     /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -117,15 +117,18 @@ public class PlayerManager : AStateController
         flyKey = context.ReadValueAsButton();
     }
 
-    public void OnUpdateBodyPart(Garment newItem){
+    public void OnUpdateBodyPart(Garment newItem)
+    {
         customizable.UpdateBodyPart(newItem);
     }
 
-    public void OnInteract(InputAction.CallbackContext context){
+    public void OnInteract(InputAction.CallbackContext context)
+    {
         interactKey = context.ReadValueAsButton();
     }
 
-    public void OnNextLine(InputAction.CallbackContext context){
+    public void OnNextLine(InputAction.CallbackContext context)
+    {
         nextLineKey = context.ReadValueAsButton();
     }
 
@@ -148,7 +151,8 @@ public class PlayerManager : AStateController
         }
     }
 
-    public void OnMissionCompleted(){
-        MissionCompleteEvent?.Invoke(this,null);
+    public void OnMissionCompleted()
+    {
+        MissionCompleteEvent?.Invoke(this, null);
     }
 }

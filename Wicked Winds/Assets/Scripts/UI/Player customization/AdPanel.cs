@@ -1,7 +1,7 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class AdPanel : MonoBehaviour
 {
@@ -31,11 +31,12 @@ public class AdPanel : MonoBehaviour
     void Update()
     {
         // Only if watching ad
-        if (gameObject.activeSelf && !confirmationPanel.activeSelf){
+        if (gameObject.activeSelf && !confirmationPanel.activeSelf)
+        {
             if (secondsForReward > 0.5)
             {
                 rewardButton.interactable = false;
-                
+
                 secondsForReward -= Time.deltaTime;
 
                 timerMinutes = Mathf.FloorToInt(secondsForReward / 60);
@@ -46,7 +47,7 @@ public class AdPanel : MonoBehaviour
             {
                 rewardText.text = "Get reward!";
                 rewardButton.interactable = true;
-                
+
                 secondsForReward = 0;
             }
         }
@@ -55,9 +56,10 @@ public class AdPanel : MonoBehaviour
     /// <summary>
     /// Invokes the event to earn coins
     /// </summary>
-    public void GetReward(){
+    public void GetReward()
+    {
         // Invoke event
-        EarnCoinsEvent?.Invoke(this,COINS_TO_EARN);
+        EarnCoinsEvent?.Invoke(this, COINS_TO_EARN);
 
         // Close panel
         gameObject.SetActive(false);
@@ -66,13 +68,15 @@ public class AdPanel : MonoBehaviour
     /// <summary>
     /// Handles panel activation
     /// </summary>
-    public void UpdatePanel (){
+    public void UpdatePanel()
+    {
         // This is active -> trying to close
         if (gameObject.activeSelf)
             // Confirm before closing
             confirmationPanel.SetActive(true);
         // This is not active -> show panel
-        else{
+        else
+        {
             gameObject.SetActive(true);
             confirmationPanel.SetActive(false);
         }
@@ -81,7 +85,8 @@ public class AdPanel : MonoBehaviour
     /// <summary>
     /// Try to close panel
     /// </summary>
-    public void ClosePanel(){
+    public void ClosePanel()
+    {
         // This is active -> trying to close
         if (gameObject.activeSelf)
             // Confirm before closing
@@ -91,10 +96,12 @@ public class AdPanel : MonoBehaviour
     /// <summary>
     /// Shows confimation message before closing panel
     /// </summary>
-    public void Confirm(string answer){
+    public void Confirm(string answer)
+    {
         confirmationPanel.SetActive(false);
 
-        if (answer == "Yes"){
+        if (answer == "Yes")
+        {
             gameObject.SetActive(false);
 
             // Restart timer

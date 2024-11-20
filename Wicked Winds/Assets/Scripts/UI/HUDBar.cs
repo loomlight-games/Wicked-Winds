@@ -5,16 +5,19 @@ public class HUDBar : MonoBehaviour
 {
     Slider slider;
 
-    void Start(){
+    void Start()
+    {
         slider = GetComponent<Slider>();
     }
 
-    public void SetMaxValue(float maxValue){
+    public void SetMaxValue(float maxValue)
+    {
         slider.maxValue = maxValue;
         slider.value = maxValue;
     }
 
-    public void SetValue(float value){
+    public void SetValue(float value)
+    {
         slider.value = value;
     }
 }

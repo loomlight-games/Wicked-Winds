@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TownGenerator
 {
-    public enum TileType {Residential, Forest, Park, Market, Swamp}
-    public enum Town {StardustTown, SandyLandy, FrostpeakHollow}
+    public enum TileType { Residential, Forest, Park, Market, Swamp }
+    public enum Town { StardustTown, SandyLandy, FrostpeakHollow }
 
     int townSize, randomIdx;
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
@@ -15,7 +15,7 @@ public class TownGenerator
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
-    
+
     public void Start()
     {
         tileSize = GameManager.Instance.tileSize;
@@ -40,28 +40,30 @@ public class TownGenerator
         };
 
         // Reset all tile types in dictionary as false - not instantiated yet
-        foreach (TileType type in Enum.GetValues(typeof(TileType))){
+        foreach (TileType type in Enum.GetValues(typeof(TileType)))
+        {
             // Adds new types if aren't considered already
             if (!isTypeInstantiated.ContainsKey(type))
-                isTypeInstantiated.Add(type,false);
+                isTypeInstantiated.Add(type, false);
 
             // Not instantiated yet
             isTypeInstantiated[type] = false;
         }
-            
+
 
         // Instantiate town parent
-        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0,0,0), Quaternion.Euler(0, 0, 0));
-        
+        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+
         // Instantiate landscape as child of town
         GameManager.Instance.InstantiateGO(landscape, townParent.transform.position, townParent.transform.rotation, townParent.transform);
 
         ///////////////////////////////////////////////////////////////////////////////////
-        if (GameManager.Instance.generateTown){ // Delete in the future
-        ///////////////////////////////////////////////////////////////////////////////////
-        CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
+        if (GameManager.Instance.generateTown)
+        { // Delete in the future
+          ///////////////////////////////////////////////////////////////////////////////////
+            CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
 
-        InstantiateTiles(); // Instantiates a town tile in each position - from center
+            InstantiateTiles(); // Instantiates a town tile in each position - from center
         }
     }
 
@@ -71,19 +73,21 @@ public class TownGenerator
     void CalculatePositions()
     {
         // Initialize positions array
-        tilesPositions = new Vector3 [townSize, townSize];
+        tilesPositions = new Vector3[townSize, townSize];
 
         // Calculate initial positions in Z and X axis
-        initialPos = tileSize/2 * (townSize-1);
+        initialPos = tileSize / 2 * (townSize - 1);
         currentZpos = initialPos;
         currentXpos = -initialPos; // from upper left corner
 
         // Calculate positions
-        for (int row = 0; row < townSize; row++){
-            for (int column = 0; column < townSize; column++){
+        for (int row = 0; row < townSize; row++)
+        {
+            for (int column = 0; column < townSize; column++)
+            {
                 currentPosition = new Vector3(currentXpos, 0f, currentZpos);
 
-                tilesPositions[row,column] = currentPosition;
+                tilesPositions[row, column] = currentPosition;
 
                 currentZpos -= tileSize;
             }
@@ -113,7 +117,7 @@ public class TownGenerator
                 // Traverse in the current direction for 'steps' times
                 for (int step = 0; step < steps; step++)
                 {
-                    InstantiateTile(tilesPositions[row,col]);
+                    InstantiateTile(tilesPositions[row, col]);
 
                     // Ensure we don't go out of bounds
                     if (row >= 0 && row < townSize && col >= 0 && col < townSize)
@@ -143,7 +147,8 @@ public class TownGenerator
         if (tileData.isUnique && isTypeInstantiated[tileData.type])
             InstantiateTile(position); // Finds another random tile - RECURSION
         // Not instantiated yet
-        else{
+        else
+        {
             isTypeInstantiated[tileData.type] = true; // Now is instantiated
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 

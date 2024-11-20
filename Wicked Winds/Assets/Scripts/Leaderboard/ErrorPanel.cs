@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,7 +29,7 @@ public class ErrorPanel : Panel
     }
 
     public override void Open()
-    {  
+    {
         action = Action.None;
         base.Open();
     }

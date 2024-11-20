@@ -54,6 +54,6 @@ public class RandomNPCMovement : MonoBehaviour
             }
         }
 
-       // Debug.LogWarning("No se pudo encontrar un destino válido después de 30 intentos.");
+        // Debug.LogWarning("No se pudo encontrar un destino válido después de 30 intentos.");
     }
 }

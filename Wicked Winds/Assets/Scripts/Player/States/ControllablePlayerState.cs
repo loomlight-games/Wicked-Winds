@@ -20,7 +20,7 @@ public class ControllablePlayerState : AState
 
     public override void Exit()
     {
-        
+
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -28,7 +28,8 @@ public class ControllablePlayerState : AState
         // It's a speed potion
         if (other.gameObject.CompareTag("SpeedPotion"))
             // Any speed amount has been lost
-            if (PlayerManager.Instance.playerController.speedPotionValue != 100){
+            if (PlayerManager.Instance.playerController.speedPotionValue != 100)
+            {
                 //Deactivates it
                 other.gameObject.SetActive(false);
 
@@ -39,7 +40,8 @@ public class ControllablePlayerState : AState
         // It's a fly high potion
         if (other.gameObject.CompareTag("FlyHighPotion"))
             // Any fly high amount has been lost
-            if (PlayerManager.Instance.playerController.flyPotionValue != 100){
+            if (PlayerManager.Instance.playerController.flyPotionValue != 100)
+            {
                 //Deactivates it
                 other.gameObject.SetActive(false);
 
@@ -77,11 +79,11 @@ public class ControllablePlayerState : AState
                 // Collects it
                 pickableObject.CollectItem();
 
-      /*  if (other.gameObject.TryGetComponent(out InteractableCat cat))
-            // Interact key is pressed
-            if (PlayerManager.Instance.interactKey)
-                Debug.Log("Interacting with interactableCat");
-                // Interact with Cat
-                cat.Interact();*/
+        /*  if (other.gameObject.TryGetComponent(out InteractableCat cat))
+              // Interact key is pressed
+              if (PlayerManager.Instance.interactKey)
+                  Debug.Log("Interacting with interactableCat");
+                  // Interact with Cat
+                  cat.Interact();*/
     }
 }

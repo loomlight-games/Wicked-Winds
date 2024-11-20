@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FinalPlayerState : AState
@@ -14,6 +12,6 @@ public class FinalPlayerState : AState
     // Update is called once per frame
     public override void Update()
     {
-        
+
     }
 }

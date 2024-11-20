@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 // Interfaz para los objetos que se reutilizarán en el pool
 public interface IPoolable
 {

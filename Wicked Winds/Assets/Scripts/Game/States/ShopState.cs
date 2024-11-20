@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopState : AState
@@ -15,11 +13,11 @@ public class ShopState : AState
 
     public override void Update()
     {
-        
+
     }
 
     public override void Exit()
     {
-        
+
     }
 }

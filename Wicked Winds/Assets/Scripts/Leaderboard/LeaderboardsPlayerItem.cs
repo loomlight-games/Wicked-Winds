@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
 using Unity.Services.Leaderboards.Models;
-using UnityEngine.UI;
+using UnityEngine;
 
 public class LeaderboardsPlayerItem : MonoBehaviour
 {

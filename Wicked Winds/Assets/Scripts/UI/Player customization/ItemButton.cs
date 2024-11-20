@@ -16,10 +16,10 @@ public class ItemButton : MonoBehaviour
     Button button;
     GameObject pricePanel, center;
 
-    Color semiTransparentWhite = new (1.0f, 1.0f, 1.0f, 0.5f), // 50% transparent white
-        semiTransparentRed = new (1f, 0.5f, 0.5f, 0.5f), // 50% transparent red
-        semiTransparentGreen = new (0.5f, 1f, 0.5f, 0.5f), // 50% transparent gren
-        semiTransparentBlue = new (0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent blue
+    Color semiTransparentWhite = new(1.0f, 1.0f, 1.0f, 0.5f), // 50% transparent white
+        semiTransparentRed = new(1f, 0.5f, 0.5f, 0.5f), // 50% transparent red
+        semiTransparentGreen = new(0.5f, 1f, 0.5f, 0.5f), // 50% transparent gren
+        semiTransparentBlue = new(0.5f, 0.5f, 1.0f, 0.5f); // 50% transparent blue
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +33,10 @@ public class ItemButton : MonoBehaviour
 
         // Find player
         player = PlayerManager.Instance.customizable;
-        
+
         // Item must be first child and price panel named like that
-        try{
+        try
+        {
             // Get item and price panel
             item = transform.GetComponentInChildren<Garment>();
             initialItemScale = item.transform.localScale;
@@ -45,7 +46,9 @@ public class ItemButton : MonoBehaviour
             center = transform.Find("Center").gameObject;
 
             priceText.text = item.price.ToString();
-        } catch {
+        }
+        catch
+        {
             Debug.LogError("Item is not first child or price panel is not 'Price panel'");
         }
     }
@@ -57,7 +60,8 @@ public class ItemButton : MonoBehaviour
         if (player == null) return;
 
         // Item is purchased
-        if(item.isPurchased){
+        if (item.isPurchased)
+        {
             // Hide price panel
             pricePanel.SetActive(false);
 
@@ -68,15 +72,19 @@ public class ItemButton : MonoBehaviour
             item.transform.localScale = Vector3.Lerp(item.transform.localScale, initialItemScale * scaleUp, 2f * Time.deltaTime);
 
             // Character is wearing smth of that body part
-            if (player.currentCustomization[item.bodyPart] != null){
+            if (player.currentCustomization[item.bodyPart] != null)
+            {
                 // Its this item -> blue
                 if (player.currentCustomization[item.bodyPart].name == item.name)
                     button.image.color = semiTransparentBlue;
                 else // Its not -> white
                     button.image.color = semiTransparentWhite;
-            }else
+            }
+            else
                 button.image.color = semiTransparentWhite;
-        }else { // Item not purchased
+        }
+        else
+        { // Item not purchased
             // Show price panel
             pricePanel.SetActive(true);
 
@@ -88,17 +96,21 @@ public class ItemButton : MonoBehaviour
                 button.image.color = semiTransparentRed;
         }
 
-        try{
-             // Check if item is in the the purchased items list of player
-            foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments){
+        try
+        {
+            // Check if item is in the the purchased items list of player
+            foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments)
+            {
                 if (purchasedItem.name == item.name) item.isPurchased = true;
             }
-        }catch{
+        }
+        catch
+        {
             Debug.LogWarning("No purchased items");
         }
 
         rotationSpeed = PlayerManager.Instance.rotatorySpeedAtShop;
-        
+
         // Rotates item
         item.transform.Rotate(0, 360 * rotationSpeed * Time.deltaTime, 0);
     }

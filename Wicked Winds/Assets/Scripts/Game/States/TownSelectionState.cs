@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class TownSelectionState : AState
 {
     GameObject townSelectionMenu,
-            townImage, 
-            townImage1, 
+            townImage,
+            townImage1,
             townImage2;
 
     Button playButton;
@@ -28,7 +28,8 @@ public class TownSelectionState : AState
 
     private void ShowTownImage(object sender, string town)
     {
-        switch (town){
+        switch (town)
+        {
             case "Stardust Town":
                 GameManager.Instance.town = TownGenerator.Town.StardustTown;
                 townImage.SetActive(true);
