@@ -25,7 +25,6 @@ public class FollowingOwnerState : ICatState
         }
         else
         {
-            Debug.Log("Dueño tiene misión de tipo CatMission. Cambiando a RandomMoveState.");
             catController.ChangeState(catController.randomMoveState);
         }
     }

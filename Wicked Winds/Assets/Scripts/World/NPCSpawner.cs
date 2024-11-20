@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NPCSpawner : MonoBehaviour
 {
@@ -7,79 +8,91 @@ public class NPCSpawner : MonoBehaviour
     public int npcCount = 30; // Número total de NPCs a generar
     public float detectionRadius = 100f; // Radio para detectar el suelo
     public LayerMask groundLayer; // Capa del suelo
-    public LayerMask buildingLayer; // Capa de edificios
-    public LayerMask waterLayer; // Capa de agua
-    public int numOfTries = 30;
-    private int spawnedNPCCount = 0; // Variable para contar el número de NPCs generados
+    public int numOfTries = 30; // Intentos máximos para buscar una posición válida
+
+    private int spawnedNPCCount = 0; // Contador de NPCs generados
 
     void Start()
     {
-
         for (int i = 0; i < npcCount; i++)
         {
-
             SpawnNPC();
         }
-        // Mostrar el total de NPCs generados en la consola después de completar la generación
         Debug.Log($"Total de NPCs generados: {spawnedNPCCount}");
     }
 
     void SpawnNPC()
     {
-        Vector3 spawnPosition = GetRandomPositionOnGround();
+        // Obtener el ID del tipo de agente para NPCs (Humanoid)
+        int humanoidAgentTypeID = NavMesh.GetSettingsByIndex(0).agentTypeID;
+
+        // Buscar una posición válida en el NavMesh para el NPC
+        Vector3 spawnPosition = GetValidNavMeshPosition(humanoidAgentTypeID);
         if (spawnPosition != Vector3.zero)
         {
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
             NPC npcComponent = npc.GetComponent<NPC>();
             npcComponent.hasMission = Random.value > 0.5f;
 
-            // 20% de probabilidad de tener un gato
+            // 20% de probabilidad de generar un gato
             if (Random.value < 0.2f)
             {
-                Vector3 catPosition = spawnPosition + new Vector3(2f, 5f, 2f);
-                GameObject cat = Instantiate(catPrefab, catPosition, Quaternion.identity);
-                CatController catController = cat.GetComponent<CatController>();
-                npcComponent.cat = catController;
-                catController.owner = npcComponent;
+                // Obtener el ID del tipo de agente para gatos (Cat)
+                int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
+
+                // Buscar una posición válida en el NavMesh para el gato
+                Vector3 catPosition = GetValidNavMeshPosition(catAgentTypeID);
+                if (catPosition != Vector3.zero)
+                {
+                    GameObject cat = Instantiate(catPrefab, catPosition, Quaternion.identity);
+                    CatController catController = cat.GetComponent<CatController>();
+                    npcComponent.cat = catController;
+                    catController.owner = npcComponent;
+                }
             }
-            // Incrementar el contador de NPCs generados
             spawnedNPCCount++;
         }
     }
 
-    Vector3 GetRandomPositionOnGround()
+    Vector3 GetValidNavMeshPosition(int agentTypeID)
     {
         for (int i = 0; i < numOfTries; i++)
         {
+            // Generar un punto aleatorio dentro del rango
             Vector3 randomPoint = new Vector3(
                 Random.Range(-detectionRadius, detectionRadius),
                 100f,
                 Random.Range(-detectionRadius, detectionRadius)
             );
 
+            // Realizar un raycast hacia abajo para detectar el suelo
             if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
             {
-                Vector3 spawnPoint = hit.point;
+                Vector3 potentialPosition = hit.point;
 
-                // Comprobar si hay un edificio justo encima del punto
-                if (Physics.Raycast(spawnPoint, Vector3.up, 50f, buildingLayer))
+                // Comprobar si el punto está en el NavMesh para el agente especificado
+                if (NavMesh.SamplePosition(potentialPosition, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
                 {
+                    // Validar que el tipo de agente sea compatible con el NavMesh en esa posición
+                    if (navHit.mask != 0 && navHit.hit && navHit.distance <= 1.0f)
+                    {
+                        NavMeshQueryFilter filter = new NavMeshQueryFilter
+                        {
+                            agentTypeID = agentTypeID,
+                            areaMask = NavMesh.AllAreas // Puedes limitar esto a áreas específicas si es necesario
+                        };
 
-                    continue; // Saltar a la siguiente iteración
-                }
-
-                // Verificar que el punto esté libre de agua o NPCs cercanos
-                bool isWaterNearby = Physics.CheckSphere(spawnPoint, 1f, waterLayer);
-                bool isNPCNearby = Physics.CheckSphere(spawnPoint, 2f, LayerMask.GetMask("NPC"));
-
-                if (!isWaterNearby && !isNPCNearby)
-                {
-                    return spawnPoint; // Punto válido
+                        // Verificar que realmente pertenece al NavMesh del agente
+                        if (NavMesh.FindClosestEdge(navHit.position, out NavMeshHit edgeHit, filter))
+                        {
+                            return navHit.position;
+                        }
+                    }
                 }
             }
         }
 
-        Debug.LogWarning("No se encontró una posición válida después de varios intentos.");
-        return Vector3.zero;
+        Debug.LogWarning($"No se encontró una posición válida en el NavMesh para el agente con ID {agentTypeID}.");
+        return Vector3.zero; // Si no encuentra una posición válida, devuelve un vector vacío
     }
 }

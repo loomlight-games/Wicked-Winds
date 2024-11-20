@@ -20,13 +20,11 @@ public class MissionManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Inicio del Manager de Misiones");
 
         allNPCs.Clear();
         NPC[] npcs = FindObjectsOfType<NPC>();
         allNPCs.AddRange(npcs);
 
-        Debug.Log($"Total NPCs encontrados: {allNPCs.Count}");
         missionIconPool = MissionIconPoolManager.Instance.GetMissionIconPool();
         assignedNPCs.Clear();
         AssignMissions(numMissionsToAssign);
@@ -34,7 +32,6 @@ public class MissionManager : MonoBehaviour
 
     public void AssignMissions(int numMissionsToAssign)
     {
-        Debug.Log("Iniciando la asignacion de misiones...");
 
         if (!CanAssignMissions())
             return;
@@ -43,9 +40,7 @@ public class MissionManager : MonoBehaviour
         int numEasyMissions, numMediumMissions, numHardMissions;
         GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions);
 
-        Debug.Log($"Numero de misiones a asignar: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
         AssignMissionsToNPCs(missionLists, numEasyMissions, numMediumMissions, numHardMissions);
-        Debug.Log("Finalizada la asignacion de misiones.");
     }
 
     private bool CanAssignMissions()
@@ -56,13 +51,11 @@ public class MissionManager : MonoBehaviour
             return false;
         }
 
-        Debug.Log($"Total de NPCs disponibles: {allNPCs.Count}");
         return true;
     }
 
     private Dictionary<string, List<MissionData>> FilterMissionsByDifficulty()
     {
-        Debug.Log("Filtrando misiones por dificultad...");
 
         var missionLists = new Dictionary<string, List<MissionData>>()
         {
@@ -73,27 +66,21 @@ public class MissionManager : MonoBehaviour
 
         foreach (MissionData mission in availableMissions)
         {
-            Debug.Log($"Analizando mision: {mission.name} con dificultad: {mission.difficulty}");
             if (mission.difficulty == 0)
             {
                 missionLists["easy"].Add(mission);
-                Debug.Log($"Mision facil añadida: {mission.name}");
             }
             else if (mission.difficulty == 1)
             {
                 missionLists["medium"].Add(mission);
-                Debug.Log($"Mision media añadida: {mission.name}");
             }
             else if (mission.difficulty == 2)
             {
                 missionLists["hard"].Add(mission);
-                Debug.Log($"Mision dificil añadida: {mission.name}");
             }
         }
 
-        Debug.Log($"Misiones faciles disponibles: {missionLists["easy"].Count}");
-        Debug.Log($"Misiones medias disponibles: {missionLists["medium"].Count}");
-        Debug.Log($"Misiones dificiles disponibles: {missionLists["hard"].Count}");
+        
 
         return missionLists;
     }
@@ -105,7 +92,6 @@ public class MissionManager : MonoBehaviour
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
-        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
@@ -151,7 +137,6 @@ public class MissionManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Todas las misiones han sido asignadas a los NPCs.");
         specialMissionGeneration(assignedNPCs);
     }
 
@@ -247,10 +232,7 @@ public class MissionManager : MonoBehaviour
                             continue;
 
                         }
-                        else
-                        {
-                            Debug.LogWarning($"Ingrediente {ingredient.name} no tiene componente Pickable.");
-                        }
+                       
 
 
                     }
@@ -274,15 +256,11 @@ public class MissionManager : MonoBehaviour
                     // Exclude the current NPC and those with a mission icon
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
-                        Debug.Log($"Adding NPC: {Npc}");
                         if (!string.IsNullOrEmpty(Npc.npcname)) // Check if the name is not null or empty
                         {
                             npcNames.Add(Npc); // Add the name to the list
                         }
-                        else
-                        {
-                            Debug.LogWarning("Found NPC with empty name.");
-                        }
+                       
                     }
                 }
 
@@ -296,10 +274,7 @@ public class MissionManager : MonoBehaviour
 
 
                 }
-                else
-                {
-                    Debug.LogWarning("No other NPCs available to be an addressee.");
-                }
+                
             }
 
 
@@ -327,18 +302,13 @@ public class MissionManager : MonoBehaviour
 
             missionIcon.transform.localPosition = desiredPosition;
             missionIcon.transform.localScale = desiredScale;
-            Debug.Log($"Icono de mision asignado a {selectedNPC.name} dentro de Bubble.");
         }
-        else
-        {
-            Debug.LogError($"El NPC {selectedNPC.name} no tiene un componente 'Bubble'.");
-        }
+        
     }
 
     private MissionData GetRandomMission(List<MissionData> missions)
     {
         int randomIndex = UnityEngine.Random.Range(0, missions.Count);
-        Debug.Log($"Mision aleatoria seleccionada: {missions[randomIndex].name}");
         return missions[randomIndex];
     }
 

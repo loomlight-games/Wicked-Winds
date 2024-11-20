@@ -32,7 +32,6 @@ public class Pickable : MonoBehaviour
     public void SetNPC(NPC assignedNPC)
     {
         npc = assignedNPC;
-        Debug.Log($"Assigned NPC to pickable item: {npc.name}"); // Log para asignacion de NPC
     }
 
     // M�todo para recolectar el objeto
@@ -46,7 +45,6 @@ public class Pickable : MonoBehaviour
                 if (this.missionIcon != null)
                 {
                     this.missionIcon.collectedItemsCount++;
-                    Debug.Log($"Objeto recolectado. Total recolectados: {this.missionIcon.collectedItemsCount}/{numOfObjectsToCollect}");
 
                     if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
                     {
@@ -56,23 +54,19 @@ public class Pickable : MonoBehaviour
                         // Aniade el NPC como nuevo objetivo en `currentTargets`
                         PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
 
-                        Debug.Log("Todos los objetos recolectados. Regresa al NPC para completar la mision.");
                         // Activa el bocadillo de texto y muestra el mensaje
                         if (textBubble != null)
                         {
                             Debug.Log("no hay player text bubble");
-                            string texto = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
-                            textBubble.StartDialogue(texto); // Inicia el dialogo en el bocadillo de texto
+                            GameManager.Instance.playState.feedBackText.text = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
+                            
                         }
 
                     }
                 }
 
             }
-            else
-            {
-                Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
-            }
+           
 
             if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
@@ -83,16 +77,10 @@ public class Pickable : MonoBehaviour
 
 
             }
-            else
-            {
-                Debug.Log($"Este ingrediente aun no se ha marcado como objetivo por lo q no se puede recoger");
-            }
+          
 
         }
-        else
-        {
-            Debug.Log($"{npc.name} cannot collect the item because acceptMission is false.");
-        }
+        
     }
 
 }

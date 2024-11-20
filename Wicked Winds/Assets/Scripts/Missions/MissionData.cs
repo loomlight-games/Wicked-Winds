@@ -83,40 +83,40 @@ public class MissionData : ScriptableObject
         {
             { "LetterMision", new string[]
                 {
-                    "Oh, what a delightful surprise! Thank you for delivering this letter from my dear grandchild. It means the world to me!",
-                    "Oh, how wonderful! This birthday message has made my day—thank you so much for bringing it to me!",
-                    "Oh, my heart! This letter is so sweet and full of love! Thank you for delivering it!",
-                    "Oh, look at this! My friend always knows how to cheer me up. Thanks for bringing this to me!",
-                    "Oh, what joy! This festive letter has filled me with holiday cheer. Thank you for delivering it!",
-                    "Oh, a thank-you note with cat stickers! This made my day. Thank you for bringing it to me!",
-                    "Oh, an invitation! How thoughtful of my neighbor—thank you for making sure I got this!",
-                    "Oh, a friendly reminder—how kind! Thank you for delivering this message to me!"
+                    "Oh, what a delightful surprise! \nThank you for delivering this letter from my dear grandchild. \nIt means the world to me!",
+                    "Oh, how wonderful!\n This birthday message has made my day\n—thank you so much for bringing it to me!",
+                    "Oh, my heart!\n This letter is so sweet and full of love!\n Thank you for delivering it!",
+                    "Oh, look at this!\n My friend always knows how to cheer me up.\n Thanks for bringing this to me!",
+                    "Oh, what joy!\n This festive letter has filled me with holiday cheer.\n Thank you for delivering it!",
+                    "Oh, a thank-you note with cat stickers!\n This made my day. \nThank you for bringing it to me!",
+                    "Oh, an invitation! \nHow thoughtful of my neighbor\n—thank you for making sure I got this!",
+                    "Oh, a friendly reminder—how kind!\n Thank you for delivering this message to me!"
                 }
             },
 
             { "CatMission", new string[]
                 {
-                    "Thank you! You’re my only hope in finding my furry friend!",
-                    "You’re amazing! I knew you’d help me track him down!",
-                    "You’ve got a great eye! I’m sure we’ll find him in no time!",
-                    "I appreciate your help! I know he’s out there somewhere!",
-                    "You’re a true friend! I can always count on you for support!",
-                    "Thanks! Without you, I’d be lost without my little buddy!",
-                    "You’re the best! I can’t wait to snuggle with my cat again!"
+                    "Thank you! \nYou’re my only hope in finding my furry friend!",
+                    "You’re amazing! \nI knew you’d help me track him down!",
+                    "You’ve got a great eye! \nI’m sure we’ll find him in no time!",
+                    "I appreciate your help!\n I know he’s out there somewhere!",
+                    "You’re a true friend! \nI can always count on you for support!",
+                    "Thanks!\n Without you, I’d be lost without my little buddy!",
+                    "You’re the best!\n I can’t wait to snuggle with my cat again!"
                 }
             },
 
             { "PotionMission", new string[]
                 {
-                    "You’re incredible! This love potion will work wonders!",
-                    "Thank you! This potion will make my crush fall head over heels!",
-                    "You’re a genius! I can feel the charm already bubbling up!",
-                    "I appreciate your help! This will make my studying so much easier!",
-                    "You’re awesome! With this luck potion, I’ll ace my exam!",
-                    "Thanks! This healing potion will get me back to my herb-gathering adventures!",
-                    "You’re fantastic! I’m feeling better already with this potion!",
-                    "You’re the best! I can’t wait to see the world through my cat’s eyes!",
-                    "You’re amazing! With this courage potion, I’m ready for anything!"
+                    "You’re incredible! \nThis love potion will work wonders!",
+                    "Thank you! \nThis potion will make my crush fall head over heels!",
+                    "You’re a genius! \nI can feel the charm already bubbling up!",
+                    "I appreciate your help! \nThis will make my studying so much easier!",
+                    "You’re awesome!\n With this luck potion,\n I’ll ace my exam!",
+                    "Thanks! \nThis healing potion will get me back to my herb-gathering adventures!",
+                    "You’re fantastic! \nI’m feeling better already with this potion!",
+                    "You’re the best! \nI can’t wait to see the world through my cat’s eyes!",
+                    "You’re amazing! \nWith this courage potion, \nI’m ready for anything!"
                 }
             }
         };

@@ -15,7 +15,7 @@ public class NPC : MonoBehaviour
     private MessageGenerator messageGenerator;
     [SerializeField] public string message;
     public string missionType;
-    public string responseMessage;
+    [SerializeField] public string responseMessage;
     private NavMeshAgent agent;
     public NPC sender;
     public CatController cat;
@@ -124,8 +124,6 @@ public class NPC : MonoBehaviour
     {
         StopMovement();
         ThankPlayer();
-        string response = "Gracias por entregarme esta carta! ";
-        gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(response);
         CompleteMission(sender);
     }
 
@@ -137,11 +135,6 @@ public class NPC : MonoBehaviour
         {
             OnInteractAfterLetter();
             return;
-        }
-
-        if (!string.IsNullOrEmpty(responseMessage))
-        {
-            gameObject.GetComponent<Interactable>().dialoguePanel.StartDialogue(responseMessage);
         }
 
         this.message = string.Empty;

@@ -28,8 +28,7 @@ public class Dialogue : MonoBehaviour
 
         if (PlayerManager.Instance.nextLineKey)
         {
-            if (lineIndex <= lines.Length) // Verifica que el �ndice est� dentro del rango
-            {
+            
                 if (text.text == lines[lineIndex])
                 {
                     NextLine();
@@ -39,76 +38,48 @@ public class Dialogue : MonoBehaviour
                     StopAllCoroutines();
                     text.text = lines[lineIndex];
                 }
-                //AdjustTextBox(); // Llama a la funci�n para ajustar el cuadro de texto
-            }
-            else
-            {
-                Debug.LogWarning("�ndice fuera de los l�mites del arreglo 'lines'.");
-            }
+           
         }
     }
 
     // M�todo para iniciar el di�logo y mostrar el nombre del NPC
-    public void StartDialogue(NPC npc)
+    
+
+    public void StartDialogue(NPC npc, string mensajito)
     {
+        // Limpiar cualquier texto previo
         text.text = string.Empty;
         npcName.text = string.Empty;
 
-        lineIndex = 0; // Reinicia el indice aqu�
-        npcName.text = npc.npcname; // Muestra el nombre del NPC
+        
+        Debug.Log("Iniciando diálogo...");
 
-        // Divide el mensaje del NPC en lineas y las almacena en el arreglo lines
-        lines = npc.message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-        if (lines.Length == 0)
-        {
-            //Debug.LogWarning("El arreglo 'lines' est� vac�o. No hay di�logos para mostrar.");
-            return; // Sale del m�todo si no hay l�neas
-        }
-
-        ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        NextLine();
-        //StartCoroutine(TypeLine());
-    }
-
-    // Nuevo m�todo para iniciar el di�logo sin el nombre del NPC
-    public void StartDialogue(string message)
-    {
-        lineIndex = 0;
-
-        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en l�neas
-
-        if (lines.Length == 0)
-        {
-            Debug.LogWarning("El arreglo 'lines' est� vac�o. No hay di�logos para mostrar.");
-            return; // Sale del m�todo si no hay l�neas
-        }
-
-        ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        NextLine();
-        //StartCoroutine(TypeLine());
-    }
-
-    public void StartDialogue(NPC npc, string message)
-    {
-        text.text = string.Empty;
-        npcName.text = string.Empty;
-
-        lineIndex = 0;
+        // Asignar el nombre del NPC
         npcName.text = npc.npcname;
+        Debug.Log($"Nombre del NPC asignado: {npc.npcname}");
 
-        lines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries); // Divide el mensaje en lineas
+        // Dividir el mensaje en líneas
+        lines = mensajito.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        Debug.Log($"Número de líneas en el mensaje: {lines.Length}");
 
         if (lines.Length == 0)
         {
-            Debug.LogWarning("No message! Must have messafe");
+            Debug.LogWarning("¡No hay mensaje! Se requiere un mensaje.");
             return;
         }
 
-        ActivateAllChildren(); // Activa todos los hijos del objeto padre
-        NextLine();
-        //StartCoroutine(TypeLine());
+        // Activar todos los hijos del objeto
+        ActivateAllChildren();
+        lineIndex = 0;
+        StartCoroutine(TypeLine());
+        Debug.Log("Se han activado todos los hijos del objeto.");
+
+      
+
+        // Si se usa la animación de escritura, descomentar la siguiente línea:
+        // 
     }
+
 
     IEnumerator TypeLine()
     {
@@ -117,7 +88,7 @@ public class Dialogue : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-        //AdjustTextBox(); // Ajusta el cuadro de texto despu�s de escribir la l�nea
+       
     }
 
     void NextLine()
@@ -127,8 +98,8 @@ public class Dialogue : MonoBehaviour
             text.text = string.Empty;
             text.text = lines[lineIndex];
             lineIndex++;
-            //text.text = string.Empty;
-            //StartCoroutine(TypeLine());
+            text.text = string.Empty;
+            StartCoroutine(TypeLine());
         }
         else
         {
