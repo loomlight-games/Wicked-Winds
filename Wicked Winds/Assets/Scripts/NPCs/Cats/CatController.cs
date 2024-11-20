@@ -13,6 +13,7 @@ public class CatController : MonoBehaviour
     private ICatState currentState;
     public Vector3 previousPlayerPosition;
     public Transform player;
+    public CatController cat;
 
     // Estados del gato
     public IdleState idleState;
@@ -33,12 +34,12 @@ public class CatController : MonoBehaviour
         ownerPosition = owner.transform;
 
         // Inicializar estados
-        idleState = new IdleState(this, agent);
-        randomMoveState = new MovingState(this, agent);
-        climbingState = new ClimbingState(this, agent);
-        fleeingState = new FleeingState(this, agent, player);
-        followingPlayerState = new FollowingPlayerState(this, agent, player, ownerPosition);
-        followingOwnerState = new FollowingOwnerState(this, agent, player, ownerPosition, owner);
+        idleState = new IdleState(cat, agent);
+        randomMoveState = new MovingState(cat, agent);
+        climbingState = new ClimbingState(cat, agent);
+        fleeingState = new FleeingState(cat, agent, player);
+        followingPlayerState = new FollowingPlayerState(cat, agent, player, ownerPosition);
+        followingOwnerState = new FollowingOwnerState(cat, agent, player, ownerPosition, owner);
 
         // Estado inicial
         currentState = followingOwnerState;
@@ -73,7 +74,7 @@ public class CatController : MonoBehaviour
 
 
     // Nuevo m?todo para interactuar con el gato
-    public void InteractWithCat()
+    public void InteractWithCat(CatController cat)
     {
         // Llamar al estado de seguir al jugador o hacer que el gato interact?e con el jugador
         PlayerManager.Instance.RemoveTarget(gameObject);

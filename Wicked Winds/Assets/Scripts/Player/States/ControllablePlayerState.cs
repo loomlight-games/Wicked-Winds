@@ -81,7 +81,6 @@ public class ControllablePlayerState : AState
 
         if (other.gameObject.TryGetComponent(out InteractableCat cat))
         {
-            Debug.Log("Detectando gato para interacción...");
             if (PlayerManager.Instance.interactKey)
             {
                 Debug.Log("Interacción con el gato iniciada.");
