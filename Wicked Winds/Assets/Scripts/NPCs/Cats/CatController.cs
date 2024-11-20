@@ -36,12 +36,11 @@ public class CatController : MonoBehaviour
         idleState = new IdleState(this, agent);
         randomMoveState = new MovingState(this, agent);
         climbingState = new ClimbingState(this, agent);
-        fleeingState = new FleeingState(this, agent, player);
-        followingPlayerState = new FollowingPlayerState(this, agent, player, ownerPosition);
+        followingPlayerState = new FollowingPlayerState(this, agent, ownerPosition);
         followingOwnerState = new FollowingOwnerState(this, agent, player, ownerPosition, owner);
 
         // Estado inicial
-        currentState = followingOwnerState;
+        currentState = followingPlayerState;
         currentState.Enter();
         UpdateCurrentStateName();
     }
@@ -79,7 +78,7 @@ public class CatController : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
         // Aniade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
-        ChangeState(followingPlayerState);
+        
 
     }
 }
