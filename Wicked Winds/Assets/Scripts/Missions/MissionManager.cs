@@ -87,11 +87,15 @@ public class MissionManager : MonoBehaviour
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
+        /*numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1, numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
-        numEasyMissions = Mathf.Max(numEasyMissions, 0);
+        numEasyMissions = Mathf.Max(numEasyMissions, 0);*/
+
+        numEasyMissions = 0;
+        numMediumMissions = numMissionsToAssign;
+        numHardMissions = 0;
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)

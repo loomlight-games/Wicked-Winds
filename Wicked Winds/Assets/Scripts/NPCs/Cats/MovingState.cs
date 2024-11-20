@@ -19,16 +19,16 @@ public class MovingState : ICatState
 
     public void Update()
     {
-        // Detectar si el jugador se acerca rápidamente y cambiar al estado de huida
+        // Detectar si el jugador se acerca r?pidamente y cambiar al estado de huida
         float distanceToPlayer = Vector3.Distance(catController.transform.position, catController.player.position);
         Vector3 playerVelocity = (catController.player.position - catController.previousPlayerPosition) / Time.deltaTime;
 
-        // Si el jugador se acerca rápidamente
+        // Si el jugador se acerca r?pidamente
         if (distanceToPlayer < catController.fleeDistance && playerVelocity.magnitude > catController.playerApproachSpeed)
         {
-            Debug.Log("Jugador se acerca rápidamente, cambiando a FleeingState.");
+            Debug.Log("Jugador se acerca r?pidamente, cambiando a FleeingState.");
             catController.ChangeState(catController.fleeingState);
-            return; // Salimos de la función para evitar seguir procesando el estado de movimiento
+            return; // Salimos de la funci?n para evitar seguir procesando el estado de movimiento
         }
 
         // Si el gato ha llegado a su destino, cambiar a IdleState
@@ -44,7 +44,7 @@ public class MovingState : ICatState
             catController.ChangeState(catController.climbingState);
         }
 
-        // Actualizar la posición previa del jugador
+        // Actualizar la posici?n previa del jugador
         catController.previousPlayerPosition = catController.player.position;
     }
 

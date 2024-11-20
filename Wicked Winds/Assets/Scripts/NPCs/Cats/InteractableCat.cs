@@ -39,11 +39,9 @@ public class InteractableCat : MonoBehaviour
                     dialoguePanel.StartDialogue(owner, msg,1); // Inicia el dialogo
                     Debug.Log("Diálogo iniciado.");
                 }
-             
 
-                // Completar la misión del NPC
-                Debug.Log("Llamando a OnMissionCompleted...");
-                PlayerManager.Instance.currentTargets.Add(owner.gameObject);
+
+                cat.InteractWithCat();
                 GameManager.Instance.playState.feedBackText.text = "Gato encontrado. Llevalo junto a su dueño\n";
 
 

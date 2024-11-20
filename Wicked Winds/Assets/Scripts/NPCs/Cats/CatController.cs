@@ -1,12 +1,12 @@
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
 public class CatController : MonoBehaviour
 {
     public GameObject playerGameObject; // Referencia al jugador
-    public Transform ownerPosition; // Referencia al dueño del gato
-    public LayerMask groundLayer, buildingLayer; // Capas de interacción
-    public float playerApproachSpeed = 1.5f; // Velocidad para diferenciar entre acercamiento rápido o lento
+    public Transform ownerPosition; // Referencia al due?o del gato
+    public LayerMask groundLayer, buildingLayer; // Capas de interacci?n
+    public float playerApproachSpeed = 1.5f; // Velocidad para diferenciar entre acercamiento r?pido o lento
     public float fleeDistance = 10f;
     public NPC owner;
     private NavMeshAgent agent;
@@ -22,7 +22,7 @@ public class CatController : MonoBehaviour
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
 
-    // Variable pública para mostrar el estado actual en el Inspector
+    // Variable p?blica para mostrar el estado actual en el Inspector
     public string currentStateName;
 
     void Start()
@@ -61,7 +61,7 @@ public class CatController : MonoBehaviour
         UpdateCurrentStateName(); // Actualiza el nombre del estado cuando cambia
     }
 
-    // Método para actualizar el nombre del estado actual
+    // M?todo para actualizar el nombre del estado actual
     void UpdateCurrentStateName()
     {
         if (currentState != null)
@@ -72,10 +72,10 @@ public class CatController : MonoBehaviour
 
 
 
-    // Nuevo método para interactuar con el gato
+    // Nuevo m?todo para interactuar con el gato
     public void InteractWithCat()
     {
-        // Llamar al estado de seguir al jugador o hacer que el gato interactúe con el jugador
+        // Llamar al estado de seguir al jugador o hacer que el gato interact?e con el jugador
         PlayerManager.Instance.RemoveTarget(gameObject);
         // Aniade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);

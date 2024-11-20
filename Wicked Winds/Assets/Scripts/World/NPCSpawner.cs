@@ -35,7 +35,7 @@ public class NPCSpawner : MonoBehaviour
             npcComponent.hasMission = Random.value > 0.5f;
 
             // 20% de probabilidad de generar un gato
-            if (Random.value < 0.2f)
+            if (Random.value < 0.3f)
             {
                 // Obtener el ID del tipo de agente para gatos (Cat)
                 int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;

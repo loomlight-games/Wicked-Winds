@@ -25,7 +25,8 @@ public class FollowingPlayerState : ICatState
     {
         if (Vector3.Distance(catController.transform.position, owner.position) < 2f)
         {
-            Debug.Log("¡El gato ha vuelto con su dueño!");
+
+            GameManager.Instance.playState.feedBackText.text = "?El gato ha vuelto con su due?o!";
             catController.ChangeState(catController.followingOwnerState);
         }
 

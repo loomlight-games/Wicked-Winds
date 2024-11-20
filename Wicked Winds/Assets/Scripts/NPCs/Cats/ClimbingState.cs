@@ -14,7 +14,7 @@ public class ClimbingState : ICatState
 
     public void Enter()
     {
-        // Lógica para detectar y moverse hacia un edificio
+        // Logica para detectar y moverse hacia un edificio
         Vector3 targetPosition;
         if (Physics.Raycast(catController.transform.position, Vector3.up, out RaycastHit hit, 5f, catController.buildingLayer))
         {
