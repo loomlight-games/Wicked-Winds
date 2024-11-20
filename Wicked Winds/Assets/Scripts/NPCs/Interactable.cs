@@ -42,7 +42,7 @@ public class Interactable : MonoBehaviour
                     Debug.Log("El mensaje del NPC existe. Asignando el mensaje al bocadillo...");
                     dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { activeNPC.responseMessage }; // Asigna el mensaje del NPC al bocadillo
-                    dialoguePanel.StartDialogue(activeNPC, activeNPC.responseMessage); // Inicia el dialogo
+                    dialoguePanel.StartDialogue(activeNPC, activeNPC.responseMessage,0); // Inicia el dialogo
                     Debug.Log("Diálogo iniciado.");
                 }
                 else
@@ -102,7 +102,7 @@ public class Interactable : MonoBehaviour
                     Debug.Log("EL PERSONAJE ESTA DICIENDO LA MISION");
                     dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { PlayerManager.Instance.npcMissionActive.message }; // Asigna el mensaje del NPC al bocadillo
-                    dialoguePanel.StartDialogue(activeNPC, activeNPC.message); // Inicia el dialogo
+                    dialoguePanel.StartDialogue(activeNPC, activeNPC.message,0); // Inicia el dialogo
                 }
 
 

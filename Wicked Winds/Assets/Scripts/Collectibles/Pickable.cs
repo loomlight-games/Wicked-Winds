@@ -45,6 +45,10 @@ public class Pickable : MonoBehaviour
                 if (this.missionIcon != null)
                 {
                     this.missionIcon.collectedItemsCount++;
+                    // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
+                    PlayerManager.Instance.RemoveTarget(gameObject);
+                    Destroy(gameObject);
+                    Debug.Log($"{npc.name} collected the item: {gameObject.name}");
 
                     if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
                     {
@@ -53,31 +57,17 @@ public class Pickable : MonoBehaviour
 
                         // Aniade el NPC como nuevo objetivo en `currentTargets`
                         PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
-
-                        // Activa el bocadillo de texto y muestra el mensaje
-                        if (textBubble != null)
-                        {
-                            Debug.Log("no hay player text bubble");
-                            GameManager.Instance.playState.feedBackText.text = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
+                        GameManager.Instance.playState.feedBackText.text = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
                             
-                        }
+                        
 
                     }
                 }
 
             }
+            
            
 
-            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
-            {
-                // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
-                PlayerManager.Instance.RemoveTarget(gameObject);
-                Destroy(gameObject);
-                Debug.Log($"{npc.name} collected the item: {gameObject.name}");
-
-
-            }
-          
 
         }
         

@@ -34,20 +34,28 @@ public class Dialogue : MonoBehaviour
     }
 
     // Método para iniciar el diálogo y mostrar el nombre del NPC
-    public void StartDialogue(NPC npc, string mensajito)
+    public void StartDialogue(NPC npc, string mensajito, int tipo) //0= humano, 1= gato
     {
         // Activar todos los hijos del objeto
         ActivateAllChildren();
         lineIndex = 0;
         // Limpiar cualquier texto previo
+
         text.text = string.Empty;
         npcName.text = string.Empty;
 
         Debug.Log("Iniciando diálogo...");
+        if(tipo == 0)
+        {// Asignar el nombre del NPC
+            npcName.text = npc.npcname;
+            Debug.Log($"Nombre del NPC asignado: {npc.npcname}");
+        }
 
-        // Asignar el nombre del NPC
-        npcName.text = npc.npcname;
-        Debug.Log($"Nombre del NPC asignado: {npc.npcname}");
+        if (tipo == 1)
+        {
+            npcName.text = npc.npcname + "'s cat";
+        }
+      
 
         // Dividir el mensaje en líneas
         lines = mensajito.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
