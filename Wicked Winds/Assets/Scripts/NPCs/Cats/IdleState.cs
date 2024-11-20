@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class IdleState : ICatState
@@ -23,16 +23,16 @@ public class IdleState : ICatState
 
     public void Update()
     {
-        // Detectar si el jugador se acerca r?pidamente y cambiar al estado de huida
+        // Detectar si el jugador se acerca r�pidamente y cambiar al estado de huida
         float distanceToPlayer = Vector3.Distance(catController.transform.position, catController.player.position);
         Vector3 playerVelocity = (catController.player.position - catController.previousPlayerPosition) / Time.deltaTime;
 
-        // Si el jugador se acerca r?pidamente
+        // Si el jugador se acerca r�pidamente
         if (distanceToPlayer < catController.fleeDistance && playerVelocity.magnitude > catController.playerApproachSpeed)
         {
-            Debug.Log("Jugador se acerca r?pidamente, cambiando a FleeingState.");
+            Debug.Log("Jugador se acerca r�pidamente, cambiando a FleeingState.");
             catController.ChangeState(catController.fleeingState);
-            return; // Salimos de la funci?n para evitar seguir procesando el estado de movimiento
+            return; // Salimos de la funci�n para evitar seguir procesando el estado de movimiento
         }
         timer += Time.deltaTime;
         if (timer >= idleTime)
@@ -40,7 +40,7 @@ public class IdleState : ICatState
             catController.ChangeState(catController.randomMoveState);
         }
 
-        // Actualizar la posici?n previa del jugador
+        // Actualizar la posici�n previa del jugador
         catController.previousPlayerPosition = catController.player.position;
     }
 

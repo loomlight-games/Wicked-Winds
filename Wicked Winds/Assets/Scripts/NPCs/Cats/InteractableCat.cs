@@ -41,7 +41,7 @@ public class InteractableCat : MonoBehaviour
                 }
 
 
-                cat.InteractWithCat(activeCat);
+                cat.InteractWithCat();
                 GameManager.Instance.playState.feedBackText.text = "Gato encontrado. Llevalo junto a su dueño\n";
 
 
