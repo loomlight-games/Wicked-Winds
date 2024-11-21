@@ -21,7 +21,7 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && PlayerManager.Instance.potionFog == false) // Si el jugador entra en la zona especificada
         {
-            Debug.Log("Player entered the fog area.");
+            GameManager.Instance.playState.feedBackText.text = "Perfect weather for some ghost stories...";
             PlayerManager.Instance.playerIsInsideFog = true;
             StartFogTransition(fogColor, fogDensity);
         }
@@ -31,21 +31,14 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player exited the fog area.");
+            GameManager.Instance.playState.feedBackText.text = "Finally some sunlight!";
             PlayerManager.Instance.playerIsInsideFog = false;
             StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
         }
     }
 
 
-   /* // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
-    private IEnumerator ReenableFogAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        PlayerManager.Instance.potionFog = false;
-        DesactivarPotionUI.Instance.activarFogUI = true;
-    }*/
-
+  
 
     // Inicia la transición de la niebla
     private void StartFogTransition(Color targetFogColor, float targetFogDensity)
@@ -56,8 +49,14 @@ public class FogTrigger : MonoBehaviour
 
     private void Update()
     {
-        // Solo actualiza la transición si hay un cambio
-        if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
+        if(PlayerManager.Instance.potionFog && PlayerManager.Instance.playerIsInsideFog == true)
+        {
+            GameManager.Instance.playState.feedBackText.text ="WOW! The fog has magically dissapeared!";
+            PlayerManager.Instance.playerIsInsideFog = false;
+            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
+        }
+            // Solo actualiza la transición si hay un cambio
+            if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
         {
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, Time.deltaTime * transitionSpeed);
             RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetDensity, Time.deltaTime * transitionSpeed);

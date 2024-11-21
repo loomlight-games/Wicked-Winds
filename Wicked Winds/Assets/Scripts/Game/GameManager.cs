@@ -8,13 +8,11 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Manages the game states
 /// </summary>
-public class GameManager : AStateController
+public class GameManager : AStateController 
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
-    public GameObject FogTriggerPrefab;
-    public float potionFogEffectTime = 30f;
-    float timer = 0f;  // Temporizador que se incrementa cada frame
+   
 
 
 
@@ -356,26 +354,8 @@ public class GameManager : AStateController
 
 
 
-    ///NIEBLA
-    ///
 
-    public void ReenableFogAfterTime()
-    {
-        if (PlayerManager.Instance.playerIsInsideFog && PlayerManager.Instance.potionFog)
-        { 
-                timer += Time.deltaTime;
-
-                if (timer >= potionFogEffectTime)
-                {
-                    // Después de 30 segundos, reactivar la niebla
-                    PlayerManager.Instance.potionFog = false;
-                    DesactivarPotionUI.Instance.activarFogUI = false;
-                timer = 0f;  // Reiniciar el temporizador
-                }
-                return;
-            
-        }
-    }
+   
 
 
-    }
+}

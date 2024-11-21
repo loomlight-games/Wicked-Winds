@@ -59,6 +59,14 @@ public class ControllablePlayerState : AState
             PlayerManager.Instance.customizable.coins++;
             PlayerManager.Instance.customizable.SaveCoins();
         }
+
+        if (other.gameObject.TryGetComponent(out PotionFog potion))
+        {
+
+            Debug.Log("Interacción con la pocion");
+            potion.CollectPotionFog();
+
+        }
     }
 
     public override void OnTriggerStay(Collider other)
@@ -88,14 +96,7 @@ public class ControllablePlayerState : AState
             }
         }
 
-        if (other.gameObject.TryGetComponent(out PotionFog potion))
-        {
-            if (PlayerManager.Instance.interactKey)
-            {
-                Debug.Log("Interacción con la pocion");
-                potion.CollectPotionFog();
-            }
-        }
+        
     }
 
 }

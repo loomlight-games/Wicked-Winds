@@ -27,7 +27,7 @@ public class TownGenerator
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
        
-        fogTriggerPrefab = GameManager.Instance.FogTriggerPrefab;
+        fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch

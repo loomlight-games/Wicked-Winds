@@ -47,7 +47,7 @@ public class Compass
             if (isIstanciated)
             {
             prefabInstance.SetActive(false);
-            GameManager.Instance.ReenableFogAfterTime();
+            FogManager.Instance.ReenableFogAfterTime();
                 return;
             }
         }
