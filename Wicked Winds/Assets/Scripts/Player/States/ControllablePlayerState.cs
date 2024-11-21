@@ -87,6 +87,15 @@ public class ControllablePlayerState : AState
                 cat.InteractCat();
             }
         }
+
+        if (other.gameObject.TryGetComponent(out PotionFog potion))
+        {
+            if (PlayerManager.Instance.interactKey)
+            {
+                Debug.Log("Interacción con la pocion");
+                potion.CollectPotionFog();
+            }
+        }
     }
 
 }
