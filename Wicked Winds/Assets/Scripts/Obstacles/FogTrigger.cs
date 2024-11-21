@@ -3,7 +3,7 @@ using UnityEngine;
 public class FogTrigger : MonoBehaviour
 {
     public Color fogColor = Color.gray;
-    public float fogDensity = 0.1f;
+    public float fogDensity = 0.3f;
     public float transitionSpeed = 2f; // Velocidad de transición de la niebla
 
     private Color targetColor;

@@ -28,6 +28,6 @@ public class PotionFog : MonoBehaviour
     private IEnumerator ReenableFogAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
-        PlayerManager.Instance.potionFog = true;
+        PlayerManager.Instance.potionFog = false;
     }
 }
