@@ -27,7 +27,7 @@ public class AuthentificationPanel : Panel
         signupButton.onClick.AddListener(SignUp);
         anonymousButton.onClick.AddListener(AnonymousSignIn);
         leaderboardButton.onClick.AddListener(Viewtable);
-
+        
         // Restaurar el color cuando el usuario empieza a escribir
         usernameInput.onValueChanged.AddListener((text) => ResetPlaceholderColor(usernameInput));
         passwordInput.onValueChanged.AddListener((text) => ResetPlaceholderColor(passwordInput));
@@ -39,6 +39,8 @@ public class AuthentificationPanel : Panel
     {
 
         base.Open();
+        usernameInput.ActivateInputField();
+        passwordInput.ActivateInputField();
     }
     private void AnonymousSignIn()
     {
