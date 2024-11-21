@@ -4,31 +4,25 @@ public class FogTrigger : MonoBehaviour
 {
     public Color fogColor = Color.gray;
     public float fogDensity = 0.1f;
+    public float transitionSpeed = 2f; // Velocidad de transición de la niebla
 
-    void Start()
+    private Color targetColor;
+    private float targetDensity;
+
+    private void Start()
     {
-        // Obtén el BoxCollider del objeto
-        BoxCollider collider = GetComponent<BoxCollider>();
-
-        if (collider != null)
-        {
-            // Ajusta el tamaño del BoxCollider según el tamaño del tile
-            collider.size = new Vector3(50f, 50f, 50f);
-            collider.providesContacts = true;
-            
-        }
+        // Inicializa los valores de la niebla al entrar al juego
+        targetColor = RenderSettings.fogColor;
+        targetDensity = RenderSettings.fogDensity;
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && PlayerManager.Instance.potionFog == false) // Si el jugador entra en la zona especificada
         {
-            Debug.Log("Player entered the fog area.");  // Debug para ver cuando el jugador entra
-            RenderSettings.fog = true;
-            RenderSettings.fogColor = fogColor; // Cambia el color de la niebla
-            RenderSettings.fogDensity = fogDensity; // Ajusta la densidad
-            Debug.Log($"Fog enabled. Color: {fogColor}, Density: {fogDensity}");  // Muestra los valores de la niebla
-            PlayerManager.Instance.playerIsInsideFog = true;    
+            Debug.Log("Player entered the fog area.");
+            PlayerManager.Instance.playerIsInsideFog = true;
+            StartFogTransition(fogColor, fogDensity);
         }
     }
 
@@ -36,10 +30,38 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player exited the fog area.");  // Debug para ver cuando el jugador sale
-            RenderSettings.fog = false; // Desactiva la niebla al salir
-            Debug.Log("Fog disabled.");  // Muestra que la niebla se ha desactivado
+            Debug.Log("Player exited the fog area.");
             PlayerManager.Instance.playerIsInsideFog = false;
+            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
+        }
+    }
+
+    // Inicia la transición de la niebla
+    private void StartFogTransition(Color targetFogColor, float targetFogDensity)
+    {
+        targetColor = targetFogColor;
+        targetDensity = targetFogDensity;
+    }
+
+    private void Update()
+    {
+        // Solo actualiza la transición si hay un cambio
+        if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
+        {
+            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, Time.deltaTime * transitionSpeed);
+            RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetDensity, Time.deltaTime * transitionSpeed);
+
+            // Si hemos alcanzado los valores objetivos, dejamos de actualizar
+            if (Mathf.Approximately(RenderSettings.fogDensity, targetDensity) && RenderSettings.fogColor == targetColor)
+            {
+                // Si estamos completamente en el valor objetivo, podemos detener la interpolación
+                RenderSettings.fog = targetDensity > 0f; // Solo habilitamos la niebla si la densidad es mayor que 0
+            }
+        }
+        else
+        {
+            // Asegurarse de que la niebla se active/desactive adecuadamente
+            RenderSettings.fog = targetDensity > 0f;
         }
     }
 }

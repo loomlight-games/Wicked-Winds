@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Net;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 
-public class Compass : MonoBehaviour
+public class Compass 
 {
     // Target
     //public Transform target; // Lista de targets del jugador
@@ -15,6 +16,11 @@ public class Compass : MonoBehaviour
     GameObject compassPrefab, prefabInstance;
 
     bool isIstanciated = false;
+
+
+    // Nuevo temporizador
+    float timeToReenable = 30f;  // 30 segundos para reactivar la niebla
+    float timer = 0f;  // Temporizador que se incrementa cada frame
 
     // Start is called before the first frame update
     public void Start()
@@ -38,12 +44,26 @@ public class Compass : MonoBehaviour
     {
         if(PlayerManager.Instance.playerIsInsideFog )
         { // Instantiated compass
-            if (isIstanciated)
+            if (!isIstanciated)
+            {
+                return;
+            }
+                if (isIstanciated)
             {
                 prefabInstance.SetActive(false);
-                // Llamar la coroutine para volver a ponerlo en true después de 30 segundos
-                StartCoroutine(ReenableFogAfterTime(GameManager.Instance.potionFogEffectTime));
+                // Comienza el temporizador
+                timer += Time.deltaTime;
+
+                if (timer >= timeToReenable)
+                {
+                    // Después de 30 segundos, reactivar la niebla
+                    PlayerManager.Instance.playerIsInsideFog = false;
+                    timer = 0f;  // Reiniciar el temporizador
+                }
+
                 return;
+
+
             }
         }
         // Player has mission
@@ -82,11 +102,7 @@ public class Compass : MonoBehaviour
         }
     }
 
-    // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
-    private IEnumerator ReenableFogAfterTime(float time)
-    {
-        yield return new WaitForSeconds(time);
-        PlayerManager.Instance.playerIsInsideFog = true;
-    }
+
+
 }
 
