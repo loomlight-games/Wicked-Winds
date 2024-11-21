@@ -14,7 +14,8 @@ public class GameManager : AStateController
     public event EventHandler<string> TownSelected;
     public GameObject FogTriggerPrefab;
     public float potionFogEffectTime = 30f;
-    
+    float timer = 0f;  // Temporizador que se incrementa cada frame
+
 
 
     #region STATES
@@ -351,4 +352,29 @@ public class GameManager : AStateController
     {
         return Instantiate(prefab, position, rotation);
     }
-}
+
+
+
+
+    ///NIEBLA
+    ///
+
+    public void ReenableFogAfterTime()
+    {
+        if (PlayerManager.Instance.playerIsInsideFog && PlayerManager.Instance.potionFog)
+        { 
+                timer += Time.deltaTime;
+
+                if (timer >= potionFogEffectTime)
+                {
+                    // Después de 30 segundos, reactivar la niebla
+                    PlayerManager.Instance.potionFog = false;
+                    timer = 0f;  // Reiniciar el temporizador
+                }
+                return;
+            
+        }
+    }
+
+
+    }

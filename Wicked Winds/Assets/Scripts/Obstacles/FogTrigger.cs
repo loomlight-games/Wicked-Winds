@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FogTrigger : MonoBehaviour
@@ -35,6 +36,15 @@ public class FogTrigger : MonoBehaviour
             StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
         }
     }
+
+
+    // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
+    private IEnumerator ReenableFogAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PlayerManager.Instance.potionFog = false;
+    }
+
 
     // Inicia la transición de la niebla
     private void StartFogTransition(Color targetFogColor, float targetFogDensity)

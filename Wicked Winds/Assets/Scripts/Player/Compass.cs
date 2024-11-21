@@ -18,10 +18,6 @@ public class Compass
     bool isIstanciated = false;
 
 
-    // Nuevo temporizador
-    float timeToReenable = 30f;  // 30 segundos para reactivar la niebla
-    float timer = 0f;  // Temporizador que se incrementa cada frame
-
     // Start is called before the first frame update
     public void Start()
     {
@@ -42,28 +38,30 @@ public class Compass
     // Update is called once per frame
     public void Update()
     {
-        if(PlayerManager.Instance.playerIsInsideFog )
+        if(PlayerManager.Instance.playerIsInsideFog && PlayerManager.Instance.potionFog)
         { // Instantiated compass
             if (!isIstanciated)
             {
                 return;
             }
-                if (isIstanciated)
+            if (isIstanciated)
+            {
+            prefabInstance.SetActive(false);
+            GameManager.Instance.ReenableFogAfterTime();
+                return;
+            }
+        }
+
+        if (PlayerManager.Instance.playerIsInsideFog && !PlayerManager.Instance.potionFog)
+        { // Instantiated compass
+            if (!isIstanciated)
+            {
+                return;
+            }
+            if (isIstanciated)
             {
                 prefabInstance.SetActive(false);
-                // Comienza el temporizador
-                timer += Time.deltaTime;
-
-                if (timer >= timeToReenable)
-                {
-                    // Después de 30 segundos, reactivar la niebla
-                    PlayerManager.Instance.playerIsInsideFog = false;
-                    timer = 0f;  // Reiniciar el temporizador
-                }
-
                 return;
-
-
             }
         }
         // Player has mission
