@@ -40,7 +40,18 @@ public class AuthentificationPanel : Panel
 
         base.Open();
         usernameInput.ActivateInputField();
-        passwordInput.ActivateInputField();
+        passwordInput.DeactivateInputField();
+        // Forzar apertura del teclado táctil
+        if (Application.isMobilePlatform)
+        {
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+        }
+        usernameInput.onSelect.AddListener((value) =>
+        {
+            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
+        });
     }
     private void AnonymousSignIn()
     {
