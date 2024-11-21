@@ -52,6 +52,12 @@ public class AuthentificationPanel : Panel
             TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
             Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
         });
+        passwordInput.onSelect.AddListener((value) =>
+        {
+            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
+        });
     }
     private void AnonymousSignIn()
     {
