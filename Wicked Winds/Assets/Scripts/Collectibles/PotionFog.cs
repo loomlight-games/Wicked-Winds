@@ -9,6 +9,7 @@ public class PotionFog : MonoBehaviour
     public void CollectPotionFog()
     {
         PlayerManager.Instance.potionFog = true;
+        DesactivarPotionUI.Instance.activarFogUI = true;
         GameManager.Instance.ReenableFogAfterTime();
 
         Destroy(gameObject);

@@ -369,7 +369,8 @@ public class GameManager : AStateController
                 {
                     // Después de 30 segundos, reactivar la niebla
                     PlayerManager.Instance.potionFog = false;
-                    timer = 0f;  // Reiniciar el temporizador
+                    DesactivarPotionUI.Instance.activarFogUI = false;
+                timer = 0f;  // Reiniciar el temporizador
                 }
                 return;
             

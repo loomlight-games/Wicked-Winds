@@ -38,12 +38,13 @@ public class FogTrigger : MonoBehaviour
     }
 
 
-    // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
+   /* // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
     private IEnumerator ReenableFogAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
         PlayerManager.Instance.potionFog = false;
-    }
+        DesactivarPotionUI.Instance.activarFogUI = true;
+    }*/
 
 
     // Inicia la transición de la niebla
