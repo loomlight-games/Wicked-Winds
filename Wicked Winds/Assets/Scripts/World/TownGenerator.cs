@@ -16,10 +16,18 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
 
+
+    /// <summary>
+    /// Niebla aleatoria en algunos tiles
+    /// </summary>
+    public GameObject fogTriggerPrefab;
+
     public void Start()
     {
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
+       
+        fogTriggerPrefab = GameManager.Instance.FogTriggerPrefab;
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -65,6 +73,10 @@ public class TownGenerator
 
             InstantiateTiles(); // Instantiates a town tile in each position - from center
         }
+
+        
+        
+
     }
 
     /// <summary>
@@ -153,7 +165,40 @@ public class TownGenerator
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
             // Instantiate tile in position with random rotation on Y
-            GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
+            GameObject instantiatedTile= GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
+
+            // Agregar niebla aleatoriamente
+            AddFogTriggerRandomly(instantiatedTile, tileData);
         }
     }
+
+
+    /// <summary>
+    /// FOG METHODS
+    /// </summary>
+    /// <summary>
+    /// Añade un FogTrigger a un tile de manera aleatoria
+    /// </summary>
+    void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
+    {
+        Debug.Log("SE ESTA EJECUTANDO EL METODO ADDFOGTRIGGERRANDOIMLY)");
+        if (tileData == null)
+        {
+            Debug.LogWarning("TownTile component not found on " + tile.name);
+            return; // Salir si no se encuentra el TownTile
+        }
+
+        float fogChance = 0.2f;
+        if (UnityEngine.Random.value < fogChance)
+        {
+            tileData.hasFog = true;
+            Debug.Log($"Tile {tile.name} has fog: {tileData.hasFog}");
+
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, Quaternion.identity);
+            fogTrigger.transform.parent = tile.transform;
+            
+        }
+    }
+
+
 }

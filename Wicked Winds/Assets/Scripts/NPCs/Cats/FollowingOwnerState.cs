@@ -12,6 +12,9 @@ public class FollowingOwnerState : ICatState
     // Distancia mínima para que el gato se detenga de su dueño
     public float minFollowDistance = 2f;
 
+    // Factor para hacer que el gato sea un poco más lento (ajusta según sea necesario)
+    public float followSpeedFactor = 0.9f;
+
     public FollowingOwnerState(CatController catController, NavMeshAgent agent, Transform player, Transform owner, NPC ownerNpc)
     {
         this.catController = catController;
@@ -25,6 +28,12 @@ public class FollowingOwnerState : ICatState
     {
         if (ownerNpc.missionType != "CatMission")
         {
+            // Ajustar la velocidad del gato para que sea igual o un poco más lenta que la del dueño
+            NavMeshAgent ownerAgent = ownerPosition.GetComponent<NavMeshAgent>();
+            if (ownerAgent != null)
+            {
+                agent.speed = ownerAgent.speed * followSpeedFactor;
+            }
             agent.SetDestination(ownerPosition.position);
         }
         else

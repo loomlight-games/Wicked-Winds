@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class Compass
+
+public class Compass : MonoBehaviour
 {
     // Target
     //public Transform target; // Lista de targets del jugador
@@ -34,6 +36,16 @@ public class Compass
     // Update is called once per frame
     public void Update()
     {
+        if(PlayerManager.Instance.playerIsInsideFog )
+        { // Instantiated compass
+            if (isIstanciated)
+            {
+                prefabInstance.SetActive(false);
+                // Llamar la coroutine para volver a ponerlo en true después de 30 segundos
+                StartCoroutine(ReenableFogAfterTime(GameManager.Instance.potionFogEffectTime));
+                return;
+            }
+        }
         // Player has mission
         if (PlayerManager.Instance.hasActiveMission)
         {
@@ -65,10 +77,16 @@ public class Compass
             // Instantiated compass
             if (isIstanciated)
             {
-                // Destroys it
-                //GameManager.Instance.DestroyGO(prefabInstance);
                 prefabInstance.SetActive(false);
             }
         }
     }
+
+    // Coroutine para esperar 30 segundos y luego habilitar de nuevo el prefab
+    private IEnumerator ReenableFogAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PlayerManager.Instance.playerIsInsideFog = true;
+    }
 }
+

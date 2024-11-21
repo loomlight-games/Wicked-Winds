@@ -57,7 +57,10 @@ public class Interactable : MonoBehaviour
                 // Completar la misión del NPC
                 Debug.Log("Llamando a OnMissionCompleted...");
 
-                
+                if(PlayerManager.Instance.npcMissionActive.cat!= null)
+                {
+                    PlayerManager.Instance.npcMissionActive.cat.ChangeState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
+                }
                 PlayerManager.Instance.npcMissionActive.OnMissionCompleted();
                 PlayerManager.Instance.currentTargets.Remove(PlayerManager.Instance.npcObjective.gameObject);
                 PlayerManager.Instance.npcMissionActive = null;

@@ -40,7 +40,7 @@ public class CatController : MonoBehaviour
         followingOwnerState = new FollowingOwnerState(this, agent, player, ownerPosition, owner);
 
         // Estado inicial
-        currentState = followingPlayerState;
+        currentState = followingOwnerState;
         currentState.Enter();
         UpdateCurrentStateName();
     }

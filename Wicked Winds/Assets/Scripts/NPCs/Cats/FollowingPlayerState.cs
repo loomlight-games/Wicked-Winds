@@ -11,6 +11,9 @@ public class FollowingPlayerState : ICatState
     // Distancia mínima para que el gato se detenga
     public float minFollowDistance = 2f;
 
+    // Factor para hacer que el gato sea un poco más lento (ajusta según sea necesario)
+    public float followSpeedFactor = 0.9f;
+
     public FollowingPlayerState(CatController catController, NavMeshAgent agent, Transform owner)
     {
         this.catController = catController;
@@ -33,6 +36,12 @@ public class FollowingPlayerState : ICatState
     {
         if (player != null)
         {
+            // Ajustar la velocidad del gato para que sea igual o un poco más lenta que la del jugador
+            NavMeshAgent playerAgent = player.GetComponent<NavMeshAgent>();
+            if (playerAgent != null)
+            {
+                agent.speed = playerAgent.speed * followSpeedFactor;
+            }
             agent.SetDestination(player.position);
         }
     }

@@ -24,6 +24,8 @@ public class PlayerManager : AStateController
     public MissionIcon activeMission;
     public NPC npcMissionActive;
     public NPC npcObjective;
+    public bool playerIsInsideFog;
+    public bool potionFog;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground

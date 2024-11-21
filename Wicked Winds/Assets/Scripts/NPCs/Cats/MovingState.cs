@@ -15,6 +15,7 @@ public class MovingState : ICatState
     public void Enter()
     {
         SetRandomDestination();
+        agent.speed = 3.0f;
     }
 
     public void Update()

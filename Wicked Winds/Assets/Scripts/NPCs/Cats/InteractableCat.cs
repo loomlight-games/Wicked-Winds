@@ -40,7 +40,7 @@ public class InteractableCat : MonoBehaviour
                     Debug.Log("Diálogo iniciado.");
                 }
 
-                cat.ChangeState(cat.followingOwnerState);
+                cat.ChangeState(cat.followingPlayerState);
                 cat.InteractWithCat();
                 GameManager.Instance.playState.feedBackText.text = "Gato encontrado. Llevalo junto a su dueño\n";
 
