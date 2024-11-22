@@ -6,8 +6,8 @@ public class GamePlayState : AState
 {
     public TextMeshProUGUI feedBackText;
 
-    GameObject UI, statesUI, gameplayUI, hud;
-    TextMeshProUGUI timerText, elapsedText;
+    GameObject UI, statesUI, gameplayUI, handledControls;
+    TextMeshProUGUI timerText; //, elapsedText;
     HUDBar highSpeedBar, flyHighBar;
     float elapsedTime, remainingTime;
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
@@ -21,16 +21,15 @@ public class GamePlayState : AState
 
         UI = GameObject.Find("Game UI");
 
-        hud = UI.transform.Find("HUD").gameObject;
-        hud.SetActive(true);
-
         statesUI = UI.transform.Find("States").gameObject;
         statesUI.SetActive(true);
         gameplayUI = statesUI.transform.Find("Gameplay").gameObject;
         gameplayUI.SetActive(true);
 
+        //HUD = UI.transform.Find("HUD").gameObject;
+
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
-        elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
+        //elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
         highSpeedBar =  GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar =  GameObject.Find("Fly high bar").GetComponent<HUDBar>();
@@ -39,10 +38,30 @@ public class GamePlayState : AState
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
         
         GameManager.Instance.townGenerator.Start();
+
+        handledControls = UI.transform.Find("Handled controls").gameObject;
+        
+        if (GameManager.Instance.playingOnPC){
+            handledControls.SetActive(false);
+        }else{
+            // Show handled controls
+            handledControls.SetActive(true);
+        }
     }
 
     public override void Update()
     {
+        if (GameManager.Instance.playingOnPC){
+            handledControls.SetActive(false);
+        }else{
+            // Show handled controls
+            handledControls.SetActive(true);
+        }
+
+        // Press ESCAPE 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            GameManager.Instance.ClickButton("Pause");
+
         UpdateTimer();
 
         if (PlayerManager.Instance.playerController.speedPotionValue >= 0)
@@ -61,7 +80,7 @@ public class GamePlayState : AState
 
     public override void Exit()
     {
-        hud.SetActive(false);
+        //HUD.SetActive(false);
         gameplayUI.SetActive(false);
     }
 
@@ -80,14 +99,13 @@ public class GamePlayState : AState
             timerText.color = Color.red;
         }
 
-        //update timer texts
         timerMinutes = Mathf.FloorToInt(remainingTime / 60);
         timerSeconds = Mathf.FloorToInt(remainingTime % 60);
         elapsedMinutes = Mathf.FloorToInt(elapsedTime / 60);
         elapsedSeconds = Mathf.FloorToInt(elapsedTime % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", timerMinutes, timerSeconds);
-        elapsedText.text = string.Format("{0:00}:{1:00}", elapsedMinutes, elapsedSeconds);
+        //elapsedText.text = string.Format("{0:00}:{1:00}", elapsedMinutes, elapsedSeconds);
 
         GameManager.Instance.remainingTime = remainingTime;
     }

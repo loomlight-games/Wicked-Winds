@@ -12,6 +12,7 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
+    public bool playingOnPC = false;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -141,6 +142,9 @@ public class GameManager : AStateController
                 break;
             case "Shop":
                 LoadSceneDirectly(buttonName);
+                break;
+            case "Playing on PC":
+                playingOnPC = !playingOnPC;
                 break;
             default:
                 break;
