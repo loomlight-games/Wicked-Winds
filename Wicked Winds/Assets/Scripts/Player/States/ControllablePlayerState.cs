@@ -62,9 +62,13 @@ public class ControllablePlayerState : AState
 
         if (other.gameObject.TryGetComponent(out PotionFog potion))
         {
-
-            Debug.Log("Interacción con la pocion");
             potion.CollectPotionFog();
+
+        }
+
+        if (other.gameObject.TryGetComponent(out teleportPotion potion2))
+        {
+            potion2.CollectTeleportPotion();
 
         }
     }

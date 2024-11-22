@@ -15,4 +15,39 @@ public class teleportPotion : MonoBehaviour
     {
         
     }
+
+    public void CollectTeleportPotion()
+    {
+        if (PlayerManager.Instance.currentTargets.Count>0)
+        {
+            // Obtener la posición del objetivo
+            Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;
+
+            // Generar un desplazamiento aleatorio
+            Vector3 offset = new Vector3(Random.Range(-2f, 2f), 0f, Random.Range(-2f, 2f));
+            Vector3 teleportPosition = targetPosition + offset;
+
+            // Obtener el componente de efecto
+            TeleportEffect effect = FindObjectOfType<TeleportEffect>();
+            if (effect != null)
+            {
+                StartCoroutine(effect.FlashAndTeleport(teleportPosition, () =>
+                {
+                    // Mover al jugador después del efecto
+                    PlayerManager.Instance.controller.enabled = false;
+                    PlayerManager.Instance.transform.position = teleportPosition;
+                    PlayerManager.Instance.controller.enabled = true;
+
+                    // Desactivar la poción
+                    gameObject.SetActive(false);
+                    Debug.Log("Player teleported with effect!");
+                }));
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No target set for teleportation!");
+        }
+    }
+
 }
