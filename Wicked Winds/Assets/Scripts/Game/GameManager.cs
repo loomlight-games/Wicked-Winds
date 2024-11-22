@@ -12,7 +12,8 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
-   
+    [SerializeField] private AudioClip[] musicTracks;
+
 
 
 
@@ -88,23 +89,40 @@ public class GameManager : AStateController
 
     private void SetStateBasedOnScene(Scene scene)
     {
-        if (scene.name == "Main menu")
+        if (scene.name == "Main menu") {
+            MusicManager.Instance.PlayAudio(musicTracks[0], 2f); // 2 seconds transition
             SetState(mainMenuState);
+        }
+            
         else if (scene.name == "Shop")
+        {
+            MusicManager.Instance.PlayAudio(musicTracks[3], 2f); 
             SetState(shopState);
-        else if (scene.name == "Leaderboard")
+        }
+           
+        else if (scene.name == "Leaderboard") {
+            MusicManager.Instance.PlayAudio(musicTracks[2], 2f); 
             SetState(leaderboardState);
-        else if (scene.name == "Gameplay")
+        }
+            
+        else if (scene.name == "Gameplay") {
+            MusicManager.Instance.PlayAudio(musicTracks[1], 2f); 
             SetState(playState);
+        }
+
         else
+        {
+            MusicManager.Instance.PlayAudio(musicTracks[1], 2f); 
             SetState(playState);
+        }
+            
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Set the state based on the newly loaded scene
         SetStateBasedOnScene(scene);
-
+        
         // Unsubscribe from the event to avoid multiple calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
