@@ -11,6 +11,7 @@ public class PlayerController
 
     float walkSpeed,
         boostSpeed,
+        rainySpeed,
         lowerHeightLimit,
         maxHeightLimit,
         flyForce,
@@ -36,6 +37,9 @@ public class PlayerController
             orientation;
     #endregion
 
+    private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
+
+
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
@@ -60,6 +64,7 @@ public class PlayerController
         movement2D = PlayerManager.Instance.movement2D;
         walkSpeed = PlayerManager.Instance.walkSpeed;
         boostSpeed = PlayerManager.Instance.boostSpeed;
+        rainySpeed = PlayerManager.Instance.boostSpeed;
         flyForce = PlayerManager.Instance.flyForce;
         gravityForce = PlayerManager.Instance.gravityForce;
         lowerHeightLimit = PlayerManager.Instance.lowerHeightLimit;
@@ -146,7 +151,12 @@ public class PlayerController
         // Check if the player is running
         if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick)
         {
-            if (speedPotionValue >= 0f)
+            if (IsPlayerUnderCloud())
+            {
+                movementSpeed = rainySpeed;
+                
+            }
+            else if (speedPotionValue >= 0f)
             { // If able to run (speed potion available)
                 if (movement2D.sqrMagnitude != 0) // Is moving
                     // Reduce speed potion value
@@ -245,4 +255,46 @@ public class PlayerController
     {
         flyPotionValue = MAX_VALUE;
     }
+
+
+    /// <summary>
+    /// Checks if the player is directly beneath the cloud on the Y axis.
+    /// </summary>
+    private bool IsPlayerUnderCloud()
+    {
+        Transform cloudTransform = PlayerManager.Instance.cloudTransform; // Referencia a la nube
+        Vector3 playerPosition = PlayerManager.Instance.transform.position;
+
+        float cloudWidth = 60f;  // Ancho de la nube
+        float cloudDepth = 20f;  // Profundidad de la nube
+
+        // Comprobar si el jugador está dentro de los límites de la nube en X y Z
+        bool isPlayerInRange = playerPosition.x > cloudTransform.position.x - cloudWidth / 2 &&
+                               playerPosition.x < cloudTransform.position.x + cloudWidth / 2 &&
+                               playerPosition.z > cloudTransform.position.z - cloudDepth / 2 &&
+                               playerPosition.z < cloudTransform.position.z + cloudDepth / 2;
+
+        // Comprobar si el jugador está debajo de la nube en Y (un poco más bajo que la nube)
+        bool isPlayerBelowCloud = playerPosition.y < cloudTransform.position.y;
+
+        // El jugador debe estar en el rango horizontal de la nube y debajo de ella en Y
+        bool isUnderCloud = isPlayerInRange && isPlayerBelowCloud;
+
+        // Si el jugador está bajo la nube y aún no se ha mostrado el mensaje
+        if (isUnderCloud && !isAlreadyUnderCloud)
+        {
+            isAlreadyUnderCloud = true; // Marca como ya debajo de la nube
+            RandomFeedback feedback = new RandomFeedback();
+            feedback.RandomCloudFeedBack(); // Mostrar el mensaje
+        }
+        else if (!isUnderCloud)
+        {
+            isAlreadyUnderCloud = false; // Resetea la bandera si el jugador sale de la nube
+        }
+
+        return isUnderCloud;
+    }
+
+
+
 }

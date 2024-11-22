@@ -26,6 +26,7 @@ public class PlayerManager : AStateController
     public NPC npcObjective;
     public bool playerIsInsideFog;
     public bool potionFog;
+    public Transform cloudTransform;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground

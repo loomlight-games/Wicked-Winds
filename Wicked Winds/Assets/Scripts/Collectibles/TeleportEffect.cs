@@ -18,18 +18,26 @@ public class TeleportEffect : MonoBehaviour
 
     private void Start()
     {
-        // Obtener la imagen del Canvas
         if (canvas != null)
         {
-            screenFlash = canvas.GetComponentInChildren<Image>(true); // Buscar incluso si está desactivada
+            // Buscar la imagen por etiqueta o nombre
+            foreach (Image img in canvas.GetComponentsInChildren<Image>(true))
+            {
+                if (img.CompareTag("ScreenFlash")) // Asegúrate de asignar esta etiqueta a la imagen
+                {
+                    screenFlash = img;
+                    break;
+                }
+            }
+
             if (screenFlash != null)
             {
-                canvas.gameObject.SetActive(false); // Desactiva el Canvas inicialmente
+                
                 screenFlash.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0); // Asegura que la opacidad sea 0
             }
             else
             {
-                Debug.LogError("No se encontró una imagen dentro del Canvas.");
+                Debug.LogError("No se encontró una imagen con la etiqueta 'ScreenFlash' dentro del Canvas.");
             }
         }
         else
@@ -40,11 +48,11 @@ public class TeleportEffect : MonoBehaviour
 
     public IEnumerator FlashAndTeleport(Vector3 teleportPosition, System.Action onComplete)
     {
-        soundManager.SelectAudio(4,0.6f);
+        soundManager.SelectAudio(4, 0.6f);
+
         if (screenFlash != null)
         {
-            // Activa el Canvas y comienza el efecto
-            canvas.gameObject.SetActive(true);
+            
             float timer = 0;
 
             // Parpadeo progresivo
@@ -60,7 +68,6 @@ public class TeleportEffect : MonoBehaviour
             screenFlash.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0); // Opacidad 0
             canvas.gameObject.SetActive(false); // Desactiva el Canvas para que no obstruya
 
-        
             // Teletransportar al jugador
             onComplete?.Invoke();
         }
