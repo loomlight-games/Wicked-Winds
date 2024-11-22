@@ -40,13 +40,15 @@ public class teleportPotion : MonoBehaviour
 
                     // Desactivar la poción
                     gameObject.SetActive(false);
-                    Debug.Log("Player teleported with effect!");
+                    GameManager.Instance.playState.feedBackText.text = "Woooooow quicker than my ex";
                 }));
             }
         }
         else
         {
-            Debug.LogWarning("No target set for teleportation!");
+            GameManager.Instance.playState.feedBackText.text = "Looks like you don't have anywhere to go!! Get some life perspective ahah";
+            // Desactivar la poción
+            gameObject.SetActive(false);
         }
     }
 
