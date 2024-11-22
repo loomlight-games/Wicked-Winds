@@ -9,6 +9,12 @@ public class TeleportEffect : MonoBehaviour
     public Color flashColor = Color.black; // Color del flash
 
     private Image screenFlash; // Referencia a la imagen para el efecto
+    private SoundManager soundManager;
+
+    private void Awake()
+    {
+        soundManager = GetComponent<SoundManager>();
+    }
 
     private void Start()
     {
@@ -34,6 +40,7 @@ public class TeleportEffect : MonoBehaviour
 
     public IEnumerator FlashAndTeleport(Vector3 teleportPosition, System.Action onComplete)
     {
+        soundManager.SelectAudio(4,0.6f);
         if (screenFlash != null)
         {
             // Activa el Canvas y comienza el efecto

@@ -51,6 +51,7 @@ public class PlayerController
 
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
+        
     }
 
     public void Update()
@@ -234,6 +235,8 @@ public class PlayerController
     {
         speedPotionValue = MAX_VALUE;
     }
+
+
 
     /// <summary>
     /// Recovers fly potion value
