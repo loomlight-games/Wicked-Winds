@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class teleportPotion : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private SoundManager soundManager;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     public void CollectTeleportPotion()
     {
         if (PlayerManager.Instance.currentTargets.Count>0)
         {
+            if(soundManager != null) { soundManager.SelectAudio(4, 0.6f); }
+            
             // Obtener la posición del objetivo
             Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;
 

@@ -13,7 +13,7 @@ public class TeleportEffect : MonoBehaviour
 
     private void Awake()
     {
-        soundManager = GetComponent<SoundManager>();
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     private void Start()

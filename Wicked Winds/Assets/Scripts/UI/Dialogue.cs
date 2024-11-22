@@ -16,7 +16,7 @@ public class Dialogue : MonoBehaviour
 
     private void Awake()
     {
-        soundManager = GetComponent<SoundManager>();
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
     void Update()

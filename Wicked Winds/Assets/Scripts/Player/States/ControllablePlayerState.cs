@@ -26,25 +26,25 @@ public class ControllablePlayerState : AState
     public override void OnTriggerEnter(Collider other)
     {
         // It's a speed potion
-        if (other.gameObject.CompareTag("SpeedPotion"))
+        if (other.gameObject.CompareTag("SpeedPotion") && other.gameObject.TryGetComponent(out speedPotion potion4))
             // Any speed amount has been lost
             if (PlayerManager.Instance.playerController.speedPotionValue != 100)
             {
                 //Deactivates it
                 other.gameObject.SetActive(false);
-
+                potion4.reproduceSound();
                 // Notifies boostable
                 SpeedPotionCollected?.Invoke(this, null);
             }
 
         // It's a fly high potion
-        if (other.gameObject.CompareTag("FlyHighPotion"))
+        if (other.gameObject.CompareTag("FlyHighPotion") && other.gameObject.TryGetComponent(out flyPotionHigh potion3))
             // Any fly high amount has been lost
             if (PlayerManager.Instance.playerController.flyPotionValue != 100)
             {
                 //Deactivates it
                 other.gameObject.SetActive(false);
-
+                potion3.reproduceSound();
                 // Notifies boostable
                 FlyPotionCollected?.Invoke(this, null);
             }

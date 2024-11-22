@@ -5,15 +5,18 @@ using UnityEngine;
 public class flyPotionHigh
     : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private SoundManager soundManager;
+
+    private void Awake()
     {
-        
+        soundManager = FindObjectOfType<SoundManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void reproduceSound()
     {
-        
+        if (soundManager != null)
+            soundManager.SelectAudio(2, 0.6f);
+
     }
+    
 }
