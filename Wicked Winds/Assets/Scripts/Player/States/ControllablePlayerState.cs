@@ -71,6 +71,13 @@ public class ControllablePlayerState : AState
             potion2.CollectTeleportPotion();
 
         }
+
+        //ALBAAA AQUIIIII
+        /*
+        if(other.gameObject.TryGetComponent(out birdPotion potion4))
+        {
+            potion4.CollectbirdPotion();
+        } */
     }
 
     public override void OnTriggerStay(Collider other)
@@ -101,13 +108,14 @@ public class ControllablePlayerState : AState
             }
         }
 
-        if (other.gameObject.TryGetComponent(out OwlController owl))
+        if (other.gameObject.TryGetComponent(out InteractableOwl owl))
         {
             GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
             if (PlayerManager.Instance.interactKey)
             {
+                GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
                 //Deactivates it
-                owl.gameObject.SetActive(false);
+                owl.Interact();
             }
         }
 

@@ -7,16 +7,15 @@ public class OwlController : MonoBehaviour
     public NPC owner; // Reference to the NPC owner of the owl
     public float moveSpeed = 5f; // Movement speed of the owl (This will be overwritten by PlayerManager)
     public float detectionRadius = 10f; // Radius for detecting the player
-    public float flightHeight = 10f; // Height at which the owl flies
+    public float flightHeight = 15f; // Height at which the owl flies
     public float flightRange = 5f; // Random flight range while the owl is flying
     public float followDistance = 5f; // Distance at which the owl will follow the player
 
     // Map boundaries (defined here)
-    private Vector3 mapMinBounds = new Vector3(-175, 10, -175); // Minimum coordinates of the map
-    private Vector3 mapMaxBounds = new Vector3(175, 20, 175);  // Maximum coordinates of the map
+    private Vector3 mapMinBounds = new Vector3(-80, 10, -80); // Minimum coordinates of the map
+    private Vector3 mapMaxBounds = new Vector3(80, 20, 80);  // Maximum coordinates of the map
 
     private bool isEscaping = false;
-    private bool isInACage = false; // State for following the player
     private Vector3 targetPosition; // Target position for random flight
 
     void Start()
@@ -81,14 +80,17 @@ public class OwlController : MonoBehaviour
         transform.position = clampedPosition;
     }
 
-    // Starts following the player after being caught
-    public void IsInCage()
+   
+
+    // Nuevo m?todo para interactuar con el gato
+    public void InteractWithOwl()
     {
-        isEscaping = false;
-        isInACage = true;
-        // Call the follow player state or have the owl interact with the player
+        // Llamar al estado de seguir al jugador o hacer que el gato interact?e con el jugador
         PlayerManager.Instance.RemoveTarget(gameObject);
-        // Add the NPC as a new target in `currentTargets`
+        // Aniade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
+        desactivarOwlUI.Instance.activateOwlUI = true;
+
+
     }
 }
