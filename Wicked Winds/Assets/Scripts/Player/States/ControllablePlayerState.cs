@@ -71,6 +71,13 @@ public class ControllablePlayerState : AState
             potion2.CollectTeleportPotion();
 
         }
+
+        //ALBAAA AQUIIIII
+        /*
+        if(other.gameObject.TryGetComponent(out birdPotion potion4))
+        {
+            potion4.CollectbirdPotion();
+        } */
     }
 
     public override void OnTriggerStay(Collider other)
