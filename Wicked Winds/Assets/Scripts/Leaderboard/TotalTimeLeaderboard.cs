@@ -1,21 +1,25 @@
-using System;
-using TMPro;
-using Unity.Services.Leaderboards;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
+using Unity.Services.Leaderboards;
+using System;
 
-public class LeaderboardPanel : Panel
+public class TotalTimeLeaderboard : Panel 
 {
     string LeaderboardID = "ElapsedTime";
     [SerializeField] private int playersPerPage = 8;
     [SerializeField] private LeaderboardsPlayerItem playerItemPrefab = null;
 
     //for asigning the playersItems prefabs (contents's children)
-    [SerializeField] private RectTransform playersContainer = null;
+    [SerializeField] private RectTransform playersContainer = null; 
     [SerializeField] public TextMeshProUGUI pageText = null;
     [SerializeField] private Button nextButton = null;
     [SerializeField] private Button prevButton = null;
-    [SerializeField] private Button closeButton = null;
+    [SerializeField] private Button ProfileButton = null;
+    [SerializeField] private Button AverageButton = null;
+    [SerializeField] private Button misionCountButton = null;   
 
     //prueba
     [SerializeField] private Button addScoreButton = null;
@@ -31,10 +35,12 @@ public class LeaderboardPanel : Panel
             return;
         }
         ClearPlayersList();
-        closeButton.onClick.AddListener(ClosePanel);
+        ProfileButton.onClick.AddListener(ProfilePanel);
         nextButton.onClick.AddListener(NextPage);
         prevButton.onClick.AddListener(PrevPage);
         addScoreButton.onClick.AddListener(AddScore);
+        AverageButton.onClick.AddListener(OpenAveragePanel);
+        misionCountButton.onClick.AddListener(OpenMisionCountPanel);
         base.Initialize();
     }
     /// <summary>
@@ -62,7 +68,7 @@ public class LeaderboardPanel : Panel
     }
     private void AddScore()
     {
-        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE, 0));
+        AddScoreAsync(PlayerPrefs.GetInt(GameManager.Instance.PLAYER_SCORE_FILE,0));
     }
     public async void AddScoreAsync(int score)
     {
@@ -145,10 +151,22 @@ public class LeaderboardPanel : Panel
         prevButton.interactable = currentPage > 1 && totalPages > 1;
     }
 
-    private void ClosePanel()
+    //PANEL MANAGEMENT
+    private void ProfilePanel()
     {
         PanelManager.Open("profile");
     }
+
+    private void OpenAveragePanel()
+    {
+        PanelManager.Open("AverageLeaderboard");
+    }
+    private void OpenMisionCountPanel()
+    {
+        PanelManager.Open("MisionCountLeaderboard");
+
+    }
+
     /// <summary>
     /// clear the list of players
     /// </summary>
@@ -163,6 +181,7 @@ public class LeaderboardPanel : Panel
             }
         }
     }
+
 
     /// <summary>
     /// control the leaderboard pages
