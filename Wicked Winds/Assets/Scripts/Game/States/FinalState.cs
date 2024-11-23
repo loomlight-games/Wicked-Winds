@@ -48,10 +48,7 @@ public class FinalState : AState
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameManager.Instance.ClickButton("Replay");
-        }
+  
     }
 
     public override void Exit()

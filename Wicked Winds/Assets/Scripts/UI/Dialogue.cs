@@ -101,7 +101,6 @@ public class Dialogue : MonoBehaviour
         else
         {
             DeactivateAllChildren(); // Termina el diálogo
-            soundManager.StopAudio();
         }
     }
 

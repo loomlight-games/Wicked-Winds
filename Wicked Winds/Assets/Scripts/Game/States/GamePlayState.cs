@@ -1,7 +1,8 @@
 using System;
 using TMPro;
 using UnityEngine;
-
+using System.Linq;
+using UnityEngine.InputSystem;
 public class GamePlayState : AState
 {
     public TextMeshProUGUI feedBackText;
@@ -13,6 +14,8 @@ public class GamePlayState : AState
     int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
 
+    //NEW INPUT SYSTEM
+    private InputAction pauseAction;
     public override void Enter()
     {
 
@@ -82,8 +85,6 @@ public class GamePlayState : AState
         else
             flyHighBar.SetValue(0);
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Pause");
     }
 
     public override void Exit()

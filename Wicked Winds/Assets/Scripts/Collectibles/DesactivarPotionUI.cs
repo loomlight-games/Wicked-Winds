@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class DesactivarPotionUI : MonoBehaviour
 {
-
     // Singleton
     public static DesactivarPotionUI Instance { get; private set; }
-    
 
+    // Variables para controlar la UI de las pociones
     public bool activarFogUI; // Esta opción aparecerá en el Inspector
-    public GameObject potionFog;     // Objeto a desactivar
+    public GameObject potionFog;     // Objeto a desactivar para la poción de niebla
 
+    public bool activarBirdUI; // Esta opción aparecerá en el Inspector
+    public GameObject potionBird;     // Objeto a desactivar para la poción de pájaros
 
     private void Awake()
     {
@@ -25,18 +26,27 @@ public class DesactivarPotionUI : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // Opcional: Mantiene el objeto al cambiar de escena
     }
+
     void Update()
     {
-        // Desactiva el objeto si la condición se cumple
-        if (activarFogUI == true)
+        // Desactiva el objeto de la poción de niebla si la condición se cumple
+        if (activarFogUI)
         {
-            potionFog.SetActive(true);
+            potionFog.SetActive(true); // Activa la UI de la poción de niebla
+        }
+        else
+        {
+            potionFog.SetActive(false); // Desactiva la UI de la poción de niebla
         }
 
-        // Desactiva el objeto si la condición se cumple
-        if (activarFogUI == false)
+        // Desactiva el objeto de la poción de pájaros si la condición se cumple
+        if (activarBirdUI)
         {
-            potionFog.SetActive(false);
+            potionBird.SetActive(true); // Activa la UI de la poción de pájaros
+        }
+        else
+        {
+            potionBird.SetActive(false); // Desactiva la UI de la poción de pájaros
         }
     }
 }

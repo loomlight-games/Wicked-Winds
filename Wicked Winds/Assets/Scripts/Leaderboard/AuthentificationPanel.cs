@@ -24,7 +24,7 @@ public class AuthentificationPanel : Panel
         signupButton.onClick.AddListener(SignUp);
         anonymousButton.onClick.AddListener(AnonymousSignIn);
         leaderboardButton.onClick.AddListener(Viewtable);
-
+        
         // Restaurar el color cuando el usuario empieza a escribir
         usernameInput.onValueChanged.AddListener((text) => ResetPlaceholderColor(usernameInput));
         passwordInput.onValueChanged.AddListener((text) => ResetPlaceholderColor(passwordInput));
@@ -36,6 +36,25 @@ public class AuthentificationPanel : Panel
     {
 
         base.Open();
+        usernameInput.ActivateInputField();
+        passwordInput.DeactivateInputField();
+        // Forzar apertura del teclado táctil
+        if (Application.isMobilePlatform)
+        {
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+        }
+        usernameInput.onSelect.AddListener((value) =>
+        {
+            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
+        });
+        passwordInput.onSelect.AddListener((value) =>
+        {
+            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
+            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
+        });
     }
     private void AnonymousSignIn()
     {
@@ -164,7 +183,7 @@ public class AuthentificationPanel : Panel
     void Viewtable()
     {
         Close();
-        PanelManager.Open("Leaderboard");
+        PanelManager.Open("TotalTimeLeaderboard");
     }
 
     // UI EFFECTS

@@ -22,6 +22,7 @@ public class PlayerManager : AStateController
     public NPC npcObjective;
     public bool playerIsInsideFog;
     public bool potionFog;
+    public bool potionBird;
     public Transform cloudTransform;
     public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
@@ -53,6 +54,8 @@ public class PlayerManager : AStateController
     public float lowerHeightLimit = 7f;
     public float maxHeightLimit = 20f;
     public float joystickScale = 1.1f;
+    // Fuerza de retroceso
+    public float pushBackForce = 5f; // Fuerza de retroceso al chocar con p�jaros
 
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
@@ -84,6 +87,23 @@ public class PlayerManager : AStateController
         hasActiveMission = false;
 
         customizable.Awake();
+    }
+
+    // El m�todo OnCollisionEnter para aplicar el retroceso
+    public override void OnCollisionEnter(Collision collision)
+    {
+        // Verifica si el objeto con el que colisiona es un p�jaro
+        if (collision.gameObject.CompareTag("Bird"))
+        {
+            // Obt�n la direcci�n opuesta a la colisi�n para empujar al personaje hacia atr�s
+            Vector3 pushBackDirection = transform.position - collision.transform.position;
+
+            // Normaliza la direcci�n y aplica la fuerza de retroceso utilizando el CharacterController
+            pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
+
+            // Aplicamos el retroceso
+            controller.Move(pushBackDirection.normalized * pushBackForce * Time.deltaTime);
+        }
     }
 
     // Start is called before the first frame update
