@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ControllablePlayerState : AState
@@ -51,13 +52,52 @@ public class ControllablePlayerState : AState
 
         // It's a coin
         if (other.gameObject.CompareTag("Coin"))
-        {
-            //Deactivates it
-            other.gameObject.SetActive(false);
+        // Attempt to get the Collectible component
+        Collectible collectible = other.GetComponent<Collectible>();
 
-            // Adds coin to player
-            PlayerManager.Instance.customizable.coins++;
-            PlayerManager.Instance.customizable.SaveCoins();
+        // Switch based on the tag of the collided object
+        switch (other.gameObject.tag)
+        {
+            case "SpeedPotion":
+                // Check if the player has lost any speed amount
+                if (PlayerManager.Instance.playerController.speedPotionValue != PlayerManager.Instance.MAX_VALUE){
+                    // If the object has a Collectible component, deactivate it if not deactivated already
+                    if (collectible != null && collectible.isModelActive){
+                        collectible.Deactivate();
+                    
+                        // Notify that a speed potion was collected
+                        SpeedPotionCollected?.Invoke(this, null);
+                    }
+                }
+                break;
+
+            case "FlyHighPotion":
+                // Check if the player has lost any fly high amount
+                if (PlayerManager.Instance.playerController.flyPotionValue != PlayerManager.Instance.MAX_VALUE){
+                    // If the object has a Collectible component, deactivate it if not deactivated already
+                    if (collectible != null && collectible.isModelActive){
+                        collectible.Deactivate();
+                        
+
+                        // Notify that a fly high potion was collected
+                        FlyPotionCollected?.Invoke(this, null);
+                    }
+                }
+                break;
+
+            case "Coin":
+                // If the object has a Collectible component, deactivate it if not deactivated already
+                if (collectible != null && collectible.isModelActive){
+                    collectible.Deactivate();
+                        
+                    // Increment the player's coin count and save it
+                    PlayerManager.Instance.customizable.coins++;
+                    PlayerManager.Instance.customizable.SaveCoins();
+                }
+                break;
+
+            default:
+                break;
         }
 
         if (other.gameObject.TryGetComponent(out PotionFog potion))

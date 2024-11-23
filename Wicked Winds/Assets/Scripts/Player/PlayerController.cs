@@ -22,8 +22,7 @@ public class PlayerController
         verticalPosition,
         flyPotionLoss,
         speedPotionLoss;
-
-    public float MAX_VALUE = 100;
+    
     public float flyPotionValue, speedPotionValue;
 
     Vector3 movement3D,
@@ -43,9 +42,9 @@ public class PlayerController
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
-        flyPotionValue = MAX_VALUE;
-        speedPotionValue = MAX_VALUE;
-
+        flyPotionValue = PlayerManager.Instance.MAX_VALUE; 
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE; ;
+        
         controller = PlayerManager.Instance.controller;
         player = PlayerManager.Instance.transform;
         orientation = PlayerManager.Instance.orientation;
@@ -243,7 +242,7 @@ public class PlayerController
     /// </summary>
     public void SpeedPotionGain(object sender, EventArgs e)
     {
-        speedPotionValue = MAX_VALUE;
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
 
@@ -253,7 +252,7 @@ public class PlayerController
     /// </summary>
     private void FlyPotionGain(object sender, EventArgs e)
     {
-        flyPotionValue = MAX_VALUE;
+        flyPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
 
@@ -268,19 +267,19 @@ public class PlayerController
         float cloudWidth = 60f;  // Ancho de la nube
         float cloudDepth = 20f;  // Profundidad de la nube
 
-        // Comprobar si el jugador está dentro de los límites de la nube en X y Z
+        // Comprobar si el jugador estï¿½ dentro de los lï¿½mites de la nube en X y Z
         bool isPlayerInRange = playerPosition.x > cloudTransform.position.x - cloudWidth / 2 &&
                                playerPosition.x < cloudTransform.position.x + cloudWidth / 2 &&
                                playerPosition.z > cloudTransform.position.z - cloudDepth / 2 &&
                                playerPosition.z < cloudTransform.position.z + cloudDepth / 2;
 
-        // Comprobar si el jugador está debajo de la nube en Y (un poco más bajo que la nube)
+        // Comprobar si el jugador estï¿½ debajo de la nube en Y (un poco mï¿½s bajo que la nube)
         bool isPlayerBelowCloud = playerPosition.y < cloudTransform.position.y;
 
         // El jugador debe estar en el rango horizontal de la nube y debajo de ella en Y
         bool isUnderCloud = isPlayerInRange && isPlayerBelowCloud;
 
-        // Si el jugador está bajo la nube y aún no se ha mostrado el mensaje
+        // Si el jugador estï¿½ bajo la nube y aï¿½n no se ha mostrado el mensaje
         if (isUnderCloud && !isAlreadyUnderCloud)
         {
             isAlreadyUnderCloud = true; // Marca como ya debajo de la nube

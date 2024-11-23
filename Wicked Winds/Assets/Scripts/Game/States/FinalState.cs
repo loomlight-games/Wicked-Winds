@@ -2,32 +2,45 @@ using TMPro;
 using UnityEngine;
 
 public class FinalState : AState
-{
-    GameObject finalMenu, defeat, retryButton, mainMenuButton, leaderboardButton, UI, statesUI;
+{    
+    GameObject finalMenu, 
+        defeat, 
+        retryButton, 
+        mainMenuButton,
+        leaderboardButton, 
+        UI, 
+        statesUI,
+        HUD,
+        handledControls;
     TextMeshProUGUI scoreText;
 
     public override void Enter()
     {
         UI = GameObject.Find("Game UI");
 
+        HUD = UI.transform.Find("HUD").gameObject;
+        HUD.SetActive(false);
+        handledControls = UI.transform.Find("Handled controls").gameObject;
+        handledControls.SetActive(false);
+
         statesUI = UI.transform.Find("States").gameObject;
         finalMenu = statesUI.transform.Find("FinalMenu").gameObject;
-        defeat = finalMenu.transform.Find("Defeat").gameObject;
+        defeat = finalMenu.transform.Find("Game over").gameObject;
         retryButton = finalMenu.transform.Find("Replay").gameObject;
         mainMenuButton = finalMenu.transform.Find("Main menu").gameObject;
         leaderboardButton = finalMenu.transform.Find("Leaderboard").gameObject;
-        scoreText = finalMenu.transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        scoreText = finalMenu.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
-        // Mostrar el men� de final de juego
+        
         finalMenu.SetActive(true);
         defeat.SetActive(true);
         retryButton.SetActive(true);
         mainMenuButton.SetActive(true);
         leaderboardButton.SetActive(true);
 
-        // Mostrar la puntuaci�n final
+        
         float playerScore = PlayerManager.Instance.score;
-        scoreText.text = "Your Score: " + playerScore.ToString();
+        scoreText.text = "Your total time: " + playerScore.ToString();
 
 
         Time.timeScale = 0f; // Pausar el juego
@@ -35,7 +48,7 @@ public class FinalState : AState
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) // Por ejemplo, reiniciar el juego
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             GameManager.Instance.ClickButton("Replay");
         }

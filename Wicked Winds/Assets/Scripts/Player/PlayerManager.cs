@@ -28,6 +28,12 @@ public class PlayerManager : AStateController
     public bool potionFog;
     public Transform cloudTransform;
     public float moveSpeed; // Esta es la velocidad que usas para moverte
+    [HideInInspector] public int score, MAX_VALUE = 100;
+    [HideInInspector] public List<GameObject> currentTargets = new ();
+    [HideInInspector] public Transform target;
+    [HideInInspector] public MissionIcon activeMission;
+    [HideInInspector] public Animator animator;
+
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground
     public readonly AtShopPlayerState atShopState = new();// At shop
@@ -38,6 +44,7 @@ public class PlayerManager : AStateController
     public PlayerController playerController = new();
     public CustomizableCharacter customizable;
     public Compass compass = new();
+    public PlayerAnimator playerAnimator = new();
     #endregion
 
     #region PROPERTIES
@@ -86,6 +93,8 @@ public class PlayerManager : AStateController
     // Start is called before the first frame update
     public override void Start()
     {
+        animator= GetComponent<Animator>();
+
         if (SceneManager.GetActiveScene().name == "Shop")
             SetState(atShopState);
         else
