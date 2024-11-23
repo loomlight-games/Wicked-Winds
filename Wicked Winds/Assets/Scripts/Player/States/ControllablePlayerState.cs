@@ -69,7 +69,8 @@ public class ControllablePlayerState : AState
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive){
                     collectible.Deactivate();
-                        
+                    SoundManager.Instance.SelectAudio(1, 0.6f);
+
                     // Increment the player's coin count and save it
                     PlayerManager.Instance.customizable.coins++;
                     PlayerManager.Instance.customizable.SaveCoins();

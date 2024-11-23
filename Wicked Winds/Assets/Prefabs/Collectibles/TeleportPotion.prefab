@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 1167723689287560749}
   - component: {fileID: 9192385271519526884}
   - component: {fileID: 2220576043867024435}
-  - component: {fileID: 7716339979065201457}
+  - component: {fileID: 8880726888526447888}
   m_Layer: 0
   m_Name: TeleportPotion
-  m_TagString: Untagged
+  m_TagString: TeleportPotion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614e6ec3faa5a3549a721e8cc6d3b195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7716339979065201457
+--- !u!114 &8880726888526447888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,14 +77,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8104250006888861241}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf6c925fe7fb0cb4a8f60b2db5f9a525, type: 3}
+  m_Script: {fileID: 11500000, guid: 28f0da43804f69844a1546447a6884da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 5006911545258030510, guid: ec94beb30e51e9245b3287b9acd59d2c, type: 3}
-  teleportParticles: {fileID: 1204633435680754222, guid: 2e07a2b1d76a4a84491f79c82de6fe71,
-    type: 3}
-  flashDuration: 0.5
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  reappearable: 1
+  isModelActive: 0
+  timeToReappear: 20
+  rotationSpeedX: 0.1
+  rotationSpeedY: 0.2
+  rotationSpeedZ: 0.1
 --- !u!1001 &4886541608022883435
 PrefabInstance:
   m_ObjectHideFlags: 0

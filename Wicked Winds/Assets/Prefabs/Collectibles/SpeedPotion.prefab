@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5711839278941117727}
   - component: {fileID: 246363717474197764}
-  - component: {fileID: 2231522968208556277}
+  - component: {fileID: 7123711796840963031}
   m_Layer: 0
   m_Name: SpeedPotion
   m_TagString: SpeedPotion
@@ -55,7 +55,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2231522968208556277
+--- !u!114 &7123711796840963031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,9 +64,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 996459263286131662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea34ff4f2d51cc942bdeefce956bc449, type: 3}
+  m_Script: {fileID: 11500000, guid: 28f0da43804f69844a1546447a6884da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reappearable: 1
+  isModelActive: 0
+  timeToReappear: 20
+  rotationSpeedX: 0.1
+  rotationSpeedY: 0.2
+  rotationSpeedZ: 0.1
 --- !u!1 &1675539569459030709
 GameObject:
   m_ObjectHideFlags: 0

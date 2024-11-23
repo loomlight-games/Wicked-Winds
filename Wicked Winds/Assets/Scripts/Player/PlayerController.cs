@@ -34,6 +34,7 @@ public class PlayerController
     Transform cameraTransform,
             player,
             orientation;
+
     #endregion
 
     private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
