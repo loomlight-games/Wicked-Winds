@@ -20,6 +20,7 @@ public class PotionFog : MonoBehaviour
         
         PlayerManager.Instance.potionFog = true;
         DesactivarPotionUI.Instance.activarFogUI = true;
+        //
         FogManager.Instance.ReenableFogAfterTime();
 
         gameObject.SetActive(false);

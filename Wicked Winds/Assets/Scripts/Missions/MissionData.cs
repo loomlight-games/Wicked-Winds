@@ -75,6 +75,28 @@ public class MissionData : ScriptableObject
                     "Help me create a potion that turns me into a cat! \nI want to see the world from a feline perspective!",
                     "Can you brew a courage potion for me? \nI want to face my fears and finally ride that roller coaster!"
                 }
+            },
+
+
+            { "OwlMission", new string[]
+                {
+
+                   "Oh no, my wise owl has flown off again! \nI’m sure he’s giving a lecture to the young birds, teaching them the secrets of the skies! Could you help me find him?",
+
+                    "I believe my owl is having a deep conversation with the moon. \nHe’s always been the mysterious type, but I could use your help in bringing him back before his wisdom spreads too far!",
+
+                    "My owl is out there, sharing his wisdom with the stars! \nCan you find him before he becomes a sage for every bird in the forest?",
+
+                    "Where has my owl gone now? \nI bet he’s out there in the forest, talking to the trees or teaching the birds how to fly with purpose. Please, help me find him!",
+
+                    "My owl is the wisest creature I know, but he’s off giving one of his philosophical talks to the wind! \nCan you track him down before he starts teaching the squirrels about the meaning of life?",
+
+                    "I think my owl has joined the celestial council again—he’s probably up there in the sky, debating the mysteries of the universe with the stars. Help me bring him back!",
+
+                    "Help! My owl has wandered off again. \nHe’s probably sharing his profound wisdom with the moon, telling tales that no one else can understand. I need him back home before he starts writing a book!",
+
+                    "Oh dear, my owl is out there again, passing his wisdom to the night! \nI can’t find him, but I’m sure he’s giving an important lecture to the night birds. Can you help me bring him back?"
+                }
             }
         };
 
@@ -117,6 +139,27 @@ public class MissionData : ScriptableObject
                     "You’re fantastic! \nI’m feeling better already with this potion!",
                     "You’re the best! \nI can’t wait to see the world through my cat’s eyes!",
                     "You’re amazing! \nWith this courage potion, \nI’m ready for anything!"
+                }
+            },
+
+
+            { "OwlMission", new string[]
+                {
+                    "Ah, my wise owl is home! \nThank you for bringing him back from his celestial journey!",
+
+                    "You found him! \nHe’s probably already telling the birds about the secrets of the moon. Thank you!",
+
+                    "Ah, you’ve returned my philosopher! \nI’m sure he’s got a new story to tell the stars tonight. Thank you!",
+
+                    "My owl has returned! \nI bet he’s got a thousand new pieces of wisdom to share. Thank you so much!",
+
+                    "Thank you for bringing my wise companion back! \nI’m sure he’ll now have a story to tell every bird in the forest!",
+
+                    "You’ve done it! \nI’ll bet my owl’s already deep in conversation with the wind again. Thanks for bringing him back!",
+
+                    "Oh, thank you! \nMy owl is back, and no doubt, he’s ready to share his infinite wisdom with anyone who listens!",
+
+                    "You’ve brought him back! \nNow I can rest easy knowing he’s not off teaching the stars... for now!"
                 }
             }
         };

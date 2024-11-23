@@ -58,7 +58,7 @@ public class NPCSpawner : MonoBehaviour
                 // Generar el búho en cualquier parte del mapa a una altura de 10 unidades
                 Vector3 owlPosition = new Vector3(
                     Random.Range(-detectionRadius, detectionRadius),
-                    10f, // Altura fija de 10 unidades
+                    15f, // Altura fija de 10 unidades
                     Random.Range(-detectionRadius, detectionRadius)
                 );
 
