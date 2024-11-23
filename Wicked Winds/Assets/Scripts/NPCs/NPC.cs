@@ -19,6 +19,7 @@ public class NPC : MonoBehaviour
     private NavMeshAgent agent;
     public NPC sender;
     public CatController cat;
+    public OwlController owl;
     public Guid npcID; // Identificador único para el NPC
 
     private void Awake()

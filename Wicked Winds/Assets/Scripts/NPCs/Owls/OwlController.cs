@@ -5,17 +5,18 @@ public class OwlController : MonoBehaviour
 {
     public Transform player; // Reference to the player
     public NPC owner; // Reference to the NPC owner of the owl
-    public float moveSpeed = 5f; // Movement speed of the owl
+    public float moveSpeed = 5f; // Movement speed of the owl (This will be overwritten by PlayerManager)
     public float detectionRadius = 10f; // Radius for detecting the player
     public float flightHeight = 10f; // Height at which the owl flies
     public float flightRange = 5f; // Random flight range while the owl is flying
+    public float followDistance = 5f; // Distance at which the owl will follow the player
 
     // Map boundaries (defined here)
     private Vector3 mapMinBounds = new Vector3(-175, 0, -175); // Minimum coordinates of the map
     private Vector3 mapMaxBounds = new Vector3(175, 10, 175);  // Maximum coordinates of the map
 
     private bool isEscaping = false;
-    private bool isFollowingPlayer = false; // State for following the player
+    private bool isInACage = false; // State for following the player
     private Vector3 targetPosition; // Target position for random flight
 
     void Start()
@@ -25,14 +26,8 @@ public class OwlController : MonoBehaviour
 
     void Update()
     {
-        if (isFollowingPlayer)
-        {
-            // Follow the player in the air
-            Vector3 followDirection = (player.position - transform.position).normalized;
-            followDirection.y = Mathf.Clamp(player.position.y + flightHeight, mapMinBounds.y, mapMaxBounds.y); // Smoothly adjust the height
-            transform.position += followDirection * moveSpeed * Time.deltaTime;
-        }
-        else if (isEscaping)
+       
+        if (isEscaping)
         {
             // Escape from the player in a straight line
             Vector3 escapeDirection = (transform.position - player.position).normalized;
@@ -87,10 +82,10 @@ public class OwlController : MonoBehaviour
     }
 
     // Starts following the player after being caught
-    public void StartFollowingPlayer()
+    public void IsInCage()
     {
         isEscaping = false;
-        isFollowingPlayer = true;
+        isInACage = true;
         // Call the follow player state or have the owl interact with the player
         PlayerManager.Instance.RemoveTarget(gameObject);
         // Add the NPC as a new target in `currentTargets`

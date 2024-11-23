@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class CloudMovement : MonoBehaviour
 {
-    // Rango de movimiento
-    [SerializeField] private Vector2 movementAreaMin = new Vector2(-350f, -350f);
-    [SerializeField] private Vector2 movementAreaMax = new Vector2(350f, 350f);
-
+    // Rango de movimiento en 3D
+    [SerializeField] private Vector3 movementAreaMin = new Vector3(-175f, 40f, -175f); // Coordenadas mínimas del área
+    [SerializeField] private Vector3 movementAreaMax = new Vector3(175f, 40f, 175f);   // Coordenadas máximas del área
     // Velocidad de la nube
     [SerializeField] private float speed = 2f;
 

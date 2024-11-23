@@ -106,7 +106,8 @@ public class ControllablePlayerState : AState
             GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
             if (PlayerManager.Instance.interactKey)
             {
-                owl.GetComponent<OwlController>().StartFollowingPlayer();
+                //Deactivates it
+                owl.gameObject.SetActive(false);
             }
         }
 
