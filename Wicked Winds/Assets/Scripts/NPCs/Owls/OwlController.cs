@@ -12,8 +12,8 @@ public class OwlController : MonoBehaviour
     public float followDistance = 5f; // Distance at which the owl will follow the player
 
     // Map boundaries (defined here)
-    private Vector3 mapMinBounds = new Vector3(-175, 0, -175); // Minimum coordinates of the map
-    private Vector3 mapMaxBounds = new Vector3(175, 10, 175);  // Maximum coordinates of the map
+    private Vector3 mapMinBounds = new Vector3(-175, 10, -175); // Minimum coordinates of the map
+    private Vector3 mapMaxBounds = new Vector3(175, 20, 175);  // Maximum coordinates of the map
 
     private bool isEscaping = false;
     private bool isInACage = false; // State for following the player
