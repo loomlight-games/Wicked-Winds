@@ -5,6 +5,7 @@ public class NPCSpawner : MonoBehaviour
 {
     public GameObject npcPrefab; // Prefab del NPC
     public GameObject catPrefab; // Prefab del gato
+    public GameObject owlPrefab; // Prefab del búho (nuevo)
     public int npcCount = 30; // Número total de NPCs a generar
     public float detectionRadius = 100f; // Radio para detectar el suelo
     public LayerMask groundLayer; // Capa del suelo
@@ -34,7 +35,7 @@ public class NPCSpawner : MonoBehaviour
             NPC npcComponent = npc.GetComponent<NPC>();
             npcComponent.hasMission = Random.value > 0.5f;
 
-            // 20% de probabilidad de generar un gato
+            // 30% de probabilidad de generar un gato
             if (Random.value < 0.3f)
             {
                 // Obtener el ID del tipo de agente para gatos (Cat)
@@ -50,6 +51,23 @@ public class NPCSpawner : MonoBehaviour
                     catController.owner = npcComponent;
                 }
             }
+
+            // 10% de probabilidad de generar un búho
+            if (Random.value < 0.1f)
+            {
+                // Generar el búho en cualquier parte del mapa a una altura de 10 unidades
+                Vector3 owlPosition = new Vector3(
+                    Random.Range(-detectionRadius, detectionRadius),
+                    10f, // Altura fija de 10 unidades
+                    Random.Range(-detectionRadius, detectionRadius)
+                );
+
+                GameObject owl = Instantiate(owlPrefab, owlPosition, Quaternion.identity);
+                OwlController owlController = owl.GetComponent<OwlController>();
+                npcComponent.owl = owlController;
+                owlController.owner = npcComponent;
+            }
+
             spawnedNPCCount++;
         }
     }
