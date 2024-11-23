@@ -35,8 +35,7 @@ public class teleportPotion : MonoBehaviour
                     PlayerManager.Instance.transform.position = teleportPosition;
                     PlayerManager.Instance.controller.enabled = true;
 
-                    // Desactivar la poción
-                    gameObject.SetActive(false);
+                    
                     GameManager.Instance.playState.feedBackText.text = "Woooooow quicker than my ex";
                 }));
             }
@@ -44,8 +43,7 @@ public class teleportPotion : MonoBehaviour
         else
         {
             GameManager.Instance.playState.feedBackText.text = "Looks like you don't have anywhere to go!! Get some life perspective ahah";
-            // Desactivar la poción
-            gameObject.SetActive(false);
+            
         }
     }
 
