@@ -15,9 +15,7 @@ public class GamePauseState : AState
     }
     public override void Update()
     {
-        // Press ESCAPE 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Resume");
+
     }
     public override void Exit()
     {
