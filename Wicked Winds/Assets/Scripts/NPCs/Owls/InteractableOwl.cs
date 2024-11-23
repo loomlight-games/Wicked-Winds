@@ -41,7 +41,7 @@ public class InteractableOwl : MonoBehaviour
 
                 
                 owl.InteractWithOwl();
-                GameManager.Instance.playState.feedBackText.text = "Gato encontrado. Llevalo junto a su dueño\n";
+                GameManager.Instance.playState.feedBackText.text = "Buho encontrado. Llevalo junto a su dueño\n";
 
 
 

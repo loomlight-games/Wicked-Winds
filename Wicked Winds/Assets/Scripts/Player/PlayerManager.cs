@@ -26,6 +26,7 @@ public class PlayerManager : AStateController
     public NPC npcObjective;
     public bool playerIsInsideFog;
     public bool potionFog;
+    public bool potionBird;
     public Transform cloudTransform;
 
     #region STATES
@@ -50,6 +51,8 @@ public class PlayerManager : AStateController
     public float lowerHeightLimit = 7f;
     public float maxHeightLimit = 20f;
     public float joystickScale = 1.1f;
+    // Fuerza de retroceso
+    public float pushBackForce = 5f; // Fuerza de retroceso al chocar con pájaros
 
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
@@ -81,6 +84,23 @@ public class PlayerManager : AStateController
         hasActiveMission = false;
 
         customizable.Awake();
+    }
+
+    // El método OnCollisionEnter para aplicar el retroceso
+    public override void OnCollisionEnter(Collision collision)
+    {
+        // Verifica si el objeto con el que colisiona es un pájaro
+        if (collision.gameObject.CompareTag("Bird"))
+        {
+            // Obtén la dirección opuesta a la colisión para empujar al personaje hacia atrás
+            Vector3 pushBackDirection = transform.position - collision.transform.position;
+
+            // Normaliza la dirección y aplica la fuerza de retroceso utilizando el CharacterController
+            pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
+
+            // Aplicamos el retroceso
+            controller.Move(pushBackDirection.normalized * pushBackForce * Time.deltaTime);
+        }
     }
 
     // Start is called before the first frame update

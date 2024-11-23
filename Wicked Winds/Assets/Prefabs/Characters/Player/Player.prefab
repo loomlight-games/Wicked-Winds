@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 1307730923873541152}
   - component: {fileID: 1570237454362240502}
   - component: {fileID: 985314806116692113}
+  - component: {fileID: 5179986276103026865}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -262,6 +263,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 577c62bd-2dcf-4c6f-b393-841dc58fffc5
     m_ActionName: Player/NextLine[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 93ce0f0a-0bae-4a0d-9325-af6c870b168c
+    m_ActionName: Player movement/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 92eaa586-f14b-4bf2-bfe0-9d2aa5399728
+    m_ActionName: Player/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player movement
@@ -292,6 +301,11 @@ MonoBehaviour:
   currentTargets: []
   target: {fileID: 0}
   activeMission: {fileID: 0}
+  npcMissionActive: {fileID: 0}
+  npcObjective: {fileID: 0}
+  playerIsInsideFog: 0
+  potionFog: 0
+  cloudTransform: {fileID: 0}
   walkSpeed: 6
   boostSpeed: 12
   rotationSpeed: 2
@@ -308,6 +322,33 @@ MonoBehaviour:
   lowerBody: {fileID: 3710789265273226225}
   shoes: {fileID: 2395570097453541266}
   rotatorySpeedAtShop: 0.1
+--- !u!54 &5179986276103026865
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6354958810953423510}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6659338809864452683
 GameObject:
   m_ObjectHideFlags: 0

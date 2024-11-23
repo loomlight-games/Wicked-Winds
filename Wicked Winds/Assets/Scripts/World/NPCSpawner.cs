@@ -16,9 +16,9 @@ public class NPCSpawner : MonoBehaviour
 
     //obstaculos pajaros
     public GameObject birdPrefab; // Prefab del pájaro
-    public int numberOfFlocks = 5; // Número de bandadas de pájaros a generar
+    public int numberOfFlocks = 15; // Número de bandadas de pájaros a generar
     public int birdsPerFlock = 5; // Pájaros por bandada
-    public float flockSpawnRadius = 50f; // Radio para dispersar las bandadas
+    public float flockSpawnRadius = 100f; // Radio para dispersar las bandadas
     public float flockRadius = 10f; // Radio inicial para posicionar a los pájaros en la bandada
     public float birdHeightOffset = 15f; // Altura fija de las bandadas
 
