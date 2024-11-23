@@ -39,6 +39,9 @@ public class PlayerController
 
     private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
 
+    private Vector3 lastPosition;
+   
+
 
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
@@ -55,7 +58,8 @@ public class PlayerController
 
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
-        
+        lastPosition = player.position; // Guarda la posición inicial
+
     }
 
     public void Update()
@@ -76,6 +80,7 @@ public class PlayerController
         HandleGravity();
         HandleMovement();
         HandleRotation();
+        PlayerManager.Instance.moveSpeed = CalculateSpeed();
     }
     ///////////////////////////////////////////////////////////////////////
 
@@ -139,6 +144,21 @@ public class PlayerController
                 verticalVelocity -= gravityForce * Time.deltaTime;
         }
     }
+    private float CalculateSpeed()
+    {
+        // Calcula el movimiento en el espacio 3D
+        Vector3 movement = new Vector3(PlayerManager.Instance.movement2D.x, 0f, PlayerManager.Instance.movement2D.y);
+        player.transform.Translate(movement * PlayerManager.Instance.moveSpeed * Time.deltaTime);
+
+        // Calcula la velocidad
+        Vector3 velocity = (player.transform.position - lastPosition) / Time.deltaTime; // Calcula la velocidad
+        lastPosition = player.transform.position; // Actualiza la posición anterior
+
+        // Devolver la magnitud de la velocidad
+        Debug.Log("Velocidad del jugador: " + velocity.magnitude);
+
+        return velocity.magnitude;  // Devuelve la velocidad calculada
+    }
 
     /// <summary>
     /// Transforms 2D input into 3D movement, applying vertical velocity
@@ -154,7 +174,7 @@ public class PlayerController
             if (IsPlayerUnderCloud())
             {
                 movementSpeed = rainySpeed;
-                
+
             }
             else if (speedPotionValue >= 0f)
             { // If able to run (speed potion available)
