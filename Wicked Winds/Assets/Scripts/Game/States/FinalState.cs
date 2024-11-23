@@ -35,10 +35,7 @@ public class FinalState : AState
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) // Por ejemplo, reiniciar el juego
-        {
-            GameManager.Instance.ClickButton("Replay");
-        }
+  
     }
 
     public override void Exit()
