@@ -27,7 +27,7 @@ public class PlayerManager : AStateController
     public bool playerIsInsideFog;
     public bool potionFog;
     public Transform cloudTransform;
-    public float moveSpeed; // Esta es la velocidad que usas para moverte
+
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground
     public readonly AtShopPlayerState atShopState = new();// At shop

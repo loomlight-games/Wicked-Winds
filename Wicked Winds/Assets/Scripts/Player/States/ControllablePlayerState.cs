@@ -87,7 +87,7 @@ public class ControllablePlayerState : AState
         if (other.gameObject.TryGetComponent(out Pickable pickableObject))
             // Interact key is pressed
             if (PlayerManager.Instance.interactKey)
-
+                //Debug.Log("Interacting with collectible");
                 // Collects it
                 pickableObject.CollectItem();
 
@@ -95,22 +95,12 @@ public class ControllablePlayerState : AState
         {
             if (PlayerManager.Instance.interactKey)
             {
-                GameManager.Instance.playState.feedBackText.text = "This cat is LOUDDDD";
-
+                Debug.Log("Interacción con el gato iniciada.");
                 cat.InteractCat();
             }
         }
 
-        if (other.gameObject.TryGetComponent(out OwlController owl))
-        {
-            GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
-            if (PlayerManager.Instance.interactKey)
-            {
-                owl.GetComponent<OwlController>().StartFollowingPlayer();
-            }
-        }
-
-
+        
     }
 
 }
