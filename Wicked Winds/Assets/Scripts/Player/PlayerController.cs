@@ -40,7 +40,7 @@ public class PlayerController
     private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
 
     private Vector3 lastPosition;
-    public float moveSpeed; // Esta es la velocidad que usas para moverte
+   
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ public class PlayerController
         HandleGravity();
         HandleMovement();
         HandleRotation();
-        moveSpeed = CalculateSpeed();
+        PlayerManager.Instance.moveSpeed = CalculateSpeed();
     }
     ///////////////////////////////////////////////////////////////////////
 
@@ -148,7 +148,7 @@ public class PlayerController
     {
         // Calcula el movimiento en el espacio 3D
         Vector3 movement = new Vector3(PlayerManager.Instance.movement2D.x, 0f, PlayerManager.Instance.movement2D.y);
-        player.transform.Translate(movement * moveSpeed * Time.deltaTime);
+        player.transform.Translate(movement * PlayerManager.Instance.moveSpeed * Time.deltaTime);
 
         // Calcula la velocidad
         Vector3 velocity = (player.transform.position - lastPosition) / Time.deltaTime; // Calcula la velocidad
