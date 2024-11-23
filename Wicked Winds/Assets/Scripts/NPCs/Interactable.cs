@@ -31,6 +31,10 @@ public class Interactable : MonoBehaviour
             // If NPC is target
             if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
+                if(desactivarOwlUI.Instance.activateOwlUI==true)
+                {
+                    desactivarOwlUI.Instance.activateOwlUI = false;
+                }
                 activeNPC = npc;
                 Debug.Log("como el npc es target");
                 PlayerManager.Instance.npcObjective = npc;
