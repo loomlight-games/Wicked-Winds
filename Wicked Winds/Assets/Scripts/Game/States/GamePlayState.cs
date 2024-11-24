@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -110,7 +111,11 @@ public class GamePlayState : AState
         gameOverTriggered = true;  // avoids double calls
 
         PlayerManager.Instance.score = (int)elapsedTime;
+        // Suma todos los tiempos de la lista
+        float totalMissionTime = GameManager.Instance.missionsTimes.Sum();
 
+        // Calcula la media dividiendo entre las misiones completadas
+        GameManager.Instance.averageMissionTime = totalMissionTime / MissionManager.Instance.missionsCompleted;
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
 
