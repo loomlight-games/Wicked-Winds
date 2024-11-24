@@ -137,6 +137,9 @@ public class GameManager : AStateController
             case "Pause":
                 SwitchState(pauseState);
                 break;
+            case "Return":
+                SwitchState(pauseState);
+                break;
             case "Resume":
                 SwitchState(playState);
                 break;
