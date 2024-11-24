@@ -22,6 +22,12 @@ public class NPCSpawner : MonoBehaviour
     public float flockRadius = 10f; // Radio inicial para posicionar a los pájaros en la bandada
     public float birdHeightOffset = 15f; // Altura fija de las bandadas
 
+
+    public float cloudSpawnRadious = 100f;
+    public float cloudHeightOffset = 40;
+    public GameObject cloudPrefab; 
+
+
     void Start()
     {
         for (int i = 0; i < npcCount; i++)
@@ -36,6 +42,7 @@ public class NPCSpawner : MonoBehaviour
             SpawnFlock();
         }
 
+        SpawnCloud();
     }
 
     void SpawnNPC()
@@ -132,6 +139,32 @@ public class NPCSpawner : MonoBehaviour
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
         }
+    }
+
+    void SpawnCloud()
+    {
+        // Generar una posición central aleatoria para la bandada
+        Vector3 position = new Vector3(
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious),
+            cloudHeightOffset,
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious)
+        );
+
+        for (int i = 0; i < numOfTries; i++)
+        {
+            // Validar que el centro esté sobre el terreno usando un raycast
+            if (Physics.Raycast(position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
+            {
+                position = hit.point + Vector3.up * cloudHeightOffset;
+                GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
+                PlayerManager.Instance.cloudTransform = cloud.transform;
+                return;
+
+            }
+        }
+
+           
+        
     }
 
 

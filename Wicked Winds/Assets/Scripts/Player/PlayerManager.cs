@@ -116,6 +116,8 @@ public class PlayerManager : AStateController
             SetState(atShopState);
         else
             SetState(controllableState);
+
+       
     }
 
     // Update is called once per frame

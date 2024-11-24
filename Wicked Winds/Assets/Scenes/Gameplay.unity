@@ -200,6 +200,10 @@ MonoBehaviour:
   flockSpawnRadius: 100
   flockRadius: 10
   birdHeightOffset: 15
+  cloudSpawnRadious: 100
+  cloudHeightOffset: 40
+  cloudPrefab: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
+    type: 3}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,105 +3808,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 180}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1589395276636818680
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3023113367491330483, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4008961170104844541, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_Name
-      value: Cloud
-      objectReference: {fileID: 0}
-    - target: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220279568688059066, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220279568688059066, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: CollisionModule.m_Planes.Array.data[2]
-      value: 
-      objectReference: {fileID: 618694656006441286}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 26a7c4e5b89ad1a4eb9c3a7955662083, type: 3}
---- !u!4 &1589395276636818681 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4336605715434994180, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-    type: 3}
-  m_PrefabInstance: {fileID: 1589395276636818680}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1606205167730733958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9563,7 +9468,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cloudTransform
       value: 
-      objectReference: {fileID: 1589395276636818681}
+      objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_Camera
@@ -10977,4 +10882,3 @@ SceneRoots:
   - {fileID: 679011303}
   - {fileID: 1734215245}
   - {fileID: 7836177084560793265}
-  - {fileID: 1589395276636818680}
