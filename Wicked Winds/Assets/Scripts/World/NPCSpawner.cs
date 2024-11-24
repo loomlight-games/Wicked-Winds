@@ -202,14 +202,9 @@ public class NPCSpawner : MonoBehaviour
                 if (!isWaterNearby && !isNPCNearby)
                 {
                     
-                    if (cat)
-                    {
-                        return GetValidNavMeshPosition(agentTypeID, spawnPoint); ; // Punto válido
-                    }
-                    else
-                    {
+                   
                         return spawnPoint; 
-                    }
+                    
                    
                 }
             }
