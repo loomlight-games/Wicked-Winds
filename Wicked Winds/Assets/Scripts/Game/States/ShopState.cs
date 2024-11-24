@@ -9,6 +9,8 @@ public class ShopState : AState
         Time.timeScale = 1f; // Resumes simulation
 
         UI = GameObject.Find("UI");
+
+        SoundManager.Instance.PlayMainMenuMusic();
     }
 
     public override void Update()

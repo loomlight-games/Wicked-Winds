@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class teleportPotion : MonoBehaviour
+public class TeleportPotion : MonoBehaviour
 {
     private SoundManager soundManager;
 
@@ -15,7 +15,7 @@ public class teleportPotion : MonoBehaviour
     {
         if (PlayerManager.Instance.currentTargets.Count>0)
         {
-            if(soundManager != null) { soundManager.PlaySoundEffect(4); }
+            if(soundManager != null) soundManager.PlayPotionEffect();
             
             // Obtener la posici�n del objetivo
             Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;

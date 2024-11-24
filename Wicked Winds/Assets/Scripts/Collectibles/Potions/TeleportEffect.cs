@@ -48,7 +48,7 @@ public class TeleportEffect : MonoBehaviour
 
     public IEnumerator FlashAndTeleport(Vector3 teleportPosition, System.Action onComplete)
     {
-        soundManager.PlaySoundEffect(4);
+        soundManager.PlayTeleportEffect();
 
         if (screenFlash != null)
         {

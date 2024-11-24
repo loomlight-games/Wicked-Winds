@@ -89,31 +89,22 @@ public class GameManager : AStateController
     private void SetStateBasedOnScene(Scene scene)
     {
         if (scene.name == "Main menu") {
-            SoundManager.Instance.PlayMusicTrack(0);
             SetState(mainMenuState);
         }
-            
-        else if (scene.name == "Shop")
-        {
-            SoundManager.Instance.PlayMusicTrack(0); 
+        else if (scene.name == "Shop") {
             SetState(shopState);
         }
-           
         else if (scene.name == "Leaderboard") {
-            SoundManager.Instance.PlayMusicTrack(0);
             SetState(leaderboardState);
-        }
-            
+        } 
         else if (scene.name == "Gameplay") {
-            SoundManager.Instance.PlayMusicTrack(1);
+            townGenerator.townGenerated = false;
             SetState(playState);
         }
-        else
-        {
-            SoundManager.Instance.PlayMusicTrack(1);
+        else {
+            townGenerator.townGenerated = false;
             SetState(playState);
-        }
-            
+        }  
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -128,6 +119,9 @@ public class GameManager : AStateController
     public void ClickButton(string buttonName)
     {
         Debug.Log(buttonName);
+
+        // Play sound effect
+        SoundManager.Instance.PlayButtonClickEffect();
 
         // Send button
         TownSelected?.Invoke(this, buttonName);
@@ -302,10 +296,6 @@ public class GameManager : AStateController
             Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
 
         };
-        /*AuthenticationService.Instance.SignInFailed += (err) => {
-            Debug.LogError(err);
-            AuthenticationService.Instance.SignOut();
-        };*/
 
         AuthenticationService.Instance.SignedOut += () =>
         {

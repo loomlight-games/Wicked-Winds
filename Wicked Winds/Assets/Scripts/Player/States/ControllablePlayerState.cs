@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ControllablePlayerState : AState
@@ -19,11 +18,6 @@ public class ControllablePlayerState : AState
         PlayerManager.Instance.compass.Update();
     }
 
-    public override void Exit()
-    {
-
-    }
-
     public override void OnTriggerEnter(Collider other)
     {
         // Attempt to get the Collectible component
@@ -39,7 +33,8 @@ public class ControllablePlayerState : AState
                     // If the object has a Collectible component, deactivate it if not deactivated already
                     if (collectible != null && collectible.isModelActive){
                         collectible.Deactivate();
-                        SoundManager.Instance.PlaySoundEffect(3);
+
+                        SoundManager.Instance.PlayPotionEffect();
 
                         // Notify that a speed potion was collected
                         SpeedPotionCollected?.Invoke(this, null);
@@ -53,8 +48,8 @@ public class ControllablePlayerState : AState
                     // If the object has a Collectible component, deactivate it if not deactivated already
                     if (collectible != null && collectible.isModelActive){
                         collectible.Deactivate();
-                        SoundManager.Instance.PlaySoundEffect(3);
 
+                        SoundManager.Instance.PlayPotionEffect();
 
                         // Notify that a fly high potion was collected
                         FlyPotionCollected?.Invoke(this, null);
@@ -66,44 +61,49 @@ public class ControllablePlayerState : AState
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive){
                     collectible.Deactivate();
-                    SoundManager.Instance.PlaySoundEffect(1);
+                    SoundManager.Instance.PlayCoinEffect();
 
                     // Increment the player's coin count and save it
                     PlayerManager.Instance.customizable.coins++;
                     PlayerManager.Instance.customizable.SaveCoins();
                 }
                 break;
+
             case "FogPotion":
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
+
                     if (other.gameObject.TryGetComponent(out PotionFog fogPotion))
                         fogPotion.CollectPotionFog();
                 }
                 break;
+
             case "TeleportPotion":
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
-                    if (other.gameObject.TryGetComponent(out teleportPotion teleportPotion))
+
+                    if (other.gameObject.TryGetComponent(out TeleportPotion teleportPotion))
                     {
                         teleportPotion.CollectTeleportPotion();
 
                     }
                 }
                 break;
+
             case "BirdsPotion":
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
+
                     if (other.gameObject.TryGetComponent(out BirdPotion birdsPotion))
                         birdsPotion.CollectBirdPotion();
                 }
                 break;
-
             default:
                 break;
         }
@@ -147,8 +147,5 @@ public class ControllablePlayerState : AState
                 owl.Interact();
             }
         }
-
-
     }
-
 }

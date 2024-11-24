@@ -16,7 +16,7 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
 
-    bool townGenerated = false;
+    public bool townGenerated = false;
 
     /// <summary>
     /// Niebla aleatoria en algunos tiles

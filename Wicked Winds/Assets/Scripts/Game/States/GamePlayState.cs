@@ -43,6 +43,8 @@ public class GamePlayState : AState
 
         // Generate town if not generated yet
         GameManager.Instance.townGenerator.Start();
+
+        SoundManager.Instance.PlayGamePlayMusic();
     }
 
     public override void Update()

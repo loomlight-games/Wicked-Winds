@@ -12,13 +12,6 @@ public class Dialogue : MonoBehaviour
     private int lineIndex;
     private bool isTyping = false; // Indica si se está escribiendo texto
 
-    private SoundManager soundManager;
-
-    private void Awake()
-    {
-        soundManager = FindObjectOfType<SoundManager>();
-    }
-
     void Update()
     {
         if (lines.Length == 0)
@@ -43,7 +36,7 @@ public class Dialogue : MonoBehaviour
     // Método para iniciar el diálogo y mostrar el nombre del NPC
     public void StartDialogue(NPC npc, string mensajito, int tipo) //0= humano, 1= gato
     {
-        soundManager.PlaySoundEffect(0);
+        SoundManager.Instance.PlayDialogueEffect();
         // Activar todos los hijos del objeto
         ActivateAllChildren();
         lineIndex = 0;

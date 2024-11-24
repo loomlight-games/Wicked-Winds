@@ -10,12 +10,12 @@ public class SoundManager : MonoBehaviour
     public float volume = 0.6f, 
                 fadeDuration = 2f;
 
-    [SerializeField] private AudioClip[] soundEffects;
-    [SerializeField] private AudioClip[] musicTracks;
+    [SerializeField] AudioClip[] soundEffects;
+    [SerializeField] AudioClip[] musicTracks;
 
-    private AudioSource audioSource;
+    AudioSource audioSource;
 
-    private void Awake()
+    void Awake()
     {
         if (Instance == null)
         {
@@ -32,12 +32,12 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlaySoundEffect(int id)
+    void PlaySoundEffect(int id)
     {
         audioSource.PlayOneShot (soundEffects[id], volume);
     }
 
-    public void PlayMusicTrack(int id)
+    void PlayMusicTrack(int id)
     {
         // Return if it's already playing
         if(audioSource.clip == musicTracks[id]) return;
@@ -45,8 +45,10 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(FadeAudio(musicTracks[id]));
     }
 
-    private IEnumerator FadeAudio(AudioClip newClip)
+    IEnumerator FadeAudio(AudioClip newClip)
     {
+        Debug.LogWarning("Change song");
+        
         if (audioSource.isPlaying)
         {
             // Fading out the current audio
@@ -69,5 +71,40 @@ public class SoundManager : MonoBehaviour
         }
 
         audioSource.volume = volume; // Ensure max volume
+    }
+
+    //////////////////////////////////////////////////
+    /// SOUND EFFECTS
+    public void PlayButtonClickEffect(){
+        PlaySoundEffect(0);
+    }
+
+    public void PlayCoinEffect(){
+        PlaySoundEffect(1);
+    }
+
+    public void PlayPotionEffect(){
+        int id = Random.Range(2,3);
+        PlaySoundEffect(id);
+    }
+
+    public void PlayTeleportEffect(){
+        PlaySoundEffect(4);
+    }
+
+    public void PlayDialogueEffect(){
+        PlaySoundEffect(5);
+    }
+
+    public void PlayWaterEffect(){
+        PlaySoundEffect(6);
+    }
+
+    public void PlayMainMenuMusic(){
+        PlayMusicTrack(0);
+    }
+
+    public void PlayGamePlayMusic(){
+        PlayMusicTrack(1);
     }
 }
