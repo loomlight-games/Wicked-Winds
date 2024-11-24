@@ -128,7 +128,9 @@ La partida inicia con un tiempo límite (por ejemplo, 60 segundos), y cada misi�
 - **Tipos de Misiones:**
     - **Recoger Objetos:** Desplazarse a un punto específico para obtener un objeto y regresarlo al NPC que lo solicitó.
   
-    - **Minijuegos de Habilidad:** Algunas tareas pueden incluir minijuegos rápidos que desafían la habilidad o precisión   del jugador, como preparar un objeto o realizar una acción específica en un tiempo determinado.
+    - **Entregar objetos:** En otras tareas como en la entrega de cartas, el jugador simplemente solo debe entregar un objeto a un NPC destinatario.
+ 
+      **Rescatar animales:** En este tipo de tareas el jugador deberá atrapar un objetivo en movimiento y devolverlo al personaje.
 
     - **Recompensas por Completar Misiones:** Al completar una misión, el jugador gana segundos extra en el temporizador principal, permitiéndole extender su tiempo de juego y tomar más recados.
  
@@ -179,6 +181,31 @@ Una mecánica clave del juego es la brújula de misiones, que facilita la navega
 Esta flecha se ajusta dinámicamente a medida que el jugador se desplaza, guiándolo hacia el objetivo de la misión. Esto permite a los jugadores concentrarse en la acción sin tener que preocuparse por perderse.
 
 Esta mecánica no solo simplifica el proceso de búsqueda de misiones, sino que también añade un elemento de fluidez al juego, haciendo que la experiencia de ayuda a los ciudadanos sea más inmersiva y menos frustrante.
+
+### 9. Obstáculos y pociones
+En Wicked Winds, el recorrido de Ashen no está exento de desafíos. Los obstáculos y las pociones desempeñan un papel fundamental en la jugabilidad, creando dificultades y ofreciendo herramientas para superarlas. A continuación, se detallan los principales obstáculos y las pociones disponibles en el juego:
+
+#### Obstáculos
+-**Pájaros volando por el cielo:** Estos pájaros bloquean el camino aéreo, obligando a Ashen a maniobrar con cuidado y limitando su capacidad para volar de manera continua.
+
+-**Nube que trae lluvia:** La lluvia ralentiza drásticamente a Ashen, impidiendo que alcance incluso la velocidad básica de caminata.
+
+-**Niebla densa:** La niebla reduce significativamente la visibilidad y desactiva la brújula mágica de Ashen, dificultando la orientación y navegación en el mapa.
+
+#### Pociones
+Ashen cuenta con una serie de pociones mágicas que le permiten superar estas adversidades y optimizar su desempeño en las misiones:
+
+**Birds (Rosa):**
+Oculta los obstáculos voladores (pájaros) durante 20 segundos, despejando el camino para vuelos seguros.
+
+**FlyHigh (Verde):** Rellena la barra de vuelo, permitiendo a Ashen alcanzar alturas rápidamente y sortear zonas complicadas.
+
+**Fog (Azul Claro):** Disipa la niebla durante 30 segundos, restaurando la visibilidad y reactivando la brújula mágica.
+
+**Speed (Azul Oscuro):** Rellena la barra de velocidad, permitiendo a Ashen correr rápidamente y compensar el tiempo perdido.
+
+**Teleport (Naranja):** Teletransporta instantáneamente a Ashen al lado de un objetivo, ahorrando tiempo valioso en situaciones críticas.
+
 
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
