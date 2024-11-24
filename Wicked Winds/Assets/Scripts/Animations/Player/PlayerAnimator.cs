@@ -6,7 +6,11 @@ using UnityEngine;
 public class PlayerAnimator
 {
     Animator animator;
-    string currentAnimation = "";
+    readonly int Idle = Animator.StringToHash("Idle"),
+        Moving = Animator.StringToHash("Moving"),
+        MovingFast = Animator.StringToHash("MovingFast");
+
+    int currentAnimation;
 
     // Update is called once per frame
     public void Update()
@@ -22,19 +26,19 @@ public class PlayerAnimator
         if(PlayerManager.Instance.movement2D.sqrMagnitude != 0){
             // Moving fast
             if (PlayerManager.Instance.runKey || PlayerManager.Instance.runJoystick)
-                ChangeAnimation("MovingFast");
+                ChangeAnimation(MovingFast);
             // Not moving fast
             else
-                ChangeAnimation("Moving");
+                ChangeAnimation(Moving);
         } // Is still
         else
-            ChangeAnimation("Idle");
+            ChangeAnimation(Idle);
     }
 
     /// <summary>
     /// Transitions to given animation 
     /// </summary>
-    void ChangeAnimation(string newAnimation, float duration = 0.2f){
+    void ChangeAnimation(int newAnimation, float duration = 0.2f){
         // Not same as current
         if (currentAnimation != newAnimation){
             currentAnimation = newAnimation;
