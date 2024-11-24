@@ -129,11 +129,10 @@ public class TownGenerator
                 // Traverse in the current direction for 'steps' times
                 for (int step = 0; step < steps; step++)
                 {
-                    InstantiateTile(tilesPositions[row, col]);
+                    if (row >= 0 && row < townSize && 
+                        col >= 0 && col < townSize){
+                        InstantiateTile(tilesPositions[row, col]);
 
-                    // Ensure we don't go out of bounds
-                    if (row >= 0 && row < townSize && col >= 0 && col < townSize)
-                    {
                         row += dRow[direction];
                         col += dCol[direction];
                     }
@@ -177,7 +176,7 @@ public class TownGenerator
     /// FOG METHODS
     /// </summary>
     /// <summary>
-    /// Añade un FogTrigger a un tile de manera aleatoria
+    /// Aï¿½ade un FogTrigger a un tile de manera aleatoria
     /// </summary>
     void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
     {

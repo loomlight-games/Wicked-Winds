@@ -14,8 +14,6 @@ public class GameManager : AStateController
     public event EventHandler<string> TownSelected;
     [SerializeField] private AudioClip[] musicTracks;
 
-
-
     public bool playingOnPC = false;
 
     #region STATES
@@ -58,21 +56,18 @@ public class GameManager : AStateController
     public GameObject landscape3;
     public List<GameObject> townTiles3 = new();
 
-
     [Header("Gameplay")]
     public float initialTime = 120f;
     public float remainingTime;
     public List<float> missionsTimes = new();
     public float missionTime = 0;
-    public float AverageMissionTime = 0;
-
+    public float averageMissionTime = 0;
     #endregion
 
     [HideInInspector] public string sceneToLoad = "Gameplay";
 
     public override void Awake()
     {
-        //if there's not an instance, it creates one - SINGLETON
         if (Instance == null)
         {
             Instance = this;

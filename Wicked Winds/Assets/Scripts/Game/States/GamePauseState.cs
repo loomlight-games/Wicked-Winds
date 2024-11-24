@@ -55,10 +55,6 @@ public class GamePauseState : AState
             tutorial.SetActive(true);
             handledControls.SetActive(true);
         }
-
-        // Press ESCAPE 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Resume");
     }
     public override void Exit()
     {
