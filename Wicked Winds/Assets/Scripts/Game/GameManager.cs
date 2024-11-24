@@ -98,13 +98,10 @@ public class GameManager : AStateController
             SetState(leaderboardState);
         } 
         else if (scene.name == "Gameplay") {
-            townGenerator.townGenerated = false;
+            remainingTime = initialTime;
+            townGenerator.GenerateTown();
             SetState(playState);
         }
-        else {
-            townGenerator.townGenerated = false;
-            SetState(playState);
-        }  
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)

@@ -15,18 +15,10 @@ public class TownGenerator
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
-
-    public bool townGenerated = false;
-
-    /// <summary>
-    /// Niebla aleatoria en algunos tiles
-    /// </summary>
     public GameObject fogTriggerPrefab;
 
-    public void Start()
+    public void GenerateTown()
     {
-        if (townGenerated) return;
-
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
        
@@ -70,8 +62,6 @@ public class TownGenerator
         CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
 
         InstantiateTiles(); // Instantiates a town tile in each position - from center
-
-        townGenerated = true;
     }
 
     /// <summary>
