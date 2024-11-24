@@ -22,7 +22,7 @@
 # Wicked Winds - Documento de Diseño de Juego
 
 <div align="center"><b><i>
-    Versión 0.1.0
+    Versión 1.0.0
 </i></b></div>
 
 # 1. INTRODUCCIÓN
