@@ -1402,7 +1402,11 @@ MonoBehaviour:
   birdsPerFlock: 5
   flockSpawnRadius: 100
   flockRadius: 10
-  birdHeightOffset: 15
+  birdHeightOffset: 25
+  cloudSpawnRadious: 100
+  cloudHeightOffset: 40
+  cloudPrefab: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
+    type: 3}
 --- !u!1 &393484178
 GameObject:
   m_ObjectHideFlags: 0
@@ -4450,6 +4454,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2897878059594732896, guid: f3dc61a073031e0429e8513bf791cac4,
+        type: 3}
+      propertyPath: soundEffects.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: f60e448a7abaaea4a8ab38e9cb2706fe, type: 3}
     - target: {fileID: 4317323368946030866, guid: f3dc61a073031e0429e8513bf791cac4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8722,6 +8731,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d36ad71273b436e4d986b8c46007db41, type: 2}
   - {fileID: 11400000, guid: f3ef4be925394ba4090ee440f3478274, type: 2}
   - {fileID: 11400000, guid: 6fdf0eaa4d27aca4994478d18ac9e672, type: 2}
+  - {fileID: 11400000, guid: 13435a0468a3524499f9dfddfb3ca97d, type: 2}
   allNPCs: []
   numMissionsToAssign: 10
   assignedNPCs: []
@@ -10376,100 +10386,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 180}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1589395276636818680
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3684030158519889849, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4008961170104844541, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_Name
-      value: Cloud
-      objectReference: {fileID: 0}
-    - target: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220279568688059066, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9220279568688059066, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-        type: 3}
-      propertyPath: CollisionModule.m_Planes.Array.data[2]
-      value: 
-      objectReference: {fileID: 618694656006441286}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 26a7c4e5b89ad1a4eb9c3a7955662083, type: 3}
---- !u!4 &1589395276636818681 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4336605715434994180, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-    type: 3}
-  m_PrefabInstance: {fileID: 1589395276636818680}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1609871667187959935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14199,7 +14115,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cloudTransform
       value: 
-      objectReference: {fileID: 1589395276636818681}
+      objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_Camera
@@ -15574,5 +15490,4 @@ SceneRoots:
   - {fileID: 679011303}
   - {fileID: 1734215245}
   - {fileID: 7836177084560793265}
-  - {fileID: 1589395276636818680}
   - {fileID: 814293769}
