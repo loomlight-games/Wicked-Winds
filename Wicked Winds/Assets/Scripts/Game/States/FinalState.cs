@@ -37,8 +37,10 @@ public class FinalState : AState
         retryButton.SetActive(true);
         mainMenuButton.SetActive(true);
         leaderboardButton.SetActive(true);
+        SoundManager.Instance.PlayFinalEffect();
 
-        
+
+
         float playerScore = PlayerManager.Instance.score;
         scoreText.text = "Your total time: " + playerScore.ToString();
 

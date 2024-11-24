@@ -7,8 +7,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public float volume = 0.6f, 
-                fadeDuration = 2f;
+    public float fadeDuration = 2f;
 
     [SerializeField] AudioClip[] soundEffects;
     [SerializeField] AudioClip[] musicTracks;
@@ -32,14 +31,14 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void PlaySoundEffect(int id)
+    void PlaySoundEffect(int id, float volume)
     {
         // Set the AudioSource to loop
         audioSource.loop = false;
         audioSource.PlayOneShot (soundEffects[id], volume);
     }
 
-    void PlayMusicTrack(int id)
+    void PlayMusicTrack(int id, float volume)
     {
         // Return if it's already playing
         if (audioSource.clip == musicTracks[id]) return;
@@ -48,10 +47,10 @@ public class SoundManager : MonoBehaviour
         audioSource.loop = true;
 
         // Start fading to the new track
-        StartCoroutine(FadeAudio(musicTracks[id]));
+        StartCoroutine(FadeAudio(musicTracks[id], volume));
     }
 
-    IEnumerator FadeAudio(AudioClip newClip)
+    IEnumerator FadeAudio(AudioClip newClip,float  volume)
     {
         Debug.LogWarning("Change song");
         
@@ -82,35 +81,37 @@ public class SoundManager : MonoBehaviour
     //////////////////////////////////////////////////
     /// SOUND EFFECTS
     public void PlayButtonClickEffect(){
-        PlaySoundEffect(0);
+        PlaySoundEffect(0, 1);
     }
 
     public void PlayCoinEffect(){
-        PlaySoundEffect(1);
+        PlaySoundEffect(1, 1);
     }
 
     public void PlayPotionEffect(){
         int id = Random.Range(2,3);
-        PlaySoundEffect(id);
+        PlaySoundEffect(id, 0.6f);
     }
 
     public void PlayTeleportEffect(){
-        PlaySoundEffect(4);
+        PlaySoundEffect(4, 0.6f);
     }
 
     public void PlayDialogueEffect(){
-        PlaySoundEffect(5);
+        PlaySoundEffect(5, 0.6f);
+    }
+    public void PlayFinalEffect()
+    {
+        PlaySoundEffect(6,0.6f);
     }
 
-    public void PlayWaterEffect(){
-        PlaySoundEffect(6);
-    }
+    
 
     public void PlayMainMenuMusic(){
-        PlayMusicTrack(0);
+        PlayMusicTrack(0, 0.3f);
     }
 
     public void PlayGamePlayMusic(){
-        PlayMusicTrack(1);
+        PlayMusicTrack(1, 0.3f);
     }
 }
