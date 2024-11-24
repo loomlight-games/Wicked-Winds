@@ -42,12 +42,13 @@ public class InteractableOwl : MonoBehaviour
                 
                 owl.InteractWithOwl();
                 GameManager.Instance.playState.feedBackText.text = "Buho encontrado. Llevalo junto a su dueño\n";
+                return;
 
 
 
             }
             // NPC is the assigned but not objects have been found
-            if (!PlayerManager.Instance.currentTargets.Contains(gameObject))
+            else if (!PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
                 // Iniciar el diálogo con el mensaje del gato
                 if (dialoguePanel != null)
@@ -59,9 +60,10 @@ public class InteractableOwl : MonoBehaviour
                     dialoguePanel.StartDialogue(owner, msg1, 1); // Inicia el dialogo
                     Debug.Log("Diálogo iniciado.");
                 }
+                return;
             }
         }
-        if (!PlayerManager.Instance.hasActiveMission)
+        else if (!PlayerManager.Instance.hasActiveMission)
         {
             // Iniciar el diálogo con el mensaje del gato
             if (dialoguePanel != null)
@@ -73,6 +75,7 @@ public class InteractableOwl : MonoBehaviour
                 dialoguePanel.StartDialogue(owner, msg2, 1); // Inicia el dialogo
                 Debug.Log("Diálogo iniciado.");
             }
+            return;
         }
 
     }
