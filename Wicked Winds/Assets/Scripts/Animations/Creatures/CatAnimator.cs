@@ -7,13 +7,15 @@ using UnityEngine;
 /// </summary>
 public class CatAnimator : MonoBehaviour
 {
+    CatController catController;
+
     readonly int Idle = Animator.StringToHash("Idle"),
         Moving = Animator.StringToHash("Moving");
 
     int currentAnimation;
 
     void Start(){
-
+        catController = GetComponent<CatController>();
     }
 
     // Update is called once per frame
@@ -26,12 +28,11 @@ public class CatAnimator : MonoBehaviour
     /// Checks animation conditions
     /// </summary>
     void CheckAnimation(){
-        // Is moving
-        if(PlayerManager.Instance.movement2D.sqrMagnitude != 0)
-            ChangeAnimation(Moving);
         // Is still
-        else
+        if (catController.currentStateName == "IdleState")
             ChangeAnimation(Idle);
+        else 
+            ChangeAnimation(Moving);
     }
 
     /// <summary>

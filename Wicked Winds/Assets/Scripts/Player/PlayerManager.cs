@@ -29,7 +29,7 @@ public class PlayerManager : AStateController
     [HideInInspector] public List<GameObject> currentTargets = new ();
     [HideInInspector] public Transform target;
     [HideInInspector] public MissionIcon activeMission;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground
@@ -109,8 +109,6 @@ public class PlayerManager : AStateController
     // Start is called before the first frame update
     public override void Start()
     {
-        animator = GetComponent<Animator>();
-
         if (SceneManager.GetActiveScene().name == "Shop")
             SetState(atShopState);
         else

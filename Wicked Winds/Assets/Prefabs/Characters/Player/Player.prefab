@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 1307730923873541152}
   - component: {fileID: 1570237454362240502}
   - component: {fileID: 985314806116692113}
-  - component: {fileID: 8447182819422842849}
   - component: {fileID: 3916649949563016440}
   m_Layer: 0
   m_Name: Player
@@ -305,7 +304,7 @@ MonoBehaviour:
   currentTargets: []
   target: {fileID: 0}
   activeMission: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 8585743433989578229}
   walkSpeed: 6
   boostSpeed: 12
   rotationSpeed: 2
@@ -323,27 +322,6 @@ MonoBehaviour:
   lowerBody: {fileID: 3710789265273226225}
   shoes: {fileID: 2395570097453541266}
   rotatorySpeedAtShop: 0.1
---- !u!95 &8447182819422842849
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6354958810953423510}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 144609a48242bf7419b38a5657110a11, type: 3}
-  m_Controller: {fileID: 9100000, guid: 75aacee177a50534db9fccdeba1e6bba, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!208 &3916649949563016440
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -505,6 +483,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ashen
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 144609a48242bf7419b38a5657110a11,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 75aacee177a50534db9fccdeba1e6bba, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -529,6 +512,12 @@ PrefabInstance:
 --- !u!4 &2433805261210290063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 144609a48242bf7419b38a5657110a11,
+    type: 3}
+  m_PrefabInstance: {fileID: 2759621903363072100}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8585743433989578229 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 144609a48242bf7419b38a5657110a11,
     type: 3}
   m_PrefabInstance: {fileID: 2759621903363072100}
   m_PrefabAsset: {fileID: 0}
