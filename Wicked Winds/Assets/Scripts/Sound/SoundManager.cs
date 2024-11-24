@@ -41,7 +41,7 @@ public class SoundManager : MonoBehaviour
     void PlayMusicTrack(int id, float volume)
     {
         // Return if it's already playing
-        if (audioSource.clip == musicTracks[id]) return;
+        //if (audioSource.clip == musicTracks[id]) return;
 
         // Set the AudioSource to loop
         audioSource.loop = true;
@@ -108,10 +108,10 @@ public class SoundManager : MonoBehaviour
     
 
     public void PlayMainMenuMusic(){
-        PlayMusicTrack(0, 0.3f);
+        PlayMusicTrack(0, 0.1f);
     }
 
     public void PlayGamePlayMusic(){
-        PlayMusicTrack(1, 0.3f);
+        PlayMusicTrack(1, 0.1f);
     }
 }
