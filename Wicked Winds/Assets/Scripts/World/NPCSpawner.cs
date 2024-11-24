@@ -187,11 +187,12 @@ public class NPCSpawner : MonoBehaviour
             {
                 Vector3 spawnPoint = hit.point;
 
-                // Comprobar si hay un edificio justo encima del punto
-                if (Physics.Raycast(spawnPoint, Vector3.up, 50f, buildingLayer))
+                // Realizar un raycast hacia arriba desde el punto de spawn para comprobar si hay un edificio
+                RaycastHit hitpoint;
+                if (Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, buildingLayer))
                 {
-
-                    continue; // Saltar a la siguiente iteración
+                    // Si hay un edificio encima, continuamos con la siguiente iteración
+                    continue;
                 }
 
                 // Verificar que el punto esté libre de agua o NPCs cercanos
