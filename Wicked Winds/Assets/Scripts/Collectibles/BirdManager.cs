@@ -6,6 +6,7 @@ public class BirdManager : MonoBehaviour
 {
     public static BirdManager Instance { get; private set; }
     private List<GameObject> birds; // Lista de pájaros en la escena
+    private bool birdsActive = true;
 
     private void Awake()
     {
@@ -17,21 +18,43 @@ public class BirdManager : MonoBehaviour
         birds = new List<GameObject>(GameObject.FindGameObjectsWithTag("Bird")); // Asume que los pájaros tienen el tag "Bird"
     }
 
-    // Desactivar todos los pájaros
     public void DeactivateBirds()
     {
+        if (!birdsActive) return; // Evita desactivar si ya están desactivados
+        birdsActive = false;
+
+        birds.RemoveAll(b => b == null);
         foreach (var bird in birds)
         {
-            bird.SetActive(false); // Desactiva cada pájaro
+            bird.SetActive(false);
         }
     }
 
-    // Reactivar todos los pájaros
     public void ActivateBirds()
     {
+        if (birdsActive) return; // Evita activar si ya están activos
+        birdsActive = true;
+
+        birds.RemoveAll(b => b == null);
         foreach (var bird in birds)
         {
-            bird.SetActive(true); // Reactiva cada pájaro
+            bird.SetActive(true);
         }
     }
+
+    public bool AreBirdsActive()
+    {
+        return birdsActive;
+    }
+
+
+    // Método para añadir un pájaro a la lista
+    public void RegisterBird(GameObject bird)
+    {
+        if (!birds.Contains(bird))
+        {
+            birds.Add(bird);
+        }
+    }
+
 }

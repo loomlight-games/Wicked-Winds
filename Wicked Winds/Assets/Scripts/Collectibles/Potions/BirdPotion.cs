@@ -23,7 +23,7 @@ public class BirdPotion : MonoBehaviour
     private IEnumerator DeactivateBirdsTemporarily()
     {
         // Desactivar los p�jaros
-        BirdManager.Instance.DeactivateBirds(); // Se asume que hay un BirdManager que controla los p�jaros
+        BirdManager.Instance.DeactivateBirds(); 
 
         // Espera 20 segundos
         yield return new WaitForSeconds(20f);

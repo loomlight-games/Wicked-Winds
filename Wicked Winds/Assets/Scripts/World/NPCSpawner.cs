@@ -14,7 +14,7 @@ public class NPCSpawner : MonoBehaviour
 
     private int spawnedNPCCount = 0; // Contador de NPCs generados
 
-    //obstaculos pajaros
+    //BIRD OBSTACLES
     public GameObject birdPrefab; // Prefab del pájaro
     public int numberOfFlocks = 15; // Número de bandadas de pájaros a generar
     public int birdsPerFlock = 5; // Pájaros por bandada
@@ -87,6 +87,8 @@ public class NPCSpawner : MonoBehaviour
             spawnedNPCCount++;
         }
     }
+
+    //BIRD SPAWNER
     void SpawnFlock()
     {
         // Generar una posición central aleatoria para la bandada
@@ -114,7 +116,7 @@ public class NPCSpawner : MonoBehaviour
         flockCenterObject.transform.position = flockCenter;
         flockCenterObject.transform.parent = flockParent.transform;
 
-        // Crear pájaros alrededor del centro y asignarles el flockCenter dinámicamente
+        // Crear pájaros alrededor del centro y asignarlos como hijos del centro
         for (int i = 0; i < birdsPerFlock; i++)
         {
             Vector3 birdPosition = flockCenter + new Vector3(
@@ -125,12 +127,18 @@ public class NPCSpawner : MonoBehaviour
 
             GameObject bird = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
 
+            // Configurar el pájaro como hijo del centro de su bandada
+            bird.transform.parent = flockCenterObject.transform;
+
             // Obtener el BirdController y asignar dinámicamente el flockCenter
             BirdController birdController = bird.GetComponent<BirdController>();
             if (birdController != null)
             {
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
+
+            // Registrar el pájaro en el BirdManager
+            BirdManager.Instance.RegisterBird(bird);
         }
     }
 
