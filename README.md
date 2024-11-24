@@ -206,6 +206,21 @@ Oculta los obstáculos voladores (pájaros) durante 20 segundos, despejando el c
 
 **Teleport (Naranja):** Teletransporta instantáneamente a Ashen al lado de un objetivo, ahorrando tiempo valioso en situaciones críticas.
 
+### 10. Mapas Generativos y Escenarios
+Wicked Winds cuenta con un sistema de mapas generativos que garantiza una experiencia fresca y diferente en cada partida. Los jugadores pueden explorar tres escenarios únicos, cada uno con su propia temática y estética:
+
+#### Sandy Landy
+Un vasto desierto árido donde las dunas y las ruinas antiguas crean un ambiente desafiante pero intrigante.
+#### Frospeak Hollow
+Una región nevada, cubierta de hielo y montañas, que desafía al jugador con caminos resbaladizos y un entorno invernal.
+#### Stardust Town 
+Un escenario estándar que mezcla lo mágico y lo cotidiano, ideal para las primeras partidas o para disfrutar de un ambiente más relajado.
+Generación Procedural de los Mapas
+
+Cada uno de estos escenarios utiliza un sistema procedural para construir su mapa. En total, existen siete tiles predefinidos que se colocan en posiciones aleatorias al iniciar la partida. Este diseño garantiza que, aunque el jugador explore el mismo escenario, los elementos del mapa estarán distribuidos de manera diferente cada vez, promoviendo la exploración y adaptabilidad en cada sesión de juego.
+
+La combinación de los escenarios temáticos con la aleatoriedad en la disposición de los tiles añade una capa de rejugabilidad y sorpresa, haciendo que Wicked Winds sea una experiencia dinámica y envolvente.
+
 
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
