@@ -40,8 +40,17 @@ public class SoundManager : MonoBehaviour
 
     void PlayMusicTrack(int id, float volume)
     {
+        if (musicTracks[0])
+        {
+            // Set the AudioSource to loop
+            audioSource.loop = true;
+
+            // Start fading to the new track
+            StartCoroutine(FadeAudio(musicTracks[id], volume));
+        }
+        
         // Return if it's already playing
-        //if (audioSource.clip == musicTracks[id]) return;
+        if (audioSource.clip == musicTracks[id] && audioSource.clip == musicTracks[1]) return;
 
         // Set the AudioSource to loop
         audioSource.loop = true;
@@ -50,16 +59,16 @@ public class SoundManager : MonoBehaviour
         StartCoroutine(FadeAudio(musicTracks[id], volume));
     }
 
-    IEnumerator FadeAudio(AudioClip newClip,float  volume)
+    IEnumerator FadeAudio(AudioClip newClip, float volume)
     {
-        Debug.LogWarning("Change song");
-        
+        Debug.LogWarning("Changing song");
+
         if (audioSource.isPlaying)
         {
             // Fading out the current audio
             for (float t = 0; t < fadeDuration; t += Time.deltaTime)
             {
-                audioSource.volume = 1 - (t / fadeDuration);
+                audioSource.volume = Mathf.Lerp(volume, 0, t / fadeDuration); // Gradually reduce volume to 0
                 yield return null;
             }
             audioSource.Stop();
@@ -71,12 +80,13 @@ public class SoundManager : MonoBehaviour
         // Fading in the new audio
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            audioSource.volume = t / fadeDuration;
+            audioSource.volume = Mathf.Lerp(0, volume, t / fadeDuration); // Gradually increase volume to desired max
             yield return null;
         }
 
-        audioSource.volume = volume; // Ensure max volume
+        audioSource.volume = volume; // Ensure it ends exactly at the specified volume
     }
+
 
     //////////////////////////////////////////////////
     /// SOUND EFFECTS
