@@ -1,24 +1,20 @@
 using System;
 using TMPro;
 using UnityEngine;
-using System.Linq;
-using UnityEngine.InputSystem;
+
 public class GamePlayState : AState
 {
     public TextMeshProUGUI feedBackText;
 
     GameObject UI, statesUI, gameplayUI, handledControls;
-    TextMeshProUGUI timerText; //, elapsedText;
+    TextMeshProUGUI timerText;
     HUDBar highSpeedBar, flyHighBar;
     float elapsedTime, remainingTime;
-    int timerMinutes, timerSeconds, elapsedMinutes, elapsedSeconds;
+    int timerMinutes, timerSeconds;
     bool gameOverTriggered = false; //in order to not recall the method
 
-    //NEW INPUT SYSTEM
-    private InputAction pauseAction;
     public override void Enter()
     {
-
         Debug.LogWarning("GamePlayState");
 
         Time.timeScale = 1f; // Resumes simulation
@@ -30,42 +26,29 @@ public class GamePlayState : AState
         gameplayUI = statesUI.transform.Find("Gameplay").gameObject;
         gameplayUI.SetActive(true);
 
-        //HUD = UI.transform.Find("HUD").gameObject;
-
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
-        //elapsedText = GameObject.Find("Elapsed time").GetComponent<TextMeshProUGUI>();
         feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
         highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
-
-        highSpeedBar.SetMaxValue(PlayerManager.Instance.MAX_VALUE);
-        flyHighBar.SetMaxValue(PlayerManager.Instance.MAX_VALUE);
+        handledControls = UI.transform.Find("Handled controls").gameObject;
+        
+        // Don't show handled controls in PC
+        if (GameManager.Instance.playingOnPC)
+            handledControls.SetActive(false);
+        else // Show them in other device type
+            handledControls.SetActive(true);
 
         // Needs to know boost value
         PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
 
+        // Generate town if not generated yet
         GameManager.Instance.townGenerator.Start();
-
-        handledControls = UI.transform.Find("Handled controls").gameObject;
-        
-        if (GameManager.Instance.playingOnPC){
-            handledControls.SetActive(false);
-        }else{
-            // Show handled controls
-            handledControls.SetActive(true);
-        }
     }
 
     public override void Update()
     {
-        // if (GameManager.Instance.playingOnPC){
-        //     handledControls.SetActive(false);
-        // }else{
-        //     // Show handled controls
-        //     handledControls.SetActive(true);
-        // }
-
         UpdateTimer();
+
         if (PlayerManager.Instance.hasActiveMission)
         {
             UpdateMissionTime();
@@ -85,7 +68,6 @@ public class GamePlayState : AState
 
     public override void Exit()
     {
-        //HUD.SetActive(false);
         gameplayUI.SetActive(false);
     }
 
@@ -97,9 +79,6 @@ public class GamePlayState : AState
         {
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
-
-
-
         }
         else if (remainingTime <= 0 && !gameOverTriggered)
         {
@@ -112,11 +91,8 @@ public class GamePlayState : AState
 
         timerMinutes = Mathf.FloorToInt(remainingTime / 60);
         timerSeconds = Mathf.FloorToInt(remainingTime % 60);
-        elapsedMinutes = Mathf.FloorToInt(elapsedTime / 60);
-        elapsedSeconds = Mathf.FloorToInt(elapsedTime % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", timerMinutes, timerSeconds);
-        //elapsedText.text = string.Format("{0:00}:{1:00}", elapsedMinutes, elapsedSeconds);
 
         GameManager.Instance.remainingTime = remainingTime;
     }

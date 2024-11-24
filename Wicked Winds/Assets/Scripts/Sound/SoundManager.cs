@@ -39,6 +39,9 @@ public class SoundManager : MonoBehaviour
 
     public void PlayMusicTrack(int id)
     {
+        // Return if it's already playing
+        if(audioSource.clip == musicTracks[id]) return;
+
         StartCoroutine(FadeAudio(musicTracks[id]));
     }
 

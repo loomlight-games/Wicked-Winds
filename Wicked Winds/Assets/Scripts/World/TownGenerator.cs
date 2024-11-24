@@ -16,6 +16,7 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
 
+    bool townGenerated = false;
 
     /// <summary>
     /// Niebla aleatoria en algunos tiles
@@ -24,6 +25,8 @@ public class TownGenerator
 
     public void Start()
     {
+        if (townGenerated) return;
+
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
        
@@ -58,25 +61,17 @@ public class TownGenerator
             isTypeInstantiated[type] = false;
         }
 
-
         // Instantiate town parent
         townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
 
         // Instantiate landscape as child of town
         GameManager.Instance.InstantiateGO(landscape, townParent.transform.position, townParent.transform.rotation, townParent.transform);
 
-        ///////////////////////////////////////////////////////////////////////////////////
-        if (GameManager.Instance.generateTown)
-        { // Delete in the future
-          ///////////////////////////////////////////////////////////////////////////////////
-            CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
+        CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
 
-            InstantiateTiles(); // Instantiates a town tile in each position - from center
-        }
+        InstantiateTiles(); // Instantiates a town tile in each position - from center
 
-        
-        
-
+        townGenerated = true;
     }
 
     /// <summary>
@@ -166,38 +161,20 @@ public class TownGenerator
             // Instantiate tile in position with random rotation on Y
             GameObject instantiatedTile= GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
-            // Agregar niebla aleatoriamente
             AddFogTriggerRandomly(instantiatedTile, tileData);
         }
     }
 
-
     /// <summary>
-    /// FOG METHODS
-    /// </summary>
-    /// <summary>
-    /// A�ade un FogTrigger a un tile de manera aleatoria
+    /// Adds fog trigger randomly
     /// </summary>
     void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
     {
-        Debug.Log("SE ESTA EJECUTANDO EL METODO ADDFOGTRIGGERRANDOIMLY)");
-        if (tileData == null)
-        {
-            Debug.LogWarning("TownTile component not found on " + tile.name);
-            return; // Salir si no se encuentra el TownTile
-        }
-
         float fogChance = 0.2f;
         if (UnityEngine.Random.value < fogChance)
         {
             tileData.hasFog = true;
-            Debug.Log($"Tile {tile.name} has fog: {tileData.hasFog}");
-
-            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, Quaternion.identity);
-            fogTrigger.transform.parent = tile.transform;
-            
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
         }
     }
-
-
 }

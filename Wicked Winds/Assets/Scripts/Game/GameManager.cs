@@ -13,7 +13,7 @@ public class GameManager : AStateController
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
 
-    public bool playingOnPC = false;
+    [HideInInspector] public bool playingOnPC = false;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -42,7 +42,6 @@ public class GameManager : AStateController
     [Header("Town generator")]
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
-    public bool generateTown = true;
     public TownGenerator.Town town;
     public GameObject townParent;
     [Header("Stardust Town")]
