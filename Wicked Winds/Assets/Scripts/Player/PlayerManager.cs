@@ -48,6 +48,7 @@ public class PlayerManager : AStateController
     [Header("Movement")]
     public float walkSpeed = 6f;
     public float boostSpeed = 12f;
+    public float rainySpeed = 3f;
     public float rotationSpeed = 2f;
     public float flyForce = 2f;
     public float gravityForce = 3f;
