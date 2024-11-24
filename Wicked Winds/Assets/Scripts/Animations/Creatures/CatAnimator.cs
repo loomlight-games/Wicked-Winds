@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Handles cat animations
+/// </summary>
+public class CatAnimator : MonoBehaviour
+{
+    readonly int Idle = Animator.StringToHash("Idle"),
+        Moving = Animator.StringToHash("Moving");
+
+    int currentAnimation;
+
+    void Start(){
+
+    }
+
+    // Update is called once per frame
+    public void Update()
+    {
+        CheckAnimation();
+    }
+
+    /// <summary>
+    /// Checks animation conditions
+    /// </summary>
+    void CheckAnimation(){
+        // Is moving
+        if(PlayerManager.Instance.movement2D.sqrMagnitude != 0)
+            ChangeAnimation(Moving);
+        // Is still
+        else
+            ChangeAnimation(Idle);
+    }
+
+    /// <summary>
+    /// Transitions to given animation 
+    /// </summary>
+    void ChangeAnimation(int newAnimation, float duration = 0.2f){
+        // Not same as current
+        if (currentAnimation != newAnimation){
+            currentAnimation = newAnimation;
+            // Interpolate transition to new animation
+            PlayerManager.Instance.animator.CrossFade(newAnimation, duration);
+        }
+    }
+}
