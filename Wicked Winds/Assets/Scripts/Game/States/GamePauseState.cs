@@ -5,8 +5,8 @@ public class GamePauseState : AState
     GameObject UI, 
         statesUI, 
         pauseMenuUI, 
-        PCtutorial, 
-        tutorial, 
+        //PCtutorial, 
+        //tutorial, 
         PCyes, 
         PCno,
         handledControls;
@@ -25,17 +25,17 @@ public class GamePauseState : AState
         PCyes = playingOnPCbutton.transform.Find("Yes").gameObject;
         PCno = playingOnPCbutton.transform.Find("No").gameObject;
 
-        PCtutorial = UI.transform.Find("PC tutorial").gameObject;
-        tutorial = UI.transform.Find("Not PC tutorial").gameObject;
+        //PCtutorial = UI.transform.Find("PC tutorial").gameObject;
+        //tutorial = UI.transform.Find("Not PC tutorial").gameObject;
 
         if (GameManager.Instance.playingOnPC){
             PCyes.SetActive(true);
             // Show PC tutorial
-            PCtutorial.SetActive(true);
+            //PCtutorial.SetActive(true);
         }else{
             PCno.SetActive(true);
             // Show handled device tutorial
-            tutorial.SetActive(true);
+            //tutorial.SetActive(true);
         }
 
         handledControls = UI.transform.Find("Handled controls").gameObject;
@@ -45,14 +45,14 @@ public class GamePauseState : AState
         if (GameManager.Instance.playingOnPC){
             PCyes.SetActive(true);
             PCno.SetActive(false);
-            PCtutorial.SetActive(true);
-            tutorial.SetActive(false);
+            //PCtutorial.SetActive(true);
+            //tutorial.SetActive(false);
             handledControls.SetActive(false);
         }else{
             PCyes.SetActive(false);
             PCno.SetActive(true);
-            PCtutorial.SetActive(false);
-            tutorial.SetActive(true);
+            //PCtutorial.SetActive(false);
+            //tutorial.SetActive(true);
             handledControls.SetActive(true);
         }
     }
@@ -60,8 +60,8 @@ public class GamePauseState : AState
     {
         // Hide pause menu
         pauseMenuUI.SetActive(false);
-        PCtutorial.SetActive(false);
-        tutorial.SetActive(false);
+        //PCtutorial.SetActive(false);
+        //tutorial.SetActive(false);
         Time.timeScale = 1f; // Reactivates simulation
     }
 }
