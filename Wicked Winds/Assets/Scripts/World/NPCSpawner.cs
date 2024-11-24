@@ -161,9 +161,7 @@ public class NPCSpawner : MonoBehaviour
       
                 position = GetValidNavMeshPosition(0);
                 GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
-                PlayerManager.Instance.cloudTransform = cloud.transform;
-               
-
+        PlayerManager.Instance.cloudTransform = cloud.transform;
             
         }
 
