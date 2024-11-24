@@ -13,8 +13,8 @@ public class OwlController : MonoBehaviour
     public MissionIcon missionIcon; // Referencia al icono de mision del NPC
 
     // Map boundaries (defined here)
-    private Vector3 mapMinBounds = new Vector3(-80, 10, -80); // Minimum coordinates of the map
-    private Vector3 mapMaxBounds = new Vector3(80, 20, 80);  // Maximum coordinates of the map
+    private Vector3 mapMinBounds = new Vector3(-80, 20, -80); // Minimum coordinates of the map
+    private Vector3 mapMaxBounds = new Vector3(80, 30, 80);  // Maximum coordinates of the map
 
     private bool isEscaping = false;
     private Vector3 targetPosition; // Target position for random flight
