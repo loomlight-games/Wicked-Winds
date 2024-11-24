@@ -16,7 +16,7 @@ public class PlayerManager : AStateController
 
     public Transform orientation;
     [HideInInspector] public CharacterController controller;
-    public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
+    [HideInInspector]public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     public NPC npcMissionActive;
     public NPC npcObjective;
