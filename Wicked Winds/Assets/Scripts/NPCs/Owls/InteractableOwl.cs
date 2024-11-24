@@ -54,7 +54,7 @@ public class InteractableOwl : MonoBehaviour
                 if (dialoguePanel != null)
                 {
                     String msg1 = "¡Cruuu! ¡Hoo-hooo!  \n ¡Uhú, uhú!";
-                    Debug.Log("El mensaje del GATO existe. Asignando el mensaje al bocadillo...");
+                    Debug.Log("El mensaje del buho existe. Asignando el mensaje al bocadillo...");
                     dialoguePanel.lines = null;
                     dialoguePanel.lines = new string[] { msg1 }; // Asigna el mensaje del NPC al bocadillo
                     dialoguePanel.StartDialogue(owner, msg1, 1); // Inicia el dialogo
