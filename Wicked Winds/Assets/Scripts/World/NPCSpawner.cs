@@ -158,22 +158,18 @@ public class NPCSpawner : MonoBehaviour
             Random.Range(-cloudSpawnRadious, cloudSpawnRadious)
         );
 
-        for (int i = 0; i < numOfTries; i++)
-        {
-            // Validar que el centro esté sobre el terreno usando un raycast
-            if (Physics.Raycast(position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
-            {
-                position = hit.point + Vector3.up * cloudHeightOffset;
+      
+                position = GetValidNavMeshPosition(0);
                 GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
                 PlayerManager.Instance.cloudTransform = cloud.transform;
-                return;
+               
 
-            }
+            
         }
 
            
         
-    }
+    
 
 
 
