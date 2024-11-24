@@ -134,7 +134,8 @@ public class MissionIcon : MonoBehaviour
         {
             // Asigna una nueva misión al completar la actual
             missionManager.AssignNewMission(1);
-            GameManager.Instance.remainingTime += currentMission.timeBonus;
+            GameManager.Instance.remainingTime = GameManager.Instance.remainingTime + currentMission.timeBonus;
+            GameManager.Instance.playState.feedBackText.text = $"Remaining Time: {GameManager.Instance.remainingTime}, Time Bonus: {currentMission.timeBonus}";
             GameManager.Instance.missionsTimes.Add(GameManager.Instance.missionTime);
             GameManager.Instance.missionTime = 0f;
             // Eliminar el NPC de la lista de assignedNPCs en MissionManager
