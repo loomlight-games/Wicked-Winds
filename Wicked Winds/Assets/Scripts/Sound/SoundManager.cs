@@ -34,14 +34,20 @@ public class SoundManager : MonoBehaviour
 
     void PlaySoundEffect(int id)
     {
+        // Set the AudioSource to loop
+        audioSource.loop = false;
         audioSource.PlayOneShot (soundEffects[id], volume);
     }
 
     void PlayMusicTrack(int id)
     {
         // Return if it's already playing
-        if(audioSource.clip == musicTracks[id]) return;
+        if (audioSource.clip == musicTracks[id]) return;
 
+        // Set the AudioSource to loop
+        audioSource.loop = true;
+
+        // Start fading to the new track
         StartCoroutine(FadeAudio(musicTracks[id]));
     }
 

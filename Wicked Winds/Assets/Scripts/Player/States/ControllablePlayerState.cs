@@ -140,12 +140,11 @@ public class ControllablePlayerState : AState
         if (other.gameObject.TryGetComponent(out InteractableOwl owl))
         {
             GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
-            if (PlayerManager.Instance.interactKey)
-            {
+            
                 GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
                 //Deactivates it
                 owl.Interact();
-            }
+            
         }
     }
 }

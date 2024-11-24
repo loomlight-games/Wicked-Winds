@@ -38,8 +38,7 @@ public class GamePlayState : AState
         else // Show them in other device type
             handledControls.SetActive(true);
 
-        // Needs to know boost value
-        PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
+        
 
         SoundManager.Instance.PlayGamePlayMusic();
 
@@ -118,11 +117,5 @@ public class GamePlayState : AState
         timerText.color = Color.red;
     }
 
-    /// <summary>
-    /// Called when a mission is completed. Adds time.
-    /// </summary>
-    private void OnMissionCompleteEvent(object sender, EventArgs e)
-    {
-        remainingTime += 20f;
-    }
+    
 }

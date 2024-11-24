@@ -26,8 +26,8 @@ public class PlayerManager : AStateController
     public Transform cloudTransform;
     public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
-    [HideInInspector] public List<GameObject> currentTargets = new ();
-    [HideInInspector] public Transform target;
+    public List<GameObject> currentTargets = new ();
+     public Transform target;
     [HideInInspector] public MissionIcon activeMission;
     [HideInInspector] public Animator animator;
 

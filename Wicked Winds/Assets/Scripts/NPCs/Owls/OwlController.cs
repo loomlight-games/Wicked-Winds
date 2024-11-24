@@ -5,11 +5,12 @@ public class OwlController : MonoBehaviour
 {
     public Transform player; // Reference to the player
     public NPC owner; // Reference to the NPC owner of the owl
-    public float moveSpeed = 5f; // Movement speed of the owl (This will be overwritten by PlayerManager)
+    public float moveSpeed = 2f; // Movement speed of the owl (This will be overwritten by PlayerManager)
     public float detectionRadius = 10f; // Radius for detecting the player
     public float flightHeight = 15f; // Height at which the owl flies
     public float flightRange = 5f; // Random flight range while the owl is flying
     public float followDistance = 5f; // Distance at which the owl will follow the player
+    public MissionIcon missionIcon; // Referencia al icono de mision del NPC
 
     // Map boundaries (defined here)
     private Vector3 mapMinBounds = new Vector3(-80, 10, -80); // Minimum coordinates of the map
@@ -20,12 +21,25 @@ public class OwlController : MonoBehaviour
 
     void Start()
     {
+        this.missionIcon = owner.missionIcon;
+
         SetRandomTarget(); // Set an initial random position for flight
     }
 
     void Update()
     {
-       
+        
+        if (PlayerManager.Instance.activeMission != null &&
+            this.missionIcon != null &&
+            this.missionIcon.missionID == PlayerManager.Instance.activeMission.missionID)
+        {
+            if (!PlayerManager.Instance.currentTargets.Contains(gameObject))
+            {
+                PlayerManager.Instance.AddTarget(gameObject);
+            }
+        }
+        
+
         if (isEscaping)
         {
             // Escape from the player in a straight line

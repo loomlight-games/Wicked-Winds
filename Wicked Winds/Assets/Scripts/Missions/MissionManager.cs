@@ -102,7 +102,7 @@ public class MissionManager : MonoBehaviour
             else if (mission.difficulty == 2)
             {
                 missionLists["hard"].Add(mission);
-                Debug.Log($"Mision dificil añadida: {mission.name}");
+                Debug.Log($"Mision dificil añadida: {mission.name}"); 
             }
         }
 
@@ -115,11 +115,15 @@ public class MissionManager : MonoBehaviour
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
+       /* numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1 , numMissionsToAssign - numHardMissions));
         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
-        numEasyMissions = Mathf.Max(numEasyMissions, 0);
+        numEasyMissions = Mathf.Max(numEasyMissions, 0);*/
+
+        numEasyMissions = 0;
+        numMediumMissions = 0;  
+        numHardMissions = numMissionsToAssign;
         Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
@@ -127,6 +131,7 @@ public class MissionManager : MonoBehaviour
     {
         List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
         List<NPC> npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
+        List<NPC> npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
 
         int assignedCount = 0;
 
@@ -148,6 +153,14 @@ public class MissionManager : MonoBehaviour
                 {
                     selectedNPC = GetRandomNPC(npcsWithCat);
                     npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
+                }
+            }
+            if (mission.missionName == "OwlMission") {
+
+                if (npcsWithCat.Count > 0)
+                {
+                    selectedNPC = GetRandomNPC(npcsWithOwl);
+                    npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
             else // Si es una misión de tipo Potion o Letter

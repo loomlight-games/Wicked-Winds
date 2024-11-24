@@ -30,8 +30,8 @@ public class MessageGenerator
                 answerTemplates = mission.npcAnswers["PotionMission"];
                 break;
             case "owlmission":
-                messageTemplates = mission.npcMessages["PotionMission"];
-                answerTemplates = mission.npcAnswers["PotionMission"];
+                messageTemplates = mission.npcMessages["OwlMission"];
+                answerTemplates = mission.npcAnswers["OwlMission"];
                 break;
             default:
                 Debug.LogWarning("Unknown mission type.");

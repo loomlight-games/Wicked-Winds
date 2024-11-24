@@ -69,7 +69,7 @@ public class NPCSpawner : MonoBehaviour
             }
 
             // 10% de probabilidad de generar un búho
-            if (Random.value < 0.1f)
+            if (Random.value < 0.3f)
             {
                 // Generar el búho en cualquier parte del mapa a una altura de 10 unidades
                 Vector3 owlPosition = new Vector3(

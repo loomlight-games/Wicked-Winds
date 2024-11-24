@@ -168,7 +168,16 @@ public class PlayerController
                 movementSpeed = walkSpeed;
         }
         else
+            if (IsPlayerUnderCloud())
+            {
+            movementSpeed = rainySpeed;
+
+            }
+            else
+            {
             movementSpeed = walkSpeed;
+        }
+        
 
         // Get direction in 3D space based on camera orientation
         forward = cameraTransform.forward;
