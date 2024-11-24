@@ -5,7 +5,6 @@ using UnityEngine;
 /// </summary>
 public class PlayerAnimator
 {
-    Animator animator;
     readonly int Idle = Animator.StringToHash("Idle"),
         Moving = Animator.StringToHash("Moving"),
         MovingFast = Animator.StringToHash("MovingFast");
@@ -43,7 +42,7 @@ public class PlayerAnimator
         if (currentAnimation != newAnimation){
             currentAnimation = newAnimation;
             // Interpolate transition to new animation
-            animator.CrossFade(newAnimation, duration);
+            PlayerManager.Instance.animator.CrossFade(newAnimation, duration);
         }
     }
 }

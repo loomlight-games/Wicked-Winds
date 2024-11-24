@@ -110,7 +110,7 @@ public class PlayerManager : AStateController
     // Start is called before the first frame update
     public override void Start()
     {
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
         if (SceneManager.GetActiveScene().name == "Shop")
             SetState(atShopState);
