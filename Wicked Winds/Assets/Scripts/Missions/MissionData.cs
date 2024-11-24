@@ -121,7 +121,7 @@ public class MissionData : ScriptableObject
                     "Thank you! \nYou’re my only hope in finding my furry friend!",
                     "You’re amazing! \nI knew you’d help me track him down!",
                     "You’ve got a great eye! \nI’m sure we’ll find him in no time!",
-                    "I appreciate your help!\n I know he’s out there somewhere!",
+                    "I appreciate your help!\n I'm sure he had enough adventures for one day!",
                     "You’re a true friend! \nI can always count on you for support!",
                     "Thanks!\n Without you, I’d be lost without my little buddy!",
                     "You’re the best!\n I can’t wait to snuggle with my cat again!"

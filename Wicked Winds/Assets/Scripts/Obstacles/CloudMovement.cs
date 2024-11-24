@@ -39,6 +39,7 @@ public class CloudMovement : MonoBehaviour
         float randomX = Random.Range(movementAreaMin.x, movementAreaMax.x);
         float randomY = Random.Range(movementAreaMin.y, movementAreaMax.y);
         targetPosition = new Vector3(randomX, randomY, transform.position.z);
+        PlayerManager.Instance.cloudTransform = transform;
     }
 
     private IEnumerator ChangeDirectionRoutine()

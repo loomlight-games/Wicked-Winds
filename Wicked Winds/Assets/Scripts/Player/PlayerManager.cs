@@ -16,7 +16,7 @@ public class PlayerManager : AStateController
 
     public Transform orientation;
     [HideInInspector] public CharacterController controller;
-    public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
+    [HideInInspector]public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     public NPC npcMissionActive;
     public NPC npcObjective;
@@ -26,10 +26,10 @@ public class PlayerManager : AStateController
     public Transform cloudTransform;
     public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
-    [HideInInspector] public List<GameObject> currentTargets = new ();
-    [HideInInspector] public Transform target;
+    public List<GameObject> currentTargets = new ();
+     public Transform target;
     [HideInInspector] public MissionIcon activeMission;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();// On ground
@@ -48,6 +48,7 @@ public class PlayerManager : AStateController
     [Header("Movement")]
     public float walkSpeed = 6f;
     public float boostSpeed = 12f;
+    public float rainySpeed = 3f;
     public float rotationSpeed = 2f;
     public float flyForce = 2f;
     public float gravityForce = 3f;
@@ -109,12 +110,12 @@ public class PlayerManager : AStateController
     // Start is called before the first frame update
     public override void Start()
     {
-        animator= GetComponent<Animator>();
-
         if (SceneManager.GetActiveScene().name == "Shop")
             SetState(atShopState);
         else
             SetState(controllableState);
+
+       
     }
 
     // Update is called once per frame

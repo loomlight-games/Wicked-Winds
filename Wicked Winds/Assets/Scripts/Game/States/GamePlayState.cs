@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -38,8 +39,7 @@ public class GamePlayState : AState
         else // Show them in other device type
             handledControls.SetActive(true);
 
-        // Needs to know boost value
-        PlayerManager.Instance.MissionCompleteEvent += OnMissionCompleteEvent;
+        
 
         SoundManager.Instance.PlayGamePlayMusic();
 
@@ -111,18 +111,16 @@ public class GamePlayState : AState
         gameOverTriggered = true;  // avoids double calls
 
         PlayerManager.Instance.score = (int)elapsedTime;
+        // Suma todos los tiempos de la lista
+        float totalMissionTime = GameManager.Instance.missionsTimes.Sum();
 
+        // Calcula la media dividiendo entre las misiones completadas
+        GameManager.Instance.averageMissionTime = totalMissionTime / MissionManager.Instance.missionsCompleted;
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
 
         timerText.color = Color.red;
     }
 
-    /// <summary>
-    /// Called when a mission is completed. Adds time.
-    /// </summary>
-    private void OnMissionCompleteEvent(object sender, EventArgs e)
-    {
-        remainingTime += 20f;
-    }
+    
 }

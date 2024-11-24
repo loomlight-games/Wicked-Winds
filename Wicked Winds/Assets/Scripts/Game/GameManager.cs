@@ -13,7 +13,7 @@ public class GameManager : AStateController
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
 
-    [HideInInspector] public bool playingOnPC = false;
+    public bool playingOnPC = false;
 
     #region STATES
     public readonly GamePauseState pauseState = new();
@@ -135,6 +135,9 @@ public class GameManager : AStateController
                 LoadingSceneScreen(SceneManager.GetActiveScene().name);
                 break;
             case "Pause":
+                SwitchState(pauseState);
+                break;
+            case "Return":
                 SwitchState(pauseState);
                 break;
             case "Resume":

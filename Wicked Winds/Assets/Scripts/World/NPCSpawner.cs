@@ -14,13 +14,24 @@ public class NPCSpawner : MonoBehaviour
 
     private int spawnedNPCCount = 0; // Contador de NPCs generados
 
-    //obstaculos pajaros
+    //BIRD OBSTACLES
     public GameObject birdPrefab; // Prefab del pájaro
     public int numberOfFlocks = 15; // Número de bandadas de pájaros a generar
     public int birdsPerFlock = 5; // Pájaros por bandada
     public float flockSpawnRadius = 100f; // Radio para dispersar las bandadas
     public float flockRadius = 10f; // Radio inicial para posicionar a los pájaros en la bandada
     public float birdHeightOffset = 15f; // Altura fija de las bandadas
+    public bool cat;
+
+
+    public float cloudSpawnRadious = 100f;
+    public float cloudHeightOffset = 40;
+    public GameObject cloudPrefab;
+    public LayerMask buildingLayer; // Capa de edificios
+    public LayerMask waterLayer; // Capa de agua
+
+    
+
 
     void Start()
     {
@@ -36,6 +47,7 @@ public class NPCSpawner : MonoBehaviour
             SpawnFlock();
         }
 
+        SpawnCloud();
     }
 
     void SpawnNPC()
@@ -44,7 +56,7 @@ public class NPCSpawner : MonoBehaviour
         int humanoidAgentTypeID = NavMesh.GetSettingsByIndex(0).agentTypeID;
 
         // Buscar una posición válida en el NavMesh para el NPC
-        Vector3 spawnPosition = GetValidNavMeshPosition(humanoidAgentTypeID);
+        Vector3 spawnPosition = GetRandomPositionOnGround(humanoidAgentTypeID, false);
         if (spawnPosition != Vector3.zero)
         {
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity);
@@ -58,7 +70,7 @@ public class NPCSpawner : MonoBehaviour
                 int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
 
                 // Buscar una posición válida en el NavMesh para el gato
-                Vector3 catPosition = GetValidNavMeshPosition(catAgentTypeID);
+                Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
                 if (catPosition != Vector3.zero)
                 {
                     GameObject cat = Instantiate(catPrefab, catPosition, Quaternion.identity);
@@ -69,7 +81,7 @@ public class NPCSpawner : MonoBehaviour
             }
 
             // 10% de probabilidad de generar un búho
-            if (Random.value < 0.1f)
+            if (Random.value < 0.3f)
             {
                 // Generar el búho en cualquier parte del mapa a una altura de 10 unidades
                 Vector3 owlPosition = new Vector3(
@@ -87,6 +99,8 @@ public class NPCSpawner : MonoBehaviour
             spawnedNPCCount++;
         }
     }
+
+    //BIRD SPAWNER
     void SpawnFlock()
     {
         // Generar una posición central aleatoria para la bandada
@@ -114,7 +128,7 @@ public class NPCSpawner : MonoBehaviour
         flockCenterObject.transform.position = flockCenter;
         flockCenterObject.transform.parent = flockParent.transform;
 
-        // Crear pájaros alrededor del centro y asignarles el flockCenter dinámicamente
+        // Crear pájaros alrededor del centro y asignarlos como hijos del centro
         for (int i = 0; i < birdsPerFlock; i++)
         {
             Vector3 birdPosition = flockCenter + new Vector3(
@@ -125,28 +139,88 @@ public class NPCSpawner : MonoBehaviour
 
             GameObject bird = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
 
+            // Configurar el pájaro como hijo del centro de su bandada
+            bird.transform.parent = flockCenterObject.transform;
+
             // Obtener el BirdController y asignar dinámicamente el flockCenter
             BirdController birdController = bird.GetComponent<BirdController>();
             if (birdController != null)
             {
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
+
+            // Registrar el pájaro en el BirdManager
+            BirdManager.Instance.RegisterBird(bird);
         }
     }
 
+    void SpawnCloud()
+    {
+        // Generar una posición central aleatoria para la bandada
+        Vector3 position = new Vector3(
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious),
+            cloudHeightOffset,
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious)
+        );
+
+      
+                position = GetRandomPositionOnGround(0, false);
+                GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
+                PlayerManager.Instance.cloudTransform = cloud.transform;
+            
+        }
 
 
-    Vector3 GetValidNavMeshPosition(int agentTypeID)
+
+
+    Vector3 GetRandomPositionOnGround(int agentTypeID, bool cat)
     {
         for (int i = 0; i < numOfTries; i++)
         {
-            // Generar un punto aleatorio dentro del rango
             Vector3 randomPoint = new Vector3(
                 Random.Range(-detectionRadius, detectionRadius),
                 100f,
                 Random.Range(-detectionRadius, detectionRadius)
             );
 
+            if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
+            {
+                Vector3 spawnPoint = hit.point;
+
+                // Realizar un raycast hacia arriba desde el punto de spawn para comprobar si hay un edificio
+                RaycastHit hitpoint;
+                if (Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, buildingLayer))
+                {
+                    // Si hay un edificio encima, continuamos con la siguiente iteración
+                    continue;
+                }
+
+                // Verificar que el punto esté libre de agua o NPCs cercanos
+                bool isWaterNearby = Physics.CheckSphere(spawnPoint, 1f, waterLayer);
+                bool isNPCNearby = Physics.CheckSphere(spawnPoint, 2f, LayerMask.GetMask("NPC"));
+
+                if (!isWaterNearby && !isNPCNearby)
+                {
+                    
+                   
+                        return spawnPoint; 
+                    
+                   
+                }
+            }
+        }
+        
+
+        Debug.LogWarning("No se encontró una posición válida después de varios intentos.");
+        return Vector3.zero;
+    }
+
+
+    Vector3 GetValidNavMeshPosition(int agentTypeID, Vector3 randomPoint)
+    {
+        int attempts = 30;  // Número de intentos para encontrar una posición válida
+        for (int i = 0; i < attempts; i++)
+        {
             // Realizar un raycast hacia abajo para detectar el suelo
             if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
             {
@@ -167,14 +241,21 @@ public class NPCSpawner : MonoBehaviour
                         // Verificar que realmente pertenece al NavMesh del agente
                         if (NavMesh.FindClosestEdge(navHit.position, out NavMeshHit edgeHit, filter))
                         {
-                            return navHit.position;
+                            return navHit.position; // Retorna la posición válida si se encuentra
                         }
                     }
                 }
             }
+
+            // Si no se encuentra una posición válida, genera una nueva posición aleatoria
+            randomPoint = new Vector3(
+                Random.Range(-50f, 50f), // Ajusta el rango según lo que necesites
+                randomPoint.y,
+                Random.Range(-50f, 50f)
+            );
         }
 
-        Debug.LogWarning($"No se encontró una posición válida en el NavMesh para el agente con ID {agentTypeID}.");
-        return Vector3.zero; // Si no encuentra una posición válida, devuelve un vector vacío
+        Debug.LogWarning($"No se encontró una posición válida en el NavMesh para el agente con ID {agentTypeID} después de {attempts} intentos.");
+        return Vector3.zero; // Si no se encuentra ninguna posición válida después de los intentos, devuelve Vector3.zero
     }
 }

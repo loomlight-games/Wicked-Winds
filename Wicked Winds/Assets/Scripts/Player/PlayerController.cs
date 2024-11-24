@@ -55,7 +55,9 @@ public class PlayerController
 
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
-        
+
+       
+
     }
 
     public void Update()
@@ -64,7 +66,7 @@ public class PlayerController
         movement2D = PlayerManager.Instance.movement2D;
         walkSpeed = PlayerManager.Instance.walkSpeed;
         boostSpeed = PlayerManager.Instance.boostSpeed;
-        rainySpeed = PlayerManager.Instance.boostSpeed;
+        rainySpeed = PlayerManager.Instance.rainySpeed;
         flyForce = PlayerManager.Instance.flyForce;
         gravityForce = PlayerManager.Instance.gravityForce;
         lowerHeightLimit = PlayerManager.Instance.lowerHeightLimit;
@@ -168,7 +170,16 @@ public class PlayerController
                 movementSpeed = walkSpeed;
         }
         else
+            if (IsPlayerUnderCloud())
+            {
+            movementSpeed = rainySpeed;
+
+            }
+            else
+            {
             movementSpeed = walkSpeed;
+        }
+        
 
         // Get direction in 3D space based on camera orientation
         forward = cameraTransform.forward;

@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 4496672846902782984}
   - component: {fileID: 3603374532198481566}
   - component: {fileID: 7264642940306397005}
+  - component: {fileID: 5513388707499389298}
   - component: {fileID: 8452264527194797229}
   m_Layer: 0
   m_Name: NPC
@@ -317,7 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba9cd4f541a3af458a0de049f3a5816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npc: {fileID: 0}
   missionIcon: {fileID: 0}
+  activeNPC: {fileID: 0}
   dialoguePanel: {fileID: 0}
 --- !u!114 &3603374532198481566
 MonoBehaviour:
@@ -340,6 +343,9 @@ MonoBehaviour:
   missionType: 
   responseMessage: 
   sender: {fileID: 0}
+  cat: {fileID: 0}
+  owl: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &7264642940306397005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +366,18 @@ MonoBehaviour:
   buildingLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &5513388707499389298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8623520466582528032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a30638aca75b442a95dfd4e4b74844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &8452264527194797229
 NavMeshAgent:
   m_ObjectHideFlags: 0
