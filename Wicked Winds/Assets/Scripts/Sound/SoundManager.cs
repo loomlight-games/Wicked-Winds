@@ -1,13 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles music and sound effects reproduction
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance; 
-    [SerializeField] private AudioClip[] audios;
+    public static SoundManager Instance;
+    public float volume = 0.6f, 
+                fadeDuration = 2f;
 
-    private AudioSource controlAudio;
+    [SerializeField] private AudioClip[] soundEffects;
+    [SerializeField] private AudioClip[] musicTracks;
+
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -23,23 +29,42 @@ public class SoundManager : MonoBehaviour
     }
     void Start()
     {
-        controlAudio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-
-
-    public void SelectAudio(int indice, float volumen)
+    public void PlaySoundEffect(int id)
     {
-        controlAudio.PlayOneShot (audios[indice], volumen);
+        audioSource.PlayOneShot (soundEffects[id], volume);
     }
 
-    // Metodo para detener el audio antes de tiempo
-    public void StopAudio()
+    public void PlayMusicTrack(int id)
     {
-        if (controlAudio.isPlaying) // Verifica si hay algo reproduciéndose
+        StartCoroutine(FadeAudio(musicTracks[id]));
+    }
+
+    private IEnumerator FadeAudio(AudioClip newClip)
+    {
+        if (audioSource.isPlaying)
         {
-            controlAudio.Stop();
+            // Fading out the current audio
+            for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+            {
+                audioSource.volume = 1 - (t / fadeDuration);
+                yield return null;
+            }
+            audioSource.Stop();
         }
-    }
 
+        audioSource.clip = newClip;
+        audioSource.Play();
+
+        // Fading in the new audio
+        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        {
+            audioSource.volume = t / fadeDuration;
+            yield return null;
+        }
+
+        audioSource.volume = volume; // Ensure max volume
+    }
 }

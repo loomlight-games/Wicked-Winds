@@ -8,7 +8,7 @@ public class BirdPotion : MonoBehaviour
     // Metodo para recolectar el objeto
     public void CollectBirdPotion()
     {
-        SoundManager.Instance.SelectAudio(2, 0.6f);
+        SoundManager.Instance.PlaySoundEffect(2);
 
         PlayerManager.Instance.potionBird = true;
         DesactivarPotionUI.Instance.activarBirdUI = true; // Muestra la UI de la poci�n

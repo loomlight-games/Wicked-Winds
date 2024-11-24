@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class TeleportEffect : MonoBehaviour
 {
     public Canvas canvas; // Canvas que contiene la imagen del efecto
-    public float flashDuration = 2f; // Duración del flash
+    public float flashDuration = 2f; // Duraciï¿½n del flash
     public Color flashColor = Color.black; // Color del flash
 
     private Image screenFlash; // Referencia a la imagen para el efecto
@@ -23,7 +23,7 @@ public class TeleportEffect : MonoBehaviour
             // Buscar la imagen por etiqueta o nombre
             foreach (Image img in canvas.GetComponentsInChildren<Image>(true))
             {
-                if (img.CompareTag("ScreenFlash")) // Asegúrate de asignar esta etiqueta a la imagen
+                if (img.CompareTag("ScreenFlash")) // Asegï¿½rate de asignar esta etiqueta a la imagen
                 {
                     screenFlash = img;
                     break;
@@ -37,7 +37,7 @@ public class TeleportEffect : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No se encontró una imagen con la etiqueta 'ScreenFlash' dentro del Canvas.");
+                Debug.LogError("No se encontrï¿½ una imagen con la etiqueta 'ScreenFlash' dentro del Canvas.");
             }
         }
         else
@@ -48,7 +48,7 @@ public class TeleportEffect : MonoBehaviour
 
     public IEnumerator FlashAndTeleport(Vector3 teleportPosition, System.Action onComplete)
     {
-        soundManager.SelectAudio(4, 0.6f);
+        soundManager.PlaySoundEffect(4);
 
         if (screenFlash != null)
         {
@@ -73,7 +73,7 @@ public class TeleportEffect : MonoBehaviour
         }
         else
         {
-            Debug.LogError("El efecto de flash no está configurado correctamente.");
+            Debug.LogError("El efecto de flash no estï¿½ configurado correctamente.");
         }
     }
 }

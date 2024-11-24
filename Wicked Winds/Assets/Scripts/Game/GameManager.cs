@@ -12,7 +12,6 @@ public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
-    [SerializeField] private AudioClip[] musicTracks;
 
     public bool playingOnPC = false;
 
@@ -91,29 +90,28 @@ public class GameManager : AStateController
     private void SetStateBasedOnScene(Scene scene)
     {
         if (scene.name == "Main menu") {
-            MusicManager.Instance.PlayAudio(musicTracks[0], 2f); // 2 seconds transition
+            SoundManager.Instance.PlayMusicTrack(0);
             SetState(mainMenuState);
         }
             
         else if (scene.name == "Shop")
         {
-            MusicManager.Instance.PlayAudio(musicTracks[3], 2f); 
+            SoundManager.Instance.PlayMusicTrack(0); 
             SetState(shopState);
         }
            
         else if (scene.name == "Leaderboard") {
-            MusicManager.Instance.PlayAudio(musicTracks[2], 2f); 
+            SoundManager.Instance.PlayMusicTrack(0);
             SetState(leaderboardState);
         }
             
         else if (scene.name == "Gameplay") {
-            MusicManager.Instance.PlayAudio(musicTracks[1], 2f); 
+            SoundManager.Instance.PlayMusicTrack(1);
             SetState(playState);
         }
-
         else
         {
-            MusicManager.Instance.PlayAudio(musicTracks[1], 2f); 
+            SoundManager.Instance.PlayMusicTrack(1);
             SetState(playState);
         }
             

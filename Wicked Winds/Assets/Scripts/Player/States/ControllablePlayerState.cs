@@ -39,7 +39,7 @@ public class ControllablePlayerState : AState
                     // If the object has a Collectible component, deactivate it if not deactivated already
                     if (collectible != null && collectible.isModelActive){
                         collectible.Deactivate();
-                        SoundManager.Instance.SelectAudio(3, 0.6f);
+                        SoundManager.Instance.PlaySoundEffect(3);
 
                         // Notify that a speed potion was collected
                         SpeedPotionCollected?.Invoke(this, null);
@@ -53,7 +53,7 @@ public class ControllablePlayerState : AState
                     // If the object has a Collectible component, deactivate it if not deactivated already
                     if (collectible != null && collectible.isModelActive){
                         collectible.Deactivate();
-                        SoundManager.Instance.SelectAudio(3, 0.6f);
+                        SoundManager.Instance.PlaySoundEffect(3);
 
 
                         // Notify that a fly high potion was collected
@@ -66,7 +66,7 @@ public class ControllablePlayerState : AState
                 // If the object has a Collectible component, deactivate it if not deactivated already
                 if (collectible != null && collectible.isModelActive){
                     collectible.Deactivate();
-                    SoundManager.Instance.SelectAudio(1, 0.6f);
+                    SoundManager.Instance.PlaySoundEffect(1);
 
                     // Increment the player's coin count and save it
                     PlayerManager.Instance.customizable.coins++;

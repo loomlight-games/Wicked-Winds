@@ -43,7 +43,7 @@ public class Dialogue : MonoBehaviour
     // Método para iniciar el diálogo y mostrar el nombre del NPC
     public void StartDialogue(NPC npc, string mensajito, int tipo) //0= humano, 1= gato
     {
-        soundManager.SelectAudio(0, 0.6f);
+        soundManager.PlaySoundEffect(0);
         // Activar todos los hijos del objeto
         ActivateAllChildren();
         lineIndex = 0;

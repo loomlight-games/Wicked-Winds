@@ -15,9 +15,9 @@ public class teleportPotion : MonoBehaviour
     {
         if (PlayerManager.Instance.currentTargets.Count>0)
         {
-            if(soundManager != null) { soundManager.SelectAudio(4, 0.6f); }
+            if(soundManager != null) { soundManager.PlaySoundEffect(4); }
             
-            // Obtener la posición del objetivo
+            // Obtener la posiciï¿½n del objetivo
             Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;
 
             // Generar un desplazamiento aleatorio
@@ -30,7 +30,7 @@ public class teleportPotion : MonoBehaviour
             {
                 StartCoroutine(effect.FlashAndTeleport(teleportPosition, () =>
                 {
-                    // Mover al jugador después del efecto
+                    // Mover al jugador despuï¿½s del efecto
                     PlayerManager.Instance.controller.enabled = false;
                     PlayerManager.Instance.transform.position = teleportPosition;
                     PlayerManager.Instance.controller.enabled = true;
