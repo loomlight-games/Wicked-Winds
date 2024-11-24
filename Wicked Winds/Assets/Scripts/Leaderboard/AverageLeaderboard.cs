@@ -24,8 +24,7 @@ public class AverageLeaderboard : Panel
     [SerializeField] private Button totalTimeButton = null;
     [SerializeField] private Button misionCountButton = null;
 
-    //prueba
-    [SerializeField] private Button addScoreButton = null;
+
 
     private int currentPage = 1;
     private int totalPages = 0;
@@ -41,7 +40,7 @@ public class AverageLeaderboard : Panel
         ProfileButton.onClick.AddListener(ProfilePanel);
         nextButton.onClick.AddListener(NextPage);
         prevButton.onClick.AddListener(PrevPage);
-        addScoreButton.onClick.AddListener(AddScore);
+        
         totalTimeButton.onClick.AddListener(OpenTotalTimePanel);
         misionCountButton.onClick.AddListener(OpenMisionCountPanel);
         base.Initialize();
@@ -75,7 +74,7 @@ public class AverageLeaderboard : Panel
     }
     public async void AddScoreAsync(int score)
     {
-        addScoreButton.interactable = false;
+        
         try
         {
             //
@@ -86,7 +85,7 @@ public class AverageLeaderboard : Panel
         {
             Debug.Log(exception.Message);
         }
-        addScoreButton.interactable = true;
+        
     }
 
     private async void LoadPlayers(int page)
@@ -162,11 +161,13 @@ public class AverageLeaderboard : Panel
 
     private void OpenTotalTimePanel()
     {
+        Close();
         PanelManager.Open("TotalTimeLeaderboard");
 
     }
     private void OpenMisionCountPanel()
     {
+        Close();
         PanelManager.Open("MisionCountLeaderboard");
 
     }

@@ -16,6 +16,7 @@ public class ControllablePlayerState : AState
     {
         PlayerManager.Instance.playerController.Update();
         PlayerManager.Instance.compass.Update();
+        PlayerManager.Instance.playerAnimator.Update();
     }
 
     public override void OnTriggerEnter(Collider other)
