@@ -44,9 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef631e6254ad0142ade20de681d62c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicTracks:
+  - {fileID: 8300000, guid: 6f8796b29df6f5d449ed6817be9964c9, type: 3}
+  - {fileID: 8300000, guid: 3ec3e434e6af2b9418b20dbed641ea27, type: 3}
+  - {fileID: 8300000, guid: 1dca1aa54d5d3834dbf126623248daac, type: 3}
+  - {fileID: 8300000, guid: c660d0ad8c697314d9210dfb32dc9532, type: 3}
+  playingOnPC: 1
   tileSize: 50
   townSize: 4
-  generateTown: 0
+  generateTown: 1
   town: 0
   townParent: {fileID: 128008166315782763, guid: 41af0ddb366fda541942a147ca33597b,
     type: 3}
@@ -85,4 +91,7 @@ MonoBehaviour:
   - {fileID: 947100652604495022, guid: 55aaa30403881f745917ef5560e4e071, type: 3}
   initialTime: 120
   remainingTime: 0
+  missionsTimes: []
+  missionTime: 0
+  AverageMissionTime: 0
   sceneToLoad: Gameplay

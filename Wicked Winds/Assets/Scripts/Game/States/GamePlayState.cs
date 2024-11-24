@@ -58,16 +58,12 @@ public class GamePlayState : AState
 
     public override void Update()
     {
-        if (GameManager.Instance.playingOnPC){
-            handledControls.SetActive(false);
-        }else{
-            // Show handled controls
-            handledControls.SetActive(true);
-        }
-
-        // Press ESCAPE 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GameManager.Instance.ClickButton("Pause");
+        // if (GameManager.Instance.playingOnPC){
+        //     handledControls.SetActive(false);
+        // }else{
+        //     // Show handled controls
+        //     handledControls.SetActive(true);
+        // }
 
         UpdateTimer();
         if (PlayerManager.Instance.hasActiveMission)

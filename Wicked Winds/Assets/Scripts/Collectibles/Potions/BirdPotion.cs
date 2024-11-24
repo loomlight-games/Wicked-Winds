@@ -4,43 +4,34 @@ using UnityEngine;
 
 public class BirdPotion : MonoBehaviour
 {
-    [SerializeField] private SoundManager soundManager;
-
-    private void Awake()
-    {
-        soundManager = FindObjectOfType<SoundManager>();
-    }
 
     // Metodo para recolectar el objeto
     public void CollectBirdPotion()
     {
-        if (soundManager != null)
-        {
-            soundManager.SelectAudio(2, 0.6f);
-        }
+        SoundManager.Instance.SelectAudio(2, 0.6f);
 
         PlayerManager.Instance.potionBird = true;
-        DesactivarPotionUI.Instance.activarBirdUI = true; // Muestra la UI de la poción
+        DesactivarPotionUI.Instance.activarBirdUI = true; // Muestra la UI de la pociï¿½n
 
-        // Desactivar todos los pájaros
+        // Desactivar todos los pï¿½jaros
         StartCoroutine(DeactivateBirdsTemporarily());
 
-        gameObject.SetActive(false); // Desactiva la poción
+        gameObject.SetActive(false); // Desactiva la pociï¿½n
     }
 
-    // Coroutine para desactivar los pájaros durante 20 segundos
+    // Coroutine para desactivar los pï¿½jaros durante 20 segundos
     private IEnumerator DeactivateBirdsTemporarily()
     {
-        // Desactivar los pájaros
-        BirdManager.Instance.DeactivateBirds(); // Se asume que hay un BirdManager que controla los pájaros
+        // Desactivar los pï¿½jaros
+        BirdManager.Instance.DeactivateBirds(); // Se asume que hay un BirdManager que controla los pï¿½jaros
 
         // Espera 20 segundos
         yield return new WaitForSeconds(20f);
 
-        // Reactivar los pájaros
-        BirdManager.Instance.ActivateBirds(); // Reactiva los pájaros después de 20 segundos
+        // Reactivar los pï¿½jaros
+        BirdManager.Instance.ActivateBirds(); // Reactiva los pï¿½jaros despuï¿½s de 20 segundos
 
-        // Ocultar la UI de la poción
+        // Ocultar la UI de la pociï¿½n
         DesactivarPotionUI.Instance.activarBirdUI = false;
         PlayerManager.Instance.potionBird = false;
     }

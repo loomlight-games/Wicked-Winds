@@ -26,8 +26,6 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerEnter(Collider other)
     {
-
-        
         // Attempt to get the Collectible component
         Collectible collectible = other.GetComponent<Collectible>();
 
@@ -35,7 +33,6 @@ public class ControllablePlayerState : AState
         switch (other.gameObject.tag)
         {
             case "SpeedPotion":
-
                 // Check if the player has lost any speed amount
                 if (PlayerManager.Instance.playerController.speedPotionValue != PlayerManager.Instance.MAX_VALUE)
                 {
@@ -81,13 +78,8 @@ public class ControllablePlayerState : AState
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
-                    if (other.gameObject.TryGetComponent(out PotionFog potion))
-                    {
-                        potion.CollectPotionFog();
-
-                    }
-
-
+                    if (other.gameObject.TryGetComponent(out PotionFog fogPotion))
+                        fogPotion.CollectPotionFog();
                 }
                 break;
             case "TeleportPotion":
@@ -95,35 +87,26 @@ public class ControllablePlayerState : AState
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
-                    if (other.gameObject.TryGetComponent(out teleportPotion potion2))
+                    if (other.gameObject.TryGetComponent(out teleportPotion teleportPotion))
                     {
-                        potion2.CollectTeleportPotion();
+                        teleportPotion.CollectTeleportPotion();
 
                     }
-
-
                 }
                 break;
-
+            case "BirdsPotion":
+                // If the object has a Collectible component, deactivate it if not deactivated already
+                if (collectible != null && collectible.isModelActive)
+                {
+                    collectible.Deactivate();
+                    if (other.gameObject.TryGetComponent(out BirdPotion birdsPotion))
+                        birdsPotion.CollectBirdPotion();
+                }
+                break;
 
             default:
                 break;
         }
-
-        
-
-       
-
-        if (other.gameObject.TryGetComponent(out teleportPotion potion2))
-        {
-            potion2.CollectTeleportPotion();
-
-        }
-        /*
-        if(other.gameObject.TryGetComponent(out BirdPotion potion4))
-        {
-            potion4.CollectBirdPotion();
-        } */
     }
 
     public override void OnTriggerStay(Collider other)
