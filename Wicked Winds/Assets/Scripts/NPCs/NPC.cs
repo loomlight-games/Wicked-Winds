@@ -21,6 +21,7 @@ public class NPC : MonoBehaviour
     public CatController cat;
     public OwlController owl;
     public Guid npcID; // Identificador único para el NPC
+    public Animator animator;
 
     private void Awake()
     {
