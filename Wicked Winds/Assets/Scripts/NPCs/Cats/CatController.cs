@@ -25,6 +25,8 @@ public class CatController : MonoBehaviour
     // Variable p?blica para mostrar el estado actual en el Inspector
     public string currentStateName;
 
+    public Animator animator;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();

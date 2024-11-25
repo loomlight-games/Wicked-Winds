@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -43,7 +41,7 @@ public class CatAnimator : MonoBehaviour
         if (currentAnimation != newAnimation){
             currentAnimation = newAnimation;
             // Interpolate transition to new animation
-            PlayerManager.Instance.animator.CrossFade(newAnimation, duration);
+            catController.animator.CrossFade(newAnimation, duration);
         }
     }
 }

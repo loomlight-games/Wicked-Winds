@@ -8,15 +8,15 @@ public class DesactivarPotionUI : MonoBehaviour
     public static DesactivarPotionUI Instance { get; private set; }
 
     // Variables para controlar la UI de las pociones
-    public bool activarFogUI; // Esta opción aparecerá en el Inspector
-    public GameObject potionFog;     // Objeto a desactivar para la poción de niebla
+    public bool activarFogUI; // Esta opciï¿½n aparecerï¿½ en el Inspector
+    public GameObject potionFog;     // Objeto a desactivar para la pociï¿½n de niebla
 
-    public bool activarBirdUI; // Esta opción aparecerá en el Inspector
-    public GameObject potionBird;     // Objeto a desactivar para la poción de pájaros
+    public bool activarBirdUI; // Esta opciï¿½n aparecerï¿½ en el Inspector
+    public GameObject potionBird;     // Objeto a desactivar para la pociï¿½n de pï¿½jaros
 
     private void Awake()
     {
-        // Configuración del Singleton
+        // Configuraciï¿½n del Singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject); // Elimina duplicados si ya existe una instancia
@@ -24,29 +24,28 @@ public class DesactivarPotionUI : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Opcional: Mantiene el objeto al cambiar de escena
     }
 
     void Update()
     {
-        // Desactiva el objeto de la poción de niebla si la condición se cumple
+        // Desactiva el objeto de la pociï¿½n de niebla si la condiciï¿½n se cumple
         if (activarFogUI)
         {
-            potionFog.SetActive(true); // Activa la UI de la poción de niebla
+            potionFog.SetActive(true); // Activa la UI de la pociï¿½n de niebla
         }
         else
         {
-            potionFog.SetActive(false); // Desactiva la UI de la poción de niebla
+            potionFog.SetActive(false); // Desactiva la UI de la pociï¿½n de niebla
         }
 
-        // Desactiva el objeto de la poción de pájaros si la condición se cumple
+        // Desactiva el objeto de la pociï¿½n de pï¿½jaros si la condiciï¿½n se cumple
         if (activarBirdUI)
         {
-            potionBird.SetActive(true); // Activa la UI de la poción de pájaros
+            potionBird.SetActive(true); // Activa la UI de la pociï¿½n de pï¿½jaros
         }
         else
         {
-            potionBird.SetActive(false); // Desactiva la UI de la poción de pájaros
+            potionBird.SetActive(false); // Desactiva la UI de la pociï¿½n de pï¿½jaros
         }
     }
 }

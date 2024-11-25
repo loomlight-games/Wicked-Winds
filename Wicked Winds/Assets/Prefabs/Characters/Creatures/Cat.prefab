@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -3554532786925844750}
   - component: {fileID: 4700265043925577445}
   - component: {fileID: 7408444086481017538}
+  - component: {fileID: 8361414714207836990}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Untagged
@@ -107,6 +108,7 @@ MonoBehaviour:
   previousPlayerPosition: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   currentStateName: 
+  animator: {fileID: 1950355005727185643}
 --- !u!114 &7408444086481017538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +125,18 @@ MonoBehaviour:
   owner: {fileID: 0}
   dialoguePanel: {fileID: 8223701145256544082}
   activeCat: {fileID: 0}
+--- !u!114 &8361414714207836990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7008101629366272734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c5fbf8f695adbb428e7dc9de4ad4d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5367050655649671034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,7 +198,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: aeab889707a786b40ae199860d46b5f7,
         type: 3}
       propertyPath: m_Name
-      value: Cat
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: aeab889707a786b40ae199860d46b5f7,
         type: 3}
@@ -226,6 +240,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeab889707a786b40ae199860d46b5f7, type: 3}
+--- !u!95 &1950355005727185643 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: aeab889707a786b40ae199860d46b5f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 5367050655649671034}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5616306905757237393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aeab889707a786b40ae199860d46b5f7,
@@ -344,6 +364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700496519069455043, guid: 3caa4979a4259254f92dc3dc82651ab6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6095367700394721644, guid: 3caa4979a4259254f92dc3dc82651ab6,
         type: 3}
