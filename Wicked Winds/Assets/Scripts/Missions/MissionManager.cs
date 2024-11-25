@@ -26,7 +26,6 @@ public class MissionManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(Instance);
         }
         else
             Destroy(gameObject);

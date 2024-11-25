@@ -61,7 +61,7 @@ public class SoundManager : MonoBehaviour
 
     IEnumerator FadeAudio(AudioClip newClip, float volume)
     {
-        Debug.LogWarning("Changing song");
+        Debug.Log("Changing song");
 
         if (audioSource.isPlaying)
         {

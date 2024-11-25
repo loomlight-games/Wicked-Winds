@@ -14,11 +14,7 @@ public class RandomFeedback : MonoBehaviour
         "Cloudy is very upset "
     };
 
-    private string[] sunnyFeedback = new string[]
-    {
-        
-
-    };
+    
 
     public void RandomCloudFeedBack()
     {

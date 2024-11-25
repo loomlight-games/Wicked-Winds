@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 
-[RequireComponent(typeof(CatController))]
+
+
 public class InteractableCat : MonoBehaviour
 {
     public CatController cat; // Referencia al NPC con el que se interactua

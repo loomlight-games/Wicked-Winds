@@ -16,7 +16,7 @@ public class GamePlayState : AState
 
     public override void Enter()
     {
-        Debug.LogWarning("GamePlayState");
+        Debug.Log("GamePlayState");
 
         Time.timeScale = 1f; // Resumes simulation
 
