@@ -53,7 +53,7 @@ public abstract class AStateController : MonoBehaviour
         currentState = state;
         currentState.Enter();
 
-        Debug.LogWarning(currentState.ToString());
+        //Debug.LogWarning(currentState.ToString());
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public abstract class AStateController : MonoBehaviour
         currentState = state;
         currentState.Enter(info);
 
-        Debug.LogWarning(currentState.ToString());
+        //Debug.LogWarning(currentState.ToString());
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public abstract class AStateController : MonoBehaviour
         currentState = state;
         currentState.Enter();
 
-        Debug.LogWarning(currentState.ToString());
+        //Debug.LogWarning(currentState.ToString());
     }
 
     /// <summary>
@@ -88,6 +88,6 @@ public abstract class AStateController : MonoBehaviour
         currentState = state;
         currentState.Enter(info);
 
-        Debug.LogWarning(currentState.ToString());
+        //Debug.LogWarning(currentState.ToString());
     }
 }
