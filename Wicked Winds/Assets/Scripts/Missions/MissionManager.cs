@@ -152,7 +152,7 @@ public class MissionManager : MonoBehaviour
             }
             if (mission.missionName == "OwlMission") {
 
-                if (npcsWithCat.Count > 0)
+                if (npcsWithOwl.Count > 0)
                 {
                     selectedNPC = GetRandomNPC(npcsWithOwl);
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
