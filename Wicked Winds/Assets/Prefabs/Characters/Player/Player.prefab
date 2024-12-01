@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 1307730923873541152}
   - component: {fileID: 1570237454362240502}
   - component: {fileID: 985314806116692113}
-  - component: {fileID: 3916649949563016440}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -312,6 +311,7 @@ MonoBehaviour:
   animator: {fileID: 662781783409771963}
   walkSpeed: 6
   boostSpeed: 12
+  rainySpeed: 3
   rotationSpeed: 2
   flyForce: 2
   gravityForce: 5
@@ -327,22 +327,6 @@ MonoBehaviour:
   lowerBody: {fileID: 3710789265273226225}
   shoes: {fileID: 2395570097453541266}
   rotatorySpeedAtShop: 0.1
---- !u!208 &3916649949563016440
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6354958810953423510}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &6659338809864452683
 GameObject:
   m_ObjectHideFlags: 0

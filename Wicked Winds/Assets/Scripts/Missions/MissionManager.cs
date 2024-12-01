@@ -18,6 +18,8 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
+    List<NPC> npcsWithCat;
+    List<NPC> npcsWithOwl;
 
 
     public void Awake()
@@ -126,8 +128,8 @@ public class MissionManager : MonoBehaviour
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
         List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
-        List<NPC> npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
-        List<NPC> npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
+        npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
+        npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
 
         int assignedCount = 0;
 
@@ -153,7 +155,7 @@ public class MissionManager : MonoBehaviour
             }
             if (mission.missionName == "OwlMission") {
 
-                if (npcsWithCat.Count > 0)
+                if (npcsWithOwl.Count > 0)
                 {
                     selectedNPC = GetRandomNPC(npcsWithOwl);
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista

@@ -29,15 +29,7 @@ public class OwlController : MonoBehaviour
     void Update()
     {
         
-        if (PlayerManager.Instance.activeMission != null &&
-            this.missionIcon != null &&
-            this.missionIcon.missionID == PlayerManager.Instance.activeMission.missionID)
-        {
-            if (!PlayerManager.Instance.currentTargets.Contains(gameObject))
-            {
-                PlayerManager.Instance.AddTarget(gameObject);
-            }
-        }
+  
         
 
         if (isEscaping)
