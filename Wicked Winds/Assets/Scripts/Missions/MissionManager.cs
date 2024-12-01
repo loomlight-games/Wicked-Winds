@@ -18,8 +18,8 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
-    List<NPC> npcsWithCat;
-    List<NPC> npcsWithOwl;
+    public List<NPC> npcsWithCat;
+    public List<NPC> npcsWithOwl;
 
 
     public void Awake()
@@ -153,7 +153,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            if (mission.missionName == "OwlMission") {
+            else if (mission.missionName == "OwlMission") {
 
                 if (npcsWithOwl.Count > 0)
                 {
@@ -161,7 +161,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            else // Si es una misión de tipo Potion o Letter
+            else if (mission.missionName == "PotionMission" || mission.missionName == "LetterMision") // Si es una misión de tipo Potion o Letter
             {
                 if (shuffledNPCs.Count > 0)
                 {
