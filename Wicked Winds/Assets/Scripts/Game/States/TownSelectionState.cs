@@ -59,5 +59,6 @@ public class TownSelectionState : AState
     public override void Exit()
     {
         townSelectionMenu.SetActive(false);
+        
     }
 }
