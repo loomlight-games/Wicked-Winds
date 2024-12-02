@@ -57,8 +57,8 @@ public class MissionManager : MonoBehaviour
             return;
 
         var missionLists = FilterMissionsByDifficulty();
-        int numEasyMissions, numMediumMissions, numHardMissions, numVeryHardMissions;
-        GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions, out numVeryHardMissions);
+        int numEasyMissions, numMediumMissions, numHardMissions;
+        GetMissionCounts(out numEasyMissions, out numMediumMissions, out numHardMissions);
 
         Debug.Log($"Numero de misiones a asignar: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
         AssignMissionsToNPCs(missionLists, numEasyMissions, numMediumMissions, numHardMissions);
@@ -85,9 +85,7 @@ public class MissionManager : MonoBehaviour
         {
             { "easy", new List<MissionData>() },
             { "medium", new List<MissionData>() },
-            { "hard", new List<MissionData>() },
-            { "veryhard", new List<MissionData>() }
-
+            { "hard", new List<MissionData>() }
         };
 
         foreach (MissionData mission in availableMissions)
@@ -108,11 +106,6 @@ public class MissionManager : MonoBehaviour
                 missionLists["hard"].Add(mission);
                 Debug.Log($"Mision dificil añadida: {mission.name}"); 
             }
-            else if(mission.difficulty == 3)
-            {
-                missionLists["veryhard"].Add(mission);
-                Debug.Log($"Mision dificil añadida: {mission.name}");
-            }
         }
 
         Debug.Log($"Misiones faciles disponibles: {missionLists["easy"].Count}");
@@ -122,29 +115,14 @@ public class MissionManager : MonoBehaviour
         return missionLists;
     }
 
-    private void GetMissionCounts(
-    out int numEasyMissions,
-    out int numMediumMissions,
-    out int numHardMissions,
-    out int numVeryHardMissions)
+    private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        // Calcular el número de misiones "Very Hard" basadas en las rondas actuales y totales
-        numVeryHardMissions = Mathf.Max(1, Mathf.Min(currentRound / 2, numMissionsToAssign)); // Opcional: Ajusta la lógica según tus necesidades
+       numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
+        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1 , numMissionsToAssign - numHardMissions));
+        numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
-        // Calcular el número de misiones "Hard"
-        numHardMissions = Mathf.Max(1, Mathf.Min(currentRound+1, numMissionsToAssign - numVeryHardMissions));
-
-        // Calcular el número de misiones "Medium"
-        numMediumMissions = Mathf.Max(1, Mathf.Min(currentRound + 2, numMissionsToAssign - numHardMissions - numVeryHardMissions));
-
-        // El resto se asigna como misiones "Easy"
-        numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions - numVeryHardMissions;
-
-        // Asegurarse de que el número de misiones fáciles no sea negativo
         numEasyMissions = Mathf.Max(numEasyMissions, 0);
-
-        // Debug para confirmar la distribución
-        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}, Muy Dificil: {numVeryHardMissions}");
+        Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
