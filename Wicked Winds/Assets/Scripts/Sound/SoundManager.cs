@@ -40,33 +40,29 @@ public class SoundManager : MonoBehaviour
         audioSource.PlayOneShot(soundEffects[id], volume);
     }
 
-    // Métodos para cambiar la música con volumen máximo de 0.1
     public void PlayMainMenuMusic()
     {
-        PlayMusicTrack(0, 0.1f); // Usamos el volumen máximo configurado
+        PlayMusicTrack(0, maxVolume);
     }
 
     public void PlayGamePlayMusic()
     {
-        PlayMusicTrack(1, 0.1f); // Usamos el volumen máximo configurado
+        PlayMusicTrack(1, maxVolume); 
     }
 
-    
-
-    // Método para manejar la transición entre pistas con volumen máximo
     private void PlayMusicTrack(int id, float maxVolume)
     {
         audioSource.Stop();
         audioSource.loop = true;
-        // Luego, reproducimos la nueva música con fade-in
+        // Luego, reproducimos la nueva mï¿½sica con fade-in
 
         audioSource.clip = musicTracks[id];
-        audioSource.volume = 0f; // Comienza el volumen en 0
+        audioSource.volume = 0f;
         audioSource.Play();
         StartCoroutine(FadeInMusic());
     }
 
-    // Método para hacer fade-in en la música
+    // Music fade-in
     private IEnumerator FadeInMusic()
     {
         Debug.LogWarning("SUBIENDO EL VOLUMEN");
@@ -75,14 +71,12 @@ public class SoundManager : MonoBehaviour
         // Fading in the music (gradualmente subiendo el volumen)
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            audioSource.volume = Mathf.Lerp(0, 0.1f, t / fadeDuration);  // Aumenta el volumen a targetVolume
+            audioSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);  // Aumenta el volumen a targetVolume
             yield return null;
         }
 
-        audioSource.volume = 0.1f; // Asegurarse de que se llega al volumen máximo
+        audioSource.volume = maxVolume;
     }
-
-   
 
     //////////////////////////////////////////////////
     /// SOUND EFFECTS
@@ -114,10 +108,10 @@ public class SoundManager : MonoBehaviour
 
     public void StopDialogueEffect()
     {
-        if (audioSource.isPlaying && audioSource.clip == soundEffects[5]) // Verificar si el efecto de diálogo está sonando
+        if (audioSource.isPlaying && audioSource.clip == soundEffects[5]) // Verificar si el efecto de diï¿½logo estï¿½ sonando
         {
-            Debug.LogWarning("[SoundManager] Deteniendo el efecto de diálogo.");
-            audioSource.Stop(); // Detener el sonido de diálogo inmediatamente
+            Debug.LogWarning("[SoundManager] Deteniendo el efecto de diï¿½logo.");
+            audioSource.Stop();
         }
     }
 

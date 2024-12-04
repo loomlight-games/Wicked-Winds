@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf449e2a70537c4408a1f01d7fe69897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volume: 0.6
   fadeDuration: 2
+  maxVolume: 0.1
   soundEffects:
   - {fileID: 8300000, guid: 0e5af4d6dd758f64ab50992151440317, type: 3}
   - {fileID: 8300000, guid: 7ac11d11e4165b34abd12d80c4e2734f, type: 3}
@@ -81,7 +81,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
