@@ -70,6 +70,7 @@ public class GamePlayState : AState
     public override void Exit()
     {
         gameplayUI.SetActive(false);
+        
     }
 
     private void UpdateTimer()

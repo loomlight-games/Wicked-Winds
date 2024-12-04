@@ -18,6 +18,8 @@ public class MissionManager : MonoBehaviour
     public List<NPC> assignedNPCs = new List<NPC>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
+    public List<NPC> npcsWithCat;
+    public List<NPC> npcsWithOwl;
 
 
     public void Awake()
@@ -125,8 +127,8 @@ public class MissionManager : MonoBehaviour
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
         List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
-        List<NPC> npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
-        List<NPC> npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
+        npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
+        npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
 
         int assignedCount = 0;
 
@@ -150,7 +152,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            if (mission.missionName == "OwlMission") {
+            else if (mission.missionName == "OwlMission") {
 
                 if (npcsWithOwl.Count > 0)
                 {
@@ -158,7 +160,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            else // Si es una misión de tipo Potion o Letter
+            else if (mission.missionName == "PotionMission" || mission.missionName == "LetterMision") // Si es una misión de tipo Potion o Letter
             {
                 if (shuffledNPCs.Count > 0)
                 {

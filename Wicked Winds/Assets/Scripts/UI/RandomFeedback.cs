@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomFeedback : MonoBehaviour
+public class RandomFeedback 
 {
     private string[] cloudFeedback = new string[]
     {

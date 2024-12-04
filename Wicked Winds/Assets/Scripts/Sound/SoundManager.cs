@@ -7,7 +7,8 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public float fadeDuration = 2f;
+    public float fadeDuration = 0.5f;
+    public float maxVolume = 0.1f;
 
     [SerializeField] AudioClip[] soundEffects;
     [SerializeField] AudioClip[] musicTracks;
@@ -26,6 +27,7 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -35,93 +37,92 @@ public class SoundManager : MonoBehaviour
     {
         // Set the AudioSource to loop
         audioSource.loop = false;
-        audioSource.PlayOneShot (soundEffects[id], volume);
+        audioSource.PlayOneShot(soundEffects[id], volume);
     }
 
-    void PlayMusicTrack(int id, float volume)
+    // Métodos para cambiar la música con volumen máximo de 0.1
+    public void PlayMainMenuMusic()
     {
-        if (musicTracks[0])
-        {
-            // Set the AudioSource to loop
-            audioSource.loop = true;
-
-            // Start fading to the new track
-            StartCoroutine(FadeAudio(musicTracks[id], volume));
-        }
-        
-        // Return if it's already playing
-        if (audioSource.clip == musicTracks[id] && audioSource.clip == musicTracks[1]) return;
-
-        // Set the AudioSource to loop
-        audioSource.loop = true;
-
-        // Start fading to the new track
-        StartCoroutine(FadeAudio(musicTracks[id], volume));
+        PlayMusicTrack(0, 0.1f); // Usamos el volumen máximo configurado
     }
 
-    IEnumerator FadeAudio(AudioClip newClip, float volume)
+    public void PlayGamePlayMusic()
     {
-        Debug.Log("Changing song");
-
-        if (audioSource.isPlaying)
-        {
-            // Fading out the current audio
-            for (float t = 0; t < fadeDuration; t += Time.deltaTime)
-            {
-                audioSource.volume = Mathf.Lerp(volume, 0, t / fadeDuration); // Gradually reduce volume to 0
-                yield return null;
-            }
-            audioSource.Stop();
-        }
-
-        audioSource.clip = newClip;
-        audioSource.Play();
-
-        // Fading in the new audio
-        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
-        {
-            audioSource.volume = Mathf.Lerp(0, volume, t / fadeDuration); // Gradually increase volume to desired max
-            yield return null;
-        }
-
-        audioSource.volume = volume; // Ensure it ends exactly at the specified volume
-    }
-
-
-    //////////////////////////////////////////////////
-    /// SOUND EFFECTS
-    public void PlayButtonClickEffect(){
-        PlaySoundEffect(0, 1);
-    }
-
-    public void PlayCoinEffect(){
-        PlaySoundEffect(1, 1);
-    }
-
-    public void PlayPotionEffect(){
-        int id = Random.Range(2,3);
-        PlaySoundEffect(id, 0.6f);
-    }
-
-    public void PlayTeleportEffect(){
-        PlaySoundEffect(4, 0.6f);
-    }
-
-    public void PlayDialogueEffect(){
-        PlaySoundEffect(5, 0.6f);
-    }
-    public void PlayFinalEffect()
-    {
-        PlaySoundEffect(6,0.6f);
+        PlayMusicTrack(1, 0.1f); // Usamos el volumen máximo configurado
     }
 
     
 
-    public void PlayMainMenuMusic(){
-        PlayMusicTrack(0, 0.1f);
+    // Método para manejar la transición entre pistas con volumen máximo
+    private void PlayMusicTrack(int id, float maxVolume)
+    {
+        audioSource.Stop();
+        audioSource.loop = true;
+        // Luego, reproducimos la nueva música con fade-in
+
+        audioSource.clip = musicTracks[id];
+        audioSource.volume = 0f; // Comienza el volumen en 0
+        audioSource.Play();
+        StartCoroutine(FadeInMusic());
     }
 
-    public void PlayGamePlayMusic(){
-        PlayMusicTrack(1, 0.1f);
+    // Método para hacer fade-in en la música
+    private IEnumerator FadeInMusic()
+    {
+        Debug.LogWarning("SUBIENDO EL VOLUMEN");
+        
+
+        // Fading in the music (gradualmente subiendo el volumen)
+        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        {
+            audioSource.volume = Mathf.Lerp(0, 0.1f, t / fadeDuration);  // Aumenta el volumen a targetVolume
+            yield return null;
+        }
+
+        audioSource.volume = 0.1f; // Asegurarse de que se llega al volumen máximo
+    }
+
+   
+
+    //////////////////////////////////////////////////
+    /// SOUND EFFECTS
+    public void PlayButtonClickEffect()
+    {
+        PlaySoundEffect(0, 1);
+    }
+
+    public void PlayCoinEffect()
+    {
+        PlaySoundEffect(1, 1);
+    }
+
+    public void PlayPotionEffect()
+    {
+        int id = Random.Range(2, 3);
+        PlaySoundEffect(id, 0.6f);
+    }
+
+    public void PlayTeleportEffect()
+    {
+        PlaySoundEffect(4, 0.6f);
+    }
+
+    public void PlayDialogueEffect()
+    {
+        PlaySoundEffect(5, 0.6f);
+    }
+
+    public void StopDialogueEffect()
+    {
+        if (audioSource.isPlaying && audioSource.clip == soundEffects[5]) // Verificar si el efecto de diálogo está sonando
+        {
+            Debug.LogWarning("[SoundManager] Deteniendo el efecto de diálogo.");
+            audioSource.Stop(); // Detener el sonido de diálogo inmediatamente
+        }
+    }
+
+    public void PlayFinalEffect()
+    {
+        PlaySoundEffect(6, 0.6f);
     }
 }

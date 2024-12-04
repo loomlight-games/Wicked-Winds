@@ -146,7 +146,7 @@ public class Interactable : MonoBehaviour
 
                 if (PlayerManager.Instance.activeMission.currentMission.missionName == "OwlMission")
                 {
-                    GameObject objetivo = PlayerManager.Instance.npcMissionActive.cat.gameObject;
+                    GameObject objetivo = PlayerManager.Instance.npcMissionActive.owl.gameObject;
                     PlayerManager.Instance.AddTarget(objetivo.gameObject);
                     Debug.Log("Añadiendo como target al buho perdido");
 
