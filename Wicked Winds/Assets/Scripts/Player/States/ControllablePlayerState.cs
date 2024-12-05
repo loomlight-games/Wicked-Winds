@@ -32,7 +32,8 @@ public class ControllablePlayerState : AState
                 if (PlayerManager.Instance.playerController.speedPotionValue != PlayerManager.Instance.MAX_VALUE)
                 {
                     // If the object has a Collectible component, deactivate it if not deactivated already
-                    if (collectible != null && collectible.isModelActive){
+                    if (collectible != null && collectible.isModelActive)
+                    {
                         collectible.Deactivate();
 
                         SoundManager.Instance.PlayPotionEffect();
@@ -45,9 +46,11 @@ public class ControllablePlayerState : AState
 
             case "FlyHighPotion":
                 // Check if the player has lost any fly high amount
-                if (PlayerManager.Instance.playerController.flyPotionValue != PlayerManager.Instance.MAX_VALUE){
+                if (PlayerManager.Instance.playerController.flyPotionValue != PlayerManager.Instance.MAX_VALUE)
+                {
                     // If the object has a Collectible component, deactivate it if not deactivated already
-                    if (collectible != null && collectible.isModelActive){
+                    if (collectible != null && collectible.isModelActive)
+                    {
                         collectible.Deactivate();
 
                         SoundManager.Instance.PlayPotionEffect();
@@ -60,7 +63,8 @@ public class ControllablePlayerState : AState
 
             case "Coin":
                 // If the object has a Collectible component, deactivate it if not deactivated already
-                if (collectible != null && collectible.isModelActive){
+                if (collectible != null && collectible.isModelActive)
+                {
                     collectible.Deactivate();
                     SoundManager.Instance.PlayCoinEffect();
 
@@ -105,6 +109,16 @@ public class ControllablePlayerState : AState
                         birdsPotion.CollectBirdPotion();
                 }
                 break;
+            case "Bird":
+                // Obt�n la direcci�n opuesta a la colisi�n para empujar al personaje hacia atr�s
+                Vector3 pushBackDirection = PlayerManager.Instance.transform.position - other.transform.position;
+
+                // Normaliza la direcci�n y aplica la fuerza de retroceso utilizando el CharacterController
+                pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
+
+                // Aplicamos el retroceso
+                PlayerManager.Instance.controller.Move(pushBackDirection.normalized * PlayerManager.Instance.pushBackForce * Time.deltaTime);
+                break;
             default:
                 break;
         }
@@ -114,21 +128,24 @@ public class ControllablePlayerState : AState
     {
         // It's an NPC
         if (other.gameObject.TryGetComponent(out Interactable interactable))
+        {
             // Interact key is pressed
             if (PlayerManager.Instance.interactKey)
-                //Debug.Log("Interacting with interactable");
+            {
+                Debug.Log("Interacting with interactable");
                 // Interact with NPC
                 interactable.Interact();
-
+            }
+        }
         // It's a mission collectible
-        if (other.gameObject.TryGetComponent(out Pickable pickableObject))
+        else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
+        {
             // Interact key is pressed
             if (PlayerManager.Instance.interactKey)
-
                 // Collects it
                 pickableObject.CollectItem();
-
-        if (other.gameObject.TryGetComponent(out InteractableCat cat))
+        }
+        else if (other.gameObject.TryGetComponent(out InteractableCat cat))
         {
             if (PlayerManager.Instance.interactKey)
             {
@@ -137,15 +154,14 @@ public class ControllablePlayerState : AState
                 cat.InteractCat();
             }
         }
-
-        if (other.gameObject.TryGetComponent(out InteractableOwl owl))
+        else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
         {
             GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
-            
-                GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
-                //Deactivates it
-                owl.Interact();
-            
+
+            GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
+            //Deactivates it
+            owl.Interact();
+
         }
     }
 }

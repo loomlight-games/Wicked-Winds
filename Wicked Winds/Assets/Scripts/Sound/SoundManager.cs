@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayGamePlayMusic()
     {
-        PlayMusicTrack(1, maxVolume); 
+        PlayMusicTrack(1, maxVolume);
     }
 
     private void PlayMusicTrack(int id, float maxVolume)
@@ -66,7 +66,7 @@ public class SoundManager : MonoBehaviour
     private IEnumerator FadeInMusic()
     {
         Debug.LogWarning("SUBIENDO EL VOLUMEN");
-        
+
 
         // Fading in the music (gradualmente subiendo el volumen)
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)

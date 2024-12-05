@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manages the player states and information
+/// Manages the player states and data
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : AStateController
@@ -16,7 +16,7 @@ public class PlayerManager : AStateController
 
     public Transform orientation;
     [HideInInspector] public CharacterController controller;
-    [HideInInspector]public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
+    [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
     public NPC npcMissionActive;
     public NPC npcObjective;
@@ -26,8 +26,8 @@ public class PlayerManager : AStateController
     public Transform cloudTransform;
     public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
-    public List<GameObject> currentTargets = new ();
-     public Transform target;
+    public List<GameObject> currentTargets = new();
+    public Transform target;
     [HideInInspector] public MissionIcon activeMission;
     public Animator animator;
 
@@ -90,23 +90,6 @@ public class PlayerManager : AStateController
         customizable.Awake();
     }
 
-    // El m�todo OnCollisionEnter para aplicar el retroceso
-    public override void OnCollisionEnter(Collision collision)
-    {
-        // Verifica si el objeto con el que colisiona es un p�jaro
-        if (collision.gameObject.CompareTag("Bird"))
-        {
-            // Obt�n la direcci�n opuesta a la colisi�n para empujar al personaje hacia atr�s
-            Vector3 pushBackDirection = transform.position - collision.transform.position;
-
-            // Normaliza la direcci�n y aplica la fuerza de retroceso utilizando el CharacterController
-            pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
-
-            // Aplicamos el retroceso
-            controller.Move(pushBackDirection.normalized * pushBackForce * Time.deltaTime);
-        }
-    }
-
     // Start is called before the first frame update
     public override void Start()
     {
@@ -114,8 +97,6 @@ public class PlayerManager : AStateController
             SetState(atShopState);
         else
             SetState(controllableState);
-
-       
     }
 
     // Update is called once per frame
