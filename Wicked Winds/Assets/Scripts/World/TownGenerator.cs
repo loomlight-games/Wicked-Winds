@@ -11,8 +11,7 @@ public class TownGenerator
     float tileSize, currentXpos, currentZpos, initialPos, randomRotation;
     Vector3[,] tilesPositions;
     Vector3 currentPosition;
-    public GameObject townParent;
-    GameObject currentTile, landscape;
+    GameObject townParent, currentTile, landscape;
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
