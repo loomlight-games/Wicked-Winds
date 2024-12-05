@@ -45,9 +45,7 @@ public class AuthentificationPanel : Panel
         }
         usernameInput.onSelect.AddListener((value) =>
         {
-            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
             TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
         });
         passwordInput.onSelect.AddListener((value) =>
         {
