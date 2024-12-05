@@ -5,7 +5,7 @@ public class BirdController : MonoBehaviour
     public Transform flockCenter; // Centro de la bandada
     public float flightRadius = 5f; // Radio de vuelo alrededor del centro
     public float moveSpeed = 2f; // Velocidad de movimiento
-    public float heightOffset = 15f; // Altura fija de vuelo
+    public float heightOffset = 25f; // Altura fija de vuelo
     public float randomTargetInterval = 2f; // Tiempo entre objetivos aleatorios
 
     private Vector3 targetPosition; // Posición aleatoria dentro del radio de vuelo
@@ -36,7 +36,7 @@ public class BirdController : MonoBehaviour
     {
         Vector3 randomOffset = new Vector3(
             Random.Range(-flightRadius, flightRadius),
-            Random.Range(-1f, 1f), // Pequeñas variaciones de altura
+            Random.Range(-5f, 10f), // Pequeñas variaciones de altura
             Random.Range(-flightRadius, flightRadius)
         );
 

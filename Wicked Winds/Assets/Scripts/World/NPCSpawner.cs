@@ -63,6 +63,15 @@ public class NPCSpawner : MonoBehaviour
             NPC npcComponent = npc.GetComponent<NPC>();
             npcComponent.hasMission = Random.value > 0.5f;
 
+            // Configurar NavMeshAgent
+            NavMeshAgent agentNPC = npc.GetComponent<NavMeshAgent>();
+            if (agentNPC != null)
+            {
+                agentNPC.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
+                agentNPC.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasión
+
+            }
+
             // 30% de probabilidad de generar un gato
             if (Random.value < 0.3f)
             {
@@ -73,11 +82,22 @@ public class NPCSpawner : MonoBehaviour
                 Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
                 if (catPosition != Vector3.zero)
                 {
-                    GameObject cat = Instantiate(catPrefab, catPosition, Quaternion.identity);
-                    CatController catController = cat.GetComponent<CatController>();
+                    GameObject catInstance = Instantiate(catPrefab, catPosition, Quaternion.identity);
+                    CatController catController = catInstance.GetComponent<CatController>();
                     npcComponent.cat = catController;
                     catController.owner = npcComponent;
+
+                    // Configurar NavMeshAgent
+                    NavMeshAgent agentCat = catInstance.GetComponent<NavMeshAgent>();
+                    if (agentCat != null)
+                    {
+                        agentCat.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
+                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasión
+                      
+                    }
                 }
+
+                
             }
 
             // 10% de probabilidad de generar un búho
@@ -94,8 +114,11 @@ public class NPCSpawner : MonoBehaviour
                 OwlController owlController = owl.GetComponent<OwlController>();
                 npcComponent.owl = owlController;
                 owlController.owner = npcComponent;
+
+                
             }
 
+          
             spawnedNPCCount++;
         }
     }
@@ -133,7 +156,7 @@ public class NPCSpawner : MonoBehaviour
         {
             Vector3 birdPosition = flockCenter + new Vector3(
                 Random.Range(-flockRadius, flockRadius),
-                Random.Range(-1f, 1f), // Variaciones menores en la altura inicial
+                Random.Range(-5f, 10f), // Variaciones menores en la altura inicial
                 Random.Range(-flockRadius, flockRadius)
             );
 

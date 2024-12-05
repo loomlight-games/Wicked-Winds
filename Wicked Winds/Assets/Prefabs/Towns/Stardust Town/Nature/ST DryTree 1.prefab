@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3166506626971974311}
-  - component: {fileID: 4613072877385989497}
   m_Layer: 3
   m_Name: ST DryTree 1
   m_TagString: Untagged
@@ -33,22 +32,6 @@ Transform:
   - {fileID: 3430052261637626586}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &4613072877385989497
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3027491513647467979}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1001 &2887730017449737521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -140,8 +123,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d9a8400a5a6bef44d9061b3b1a5e0416,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1917275566365660749}
   m_SourcePrefab: {fileID: 100100000, guid: d9a8400a5a6bef44d9061b3b1a5e0416, type: 3}
+--- !u!1 &2653234770164564064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d9a8400a5a6bef44d9061b3b1a5e0416,
+    type: 3}
+  m_PrefabInstance: {fileID: 2887730017449737521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &1917275566365660749
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653234770164564064}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.6290001, y: 1.937, z: 3.413}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.298, y: 0.057000004, z: 2.7150002}
+  m_TimeToStationary: 0.5
 --- !u!4 &3430052261637626586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d9a8400a5a6bef44d9061b3b1a5e0416,

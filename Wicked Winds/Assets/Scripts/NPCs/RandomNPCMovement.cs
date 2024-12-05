@@ -1,59 +1,50 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.AI; 
 
-public class RandomNPCMovement : MonoBehaviour
+
+public class RandomNPCMovement : MonoBehaviour 
 {
-    public float moveRadius = 10f;
-    public float detectionRadius = 100f;
-    public LayerMask groundLayer;
-    public LayerMask buildingLayer;
+    public NavMeshAgent agent;
+    public float range; //radius of sphere
 
-    private NavMeshAgent agent;
+    public Transform centrePoint; //centre of the area the agent wants to move around in
+
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        SetRandomDestination();
     }
+
 
     void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance) //done with path
         {
-            SetRandomDestination();
-        }
-    }
-
-    public void SetRandomDestination()
-    {
-        float minDistance = 5f;
-        float maxDistance = moveRadius;
-
-        Vector3 randomDirection;
-        NavMeshHit hit;
-
-        for (int i = 0; i < 30; i++)
-        {
-            randomDirection = Random.insideUnitSphere * maxDistance;
-            randomDirection += transform.position;
-
-            if (NavMesh.SamplePosition(randomDirection, out hit, maxDistance, NavMesh.AllAreas) &&
-                Vector3.Distance(transform.position, hit.position) >= minDistance)
+            Vector3 point;
+            if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
             {
-                // Raycast hacia arriba para asegurarse de que no haya edificios encima
-                if (!Physics.Raycast(hit.position, Vector3.up, 10f, buildingLayer))
-                {
-                    agent.SetDestination(hit.position);
-
-                    // Comprobar que el destino es alcanzable
-                    if (agent.pathStatus == NavMeshPathStatus.PathComplete)
-                    {
-                        return; // Si encuentra un camino válido, establece el destino y sale del método
-                    }
-                }
+                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                agent.SetDestination(point);
             }
         }
 
-        // Debug.LogWarning("No se pudo encontrar un destino válido después de 30 intentos.");
     }
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+
+        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) 
+        {
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
+    }
+
+
 }
