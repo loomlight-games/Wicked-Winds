@@ -24,7 +24,7 @@ public class TownGenerator
         townSize = GameManager.Instance.townSize;
 
         fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
-        fogTriggerPrefab = FogManager.Instance.FogPrefab;
+        fogPrefab = FogManager.Instance.FogPrefab;
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -131,7 +131,7 @@ public class TownGenerator
             }
         }
 
-        AddFogTriggerRandomly(tilesPositions);
+        
     }
 
     /// <summary>
@@ -156,31 +156,21 @@ public class TownGenerator
             // Instantiate tile in position with random rotation on Y
             GameObject instantiatedTile = GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
-            
+            AddFogTriggerRandomly(instantiatedTile);
         }
     }
     /// <summary>
     /// Adds fog trigger randomly
     /// </summary>
-    void AddFogTriggerRandomly(Vector3[,] tilesPositions)
+    void AddFogTriggerRandomly(GameObject tile)
     {
-
-        for (int i = 0; i < 2; i++) 
+        float fogChance = 0.2f;
+        if (UnityEngine.Random.value < fogChance)
         {
-            // Seleccionar un índice aleatorio para la posición
-            int totalTiles = tilesPositions.GetLength(0) * tilesPositions.GetLength(1);
-            int randomIndex = UnityEngine.Random.Range(0, totalTiles);
-
-
-
-            // Instanciar el prefab del trigger de niebla
-            GameManager.Instance.InstantiateGO(fogTriggerPrefab, townTiles[randomIndex].transform.position, townTiles[randomIndex].transform.rotation, townParent.transform);
-
-            GameManager.Instance.InstantiateGO(fogPrefab, townTiles[randomIndex].transform.position, townTiles[randomIndex].transform.rotation, townParent.transform);
-
-
             
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
+            GameObject fog = GameObject.Instantiate(fogPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
         }
-    }
 
+    }
 }
