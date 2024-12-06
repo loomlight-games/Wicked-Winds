@@ -16,7 +16,6 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
     public GameObject fogTriggerPrefab;
-    public GameObject fogPrefab;
 
     public void GenerateTown()
     {
@@ -24,7 +23,10 @@ public class TownGenerator
         townSize = GameManager.Instance.townSize;
 
         fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
+<<<<<<< HEAD
         fogPrefab = FogManager.Instance.FogPrefab;
+=======
+>>>>>>> parent of 18cfa6a (HOLA)
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -130,8 +132,11 @@ public class TownGenerator
                 if (direction == 1 || direction == 3) steps++;
             }
         }
+<<<<<<< HEAD
 
         
+=======
+>>>>>>> parent of 18cfa6a (HOLA)
     }
 
     /// <summary>
@@ -156,21 +161,36 @@ public class TownGenerator
             // Instantiate tile in position with random rotation on Y
             GameObject instantiatedTile = GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
+<<<<<<< HEAD
             AddFogTriggerRandomly(instantiatedTile);
+=======
+            AddFogTriggerRandomly(instantiatedTile, tileData);
+>>>>>>> parent of 18cfa6a (HOLA)
         }
     }
+
     /// <summary>
     /// Adds fog trigger randomly
     /// </summary>
+<<<<<<< HEAD
     void AddFogTriggerRandomly(GameObject tile)
+=======
+    void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
+>>>>>>> parent of 18cfa6a (HOLA)
     {
         float fogChance = 0.2f;
         if (UnityEngine.Random.value < fogChance)
         {
+<<<<<<< HEAD
             
             GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
             GameObject fog = GameObject.Instantiate(fogPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
         }
 
+=======
+            tileData.hasFog = true;
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
+        }
+>>>>>>> parent of 18cfa6a (HOLA)
     }
 }
