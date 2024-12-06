@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Manages the game states
 /// </summary>
-public class GameManager : AStateController 
+public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
@@ -88,16 +88,21 @@ public class GameManager : AStateController
 
     private void SetStateBasedOnScene(Scene scene)
     {
-        if (scene.name == "Main menu") {
+        if (scene.name == "Main menu")
+        {
             SetState(mainMenuState);
+            SoundManager.Instance.PlayMainMenuMusic();
         }
-        else if (scene.name == "Shop") {
+        else if (scene.name == "Shop")
+        {
             SetState(shopState);
         }
-        else if (scene.name == "Leaderboard") {
+        else if (scene.name == "Leaderboard")
+        {
             SetState(leaderboardState);
-        } 
-        else if (scene.name == "Gameplay") {
+        }
+        else if (scene.name == "Gameplay")
+        {
             remainingTime = initialTime;
             townGenerator.GenerateTown();
             SetState(playState);
@@ -108,7 +113,7 @@ public class GameManager : AStateController
     {
         // Set the state based on the newly loaded scene
         SetStateBasedOnScene(scene);
-        
+
         // Unsubscribe from the event to avoid multiple calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -138,7 +143,7 @@ public class GameManager : AStateController
                 SwitchState(pauseState);
                 break;
             case "Return":
-                SwitchState(pauseState);
+                SwitchState(mainMenuState);
                 break;
             case "Resume":
                 SwitchState(playState);
@@ -151,13 +156,13 @@ public class GameManager : AStateController
                 LoadSceneDirectly("Main menu");
                 break;
             case "Main menu":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Main menu");
                 break;
             case "Leaderboard":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Leaderboard");
                 break;
             case "Shop":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Shop");
                 break;
             case "Playing on PC":
                 playingOnPC = !playingOnPC;
@@ -167,7 +172,7 @@ public class GameManager : AStateController
         }
     }
 
- 
+
     /////////////////////////////////////////////////////////////////////////////////////////
     #region UNITY SERVICES ZONE (LEADERBOARD)
     /// <summary>
@@ -341,7 +346,8 @@ public class GameManager : AStateController
     /// <summary>
     /// For scenes that take time to load - through loading screen
     /// </summary>
-    void LoadingSceneScreen (string sceneName){
+    void LoadingSceneScreen(string sceneName)
+    {
         sceneToLoad = sceneName;
         SceneManager.LoadScene("Loading screen");
     }
@@ -349,12 +355,14 @@ public class GameManager : AStateController
     /// <summary>
     /// For scenes that don't take time to load
     /// </summary>
-    void LoadSceneDirectly(string sceneName){
+    void LoadSceneDirectly(string sceneName)
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
 
-    public void DestroyGO(GameObject gameObject){
+    public void DestroyGO(GameObject gameObject)
+    {
         Destroy(gameObject);
     }
 
@@ -371,7 +379,7 @@ public class GameManager : AStateController
 
 
 
-   
+
 
 
 }
