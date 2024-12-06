@@ -9,13 +9,11 @@ public class MainMenuState : AState
         UI = GameObject.Find("UI");
         mainMenu = UI.transform.Find("Main menu").gameObject;
         mainMenu.SetActive(true);
-
-        SoundManager.Instance.PlayMainMenuMusic();
     }
 
     public override void Exit()
     {
         mainMenu.SetActive(false);
-        
+
     }
 }

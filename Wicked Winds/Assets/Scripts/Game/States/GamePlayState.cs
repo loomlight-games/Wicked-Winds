@@ -8,11 +8,13 @@ public class GamePlayState : AState
     public TextMeshProUGUI feedBackText;
 
     GameObject UI, statesUI, gameplayUI, handledControls;
-    TextMeshProUGUI timerText;
+    public TextMeshProUGUI timerText;
     HUDBar highSpeedBar, flyHighBar;
     float elapsedTime, remainingTime;
     int timerMinutes, timerSeconds;
-    bool gameOverTriggered = false; //in order to not recall the method
+    bool gameOverTriggered = false, //in order to not recall the method
+        isScalingRed = false,
+        isScalingYellow = false;
 
     public override void Enter()
     {
@@ -32,14 +34,12 @@ public class GamePlayState : AState
         highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
         handledControls = UI.transform.Find("Handled controls").gameObject;
-        
+
         // Don't show handled controls in PC
         if (GameManager.Instance.playingOnPC)
             handledControls.SetActive(false);
         else // Show them in other device type
             handledControls.SetActive(true);
-
-        
 
         SoundManager.Instance.PlayGamePlayMusic();
 
@@ -70,7 +70,7 @@ public class GamePlayState : AState
     public override void Exit()
     {
         gameplayUI.SetActive(false);
-        
+
     }
 
     private void UpdateTimer()
@@ -81,14 +81,24 @@ public class GamePlayState : AState
         {
             remainingTime -= Time.deltaTime;
             elapsedTime += Time.deltaTime;
+
+            if (remainingTime <= 31 && !isScalingRed)
+            {
+                timerText.color = Color.red;
+                isScalingRed = true; // Set the flag to true to prevent further calls
+                GameManager.Instance.StartCoroutine(GameManager.Instance.ScaleTimerText(3, timerText.color));
+            }
+            else if (remainingTime <= 61 && !isScalingYellow && remainingTime > 31)
+            {
+                timerText.color = Color.yellow;
+                isScalingYellow = true; // Set the flag to true to prevent further calls
+                GameManager.Instance.StartCoroutine(GameManager.Instance.ScaleTimerText(3, timerText.color));
+            }
         }
         else if (remainingTime <= 0 && !gameOverTriggered)
         {
             remainingTime = 0;
-
-            // GAMEOVER when remaining time is over
             TriggerGameOver(); //switching states
-            timerText.color = Color.red;
         }
 
         timerMinutes = Mathf.FloorToInt(remainingTime / 60);
@@ -101,7 +111,6 @@ public class GamePlayState : AState
 
     private void UpdateMissionTime()
     {
-
         if (remainingTime > 0)
         {
             GameManager.Instance.missionTime += Time.deltaTime;
@@ -119,9 +128,5 @@ public class GamePlayState : AState
         GameManager.Instance.averageMissionTime = totalMissionTime / MissionManager.Instance.missionsCompleted;
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
-
-        timerText.color = Color.red;
     }
-
-    
 }

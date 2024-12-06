@@ -21,7 +21,7 @@ public class TownGenerator
     {
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
-       
+
         fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
 
         // Select tiles according to map theme
@@ -54,7 +54,7 @@ public class TownGenerator
         }
 
         // Instantiate town parent
-        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+        townParent = GameObject.Find("TownParent") ?? new GameObject("TownParent");
 
         // Instantiate landscape as child of town
         GameManager.Instance.InstantiateGO(landscape, townParent.transform.position, townParent.transform.rotation, townParent.transform);
@@ -114,8 +114,9 @@ public class TownGenerator
                 // Traverse in the current direction for 'steps' times
                 for (int step = 0; step < steps; step++)
                 {
-                    if (row >= 0 && row < townSize && 
-                        col >= 0 && col < townSize){
+                    if (row >= 0 && row < townSize &&
+                        col >= 0 && col < townSize)
+                    {
                         InstantiateTile(tilesPositions[row, col]);
 
                         row += dRow[direction];
@@ -149,7 +150,7 @@ public class TownGenerator
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
             // Instantiate tile in position with random rotation on Y
-            GameObject instantiatedTile= GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
+            GameObject instantiatedTile = GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
             AddFogTriggerRandomly(instantiatedTile, tileData);
         }
