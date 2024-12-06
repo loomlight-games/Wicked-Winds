@@ -22,7 +22,6 @@ public class PlayerManager : AStateController
     public bool potionFog;
     public bool potionBird;
     public Transform cloudTransform;
-    public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
     public List<GameObject> currentTargets = new();
     public Transform target;
@@ -30,8 +29,8 @@ public class PlayerManager : AStateController
     public Animator animator;
 
     #region STATES
-    public readonly ControllablePlayerState controllableState = new();// On ground
-    public readonly AtShopPlayerState atShopState = new();// At shop
+    public readonly ControllablePlayerState controllableState = new();
+    public readonly AtShopPlayerState atShopState = new();
     public readonly FinalPlayerState finalState = new();
     #endregion
 
@@ -58,6 +57,7 @@ public class PlayerManager : AStateController
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
     public float flyPotionLossPerSecond = 4f;
+    public float interactionThreshold = 0.9f;
     public Transform compassTransform;
 
 

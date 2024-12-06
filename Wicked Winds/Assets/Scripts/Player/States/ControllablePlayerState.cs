@@ -126,41 +126,28 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerStay(Collider other)
     {
-        // It's an NPC
-        if (other.gameObject.TryGetComponent(out Interactable interactable))
+        // Interact key is pressed
+        if (PlayerManager.Instance.interactKey)
         {
-            // Interact key is pressed
-            if (PlayerManager.Instance.interactKey)
-            {
-                //Debug.Log("Interacting with interactable");
-                // Interact with NPC
+            // Player is not facing this collider
+            if (!PlayerManager.Instance.playerController.PlayerIsFacing(other.transform))
+                return; // Won't do anything if the player is not facing the collider
+
+            Debug.LogWarningFormat("Facing player");
+
+            // It's an NPC
+            if (other.gameObject.TryGetComponent(out Interactable interactable))
                 interactable.Interact();
-            }
-        }
-        // It's a mission collectible
-        else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
-        {
-            // Interact key is pressed
-            if (PlayerManager.Instance.interactKey)
-                // Collects it
+            // It's a mission collectible
+            else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
                 pickableObject.CollectItem();
-        }
-        else if (other.gameObject.TryGetComponent(out InteractableCat cat))
-        {
-            if (PlayerManager.Instance.interactKey)
-            {
-                GameManager.Instance.playState.feedBackText.text = "This cat is LOUDDDD";
-
+            // It's a cat
+            else if (other.gameObject.TryGetComponent(out InteractableCat cat))
                 cat.InteractCat();
-            }
-        }
-        else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
-        {
-            GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
+            // It's an owl
+            else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
+                owl.Interact();
 
-            GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
-            //Deactivates it
-            owl.Interact();
         }
     }
 }
