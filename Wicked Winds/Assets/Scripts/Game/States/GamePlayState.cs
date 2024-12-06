@@ -32,14 +32,12 @@ public class GamePlayState : AState
         highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
         handledControls = UI.transform.Find("Handled controls").gameObject;
-        
+
         // Don't show handled controls in PC
         if (GameManager.Instance.playingOnPC)
             handledControls.SetActive(false);
         else // Show them in other device type
             handledControls.SetActive(true);
-
-        
 
         SoundManager.Instance.PlayGamePlayMusic();
 
@@ -70,7 +68,7 @@ public class GamePlayState : AState
     public override void Exit()
     {
         gameplayUI.SetActive(false);
-        
+
     }
 
     private void UpdateTimer()
@@ -101,7 +99,6 @@ public class GamePlayState : AState
 
     private void UpdateMissionTime()
     {
-
         if (remainingTime > 0)
         {
             GameManager.Instance.missionTime += Time.deltaTime;
@@ -122,6 +119,4 @@ public class GamePlayState : AState
 
         timerText.color = Color.red;
     }
-
-    
 }

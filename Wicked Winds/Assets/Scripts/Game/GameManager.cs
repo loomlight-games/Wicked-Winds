@@ -103,8 +103,16 @@ public class GameManager : AStateController
         }
         else if (scene.name == "Gameplay")
         {
+            RandomHour();
             remainingTime = initialTime;
             townGenerator.GenerateTown();
+            SetState(playState);
+        }
+        else
+        {
+            RandomHour();
+            remainingTime = initialTime;
+            //townGenerator.GenerateTown();
             SetState(playState);
         }
     }
@@ -375,11 +383,23 @@ public class GameManager : AStateController
         return Instantiate(prefab, position, rotation);
     }
 
+    private void RandomHour()
+    {
+        // Finds game object with Sun tag
+        GameObject sun = GameObject.FindGameObjectWithTag("Sun");
+        if (sun == null)
+        {
+            Debug.LogWarning("Sun object not found!");
+            return;
+        }
 
+        // Random value from 15 to 60 - X axis
+        float randomX = UnityEngine.Random.Range(15f, 60f);
 
+        // Random value from 0 to 360 - Y axis
+        float randomY = UnityEngine.Random.Range(0f, 360f);
 
-
-
-
-
+        // Apply new rotations to Sun
+        sun.transform.rotation = Quaternion.Euler(randomX, randomY, sun.transform.rotation.eulerAngles.z);
+    }
 }
