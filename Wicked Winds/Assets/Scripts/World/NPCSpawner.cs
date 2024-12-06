@@ -18,10 +18,10 @@ public class NPCSpawner : MonoBehaviour
 
     //BIRD OBSTACLES
     public GameObject birdPrefab; // Prefab del p�jaro
-    public int numberOfFlocks = 15; // N�mero de bandadas de p�jaros a generar
+    public int numberOfFlocks = 20; // N�mero de bandadas de p�jaros a generar
     public int birdsPerFlock = 5; // P�jaros por bandada
-    public float flockSpawnRadius = 100f; // Radio para dispersar las bandadas
-    public float flockRadius = 10f; // Radio inicial para posicionar a los p�jaros en la bandada
+    public float flockSpawnRadius = 80f; // Radio para dispersar las bandadas
+    public float flockRadius = 15f; // Radio inicial para posicionar a los p�jaros en la bandada
     public float birdHeightOffset = 15f; // Altura fija de las bandadas
     public bool cat;
 
@@ -134,25 +134,25 @@ public class NPCSpawner : MonoBehaviour
     //BIRD SPAWNER
     void SpawnFlock()
     {
-        // Generar una posici�n central aleatoria para la bandada
+        // Generar una posicion central aleatoria para la bandada
         Vector3 flockCenter = new Vector3(
             Random.Range(-flockSpawnRadius, flockSpawnRadius),
             birdHeightOffset,
             Random.Range(-flockSpawnRadius, flockSpawnRadius)
         );
 
-        // Validar que el centro est� sobre el terreno usando un raycast
+        // Validar que el centro este sobre el terreno usando un raycast
         if (Physics.Raycast(flockCenter + Vector3.up * 100f, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
         {
             flockCenter = hit.point + Vector3.up * birdHeightOffset;
         }
 
-        // Crear un objeto vac�o que servir� como centro de la bandada y hacerlo hijo del padre
+        // Crear un objeto vacio que servira como centro de la bandada y hacerlo hijo del padre
         GameObject flockCenterObject = new GameObject("FlockCenter");
         flockCenterObject.transform.position = flockCenter;
         flockCenterObject.transform.parent = flocksParent.transform;
 
-        // Crear p�jaros alrededor del centro y asignarlos como hijos del centro
+        // Crear pajaros alrededor del centro y asignarlos como hijos del centro
         for (int i = 0; i < birdsPerFlock; i++)
         {
             Vector3 birdPosition = flockCenter + new Vector3(
@@ -163,17 +163,17 @@ public class NPCSpawner : MonoBehaviour
 
             GameObject bird = Instantiate(birdPrefab, birdPosition, Quaternion.identity);
 
-            // Configurar el p�jaro como hijo del centro de su bandada
+            // Configurar el pajaro como hijo del centro de su bandada
             bird.transform.parent = flockCenterObject.transform;
 
-            // Obtener el BirdController y asignar din�micamente el flockCenter
+            // Obtener el BirdController y asignar dinamicamente el flockCenter
             BirdController birdController = bird.GetComponent<BirdController>();
             if (birdController != null)
             {
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
 
-            // Registrar el p�jaro en el BirdManager
+            // Registrar el pajaro en el BirdManager
             BirdManager.Instance.RegisterBird(bird);
         }
     }
