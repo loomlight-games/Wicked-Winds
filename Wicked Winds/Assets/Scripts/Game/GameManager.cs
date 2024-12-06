@@ -43,7 +43,7 @@ public class GameManager : AStateController
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
     public TownGenerator.Town town;
-    public GameObject townParent;
+
     [Header("Stardust Town")]
     public GameObject landscape1;
     public List<GameObject> townTiles1 = new();
