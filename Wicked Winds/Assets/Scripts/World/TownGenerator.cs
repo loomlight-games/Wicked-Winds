@@ -15,14 +15,14 @@ public class TownGenerator
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
-    public GameObject fogPrefab;
+    public GameObject fogTriggerPrefab;
 
     public void GenerateTown()
     {
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
-       
-        fogPrefab = FogManager.Instance.FogTriggerPrefab;
+
+        fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -54,7 +54,7 @@ public class TownGenerator
         }
 
         // Instantiate town parent
-        townParent = GameManager.Instance.InstantiateGO(GameManager.Instance.townParent, new Vector3(0, 0, 0), Quaternion.Euler(0, 0, 0));
+        townParent = GameObject.Find("TownParent") ?? new GameObject("TownParent");
 
         // Instantiate landscape as child of town
         GameManager.Instance.InstantiateGO(landscape, townParent.transform.position, townParent.transform.rotation, townParent.transform);
@@ -114,8 +114,9 @@ public class TownGenerator
                 // Traverse in the current direction for 'steps' times
                 for (int step = 0; step < steps; step++)
                 {
-                    if (row >= 0 && row < townSize && 
-                        col >= 0 && col < townSize){
+                    if (row >= 0 && row < townSize &&
+                        col >= 0 && col < townSize)
+                    {
                         InstantiateTile(tilesPositions[row, col]);
 
                         row += dRow[direction];
@@ -127,9 +128,6 @@ public class TownGenerator
                 if (direction == 1 || direction == 3) steps++;
             }
         }
-
-        AddFogTriggerRandomly(tilesPositions);
-
     }
 
     /// <summary>
@@ -152,32 +150,22 @@ public class TownGenerator
             randomRotation = UnityEngine.Random.Range(0, 4) * 90f; // 0,90,180,270
 
             // Instantiate tile in position with random rotation on Y
-            GameObject instantiatedTile= GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
+            GameObject instantiatedTile = GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
+            AddFogTriggerRandomly(instantiatedTile, tileData);
         }
     }
 
     /// <summary>
     /// Adds fog trigger randomly
     /// </summary>
-    
-    void AddFogTriggerRandomly(Vector3[,] tilesPositions)
+    void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
     {
-        // Obtener dimensiones de la matriz
-        int rows = tilesPositions.GetLength(0);
-        int cols = tilesPositions.GetLength(1);
-
-        // Seleccionar una fila y columna aleatoria
-        int randomRow = UnityEngine.Random.Range(0, rows);
-        int randomCol = UnityEngine.Random.Range(0, cols);
-
-        // Obtener la posición aleatoria
-        Vector3 randomPosition = tilesPositions[randomRow, randomCol];
-
-        // Instanciar el prefab en la posición aleatoria
-        GameManager.Instance.InstantiateGO(fogPrefab, randomPosition, Quaternion.identity, townParent.transform);
-
-        Debug.Log($"Fog trigger añadido en posición: ({randomRow}, {randomCol}) - {randomPosition}");
+        float fogChance = 0.2f;
+        if (UnityEngine.Random.value < fogChance)
+        {
+            tileData.hasFog = true;
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
+        }
     }
-
 }

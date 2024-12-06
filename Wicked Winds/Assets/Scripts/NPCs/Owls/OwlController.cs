@@ -18,6 +18,7 @@ public class OwlController : MonoBehaviour
 
     private bool isEscaping = false;
     private Vector3 targetPosition; // Target position for random flight
+    public float rotationSpeed = 5f; // Speed of rotation for smooth turning
 
     void Start()
     {
@@ -28,16 +29,17 @@ public class OwlController : MonoBehaviour
 
     void Update()
     {
-        
-  
-        
-
         if (isEscaping)
         {
             // Escape from the player in a straight line
             Vector3 escapeDirection = (transform.position - player.position).normalized;
             escapeDirection.y += flightHeight; // Raise the owl while escaping
-            transform.position += escapeDirection * moveSpeed * Time.deltaTime;
+            Vector3 newPosition = transform.position + escapeDirection * moveSpeed * Time.deltaTime;
+
+            // Rotate the owl towards the escape direction
+            RotateTowards(newPosition - transform.position);
+
+            transform.position = newPosition;
 
             // Restrict the owl within the map boundaries
             ClampToMapBounds();
@@ -45,7 +47,11 @@ public class OwlController : MonoBehaviour
         else
         {
             // Random flight while not interacting with the player
+            Vector3 directionToTarget = targetPosition - transform.position;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+            // Rotate the owl towards its target
+            RotateTowards(directionToTarget);
 
             // If the owl reaches the destination, choose a new target
             if (Vector3.Distance(transform.position, targetPosition) < 1f)
@@ -61,6 +67,16 @@ public class OwlController : MonoBehaviour
 
             // Restrict the owl within the map boundaries
             ClampToMapBounds();
+        }
+    }
+
+    // Rotates the owl to face the given direction smoothly
+    void RotateTowards(Vector3 direction)
+    {
+        if (direction.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -86,17 +102,13 @@ public class OwlController : MonoBehaviour
         transform.position = clampedPosition;
     }
 
-   
-
-    // Nuevo m?todo para interactuar con el gato
+    // Nuevo método para interactuar con el búho
     public void InteractWithOwl()
     {
-        // Llamar al estado de seguir al jugador o hacer que el gato interact?e con el jugador
+        // Llamar al estado de seguir al jugador o hacer que el búho interactúe con el jugador
         PlayerManager.Instance.RemoveTarget(gameObject);
-        // Aniade el NPC como nuevo objetivo en `currentTargets`
+        // Añade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
         desactivarOwlUI.Instance.activateOwlUI = true;
-
-
     }
 }
