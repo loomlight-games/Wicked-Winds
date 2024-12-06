@@ -5,8 +5,9 @@ using UnityEngine;
 public class FogManager : MonoBehaviour
 {
 
-    public static FogManager Instance; //only one GameManager in the game (singleton)
+    public static FogManager Instance; 
     public GameObject FogTriggerPrefab;
+    public GameObject FogPrefab;
     public float potionFogEffectTime = 2f;
     float timer = 0f;  // Temporizador que se incrementa cada frame
     private bool isFogTimerActive = false;
