@@ -15,14 +15,14 @@ public class TownGenerator
     TownTile tileData;
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
-    public GameObject fogTriggerPrefab;
+    public GameObject fogPrefab;
 
     public void GenerateTown()
     {
         tileSize = GameManager.Instance.tileSize;
         townSize = GameManager.Instance.townSize;
        
-        fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
+        fogPrefab = FogManager.Instance.FogTriggerPrefab;
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -127,6 +127,9 @@ public class TownGenerator
                 if (direction == 1 || direction == 3) steps++;
             }
         }
+
+        AddFogTriggerRandomly(tilesPositions);
+
     }
 
     /// <summary>
@@ -151,20 +154,30 @@ public class TownGenerator
             // Instantiate tile in position with random rotation on Y
             GameObject instantiatedTile= GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
-            AddFogTriggerRandomly(instantiatedTile, tileData);
         }
     }
 
     /// <summary>
     /// Adds fog trigger randomly
     /// </summary>
-    void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
+    
+    void AddFogTriggerRandomly(Vector3[,] tilesPositions)
     {
-        float fogChance = 0.2f;
-        if (UnityEngine.Random.value < fogChance)
-        {
-            tileData.hasFog = true;
-            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
-        }
+        // Obtener dimensiones de la matriz
+        int rows = tilesPositions.GetLength(0);
+        int cols = tilesPositions.GetLength(1);
+
+        // Seleccionar una fila y columna aleatoria
+        int randomRow = UnityEngine.Random.Range(0, rows);
+        int randomCol = UnityEngine.Random.Range(0, cols);
+
+        // Obtener la posición aleatoria
+        Vector3 randomPosition = tilesPositions[randomRow, randomCol];
+
+        // Instanciar el prefab en la posición aleatoria
+        GameManager.Instance.InstantiateGO(fogPrefab, randomPosition, Quaternion.identity, townParent.transform);
+
+        Debug.Log($"Fog trigger añadido en posición: ({randomRow}, {randomCol}) - {randomPosition}");
     }
+
 }
