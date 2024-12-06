@@ -132,7 +132,7 @@ public class ControllablePlayerState : AState
             // Interact key is pressed
             if (PlayerManager.Instance.interactKey)
             {
-                Debug.Log("Interacting with interactable");
+                //Debug.Log("Interacting with interactable");
                 // Interact with NPC
                 interactable.Interact();
             }
@@ -161,7 +161,6 @@ public class ControllablePlayerState : AState
             GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
             //Deactivates it
             owl.Interact();
-
         }
     }
 }

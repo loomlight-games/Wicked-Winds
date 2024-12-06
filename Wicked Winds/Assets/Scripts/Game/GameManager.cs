@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -401,5 +402,57 @@ public class GameManager : AStateController
 
         // Apply new rotations to Sun
         sun.transform.rotation = Quaternion.Euler(randomX, randomY, sun.transform.rotation.eulerAngles.z);
+    }
+
+    public void AddTime(int timeBonus)
+    {
+        remainingTime += timeBonus;
+
+        playState.timerText.color = Color.green;
+
+        // Start the scaling animation coroutine
+        StartCoroutine(ScaleTimerText(1, Color.white));
+    }
+
+    public IEnumerator ScaleTimerText(int times, Color colorToReturn)
+    {
+        Transform timerText = playState.timerText.transform;
+
+        Vector3 originalScale = timerText.localScale;
+        Vector3 targetScale = originalScale * 1.5f; // Scale up by 20%
+        float duration = 0.5f; // Duration of the scaling animation
+
+        for (int i = 0; i < times; i++)
+        {
+            // Reset elapsed time for scaling up
+            float elapsed = 0f;
+
+            // Scale up
+            while (elapsed < duration)
+            {
+                timerText.transform.localScale = Vector3.Lerp(originalScale, targetScale, Mathf.Clamp01(elapsed / duration));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the target scale is set
+            timerText.transform.localScale = targetScale;
+
+            // Reset elapsed time for scaling down
+            elapsed = 0f;
+
+            // Scale down
+            while (elapsed < duration)
+            {
+                timerText.transform.localScale = Vector3.Lerp(targetScale, originalScale, Mathf.Clamp01(elapsed / duration));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the original scale is restored
+            timerText.transform.localScale = originalScale;
+        }
+
+        playState.timerText.color = colorToReturn; // Reset color after scaling
     }
 }
