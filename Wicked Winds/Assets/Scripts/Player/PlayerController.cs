@@ -274,8 +274,6 @@ public class PlayerController
         // Calculate the dot product between the forward vector and the direction to the target
         float dotProduct = Vector3.Dot(player.forward, directionToTarget);
 
-        Debug.LogWarningFormat(dotProduct.ToString());
-
         // Check if the dot product is bigger than the threshold
         return dotProduct >= interactionThreshold;
     }
