@@ -30,7 +30,7 @@ public struct SoundsList
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public AudioSource effectsSource, musicSource;
+    AudioSource effectsSource, musicSource;
     [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
     //[SerializeField, Range(0, 1)] float maxVolume = 1f;
     [SerializeField] SoundsList[] soundsList;
@@ -72,10 +72,13 @@ public class SoundManager : MonoBehaviour
 
         // musicSource is the second AudioSource component
         musicSource = audioSources[1];
+
+        effectsSource.loop = false;
+        musicSource.loop = true;
     }
 
     /// <summary>
-    /// Plays random sound of a specific type. If it's music starts a transition
+    /// Plays random sound of a specific type
     /// </summary>
     public static void PlaySound(SoundType type, float volume = 1)
     {
@@ -88,39 +91,16 @@ public class SoundManager : MonoBehaviour
         // Type is music
         if (type == SoundType.MenuMusic || type == SoundType.GameplayMusic)
         {
-            // Played in musicSource with a transition effect
-            Instance.StartCoroutine(Instance.MusicTransition(randomClip, volume));
+            // Stop the current clip and change to the new clip
+            Instance.musicSource.Stop();
+            Instance.musicSource.clip = randomClip;
+            Instance.musicSource.volume = volume;
+            Instance.musicSource.Play();
         }
         // Type is an effect
         else
             // Played in effectsSource
             Instance.effectsSource.PlayOneShot(randomClip, volume);
-    }
-
-    private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
-    {
-        // Fade out the current clip
-        float startVolume = musicSource.volume;
-        while (musicSource.volume > 0)
-        {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
-            yield return null;
-        }
-
-        // Stop the current clip and change to the new clip
-        musicSource.Stop();
-        musicSource.clip = newClip;
-        musicSource.Play();
-
-        // Fade in the new clip
-        while (musicSource.volume < targetVolume)
-        {
-            musicSource.volume += targetVolume * Time.deltaTime / fadeDuration;
-            yield return null;
-        }
-
-        // Ensure the volume is set to the target volume at the end
-        musicSource.volume = targetVolume;
     }
 }
 
