@@ -36,7 +36,7 @@ public class ControllablePlayerState : AState
                     {
                         collectible.Deactivate();
 
-                        SoundManager.Instance.PlayPotionEffect();
+                        SoundManager.PlaySound(SoundType.Potion);
 
                         // Notify that a speed potion was collected
                         SpeedPotionCollected?.Invoke(this, null);
@@ -53,7 +53,7 @@ public class ControllablePlayerState : AState
                     {
                         collectible.Deactivate();
 
-                        SoundManager.Instance.PlayPotionEffect();
+                        SoundManager.PlaySound(SoundType.Potion);
 
                         // Notify that a fly high potion was collected
                         FlyPotionCollected?.Invoke(this, null);
@@ -66,7 +66,7 @@ public class ControllablePlayerState : AState
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
-                    SoundManager.Instance.PlayCoinEffect();
+                    SoundManager.PlaySound(SoundType.Coin);
 
                     // Increment the player's coin count and save it
                     PlayerManager.Instance.customizable.coins++;

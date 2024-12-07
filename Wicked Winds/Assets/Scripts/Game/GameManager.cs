@@ -92,7 +92,7 @@ public class GameManager : AStateController
         if (scene.name == "Main menu")
         {
             SetState(mainMenuState);
-            SoundManager.Instance.PlayMainMenuMusic();
+            SoundManager.PlaySound(SoundType.MenuMusic);
         }
         else if (scene.name == "Shop")
         {
@@ -132,7 +132,7 @@ public class GameManager : AStateController
         Debug.Log(buttonName);
 
         // Play sound effect
-        SoundManager.Instance.PlayButtonClickEffect();
+        SoundManager.PlaySound(SoundType.ButtonClick);
 
         // Send button
         TownSelected?.Invoke(this, buttonName);

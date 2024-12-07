@@ -10,7 +10,7 @@ public class ShopState : AState
 
         UI = GameObject.Find("UI");
 
-        SoundManager.Instance.PlayMainMenuMusic();
+        SoundManager.PlaySound(SoundType.MenuMusic);
     }
 
     public override void Update()

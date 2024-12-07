@@ -1,65 +1,83 @@
 using System.Collections;
 using UnityEngine;
+using System;
+
+/// <summary>
+/// Public sound types enumeration
+/// </summary>
+public enum SoundType
+{
+    MenuMusic,
+    GameplayMusic,
+    ButtonClick,
+    Coin,
+    Water,
+    Potion,
+    Teleport,
+    Dialogue,
+    Cat,
+    Bird,
+    Owl,
+    Final,
+}
+
+
+/// <summary>
+/// Allows to handle multiple sounds of the same type
+/// </summary>
+[Serializable]
+public struct SoundsList
+{
+    [HideInInspector] public string name;
+    [SerializeField] public AudioClip[] sounds;
+}
 
 /// <summary>
 /// Handles music and sound effects reproduction
 /// </summary>
+[RequireComponent(typeof(AudioSource)), ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public float fadeDuration = 0.5f;
-    public float maxVolume = 0.1f;
+    public AudioSource effectsSource, musicSource;
+    [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
+    [SerializeField, Range(0, 1)] float maxVolume = 0.1f;
+    [SerializeField] SoundsList[] soundsList;
 
-    [SerializeField] AudioClip[] soundEffects;
-    [SerializeField] AudioClip[] musicTracks;
+#if UNITY_EDITOR
+    /// <summary>
+    /// To automatically call each sound list by a type in the editor
+    /// </summary>
+    void OnEnable()
+    {
+        string[] names = Enum.GetNames(typeof(SoundType));
+        Array.Resize(ref soundsList, names.Length);
 
-    AudioSource audioSource;
+        for (int i = 0; i < soundsList.Length; i++)
+            soundsList[i].name = names[i];
+    }
+#endif
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         if (Instance == null)
-        {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+
     }
 
-    void PlaySoundEffect(int id, float volume)
+    public static void PlaySound(SoundType sound, float volume = 1)
     {
-        // Set the AudioSource to loop
-        audioSource.loop = false;
-        audioSource.PlayOneShot(soundEffects[id], volume);
-    }
-
-    public void PlayMainMenuMusic()
-    {
-        PlayMusicTrack(0, maxVolume);
-    }
-
-    public void PlayGamePlayMusic()
-    {
-        PlayMusicTrack(1, maxVolume);
-    }
-
-    private void PlayMusicTrack(int id, float maxVolume)
-    {
-        audioSource.Stop();
-        audioSource.loop = true;
-        // Luego, reproducimos la nueva m�sica con fade-in
-
-        audioSource.clip = musicTracks[id];
-        audioSource.volume = 0f;
-        audioSource.Play();
-        StartCoroutine(FadeInMusic());
+        AudioClip[] clips = Instance.soundsList[(int)sound].sounds;
+        AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
+        Instance.effectsSource.PlayOneShot(randomClip, volume);
     }
 
     // Music fade-in
@@ -71,52 +89,10 @@ public class SoundManager : MonoBehaviour
         // Fading in the music (gradualmente subiendo el volumen)
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            audioSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);  // Aumenta el volumen a targetVolume
+            effectsSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);  // Aumenta el volumen a targetVolume
             yield return null;
         }
 
-        audioSource.volume = maxVolume;
-    }
-
-    //////////////////////////////////////////////////
-    /// SOUND EFFECTS
-    public void PlayButtonClickEffect()
-    {
-        PlaySoundEffect(0, 1);
-    }
-
-    public void PlayCoinEffect()
-    {
-        PlaySoundEffect(1, 1);
-    }
-
-    public void PlayPotionEffect()
-    {
-        int id = Random.Range(2, 3);
-        PlaySoundEffect(id, 0.6f);
-    }
-
-    public void PlayTeleportEffect()
-    {
-        PlaySoundEffect(4, 0.6f);
-    }
-
-    public void PlayDialogueEffect()
-    {
-        PlaySoundEffect(5, 0.6f);
-    }
-
-    public void StopDialogueEffect()
-    {
-        if (audioSource.isPlaying && audioSource.clip == soundEffects[5]) // Verificar si el efecto de di�logo est� sonando
-        {
-            Debug.LogWarning("[SoundManager] Deteniendo el efecto de di�logo.");
-            audioSource.Stop();
-        }
-    }
-
-    public void PlayFinalEffect()
-    {
-        PlaySoundEffect(6, 0.6f);
+        effectsSource.volume = maxVolume;
     }
 }

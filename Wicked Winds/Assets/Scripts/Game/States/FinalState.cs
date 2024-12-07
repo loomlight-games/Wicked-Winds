@@ -2,13 +2,13 @@ using TMPro;
 using UnityEngine;
 
 public class FinalState : AState
-{    
-    GameObject finalMenu, 
-        defeat, 
-        retryButton, 
+{
+    GameObject finalMenu,
+        defeat,
+        retryButton,
         mainMenuButton,
-        leaderboardButton, 
-        UI, 
+        leaderboardButton,
+        UI,
         statesUI,
         HUD,
         handledControls;
@@ -31,13 +31,13 @@ public class FinalState : AState
         leaderboardButton = finalMenu.transform.Find("Leaderboard").gameObject;
         scoreText = finalMenu.transform.Find("Score").GetComponent<TextMeshProUGUI>();
 
-        
+
         finalMenu.SetActive(true);
         defeat.SetActive(true);
         retryButton.SetActive(true);
         mainMenuButton.SetActive(true);
         leaderboardButton.SetActive(true);
-        SoundManager.Instance.PlayFinalEffect();
+        SoundManager.PlaySound(SoundType.Final);
 
 
 
@@ -50,7 +50,7 @@ public class FinalState : AState
 
     public override void Update()
     {
-  
+
     }
 
     public override void Exit()
