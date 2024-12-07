@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class AStateController : MonoBehaviour
 {
     protected AState currentState;
+    protected AState previousState;
 
     public abstract void Awake();
 
@@ -72,6 +73,7 @@ public abstract class AStateController : MonoBehaviour
     /// </summary>
     public virtual void SwitchState(AState state)
     {
+        previousState = currentState;
         currentState.Exit();
         currentState = state;
         currentState.Enter();
@@ -84,9 +86,22 @@ public abstract class AStateController : MonoBehaviour
     /// </summary>
     public virtual void SwitchState(AState state, string info)
     {
+        previousState = currentState;
         currentState.Exit();
         currentState = state;
         currentState.Enter(info);
+
+        //Debug.LogWarning(currentState.ToString());
+    }
+
+    /// <summary>
+    /// Switchs to previous state after exiting the current.
+    /// </summary>
+    public virtual void ReturnToPreviousState()
+    {
+        currentState.Exit();
+        currentState = previousState;
+        currentState.Enter();
 
         //Debug.LogWarning(currentState.ToString());
     }
