@@ -102,13 +102,17 @@ public class OwlController : MonoBehaviour
         transform.position = clampedPosition;
     }
 
-    // Nuevo m�todo para interactuar con el b�ho
-    public void InteractWithOwl()
+    public void Interact()
     {
-        // Llamar al estado de seguir al jugador o hacer que el b�ho interact�e con el jugador
-        PlayerManager.Instance.RemoveTarget(gameObject);
-        // A�ade el NPC como nuevo objetivo en `currentTargets`
-        PlayerManager.Instance.AddTarget(owner.gameObject);
-        desactivarOwlUI.Instance.activateOwlUI = true;
+        // This owl is a target
+        if (PlayerManager.Instance.hasActiveMission &&
+            PlayerManager.Instance.currentTargets.Contains(gameObject))
+        {
+            // Show icon in UI
+            desactivarOwlUI.Instance.activateOwlUI = true;
+
+            // TODO make it reappear
+            this.gameObject.SetActive(false);
+        }
     }
 }

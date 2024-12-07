@@ -143,7 +143,7 @@ public class ControllablePlayerState : AState
             else if (other.gameObject.TryGetComponent(out CatController cat))
                 cat.Interact();
             // It's an owl
-            else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
+            else if (other.gameObject.TryGetComponent(out OwlController owl))
                 owl.Interact();
         }
     }
