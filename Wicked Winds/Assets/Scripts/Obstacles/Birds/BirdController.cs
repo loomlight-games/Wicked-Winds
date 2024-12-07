@@ -58,4 +58,15 @@ public class BirdController : MonoBehaviour
         targetPosition = flockCenter.position + randomOffset;
         targetPosition.y = heightOffset; // Mantener la altura fija
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Cambia de dirección o realiza otra acción
+            SetRandomTarget();
+            Debug.Log("Bird collided with the player and changed direction!");
+        }
+    }
+
 }
