@@ -96,11 +96,62 @@ public class SoundManager : MonoBehaviour
             Instance.musicSource.clip = randomClip;
             Instance.musicSource.volume = volume;
             Instance.musicSource.Play();
+
+            // Played in musicSource with a transition
+            //Instance.StartCoroutine(Instance.MusicTransition(randomClip, volume));
         }
         // Type is an effect
         else
             // Played in effectsSource
             Instance.effectsSource.PlayOneShot(randomClip, volume);
+    }
+
+    /// <summary>
+    /// Plays random sound of a specific type
+    /// </summary>
+    public static void Play3DSound(SoundType type, Vector3 position, float volume = 1)
+    {
+        // Takes all the clips of the type
+        AudioClip[] clips = Instance.soundsList[(int)type].sounds;
+
+        // Randomly selects a clip from the list
+        AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
+
+        // Plays the sound at the specified position
+        AudioSource.PlayClipAtPoint(randomClip, position, volume);
+    }
+
+    // NOT WORKING /////////////////////////////////////////////////////////////
+    private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
+    {
+        Debug.LogWarning("Transitioning to new music clip: " + newClip.name);
+
+        float percent = 0;
+
+        // Fade out the current clip
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * 1 / fadeDuration;
+            Instance.musicSource.volume = Mathf.Lerp(1f, 0, percent);
+            yield return null;
+        }
+
+        // Stop the current clip and change to the new clip
+        //musicSource.Stop();
+        Instance.musicSource.clip = newClip;
+        Instance.musicSource.Play();
+
+        percent = 0;
+        // Fade in the new clip
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * 1 / fadeDuration;
+            Instance.musicSource.volume = Mathf.Lerp(0, 1f, percent);
+            yield return null;
+        }
+
+        // Ensure the volume is set to the target volume at the end
+        Instance.musicSource.volume = targetVolume;
     }
 }
 
