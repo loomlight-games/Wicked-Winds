@@ -74,6 +74,9 @@ public class SoundManager : MonoBehaviour
         musicSource = audioSources[1];
     }
 
+    /// <summary>
+    /// Plays random sound of a specific type. If it's music starts a transition
+    /// </summary>
     public static void PlaySound(SoundType type, float volume = 1)
     {
         // Takes all the clips of the type
@@ -85,13 +88,8 @@ public class SoundManager : MonoBehaviour
         // Type is music
         if (type == SoundType.MenuMusic || type == SoundType.GameplayMusic)
         {
-            // Played in musicSource
-            Instance.musicSource.Stop();
-            Instance.musicSource.clip = randomClip;
-            Instance.musicSource.volume = 0f;
-            Instance.musicSource.loop = true;
-            Instance.musicSource.Play();
-            Instance.StartCoroutine(Instance.FadeInMusic(volume));
+            // Played in musicSource with a transition effect
+            Instance.StartCoroutine(Instance.MusicTransition(randomClip, volume));
         }
         // Type is an effect
         else
@@ -99,18 +97,30 @@ public class SoundManager : MonoBehaviour
             Instance.effectsSource.PlayOneShot(randomClip, volume);
     }
 
-    private IEnumerator FadeInMusic(float volume)
+    private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
     {
-        Debug.LogWarning("Changing song");
-
-        // Fading in the music
-        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        // Fade out the current clip
+        float startVolume = musicSource.volume;
+        while (musicSource.volume > 0)
         {
-            musicSource.volume = Mathf.Lerp(0, volume, t / fadeDuration);
+            musicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
             yield return null;
         }
 
-        musicSource.volume = volume;
+        // Stop the current clip and change to the new clip
+        musicSource.Stop();
+        musicSource.clip = newClip;
+        musicSource.Play();
+
+        // Fade in the new clip
+        while (musicSource.volume < targetVolume)
+        {
+            musicSource.volume += targetVolume * Time.deltaTime / fadeDuration;
+            yield return null;
+        }
+
+        // Ensure the volume is set to the target volume at the end
+        musicSource.volume = targetVolume;
     }
 }
 
