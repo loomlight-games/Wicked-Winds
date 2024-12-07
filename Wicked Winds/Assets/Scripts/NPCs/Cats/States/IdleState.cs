@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class IdleState : ICatState
+public class IdleState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -14,18 +14,18 @@ public class IdleState : ICatState
         this.agent = agent;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         idleTime = Random.Range(5f, 10f);
         timer = 0f;
         agent.isStopped = true;
     }
 
-    public void Update()
+    public override void Update()
     {
         // Detectar si el jugador se acerca r�pidamente y cambiar al estado de huida
-        float distanceToPlayer = Vector3.Distance(catController.transform.position, catController.player.position);
-        Vector3 playerVelocity = (catController.player.position - catController.previousPlayerPosition) / Time.deltaTime;
+        float distanceToPlayer = Vector3.Distance(catController.transform.position, PlayerManager.Instance.transform.position);
+        Vector3 playerVelocity = (PlayerManager.Instance.transform.position - catController.previousPlayerPosition) / Time.deltaTime;
 
         // Si el jugador se acerca r�pidamente
         if (distanceToPlayer < catController.fleeDistance && playerVelocity.magnitude > catController.playerApproachSpeed)
@@ -41,10 +41,10 @@ public class IdleState : ICatState
         }
 
         // Actualizar la posici�n previa del jugador
-        catController.previousPlayerPosition = catController.player.position;
+        catController.previousPlayerPosition = PlayerManager.Instance.transform.position;
     }
 
-    public void Exit()
+    public override void Exit()
     {
         agent.isStopped = false;
     }

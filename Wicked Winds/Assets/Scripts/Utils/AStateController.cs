@@ -9,7 +9,7 @@ public abstract class AStateController : MonoBehaviour
     protected AState currentState;
     protected AState previousState;
 
-    public abstract void Awake();
+    public virtual void Awake() { }
 
     public abstract void Start();
 

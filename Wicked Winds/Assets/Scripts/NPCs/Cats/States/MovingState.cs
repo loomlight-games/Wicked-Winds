@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class MovingState : ICatState
+public class MovingState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -12,15 +12,15 @@ public class MovingState : ICatState
         this.agent = agent;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         SetRandomDestination();
         agent.speed = 3.0f;
     }
 
-    public void Update()
+    public override void Update()
     {
-      
+
         // Si el gato ha llegado a su destino, cambiar a IdleState
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -35,11 +35,11 @@ public class MovingState : ICatState
         }
 
         // Actualizar la posici�n previa del jugador
-        catController.previousPlayerPosition = catController.player.position;
+        catController.previousPlayerPosition = PlayerManager.Instance.transform.position;
     }
 
 
-    public void Exit() { }
+    public override void Exit() { }
 
     private void SetRandomDestination()
     {

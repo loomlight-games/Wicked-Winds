@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ClimbingState : ICatState
+public class ClimbingState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -12,7 +12,7 @@ public class ClimbingState : ICatState
         this.agent = agent;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         // L?gica para detectar y moverse hacia un edificio
         Vector3 targetPosition;
@@ -35,7 +35,7 @@ public class ClimbingState : ICatState
         }
     }
 
-    public void Update()
+    public override void Update()
     {
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -43,7 +43,7 @@ public class ClimbingState : ICatState
         }
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 
     private void JumpToPosition(Vector3 position)
     {

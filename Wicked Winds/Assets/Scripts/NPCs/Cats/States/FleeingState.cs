@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FleeingState : ICatState
+public class FleeingState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -14,7 +14,7 @@ public class FleeingState : ICatState
         this.player = player;
     }
 
-    public void Enter()
+    public override void Enter()
     {
         Vector3 fleeDirection = (catController.transform.position - player.position).normalized * 20f;
         NavMeshHit hit;
@@ -25,7 +25,7 @@ public class FleeingState : ICatState
         }
     }
 
-    public void Update()
+    public override void Update()
     {
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -33,5 +33,5 @@ public class FleeingState : ICatState
         }
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class FollowingPlayerState : ICatState
+public class FollowingPlayerState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -32,7 +32,7 @@ public class FollowingPlayerState : ICatState
         }
     }
 
-    public void Enter()
+    public override void Enter()
     {
         if (player != null)
         {
@@ -46,7 +46,7 @@ public class FollowingPlayerState : ICatState
         }
     }
 
-    public void Update()
+    public override void Update()
     {
         if (player != null)
         {
@@ -73,5 +73,5 @@ public class FollowingPlayerState : ICatState
         }
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 }

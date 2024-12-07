@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class FollowingOwnerState : ICatState
+public class FollowingOwnerState : AState
 {
     private CatController catController;
     private NavMeshAgent agent;
@@ -24,7 +24,7 @@ public class FollowingOwnerState : ICatState
         this.ownerNpc = ownerNpc;  // Guardamos la referencia del NPC dueño
     }
 
-    public void Enter()
+    public override void Enter()
     {
         if (ownerNpc.missionType != "CatMission")
         {
@@ -43,7 +43,7 @@ public class FollowingOwnerState : ICatState
         }
     }
 
-    public void Update()
+    public override void Update()
     {
         // Verificamos si el dueño tiene una misión de tipo CatMission
         if (ownerNpc.missionType == "CatMission")
@@ -70,7 +70,7 @@ public class FollowingOwnerState : ICatState
         }
     }
 
-    public void Exit() { }
+    public override void Exit() { }
 
     // Método para hacer que el gato huya
     private void StartCatRun()
