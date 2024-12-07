@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3075400461487082050}
   - component: {fileID: -3554532786925844750}
   - component: {fileID: 4700265043925577445}
-  - component: {fileID: 7408444086481017538}
   - component: {fileID: 8361414714207836990}
   m_Layer: 0
   m_Name: Cat
@@ -92,38 +91,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 638169d55b8c93a449a8289df7d8dc3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGameObject: {fileID: 6354958810953423510, guid: 2e58d67de17b23644a2bc9824b8f0296,
-    type: 3}
-  ownerPosition: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
+  animator: {fileID: 1950355005727185643}
   buildingLayer:
     serializedVersion: 2
     m_Bits: 128
-  playerApproachSpeed: 1.5
-  fleeDistance: 10
   owner: {fileID: 0}
-  previousPlayerPosition: {x: 0, y: 0, z: 0}
-  player: {fileID: 0}
   currentStateName: 
-  animator: {fileID: 1950355005727185643}
---- !u!114 &7408444086481017538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7008101629366272734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f329957802e0c104b85ea42a786e9aa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cat: {fileID: 4700265043925577445}
-  owner: {fileID: 0}
-  dialoguePanel: {fileID: 0}
-  activeCat: {fileID: 0}
+  minFollowDistance: 2
+  idlingSpeed: 3
+  distanceToPlayer: 0
+  distanceToOwner: 0
+  agent: {fileID: 0}
 --- !u!114 &8361414714207836990
 MonoBehaviour:
   m_ObjectHideFlags: 0

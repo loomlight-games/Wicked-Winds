@@ -182,7 +182,7 @@ public class NPC : MonoBehaviour
                     desactivarOwlUI.Instance.activateOwlUI = false;
                 }
 
-                PlayerManager.Instance.npcMissionActive.cat?.ChangeState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
+                PlayerManager.Instance.npcMissionActive.cat?.SwitchState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
                 PlayerManager.Instance.npcMissionActive.OnMissionCompleted();
                 PlayerManager.Instance.currentTargets.Remove(gameObject);
                 PlayerManager.Instance.npcMissionActive = null;

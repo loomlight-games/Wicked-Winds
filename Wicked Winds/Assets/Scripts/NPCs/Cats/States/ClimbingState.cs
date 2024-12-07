@@ -3,52 +3,30 @@ using UnityEngine.AI;
 
 public class ClimbingState : AState
 {
-    private CatController catController;
-    private NavMeshAgent agent;
+    readonly CatController catController;
 
-    public ClimbingState(CatController catController, NavMeshAgent agent)
+    public ClimbingState(CatController catController)
     {
         this.catController = catController;
-        this.agent = agent;
     }
 
     public override void Enter()
     {
-        // L?gica para detectar y moverse hacia un edificio
-        Vector3 targetPosition;
-        if (Physics.Raycast(catController.transform.position, Vector3.up, out RaycastHit hit, 5f, catController.buildingLayer))
-        {
-            targetPosition = hit.point;
+        Vector3 targetPosition = catController.hit.point;
 
-            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
-            {
-                agent.SetDestination(navHit.position);
-            }
-            else
-            {
-                JumpToPosition(targetPosition);
-            }
-        }
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+            catController.agent.SetDestination(navHit.position);
         else
         {
-            catController.ChangeState(catController.randomMoveState);
+            catController.agent.enabled = false;
+            catController.transform.position = targetPosition;
+            catController.agent.enabled = true;
         }
     }
 
     public override void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-        {
-            catController.ChangeState(catController.idleState);
-        }
-    }
-
-    public override void Exit() { }
-
-    private void JumpToPosition(Vector3 position)
-    {
-        agent.enabled = false;
-        catController.transform.position = position;
-        agent.enabled = true;
+        if (!catController.agent.pathPending && catController.agent.remainingDistance <= catController.agent.stoppingDistance)
+            catController.SwitchState(catController.idleState);
     }
 }

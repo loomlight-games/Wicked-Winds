@@ -3,51 +3,36 @@ using UnityEngine.AI;
 
 public class MovingState : AState
 {
-    private CatController catController;
-    private NavMeshAgent agent;
+    readonly CatController catController;
 
-    public MovingState(CatController catController, NavMeshAgent agent)
+    public MovingState(CatController catController)
     {
         this.catController = catController;
-        this.agent = agent;
     }
 
     public override void Enter()
     {
         SetRandomDestination();
-        agent.speed = 3.0f;
     }
 
     public override void Update()
     {
-
-        // Si el gato ha llegado a su destino, cambiar a IdleState
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        // Destination is reached
+        if (!catController.agent.pathPending && catController.agent.remainingDistance <= catController.agent.stoppingDistance)
+            catController.SwitchState(catController.idleState);
+        // Detect building
+        else if (Physics.Raycast(catController.transform.position, Vector3.up, out RaycastHit hit, 5f, catController.buildingLayer))
         {
-            catController.ChangeState(catController.idleState);
+            hit = catController.hit;
+            catController.SwitchState(catController.climbingState);
         }
-
-        // Detectar edificios cercanos
-        if (Physics.Raycast(catController.transform.position, Vector3.up, out RaycastHit hit, 5f, catController.buildingLayer))
-        {
-            Debug.Log("Edificio detectado. Cambiando a ClimbingState.");
-            catController.ChangeState(catController.climbingState);
-        }
-
-        // Actualizar la posici�n previa del jugador
-        catController.previousPlayerPosition = PlayerManager.Instance.transform.position;
     }
-
-
-    public override void Exit() { }
 
     private void SetRandomDestination()
     {
         Vector3 randomDirection = Random.insideUnitSphere * 15f + catController.transform.position;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomDirection, out hit, 15f, NavMesh.AllAreas))
-        {
-            agent.SetDestination(hit.position);
-        }
+            catController.agent.SetDestination(hit.position);
     }
 }

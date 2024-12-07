@@ -140,8 +140,8 @@ public class ControllablePlayerState : AState
             else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
                 pickableObject.CollectItem();
             // It's a cat
-            else if (other.gameObject.TryGetComponent(out InteractableCat cat))
-                cat.InteractCat();
+            else if (other.gameObject.TryGetComponent(out CatController cat))
+                cat.Interact();
             // It's an owl
             else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
                 owl.Interact();

@@ -3,68 +3,50 @@ using UnityEngine;
 
 public class CatController : AStateController
 {
-    public Transform ownerPosition;
-    public LayerMask groundLayer, buildingLayer;
-    public float playerApproachSpeed = 1.5f;
-    public float fleeDistance = 10f;
+    public Animator animator;
+    public LayerMask buildingLayer;
     public NPC owner;
-    private NavMeshAgent agent;
-    public Vector3 previousPlayerPosition;
+    public string currentStateName;
+    public float minFollowDistance = 2f, // Min distance for the cat to stop
+    followSpeedFactor = 0.9f,
+    distanceToPlayer,
+    distanceToOwner,
+    minIdleTime = 5f,
+    maxIdleTime = 10f;
+    [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public RaycastHit hit;
 
     // STATES
     public IdleState idleState;
     public MovingState randomMoveState;
     public ClimbingState climbingState;
-    public FleeingState fleeingState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
-
-    public string currentStateName;
-
-    public Animator animator;
 
     public override void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        ownerPosition = owner.transform;
 
-        // Inicializar estados
-        idleState = new IdleState(this, agent);
-        randomMoveState = new MovingState(this, agent);
-        climbingState = new ClimbingState(this, agent);
-        followingPlayerState = new FollowingPlayerState(this, agent, ownerPosition);
-        followingOwnerState = new FollowingOwnerState(this, agent, PlayerManager.Instance.transform, ownerPosition, owner);
+        idleState = new IdleState(this);
+        randomMoveState = new MovingState(this);
+        climbingState = new ClimbingState(this);
+        followingPlayerState = new FollowingPlayerState(this);
+        followingOwnerState = new FollowingOwnerState(this);
 
-        // Estado inicial
-        currentState = followingOwnerState;
-        currentState.Enter();
-        UpdateCurrentStateName();
+        SetState(followingOwnerState);
     }
 
     public override void UpdateFrame()
     {
-        UpdateCurrentStateName(); // Actualiza el nombre del estado en cada frame
-    }
+        // Calculate distances
+        distanceToPlayer = Vector3.Distance(transform.position, PlayerManager.Instance.transform.position);
+        distanceToOwner = Vector3.Distance(transform.position, owner.transform.position);
 
-    public void ChangeState(AState newState)
-    {
-        currentState.Exit();
-        currentState = newState;
-        currentState.Enter();
-        UpdateCurrentStateName(); // Actualiza el nombre del estado cuando cambia
-    }
-
-    // M?todo para actualizar el nombre del estado actual
-    void UpdateCurrentStateName()
-    {
-        if (currentState != null)
-        {
-            currentStateName = currentState.GetType().Name;
-        }
+        currentStateName = currentState.ToString();
     }
 
     /// <summary>
-    /// Interacts if this cat is a target
+    /// Interacts if this cat is the target
     /// </summary>
     public void Interact()
     {
@@ -72,7 +54,7 @@ public class CatController : AStateController
         if (PlayerManager.Instance.hasActiveMission &&
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
-            ChangeState(followingPlayerState);
+            SwitchState(followingPlayerState);
 
             PlayerManager.Instance.RemoveTarget(gameObject);
 
