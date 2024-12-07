@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf449e2a70537c4408a1f01d7fe69897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: c39a562f9c685b7479425f876e34e239, type: 2}
   fadeDuration: 0.5
   soundsList:
   - name: MenuMusic
@@ -92,7 +93,8 @@ AudioSource:
   m_GameObject: {fileID: 6458579888020657512}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 76780424012560017, guid: c39a562f9c685b7479425f876e34e239,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -188,12 +190,13 @@ AudioSource:
   m_GameObject: {fileID: 6458579888020657512}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 9066253458658710054, guid: c39a562f9c685b7479425f876e34e239,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

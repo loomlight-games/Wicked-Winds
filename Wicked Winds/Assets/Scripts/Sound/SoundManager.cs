@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEngine.Audio;
 
 /// <summary>
 /// Public sound types enumeration
@@ -152,6 +153,16 @@ public class SoundManager : MonoBehaviour
 
         // Ensure the volume is set to the target volume at the end
         Instance.musicSource.volume = targetVolume;
+    }
+
+    public void UpdateMusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+    }
+
+    public void UpdateEffectsVolume(float volume)
+    {
+        effectsSource.volume = volume;
     }
 }
 

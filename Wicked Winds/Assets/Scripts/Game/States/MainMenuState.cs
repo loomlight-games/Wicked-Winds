@@ -14,6 +14,5 @@ public class MainMenuState : AState
     public override void Exit()
     {
         mainMenu.SetActive(false);
-
     }
 }

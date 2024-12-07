@@ -22,6 +22,7 @@ public class GameManager : AStateController
     public readonly GamePlayState playState = new();
     public readonly FinalState endState = new();
     public readonly CreditsState creditsState = new();
+    public readonly SettingsState settingsState = new();
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
     public readonly TownSelectionState selectTownState = new();
@@ -162,6 +163,9 @@ public class GameManager : AStateController
                 break;
             case "Credits":
                 SwitchState(creditsState);
+                break;
+            case "Settings":
+                SwitchState(settingsState);
                 break;
             case "Main menu leaderboard":
                 AuthenticationService.Instance.SignOut();
