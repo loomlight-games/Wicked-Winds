@@ -29,8 +29,8 @@ public class SettingsState : AState
 
     public override void Update()
     {
-        effectsSlider.value = SoundManager.Instance.effectsSource.volume;
-        musicSlider.value = SoundManager.Instance.musicSource.volume;
+        effectsSlider.value = SoundManager.Instance.effectsVolume;
+        musicSlider.value = SoundManager.Instance.musicVolume;
 
         if (GameManager.Instance.playingOnPC)
         {

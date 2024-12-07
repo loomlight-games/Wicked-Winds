@@ -5,25 +5,6 @@ using UnityEditor;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Public sound types enumeration
-/// </summary>
-public enum SoundType
-{
-    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport,
-    Dialogue, Cat, Bird, Owl, Final,
-}
-
-/// <summary>
-/// Allows to handle multiple sounds of the same type
-/// </summary>
-[Serializable]
-public struct SoundsList
-{
-    [HideInInspector] public string name;
-    [SerializeField] public AudioClip[] sounds;
-}
-
-/// <summary>
 /// Handles music and sound effects reproduction. Requires two 
 /// audioSource components 
 /// </summary>
@@ -31,9 +12,10 @@ public struct SoundsList
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    [HideInInspector] public AudioSource effectsSource, musicSource;
-    [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
-    //[SerializeField, Range(0, 1)] float maxVolume = 1f;
+    public static AudioSource effectsSource, musicSource;
+
+    [Range(0, 1)] public float effectsVolume = 1f, musicVolume = 1f;
+    //[SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
     [SerializeField] SoundsList[] soundsList;
 
 #if UNITY_EDITOR
@@ -78,6 +60,15 @@ public class SoundManager : MonoBehaviour
         musicSource.loop = true;
     }
 
+    void Update()
+    {
+        if (Instance.effectsVolume != effectsSource.volume)
+            effectsSource.volume = Instance.effectsVolume;
+
+        if (Instance.musicVolume != musicSource.volume)
+            musicSource.volume = Instance.musicVolume;
+    }
+
     /// <summary>
     /// Plays random sound of a specific type
     /// </summary>
@@ -93,10 +84,10 @@ public class SoundManager : MonoBehaviour
         if (type == SoundType.MenuMusic || type == SoundType.GameplayMusic)
         {
             // Stop the current clip and change to the new clip
-            Instance.musicSource.Stop();
-            Instance.musicSource.clip = randomClip;
-            Instance.musicSource.volume = volume;
-            Instance.musicSource.Play();
+            musicSource.Stop();
+            musicSource.clip = randomClip;
+            musicSource.volume = volume;
+            musicSource.Play();
 
             // Played in musicSource with a transition
             //Instance.StartCoroutine(Instance.MusicTransition(randomClip, volume));
@@ -104,7 +95,7 @@ public class SoundManager : MonoBehaviour
         // Type is an effect
         else
             // Played in effectsSource
-            Instance.effectsSource.PlayOneShot(randomClip, volume);
+            effectsSource.PlayOneShot(randomClip, volume);
     }
 
     /// <summary>
@@ -124,46 +115,48 @@ public class SoundManager : MonoBehaviour
 
     public static void UpdateMusicVolume(float volume)
     {
-        Instance.musicSource.volume = volume;
+        Instance.musicVolume = volume;
+        musicSource.volume = volume;
     }
 
     public static void UpdateEffectsVolume(float volume)
     {
-        Instance.effectsSource.volume = volume;
+        Instance.effectsVolume = volume;
+        effectsSource.volume = volume;
     }
 
     // NOT WORKING /////////////////////////////////////////////////////////////
-    private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
-    {
-        Debug.LogWarning("Transitioning to new music clip: " + newClip.name);
+    // private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
+    // {
+    //     Debug.LogWarning("Transitioning to new music clip: " + newClip.name);
 
-        float percent = 0;
+    //     float percent = 0;
 
-        // Fade out the current clip
-        while (percent < 1)
-        {
-            percent += Time.deltaTime * 1 / fadeDuration;
-            Instance.musicSource.volume = Mathf.Lerp(1f, 0, percent);
-            yield return null;
-        }
+    //     // Fade out the current clip
+    //     while (percent < 1)
+    //     {
+    //         percent += Time.deltaTime * 1 / fadeDuration;
+    //         musicSource.volume = Mathf.Lerp(1f, 0, percent);
+    //         yield return null;
+    //     }
 
-        // Stop the current clip and change to the new clip
-        //musicSource.Stop();
-        Instance.musicSource.clip = newClip;
-        Instance.musicSource.Play();
+    //     // Stop the current clip and change to the new clip
+    //     //musicSource.Stop();
+    //     musicSource.clip = newClip;
+    //     musicSource.Play();
 
-        percent = 0;
-        // Fade in the new clip
-        while (percent < 1)
-        {
-            percent += Time.deltaTime * 1 / fadeDuration;
-            Instance.musicSource.volume = Mathf.Lerp(0, 1f, percent);
-            yield return null;
-        }
+    //     percent = 0;
+    //     // Fade in the new clip
+    //     while (percent < 1)
+    //     {
+    //         percent += Time.deltaTime * 1 / fadeDuration;
+    //         musicSource.volume = Mathf.Lerp(0, 1f, percent);
+    //         yield return null;
+    //     }
 
-        // Ensure the volume is set to the target volume at the end
-        Instance.musicSource.volume = targetVolume;
-    }
+    //     // Ensure the volume is set to the target volume at the end
+    //     musicSource.volume = targetVolume;
+    // }
 }
 
 /// <summary>
@@ -194,4 +187,23 @@ public class SoundManagerEditor : Editor
             }
         }
     }
+}
+
+/// <summary>
+/// Public sound types enumeration
+/// </summary>
+public enum SoundType
+{
+    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport,
+    Dialogue, Cat, Bird, Owl, Final,
+}
+
+/// <summary>
+/// Allows to handle multiple sounds of the same type
+/// </summary>
+[Serializable]
+public struct SoundsList
+{
+    [HideInInspector] public string name;
+    [SerializeField] public AudioClip[] sounds;
 }
