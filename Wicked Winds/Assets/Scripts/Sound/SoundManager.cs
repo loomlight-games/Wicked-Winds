@@ -74,13 +74,16 @@ public class SoundManager : MonoBehaviour
         musicSource = audioSources[1];
     }
 
-    public static void PlaySound(SoundType sound, float volume = 1)
+    public static void PlaySound(SoundType type, float volume = 1)
     {
-        AudioClip[] clips = Instance.soundsList[(int)sound].sounds;
+        // Takes all the clips of the type
+        AudioClip[] clips = Instance.soundsList[(int)type].sounds;
+
+        // Randomly selects a clip from the list
         AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
 
-        // Sound is music
-        if (sound == SoundType.MenuMusic || sound == SoundType.GameplayMusic)
+        // Type is music
+        if (type == SoundType.MenuMusic || type == SoundType.GameplayMusic)
         {
             // Played in musicSource
             Instance.musicSource.Stop();
@@ -90,7 +93,7 @@ public class SoundManager : MonoBehaviour
             Instance.musicSource.Play();
             Instance.StartCoroutine(Instance.FadeInMusic(volume));
         }
-        // Sound is an effect
+        // Type is an effect
         else
             // Played in effectsSource
             Instance.effectsSource.PlayOneShot(randomClip, volume);
