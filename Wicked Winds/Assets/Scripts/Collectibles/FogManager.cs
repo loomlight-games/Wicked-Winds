@@ -12,8 +12,8 @@ public class FogManager : MonoBehaviour
     float timer = 0f;  // Temporizador que se incrementa cada frame
     private bool isFogTimerActive = false;
     // Start is called before the first frame update
-
-    public  void Awake()
+    private List<FogTrigger> fogTriggers = new List<FogTrigger>(); // Lista para almacenar todos los triggers de niebla
+    public void Awake()
     {
         //if there's not an instance, it creates one - SINGLETON
         if (Instance == null)
@@ -23,7 +23,8 @@ public class FogManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-       
+        // Obtener todos los FogTrigger en la escena y añadirlos a la lista
+        fogTriggers.AddRange(FindObjectsOfType<FogTrigger>());
     }
 
     private void Update()
@@ -31,22 +32,35 @@ public class FogManager : MonoBehaviour
         if (isFogTimerActive)
         {
             timer += Time.deltaTime;
-            if (timer > 5f) { GameManager.Instance.playState.feedBackText.text = "The potion only lasts 20 seconds you better hurry!"; }
             if (timer >= potionFogEffectTime)
             {
-                // Reactivar la niebla y reiniciar el temporizador
                 PlayerManager.Instance.potionFog = false;
                 DesactivarPotionUI.Instance.activarFogUI = false;
                 timer = 0f;
                 isFogTimerActive = false;
-                GameManager.Instance.playState.feedBackText.text =  "Back to London time...";
+                GameManager.Instance.playState.feedBackText.text = "Back to London time...";
+
+                // Reactivar todos los triggers de niebla
+                foreach (var fogTrigger in fogTriggers)
+                {
+                    fogTrigger.SetFogTriggerState(true); // Activar los triggers después de que la niebla se haya desactivado
+                }
+
+                Debug.Log("Potion fog effect ended.");
             }
         }
     }
 
     public void ReenableFogAfterTime()
     {
-       
-        isFogTimerActive = true; // Activar el temporizador
+        // Este método puede ser llamado después de tomar la poción
+        isFogTimerActive = true;
+        Debug.Log("Fog timer re-enabled");
+
+        // Desactivar todos los triggers de niebla mientras la poción esté activa
+        foreach (var fogTrigger in fogTriggers)
+        {
+            fogTrigger.SetFogTriggerState(false); // Desactivar los triggers durante la poción
+        }
     }
 }

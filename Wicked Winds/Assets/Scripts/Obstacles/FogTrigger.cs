@@ -1,77 +1,73 @@
-using System.Collections;
 using UnityEngine;
 
 public class FogTrigger : MonoBehaviour
 {
-    public Color fogColor = Color.gray;
-    public float fogDensity = 0.3f;
-    public float transitionSpeed = 2f; // Velocidad de transición de la niebla
+    public Color fogColor = Color.white; // Color de la niebla
+    public float fogDensity = 0.2f; // Densidad máxima de la niebla
+    public float transitionSpeed = 0.5f; // Velocidad de transición
 
-    private Color targetColor;
-    private float targetDensity;
+    private float targetFogDensity; // Densidad objetivo
+    private bool isTransitioning;
 
     private void Start()
     {
-        // Inicializa los valores de la niebla al entrar al juego
-        targetColor = RenderSettings.fogColor;
-        targetDensity = RenderSettings.fogDensity;
+        // Asegurarse de que la niebla esté desactivada al inicio
+        RenderSettings.fog = false;
+        RenderSettings.fogDensity = 0f;
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && PlayerManager.Instance.potionFog == false) // Si el jugador entra en la zona especificada
+        if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
         {
             GameManager.Instance.playState.feedBackText.text = "Perfect weather for some ghost stories...";
-            PlayerManager.Instance.playerIsInsideFog = true;
-            StartFogTransition(fogColor, fogDensity);
+            StartFogTransition(fogDensity); // Activar niebla
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
         {
             GameManager.Instance.playState.feedBackText.text = "Finally some sunlight!";
-            PlayerManager.Instance.playerIsInsideFog = false;
-            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
+            StartFogTransition(0f); // Desactivar niebla
         }
     }
 
-
-  
-
-    // Inicia la transición de la niebla
-    private void StartFogTransition(Color targetFogColor, float targetFogDensity)
+    private void StartFogTransition(float newFogDensity)
     {
-        targetColor = targetFogColor;
-        targetDensity = targetFogDensity;
+        RenderSettings.fogColor = fogColor; // Asegurar que el color de la niebla esté establecido
+        RenderSettings.fog = true; // Activar la niebla
+        targetFogDensity = newFogDensity;
+        isTransitioning = true;
     }
 
     private void Update()
     {
-        if(PlayerManager.Instance.potionFog && PlayerManager.Instance.playerIsInsideFog == true)
+        if (isTransitioning)
         {
-            GameManager.Instance.playState.feedBackText.text ="WOW! The fog has magically dissapeared!";
-            PlayerManager.Instance.playerIsInsideFog = false;
-            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
-        }
-            // Solo actualiza la transición si hay un cambio
-            if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
-        {
-            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, Time.deltaTime * transitionSpeed);
-            RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetDensity, Time.deltaTime * transitionSpeed);
+            // Interpolación de la densidad de la niebla
+            RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetFogDensity, Time.deltaTime * transitionSpeed);
 
-            // Si hemos alcanzado los valores objetivos, dejamos de actualizar
-            if (Mathf.Approximately(RenderSettings.fogDensity, targetDensity) && RenderSettings.fogColor == targetColor)
+            // Verificar si la densidad está cerca del objetivo
+            if (Mathf.Abs(RenderSettings.fogDensity - targetFogDensity) < 0.01f)
             {
-                // Si estamos completamente en el valor objetivo, podemos detener la interpolación
-                RenderSettings.fog = targetDensity > 0f; // Solo habilitamos la niebla si la densidad es mayor que 0
+                RenderSettings.fogDensity = targetFogDensity;
+                isTransitioning = false;
+
+                // Si la densidad objetivo es 0, desactivar la niebla
+                if (targetFogDensity == 0f)
+                {
+                    RenderSettings.fog = false;
+                }
             }
         }
-        else
+
+        // Manejar caso especial de la poción
+        if (PlayerManager.Instance.potionFog)
         {
-            // Asegurarse de que la niebla se active/desactive adecuadamente
-            RenderSettings.fog = targetDensity > 0f;
+            GameManager.Instance.playState.feedBackText.text = "WOW! The fog has magically disappeared!";
+            StartFogTransition(0f); // Desactivar niebla inmediatamente
         }
     }
 }
