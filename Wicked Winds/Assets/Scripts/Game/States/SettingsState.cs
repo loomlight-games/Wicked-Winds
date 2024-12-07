@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsState : AState
 {
 
     GameObject Menu, panel, PCyes, PCno;
+
+    Slider musicSlider, effectsSlider;
 
     public override void Enter()
     {
@@ -19,10 +22,16 @@ public class SettingsState : AState
             PCyes.SetActive(true);
         else
             PCno.SetActive(true);
+
+        effectsSlider = panel.transform.Find("Effects slider").GetComponent<Slider>();
+        musicSlider = panel.transform.Find("Music slider").GetComponent<Slider>();
     }
 
     public override void Update()
     {
+        effectsSlider.value = SoundManager.Instance.effectsSource.volume;
+        musicSlider.value = SoundManager.Instance.musicSource.volume;
+
         if (GameManager.Instance.playingOnPC)
         {
             PCyes.SetActive(true);

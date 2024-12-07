@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEditor;
-using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Public sound types enumeration
@@ -31,7 +31,7 @@ public struct SoundsList
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    AudioSource effectsSource, musicSource;
+    [HideInInspector] public AudioSource effectsSource, musicSource;
     [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
     //[SerializeField, Range(0, 1)] float maxVolume = 1f;
     [SerializeField] SoundsList[] soundsList;
@@ -122,6 +122,16 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(randomClip, position, volume);
     }
 
+    public static void UpdateMusicVolume(float volume)
+    {
+        Instance.musicSource.volume = volume;
+    }
+
+    public static void UpdateEffectsVolume(float volume)
+    {
+        Instance.effectsSource.volume = volume;
+    }
+
     // NOT WORKING /////////////////////////////////////////////////////////////
     private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
     {
@@ -153,16 +163,6 @@ public class SoundManager : MonoBehaviour
 
         // Ensure the volume is set to the target volume at the end
         Instance.musicSource.volume = targetVolume;
-    }
-
-    public void UpdateMusicVolume(float volume)
-    {
-        musicSource.volume = volume;
-    }
-
-    public void UpdateEffectsVolume(float volume)
-    {
-        effectsSource.volume = volume;
     }
 }
 
