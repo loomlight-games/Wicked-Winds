@@ -28,6 +28,7 @@ public class AverageLeaderboard : Panel
 
     private int currentPage = 1;
     private int totalPages = 0;
+    
 
 
     public override void Initialize()
@@ -59,7 +60,17 @@ public class AverageLeaderboard : Panel
         totalPages = 0;
         LoadPlayers(1);
         //LoadPlayersWithoutSignIn(1);
-        AddGameScore();
+
+        // Comprobamos que ha hecho mas de 10 misiones (player_missiontime_file es >0)
+        int missionTime = PlayerPrefs.GetInt(GameManager.Instance.PLAYER_MISSIONTIME_FILE, 0);
+        if (missionTime > 0) 
+        {
+            AddGameScore();
+        }
+        else
+        {
+            Debug.Log("No se añadirá puntuación porque no se han hecho mas de 10 misiones (tiempo medio = 0)");
+        }
 
     }
 

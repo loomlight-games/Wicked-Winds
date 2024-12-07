@@ -119,11 +119,21 @@ public class GamePlayState : AState
         gameOverTriggered = true;  // avoids double calls
 
         PlayerManager.Instance.score = (int)elapsedTime;
-        // Suma todos los tiempos de la lista
-        float totalMissionTime = GameManager.Instance.missionsTimes.Sum();
 
-        // Calcula la media dividiendo entre las misiones completadas
-        GameManager.Instance.averageMissionTime = totalMissionTime / MissionManager.Instance.missionsCompleted;
+        if (MissionManager.Instance.missionsCompleted >= 10)
+        {
+            // Suma todos los tiempos de la lista
+            float totalMissionTime = GameManager.Instance.missionsTimes.Sum();
+
+            // Calcula la media dividiendo entre las misiones completadas
+            GameManager.Instance.averageMissionTime = totalMissionTime / MissionManager.Instance.missionsCompleted;
+        }
+        else
+        {
+            GameManager.Instance.averageMissionTime = 0;
+            Debug.Log(" No has hecho mas de 10 misiones");
+        }
+        
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
     }

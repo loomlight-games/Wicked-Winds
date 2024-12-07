@@ -22,8 +22,8 @@ public class AuthentificationPanel : Panel
         }
         signinButton.onClick.AddListener(SignIn);
         signupButton.onClick.AddListener(SignUp);
-        anonymousButton.onClick.AddListener(AnonymousSignIn);
-        leaderboardButton.onClick.AddListener(Viewtable);
+        //anonymousButton.onClick.AddListener(AnonymousSignIn);
+        //leaderboardButton.onClick.AddListener(Viewtable);
         
         // Restaurar el color cuando el usuario empieza a escribir
         usernameInput.onValueChanged.AddListener((text) => ResetPlaceholderColor(usernameInput));
@@ -45,9 +45,7 @@ public class AuthentificationPanel : Panel
         }
         usernameInput.onSelect.AddListener((value) =>
         {
-            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
             TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
         });
         passwordInput.onSelect.AddListener((value) =>
         {
