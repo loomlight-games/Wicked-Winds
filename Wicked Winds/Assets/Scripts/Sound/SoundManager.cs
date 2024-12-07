@@ -1,26 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 /// <summary>
 /// Public sound types enumeration
 /// </summary>
 public enum SoundType
 {
-    MenuMusic,
-    GameplayMusic,
-    ButtonClick,
-    Coin,
-    Water,
-    Potion,
-    Teleport,
-    Dialogue,
-    Cat,
-    Bird,
-    Owl,
-    Final,
+    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport,
+    Dialogue, Cat, Bird, Owl, Final,
 }
-
 
 /// <summary>
 /// Allows to handle multiple sounds of the same type
@@ -33,9 +23,10 @@ public struct SoundsList
 }
 
 /// <summary>
-/// Handles music and sound effects reproduction
+/// Handles music and sound effects reproduction. Requires two 
+/// audioSource components 
 /// </summary>
-[RequireComponent(typeof(AudioSource)), ExecuteInEditMode]
+[ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
@@ -46,7 +37,7 @@ public class SoundManager : MonoBehaviour
 
 #if UNITY_EDITOR
     /// <summary>
-    /// To automatically call each sound list by a type in the editor
+    /// Automatically assigns the names of the sound types to the sound lists
     /// </summary>
     void OnEnable()
     {
@@ -60,17 +51,27 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-
         if (Instance == null)
+        {
             Instance = this;
+
+            if (Application.isPlaying)
+                DontDestroyOnLoad(gameObject);// To avoid error in editor
+        }
         else
             Destroy(gameObject);
     }
 
     void Start()
     {
+        // Retrieve all AudioSource components attached to the GameObject
+        AudioSource[] audioSources = GetComponents<AudioSource>();
 
+        // effectsSource is the first AudioSource component
+        effectsSource = audioSources[0];
+
+        // musicSource is the second AudioSource component
+        musicSource = audioSources[1];
     }
 
     public static void PlaySound(SoundType sound, float volume = 1)
@@ -80,19 +81,47 @@ public class SoundManager : MonoBehaviour
         Instance.effectsSource.PlayOneShot(randomClip, volume);
     }
 
-    // Music fade-in
     private IEnumerator FadeInMusic()
     {
-        Debug.LogWarning("SUBIENDO EL VOLUMEN");
+        Debug.LogWarning("Changing song");
 
-
-        // Fading in the music (gradualmente subiendo el volumen)
+        // Fading in the music
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            effectsSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);  // Aumenta el volumen a targetVolume
+            effectsSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);
             yield return null;
         }
 
         effectsSource.volume = maxVolume;
+    }
+}
+
+/// <summary>
+/// To ensure that at least two AudioSources are attached to the SoundManager GO
+/// </summary>
+[CustomEditor(typeof(SoundManager))]
+public class SoundManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        SoundManager soundManager = (SoundManager)target;
+
+        // Check if there are exactly two AudioSource components
+        AudioSource[] audioSources = soundManager.GetComponents<AudioSource>();
+        if (audioSources.Length != 2)
+        {
+            EditorGUILayout.HelpBox("SoundManager requires exactly two AudioSource components.", MessageType.Warning);
+
+            if (GUILayout.Button("Add Missing AudioSources"))
+            {
+                while (audioSources.Length < 2)
+                {
+                    soundManager.gameObject.AddComponent<AudioSource>();
+                    audioSources = soundManager.GetComponents<AudioSource>();
+                }
+            }
+        }
     }
 }
