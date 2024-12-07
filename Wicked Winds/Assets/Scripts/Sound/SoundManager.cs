@@ -62,6 +62,9 @@ public class SoundManager : MonoBehaviour
 
     void Update()
     {
+        if (!Application.isPlaying)
+            return;// To avoid error in editor
+
         if (Instance.effectsVolume != effectsSource.volume)
             effectsSource.volume = Instance.effectsVolume;
 

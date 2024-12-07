@@ -6,16 +6,6 @@ public class Pickable : MonoBehaviour
     public NPC npc;
     public MissionIcon missionIcon; // Referencia al icono de mision del NPC
     public int numOfObjectsToCollect;
-    public Dialogue textBubble; // Referencia al bocadillo de texto
-
-
-
-    // Metodo para establecer el NPC
-
-    private void Start()
-    {
-        textBubble = FindObjectOfType<Dialogue>();
-    }
 
     private void Update()
     {
@@ -29,48 +19,43 @@ public class Pickable : MonoBehaviour
             }
         }
     }
+
     public void SetNPC(NPC assignedNPC)
     {
         npc = assignedNPC;
     }
 
-    // M�todo para recolectar el objeto
+    /// <summary>
+    /// Collects the item and updates the mission icon.
+    /// </summary>
     public void CollectItem()
     {
         if (npc != null && PlayerManager.Instance.currentTargets != null)
         {
-            if (PlayerManager.Instance.currentTargets.Contains(this.gameObject))
+            if (PlayerManager.Instance.currentTargets.Contains(gameObject))
             {
-                missionIcon = npc.missionIcon;
-                if (this.missionIcon != null)
+                missionIcon = npc.request;
+
+                if (missionIcon != null)
                 {
-                    this.missionIcon.collectedItemsCount++;
-                    // Quitar el ingrediente de la lista de objetivos y destruir el objeto recolectado
+                    missionIcon.collectedItemsCount++;
+
+                    // Remove ingredient from targets and destroy it
                     PlayerManager.Instance.RemoveTarget(gameObject);
                     Destroy(gameObject);
-                    Debug.Log($"{npc.name} collected the item: {gameObject.name}");
 
-                    if (this.missionIcon.collectedItemsCount >= numOfObjectsToCollect)
+                    // At least all targets found
+                    if (missionIcon.collectedItemsCount >= numOfObjectsToCollect)
                     {
-                        // Reinicia el contador para futuras misiones
-                        this.missionIcon.collectedItemsCount = 0;
+                        // Restarts counter
+                        missionIcon.collectedItemsCount = 0;
 
-                        // Aniade el NPC como nuevo objetivo en `currentTargets`
+                        // Makes NPC the next target 
                         PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
-                        GameManager.Instance.playState.feedBackText.text = "Todos los objetos recolectados. Regresa al NPC para completar la mision.\n";
-                            
-                        
-
+                        GameManager.Instance.playState.feedBackText.text = $"All ingredients found! Bring them to {npc.npcname}\n";
                     }
                 }
-
             }
-            
-           
-
-
         }
-        
     }
-
 }

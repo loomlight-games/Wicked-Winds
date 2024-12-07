@@ -15,7 +15,7 @@ public class MessageGenerator
         string[] messageTemplates;
         string[] answerTemplates;
 
-        switch (mission.missionName.ToLower()) // Use .ToLower() to ensure case-insensitive comparison
+        switch (mission.type.ToLower()) // Use .ToLower() to ensure case-insensitive comparison
         {
             case "lettermision":
                 messageTemplates = mission.npcMessages["LetterMision"];

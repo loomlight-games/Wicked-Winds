@@ -7,7 +7,7 @@ public class MissionIcon : MonoBehaviour
     public Sprite spriteMission;
     public Sprite spriteMissionCompleted;
 
-    public MissionData currentMission; // La misi�n asignada a este �cono
+    public MissionData data; // La misi�n asignada a este �cono
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
     public NPC assignedNPC; // A�adimos una referencia al NPC
@@ -25,10 +25,10 @@ public class MissionIcon : MonoBehaviour
     // M�todo para asignar una misi�n a este �cono
     public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
     {
-        currentMission = mission;
+        data = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
-        assignedNPC.missionType = currentMission.missionName;
+        assignedNPC.missionType = data.type;
 
         // Generar un ID �nico para esta misi�n
         missionID = Guid.NewGuid();
@@ -47,7 +47,7 @@ public class MissionIcon : MonoBehaviour
     {
 
         // Almacenar la misi�n actual y el manager
-        currentMission = mission;
+        data = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
 
@@ -57,22 +57,22 @@ public class MissionIcon : MonoBehaviour
 
         messageGenerator = new();
         // Generar el mensaje para la misi�n
-        var (message, response) = messageGenerator.GenerateMessage(currentMission, assignedNPC, assignedNPC.missionIcon);
+        var (message, response) = messageGenerator.GenerateMessage(data, assignedNPC, assignedNPC.request);
 
         // Check if the selected message template contains {NPC_NAME}
         if (message.Contains("{NPC_NAME}"))
         {
-            message = message.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
+            message = message.Replace("{NPC_NAME}", assignedNPC.request.addresseeName);
         }
 
         if (response.Contains("{NPC_NAME}"))
         {
-            response = response.Replace("{NPC_NAME}", assignedNPC.missionIcon.addresseeName);
+            response = response.Replace("{NPC_NAME}", assignedNPC.request.addresseeName);
         }
 
         // Luego puedes asignar el mensaje y la respuesta a las propiedades de NPC
         assignedNPC.message = message;
-        if (mission.missionName == "LetterMision")
+        if (mission.type == "LetterMision")
         {
             assignedNPC.responseMessage = null;
             addressee.responseMessage = response;
@@ -86,7 +86,7 @@ public class MissionIcon : MonoBehaviour
     // Este m�todo es llamado cuando el objeto es tomado del pool
     public void OnObjectSpawn()
     {
-        if (currentMission != null)
+        if (data != null)
         {
             // Obtiene el componente SpriteRenderer del GameObject al que est� adjunto este script
             SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -95,19 +95,19 @@ public class MissionIcon : MonoBehaviour
                 spriteRenderer.sprite = spriteMission;
             }
 
-            currentMission.isCompleted = false;
+            data.isCompleted = false;
         }
     }
 
     public void CompleteMission()
     {
-        if (currentMission != null)
+        if (data != null)
         {
             // Creates another mission
             missionManager.AssignNewMission(1);
 
             // Adds time and makes animation
-            GameManager.Instance.AddTime(currentMission.timeBonus);
+            GameManager.Instance.AddTime(data.timeBonus);
 
             GameManager.Instance.missionsTimes.Add(GameManager.Instance.missionTime);
             GameManager.Instance.missionTime = 0f;
@@ -116,7 +116,7 @@ public class MissionIcon : MonoBehaviour
             missionManager.assignedNPCs.Remove(assignedNPC);
             assignedNPC.OnObjectReturn();
 
-            currentMission = null;
+            data = null;
             assignedNPC = null;
 
             PlayerManager.Instance.hasActiveMission = false;

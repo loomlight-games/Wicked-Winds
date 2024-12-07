@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1771561285409204118}
   - component: {fileID: 4250233420254471838}
-  - component: {fileID: 3307777110171398428}
   - component: {fileID: 2414267959813268362}
   - component: {fileID: 8597868268812028505}
   - component: {fileID: 6846470004272098406}
@@ -63,23 +62,6 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &3307777110171398428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218170469500960052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba9cd4f541a3af458a0de049f3a5816, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npc: {fileID: 0}
-  missionIcon: {fileID: 1688748061238991769, guid: 7e02ceb2d0cb6bc4b94f798b32525c72,
-    type: 3}
-  activeNPC: {fileID: 0}
-  dialoguePanel: {fileID: 0}
 --- !u!114 &2414267959813268362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccff8a4df03b14409ad1484a052a7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionIcon: {fileID: 0}
+  request: {fileID: 0}
   hasMission: 0
   movementScript: {fileID: 8597868268812028505}
   bubble: {fileID: 2492813812020445530}
@@ -104,6 +86,7 @@ MonoBehaviour:
   cat: {fileID: 0}
   owl: {fileID: 0}
   animator: {fileID: 42622215060290096}
+  dialoguePanel: {fileID: 0}
 --- !u!114 &8597868268812028505
 MonoBehaviour:
   m_ObjectHideFlags: 0

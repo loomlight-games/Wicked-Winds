@@ -22,7 +22,7 @@ public class OwlController : MonoBehaviour
 
     void Start()
     {
-        this.missionIcon = owner.missionIcon;
+        this.missionIcon = owner.request;
 
         SetRandomTarget(); // Set an initial random position for flight
     }
@@ -102,12 +102,12 @@ public class OwlController : MonoBehaviour
         transform.position = clampedPosition;
     }
 
-    // Nuevo método para interactuar con el búho
+    // Nuevo mï¿½todo para interactuar con el bï¿½ho
     public void InteractWithOwl()
     {
-        // Llamar al estado de seguir al jugador o hacer que el búho interactúe con el jugador
+        // Llamar al estado de seguir al jugador o hacer que el bï¿½ho interactï¿½e con el jugador
         PlayerManager.Instance.RemoveTarget(gameObject);
-        // Añade el NPC como nuevo objetivo en `currentTargets`
+        // Aï¿½ade el NPC como nuevo objetivo en `currentTargets`
         PlayerManager.Instance.AddTarget(owner.gameObject);
         desactivarOwlUI.Instance.activateOwlUI = true;
     }

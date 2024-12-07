@@ -134,8 +134,8 @@ public class ControllablePlayerState : AState
                 return; // Won't do anything if the player is not facing the collider
 
             // It's an NPC
-            if (other.gameObject.TryGetComponent(out Interactable interactable))
-                interactable.Interact();
+            if (other.gameObject.TryGetComponent(out NPC npc))
+                npc.Interact();
             // It's a mission collectible
             else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
                 pickableObject.CollectItem();
@@ -145,7 +145,6 @@ public class ControllablePlayerState : AState
             // It's an owl
             else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
                 owl.Interact();
-
         }
     }
 }

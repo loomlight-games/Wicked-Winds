@@ -97,12 +97,11 @@ public class Dialogue : MonoBehaviour
         }
     }
 
-    // Método para activar todos los hijos del objeto padre
     void ActivateAllChildren()
     {
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(true); // Activa cada hijo
+            child.gameObject.SetActive(true);
         }
     }
 
@@ -110,7 +109,7 @@ public class Dialogue : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.gameObject.SetActive(false); // Desactiva todos los hijos
+            child.gameObject.SetActive(false);
         }
     }
 
