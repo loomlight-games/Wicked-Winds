@@ -41,9 +41,6 @@ public class GamePlayState : AState
         else // Show them in other device type
             handledControls.SetActive(true);
 
-        // TODO: move to when scene is charged
-        SoundManager.PlaySound(SoundType.GameplayMusic);
-
         gameOverTriggered = false;
     }
 

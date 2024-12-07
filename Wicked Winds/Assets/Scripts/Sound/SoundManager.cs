@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
     public AudioSource effectsSource, musicSource;
     [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
-    [SerializeField, Range(0, 1)] float maxVolume = 0.1f;
+    //[SerializeField, Range(0, 1)] float maxVolume = 1f;
     [SerializeField] SoundsList[] soundsList;
 
 #if UNITY_EDITOR
@@ -78,21 +78,36 @@ public class SoundManager : MonoBehaviour
     {
         AudioClip[] clips = Instance.soundsList[(int)sound].sounds;
         AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
-        Instance.effectsSource.PlayOneShot(randomClip, volume);
+
+        // Sound is music
+        if (sound == SoundType.MenuMusic || sound == SoundType.GameplayMusic)
+        {
+            // Played in musicSource
+            Instance.musicSource.Stop();
+            Instance.musicSource.clip = randomClip;
+            Instance.musicSource.volume = 0f;
+            Instance.musicSource.loop = true;
+            Instance.musicSource.Play();
+            Instance.StartCoroutine(Instance.FadeInMusic(volume));
+        }
+        // Sound is an effect
+        else
+            // Played in effectsSource
+            Instance.effectsSource.PlayOneShot(randomClip, volume);
     }
 
-    private IEnumerator FadeInMusic()
+    private IEnumerator FadeInMusic(float volume)
     {
         Debug.LogWarning("Changing song");
 
         // Fading in the music
         for (float t = 0; t < fadeDuration; t += Time.deltaTime)
         {
-            effectsSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);
+            musicSource.volume = Mathf.Lerp(0, volume, t / fadeDuration);
             yield return null;
         }
 
-        effectsSource.volume = maxVolume;
+        musicSource.volume = volume;
     }
 }
 

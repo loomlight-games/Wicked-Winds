@@ -91,19 +91,22 @@ public class GameManager : AStateController
     {
         if (scene.name == "Main menu")
         {
-            SetState(mainMenuState);
             SoundManager.PlaySound(SoundType.MenuMusic);
+            SetState(mainMenuState);
         }
         else if (scene.name == "Shop")
         {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(shopState);
         }
         else if (scene.name == "Leaderboard")
         {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(leaderboardState);
         }
         else if (scene.name == "Gameplay")
         {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
             RandomHour();
             remainingTime = initialTime;
             townGenerator.GenerateTown();
@@ -111,9 +114,9 @@ public class GameManager : AStateController
         }
         else
         {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
             RandomHour();
             remainingTime = initialTime;
-            //townGenerator.GenerateTown();
             SetState(playState);
         }
     }
