@@ -28,7 +28,6 @@ public class NPCSpawner : MonoBehaviour
 
     public float cloudSpawnRadious = 100f;
     public float cloudHeightOffset = 40;
-    public GameObject cloudPrefab;
     public LayerMask buildingLayer; // Capa de edificios
     public LayerMask waterLayer; // Capa de agua
 
@@ -180,7 +179,7 @@ public class NPCSpawner : MonoBehaviour
 
     void SpawnCloud()
     {
-        // Generar una posici�n central aleatoria para la bandada
+        
         Vector3 position = new Vector3(
             Random.Range(-cloudSpawnRadious, cloudSpawnRadious),
             cloudHeightOffset,
@@ -189,7 +188,8 @@ public class NPCSpawner : MonoBehaviour
 
 
         position = GetRandomPositionOnGround(0, false);
-        GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
+        GameObject cloud = CloudPool.Instance.GetCloud();
+        cloud.transform.position = position;
         PlayerManager.Instance.cloudTransform = cloud.transform;
 
     }
@@ -235,51 +235,9 @@ public class NPCSpawner : MonoBehaviour
         }
 
 
-        Debug.LogWarning("No se encontr� una posici�n v�lida despu�s de varios intentos.");
+        Debug.LogWarning("No se encontro una posicion valida despues de varios intentos.");
         return Vector3.zero;
     }
 
 
-    Vector3 GetValidNavMeshPosition(int agentTypeID, Vector3 randomPoint)
-    {
-        int attempts = 30;  // N�mero de intentos para encontrar una posici�n v�lida
-        for (int i = 0; i < attempts; i++)
-        {
-            // Realizar un raycast hacia abajo para detectar el suelo
-            if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
-            {
-                Vector3 potentialPosition = hit.point;
-
-                // Comprobar si el punto est� en el NavMesh para el agente especificado
-                if (NavMesh.SamplePosition(potentialPosition, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
-                {
-                    // Validar que el tipo de agente sea compatible con el NavMesh en esa posici�n
-                    if (navHit.mask != 0 && navHit.hit && navHit.distance <= 1.0f)
-                    {
-                        NavMeshQueryFilter filter = new NavMeshQueryFilter
-                        {
-                            agentTypeID = agentTypeID,
-                            areaMask = NavMesh.AllAreas // Puedes limitar esto a �reas espec�ficas si es necesario
-                        };
-
-                        // Verificar que realmente pertenece al NavMesh del agente
-                        if (NavMesh.FindClosestEdge(navHit.position, out NavMeshHit edgeHit, filter))
-                        {
-                            return navHit.position; // Retorna la posici�n v�lida si se encuentra
-                        }
-                    }
-                }
-            }
-
-            // Si no se encuentra una posici�n v�lida, genera una nueva posici�n aleatoria
-            randomPoint = new Vector3(
-                Random.Range(-50f, 50f), // Ajusta el rango seg�n lo que necesites
-                randomPoint.y,
-                Random.Range(-50f, 50f)
-            );
-        }
-
-        Debug.LogWarning($"No se encontr� una posici�n v�lida en el NavMesh para el agente con ID {agentTypeID} despu�s de {attempts} intentos.");
-        return Vector3.zero; // Si no se encuentra ninguna posici�n v�lida despu�s de los intentos, devuelve Vector3.zero
-    }
 }

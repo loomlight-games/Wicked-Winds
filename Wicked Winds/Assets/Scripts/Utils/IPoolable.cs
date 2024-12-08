@@ -1,4 +1,6 @@
 // Interfaz para los objetos que se reutilizarán en el pool
+using UnityEngine;
+
 public interface IPoolable
 {
     // Método para inicializar el objeto cuando es tomado del pool
