@@ -11,7 +11,7 @@ public class PotionFog : MonoBehaviour
         Debug.Log("CollectPotionFog called");
 
         // Reproducir el sonido del efecto de la poción
-        SoundManager.Instance.PlayPotionEffect();
+        //SoundManager.Instance.PlayPotionEffect();
         Debug.Log("Potion effect sound played");  // Log para el sonido
 
         // Activar la niebla de la poción
@@ -24,6 +24,7 @@ public class PotionFog : MonoBehaviour
 
         // Reactivar el temporizador de niebla
         FogManager.Instance.ReenableFogAfterTime();
-        Debug.Log("Fog timer re-enabled from PotionFog");
+        FogManager.Instance.StartFogTransition(0f, new Color(0f, 0f, 0f, 0f)); // Desactivar la niebla inmediatamente
+        Debug.Log("Fog immediately disabled upon potion collection");
     }
 }
