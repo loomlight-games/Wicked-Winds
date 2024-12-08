@@ -36,19 +36,22 @@ public class MissionManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Inicio del Manager de Misiones");
-
         allNPCs.Clear();
         NPC[] npcs = FindObjectsOfType<NPC>();
         allNPCs.AddRange(npcs);
 
-        Debug.Log($"Total NPCs encontrados: {allNPCs.Count}");
+        if (allNPCs.Count <= 0)
+        {
+            Debug.LogError("No NPC found to assign any mission.");
+            return;
+        }
+
         missionIconPool = MissionIconPoolManager.Instance.GetMissionIconPool();
         assignedNPCs.Clear();
-        AssignMissions(numMissionsToAssign);
+        AssignMissions();
     }
 
-    public void AssignMissions(int numMissionsToAssign)
+    public void AssignMissions()
     {
         Debug.Log("Iniciando la asignacion de misiones...");
 
@@ -68,11 +71,10 @@ public class MissionManager : MonoBehaviour
     {
         if (allNPCs.Count < numMissionsToAssign)
         {
-            Debug.LogError("No hay suficientes NPCs para asignar misiones.");
+            Debug.LogError("Not enough NPCs for all the missions to be assigned");
             return false;
         }
 
-        Debug.Log($"Total de NPCs disponibles: {allNPCs.Count}");
         return true;
     }
 
@@ -294,7 +296,7 @@ public class MissionManager : MonoBehaviour
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
                         Debug.Log($"Adding NPC: {Npc}");
-                        if (!string.IsNullOrEmpty(Npc.npcName)) // Check if the name is not null or empty
+                        if (!string.IsNullOrEmpty(Npc.name)) // Check if the name is not null or empty
                         {
                             npcNames.Add(Npc); // Add the name to the list
                         }
@@ -309,7 +311,7 @@ public class MissionManager : MonoBehaviour
                 if (npcNames.Count > 0)
                 {
                     NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
-                    npc.request.addresseeName = randomNPC.npcName;
+                    npc.request.addresseeName = randomNPC.name;
                     npc.request.addressee = randomNPC;
                     randomNPC.sender = npc;
 
@@ -367,8 +369,6 @@ public class MissionManager : MonoBehaviour
         missionsCompleted++;
         currentRound = (missionsCompleted / 5) + 1;
         GameManager.Instance.playState.feedBackText.text = $"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}";
-        AssignMissions(numMissionsToAssign);
+        AssignMissions();
     }
-
-
 }

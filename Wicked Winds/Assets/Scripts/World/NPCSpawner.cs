@@ -5,35 +5,26 @@ public class NPCSpawner : MonoBehaviour
 {
     GameObject npcsParent, catsParent, owlsParent, flocksParent;
 
-    public GameObject npcPrefab; // Prefab del NPC
-    public GameObject catPrefab; // Prefab del gato
-    public GameObject owlPrefab; // Prefab del b�ho (nuevo)
+    public GameObject npcPrefab,
+    catPrefab,
+    birdPrefab,
+    owlPrefab,
+    cloudPrefab;
 
-    public int npcCount = 30; // N�mero total de NPCs a generar
-    public float detectionRadius = 100f; // Radio para detectar el suelo
-    public LayerMask groundLayer; // Capa del suelo
-    public int numOfTries = 30; // Intentos m�ximos para buscar una posici�n v�lida
+    public int npcCount = 50,
+        numOfTries = 30, // To find valid position
+        numberOfFlocks = 15,
+        birdsPerFlock = 5;
 
-    private int spawnedNPCCount = 0; // Contador de NPCs generados
+    public float detectionRadius = 50f, // Radious to detect ground
+        flockSpawnRadius = 80f,// Radio para dispersar las bandadas
+        flockRadius = 15f, // Radio inicial para posicionar a los p�jaros en la bandada
+        birdHeightOffset = 15f, // Altura fija de las bandadas
+        cloudSpawnRadious = 100f,
+        cloudHeightOffset = 40;
 
-    //BIRD OBSTACLES
-    public GameObject birdPrefab; // Prefab del p�jaro
-    public int numberOfFlocks = 20; // N�mero de bandadas de p�jaros a generar
-    public int birdsPerFlock = 5; // P�jaros por bandada
-    public float flockSpawnRadius = 80f; // Radio para dispersar las bandadas
-    public float flockRadius = 15f; // Radio inicial para posicionar a los p�jaros en la bandada
-    public float birdHeightOffset = 15f; // Altura fija de las bandadas
-    public bool cat;
-
-
-    public float cloudSpawnRadious = 100f;
-    public float cloudHeightOffset = 40;
-    public GameObject cloudPrefab;
-    public LayerMask buildingLayer; // Capa de edificios
-    public LayerMask waterLayer; // Capa de agua
-
-
-
+    public LayerMask buildingLayer, waterLayer, groundLayer;
+    int spawnedNPCCount = 0;
 
     void Start()
     {
@@ -47,9 +38,7 @@ public class NPCSpawner : MonoBehaviour
         {
             SpawnNPC();
         }
-        Debug.Log($"Total de NPCs generados: {spawnedNPCCount}");
 
-        // Generar bandadas de p�jaros
         for (int i = 0; i < numberOfFlocks; i++)
         {
             SpawnFlock();
@@ -69,6 +58,10 @@ public class NPCSpawner : MonoBehaviour
         {
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity, npcsParent.transform);
             NPC npcComponent = npc.GetComponent<NPC>();
+
+            if (npcComponent == null)
+                return;
+
             npcComponent.hasMission = Random.value > 0.5f;
 
             // Configurar NavMeshAgent
@@ -104,12 +97,10 @@ public class NPCSpawner : MonoBehaviour
 
                     }
                 }
-
-
             }
 
             // 10% de probabilidad de generar un b�ho
-            if (Random.value < 0.3f)
+            if (Random.value < 0.1f)
             {
                 // Generar el b�ho en cualquier parte del mapa a una altura de 10 unidades
                 Vector3 owlPosition = new Vector3(
@@ -122,11 +113,7 @@ public class NPCSpawner : MonoBehaviour
                 OwlController owlController = owl.GetComponent<OwlController>();
                 npcComponent.owl = owlController;
                 owlController.owner = npcComponent;
-
-
             }
-
-
             spawnedNPCCount++;
         }
     }

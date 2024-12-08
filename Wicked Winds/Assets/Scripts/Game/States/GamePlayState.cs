@@ -18,8 +18,6 @@ public class GamePlayState : AState
 
     public override void Enter()
     {
-        Debug.Log("GamePlayState");
-
         Time.timeScale = 1f; // Resumes simulation
 
         UI = GameObject.Find("Game UI");
@@ -133,7 +131,7 @@ public class GamePlayState : AState
             GameManager.Instance.averageMissionTime = 0;
             Debug.Log(" No has hecho mas de 10 misiones");
         }
-        
+
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.finalState);
         GameManager.Instance.SwitchState(GameManager.Instance.endState);
     }

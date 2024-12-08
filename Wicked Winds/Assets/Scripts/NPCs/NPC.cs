@@ -4,162 +4,56 @@ using UnityEngine.AI;
 
 public class NPC : MonoBehaviour
 {
-    public MissionIcon request = null; // Referencia al �cono que ser� asignado a este NPC
-    public bool hasMission; // Indica si el NPC tiene una misi�n
-    public RandomNPCMovement movementScript; // Referencia al script de movimiento
-    public GameObject bubble; // Referencia al objeto bubble del NPC
-    public MissionIconPool missionIconPool; // Agrega esta l�nea
-    [SerializeField] public string npcName;
-    private NPCNameManager nameManager;
-    private MessageGenerator messageGenerator;
-    [SerializeField] public string message;
-    public string missionType;
-    [SerializeField] public string responseMessage;
-    private NavMeshAgent agent;
+    public string missionType,
+        message,
+        responseMessage;
+    public bool hasMission;
+    public MissionIcon request = null;
     public NPC sender;
     public CatController cat;
     public OwlController owl;
-    public Guid npcID; // Identificador único para el NPC
     public Animator animator;
+    public Guid npcID;
 
-    private void Awake()
+    NavMeshAgent agent;
+    RandomNPCMovement movementScript;
+    GameObject bubble;
+
+
+    void Awake()
     {
-        nameManager = NPCNameManager.Instance;
-        npcName = nameManager.GetRandomNPCName();
-        npcID = Guid.NewGuid(); // Generar un ID único al inicializar el NPC
-
+        // nameManager = NPCNameManager.Instance;
+        // name = nameManager.GetRandomNPCName();
+        // npcID = Guid.NewGuid(); // Unique ID
     }
 
     void Start()
     {
-        name = npcName;
+        // bubble = transform.Find("Bubble").gameObject;
 
-        agent = GetComponent<NavMeshAgent>();
-
-        missionIconPool = MissionIconPoolManager.Instance.GetMissionIconPool();
-        if (request == null) hasMission = false;
-        else hasMission = true;
-        if (hasMission && movementScript != null)
-        {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
-            if (bubble != null)
-            {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
-            }
-        }
-        else if (movementScript != null)
-        {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
-
-            if (bubble != null)
-            {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
-            }
-        }
+        // movementScript = GetComponent<RandomNPCMovement>();
+        // agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    void Update()
     {
-        if (request == null) hasMission = false;
-        else hasMission = true;
-
-        if (hasMission && movementScript != null)
-        {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
-            if (bubble != null)
-            {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
-            }
-        }
-        else if (movementScript != null)
-        {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
-
-            if (bubble != null)
-            {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
-            }
-        }
-    }
-
-    public void StopMovement()
-    {
-        if (agent != null)
-        {
-            agent.isStopped = true; // Detiene el movimiento del NPC
-        }
-    }
-
-    // Este m�todo es llamado cuando el objeto es devuelto al pool
-    public void OnObjectReturn()
-    {
-        Debug.Log("Devolviendo MissionIcon al pool.");
-
-        if (request != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
-        {
-            Debug.Log($"Devolviendo MissionIcon de {gameObject.name} al pool.");
-
-            if (request != null)
-            {
-                Debug.Log($"Liberando �cono de misi�n de {gameObject.name}.");
-                MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(request);
-                request = null;
-            }
-
-            this.hasMission = false;
-            this.message = string.Empty;
-            Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
-        }
-
-
-        Debug.Log("Referencias limpiadas en OnObjectReturn.");
-    }
-
-    public void OnInteractAfterLetter()
-    {
-        StopMovement();
-        CompleteMission(sender);
-    }
-
-    // M�todo llamado cuando el jugador interact�a con el NPC
-    public void OnMissionCompleted()
-    {
-        // Mostrar el mensaje antes de completar la misión
-        if (agent.isStopped == false)
-        {
-            OnInteractAfterLetter();
-            return;
-        }
-
-        this.message = string.Empty;
-
-        CompleteMission(this);
-    }
-
-    /// <summary>
-    /// Removes target and mission from player
-    /// </summary>
-    public void CompleteMission(NPC npc)
-    {
-        if (this.request != null)
-            request.CompleteMission();
-
-        if (sender != null)
-        {
-            if (sender.request != null)
-            {
-                sender.request.CompleteMission();
-                sender = null;
-            }
-        }
-        // Quita al NPC de la lista de objetivos al completar la misi�n
-        PlayerManager.Instance.RemoveTarget(gameObject);
-
-        PlayerManager.Instance.hasActiveMission = false;
+        // if (request == null)
+        // {
+        //     hasMission = false;
+        //     movementScript.enabled = false;
+        //     bubble.SetActive(false);
+        // }
+        // else
+        // {
+        //     hasMission = true;
+        //     movementScript.enabled = true;
+        //     bubble.SetActive(true);
+        // }
     }
 
     public void Interact()
     {
+        /*
         // Player has a mission
         if (PlayerManager.Instance.hasActiveMission)
         {
@@ -169,7 +63,7 @@ public class NPC : MonoBehaviour
                 // Start conversation
                 if (responseMessage != null)
                 {
-                    GameManager.Instance.dialogue.StartDialogue(npcName, responseMessage);
+                    GameManager.Instance.dialogue.StartDialogue(name, responseMessage);
                 }
                 else
                     Debug.LogError("npc.responseMessage is null.");
@@ -211,7 +105,7 @@ public class NPC : MonoBehaviour
                 // Start conversation
                 if (message != null)
                 {
-                    GameManager.Instance.dialogue.StartDialogue(npcName, message);
+                    GameManager.Instance.dialogue.StartDialogue(name, message);
                 }
                 else
                     Debug.LogError("npc.message is null.");
@@ -252,8 +146,91 @@ public class NPC : MonoBehaviour
                 PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una mision activa
             }
         }
+        */
     }
+
+    // Este m�todo es llamado cuando el objeto es devuelto al pool
+    public void OnObjectReturn()
+    {
+        /*
+        Debug.Log("Devolviendo MissionIcon al pool.");
+
+        if (request != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
+        {
+            Debug.Log($"Devolviendo MissionIcon de {gameObject.name} al pool.");
+
+            if (request != null)
+            {
+                Debug.Log($"Liberando �cono de misi�n de {gameObject.name}.");
+                MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(request);
+                request = null;
+            }
+
+            this.hasMission = false;
+            this.message = string.Empty;
+            Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
+        }
+
+        Debug.Log("Referencias limpiadas en OnObjectReturn.");
+        */
+    }
+
+    // M�todo llamado cuando el jugador interact�a con el NPC
+    public void OnMissionCompleted()
+    {
+        /*
+        // Mostrar el mensaje antes de completar la misión
+        if (agent.isStopped == false)
+        {
+            OnInteractAfterLetter();
+            return;
+        }
+
+        this.message = string.Empty;
+
+        CompleteMission(this);
+        */
+    }
+
+    public void OnInteractAfterLetter()
+    {
+        /*
+        StopMovement();
+        CompleteMission(sender);
+        */
+    }
+    public void StopMovement()
+    {
+        /*
+        if (agent != null)
+        {
+            agent.isStopped = true; // Detiene el movimiento del NPC
+        }
+        */
+    }
+
+    /// <summary>
+    /// Removes target and mission from player
+    /// </summary>
+    public void CompleteMission(NPC npc)
+    {
+        /*
+        if (this.request != null)
+            request.CompleteMission();
+
+        if (sender != null)
+        {
+            if (sender.request != null)
+            {
+                sender.request.CompleteMission();
+                sender = null;
+            }
+        }
+        // Quita al NPC de la lista de objetivos al completar la misi�n
+        PlayerManager.Instance.RemoveTarget(gameObject);
+
+        PlayerManager.Instance.hasActiveMission = false;
+        */
+    }
+
 }
-
-
-
