@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1f6a483167a8a4cb3658d250b6f165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcNames: []
 --- !u!114 &281483041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,32 +184,31 @@ MonoBehaviour:
     type: 3}
   catPrefab: {fileID: 7008101629366272734, guid: 97f5b3be52251c7479c3b468417fbd12,
     type: 3}
-  owlPrefab: {fileID: 5071938713549664656, guid: 4dcd8423e31c19d4e94cf252d3380519,
-    type: 3}
-  npcCount: 50
-  detectionRadius: 50
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  numOfTries: 30
   birdPrefab: {fileID: 8184811357168678720, guid: 5e72ad196993fba4faf15a62ec98a9df,
     type: 3}
+  owlPrefab: {fileID: 5071938713549664656, guid: 4dcd8423e31c19d4e94cf252d3380519,
+    type: 3}
+  cloudPrefab: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
+    type: 3}
+  npcCount: 50
+  numOfTries: 30
   numberOfFlocks: 15
   birdsPerFlock: 5
+  detectionRadius: 50
   flockSpawnRadius: 100
   flockRadius: 10
   birdHeightOffset: 25
-  cat: 0
   cloudSpawnRadious: 100
   cloudHeightOffset: 40
-  cloudPrefab: {fileID: 8879904100546322285, guid: 26a7c4e5b89ad1a4eb9c3a7955662083,
-    type: 3}
   buildingLayer:
     serializedVersion: 2
     m_Bits: 128
   waterLayer:
     serializedVersion: 2
     m_Bits: 16
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &622556716
 GameObject:
   m_ObjectHideFlags: 0

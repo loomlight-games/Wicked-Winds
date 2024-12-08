@@ -146,7 +146,7 @@ public class MissionManager : MonoBehaviour
             NPC selectedNPC = null;
 
             // Asignar NPC dependiendo del tipo de misión
-            if (mission.type == "CatMission") // Si es una misión de tipo Cat
+            if (mission.missionName == "CatMission") // Si es una misión de tipo Cat
             {
                 if (npcsWithCat.Count > 0)
                 {
@@ -154,7 +154,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            else if (mission.type == "OwlMission")
+            else if (mission.missionName == "OwlMission")
             {
 
                 if (npcsWithOwl.Count > 0)
@@ -163,7 +163,7 @@ public class MissionManager : MonoBehaviour
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
             }
-            else if (mission.type == "PotionMission" || mission.type == "LetterMision") // Si es una misión de tipo Potion o Letter
+            else if (mission.missionName == "PotionMission" || mission.missionName == "LetterMision") // Si es una misión de tipo Potion o Letter
             {
                 if (shuffledNPCs.Count > 0)
                 {

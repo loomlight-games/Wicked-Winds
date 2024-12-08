@@ -28,7 +28,7 @@ public class MissionIcon : MonoBehaviour
         data = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
-        assignedNPC.missionType = data.type;
+        assignedNPC.missionType = data.missionName;
 
         // Generar un ID �nico para esta misi�n
         missionID = Guid.NewGuid();
@@ -72,7 +72,7 @@ public class MissionIcon : MonoBehaviour
 
         // Luego puedes asignar el mensaje y la respuesta a las propiedades de NPC
         assignedNPC.message = message;
-        if (mission.type == "LetterMision")
+        if (mission.missionName == "LetterMision")
         {
             assignedNPC.responseMessage = null;
             addressee.responseMessage = response;
