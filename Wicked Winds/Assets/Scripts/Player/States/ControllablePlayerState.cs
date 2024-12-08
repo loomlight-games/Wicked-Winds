@@ -110,6 +110,9 @@ public class ControllablePlayerState : AState
                 }
                 break;
             case "Bird":
+
+                Debug.Log("Colisión detectada con un pájaro.");
+
                 // Obtén la dirección opuesta a la colisión para empujar al personaje hacia atrás
                 Vector3 pushBackDirection = PlayerManager.Instance.transform.position - other.transform.position;
 
