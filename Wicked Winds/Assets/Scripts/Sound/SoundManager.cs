@@ -1,8 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using System;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles music and sound effects reproduction. Requires two 
@@ -102,18 +100,12 @@ public class SoundManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Plays random sound of a specific type
+    /// Stops the current sound effect
     /// </summary>
-    public static void Play3DSound(SoundType type, Vector3 position, float volume = 1)
+    public static void StopSoundEffect()
     {
-        // Takes all the clips of the type
-        AudioClip[] clips = Instance.soundsList[(int)type].sounds;
-
-        // Randomly selects a clip from the list
-        AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
-
-        // Plays the sound at the specified position
-        AudioSource.PlayClipAtPoint(randomClip, position, volume);
+        effectsSource.Stop();
+        effectsSource.clip = null;
     }
 
     public static void UpdateMusicVolume(float volume)

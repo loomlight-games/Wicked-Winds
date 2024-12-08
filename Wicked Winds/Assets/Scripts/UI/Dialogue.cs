@@ -57,8 +57,6 @@ public class Dialogue
             // Full line isn't printed yet
             else
             {
-                SoundManager.PlaySound(SoundType.Dialogue);
-
                 // Executes coroutine
                 GameManager.Instance.StartCoroutine(TypeLine());
             }

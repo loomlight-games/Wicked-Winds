@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,8 +7,6 @@ public class TalkingPlayerState : AState
 
     public override void Enter()
     {
-        //Time.timeScale = 0f; // Stops simulation
-
         GameObject UI = GameObject.Find("HUD");
         dialoguePanel = UI.transform.Find("Dialogue panel").gameObject;
 
@@ -25,6 +21,9 @@ public class TalkingPlayerState : AState
 
         // Assign texts to dialogue
         GameManager.Instance.dialogue.Initialize(messageText, nameText);
+
+        // Plays dialogue sound
+        SoundManager.PlaySound(SoundType.Dialogue);
     }
 
     public override void Update()
@@ -37,7 +36,6 @@ public class TalkingPlayerState : AState
     public override void Exit()
     {
         dialoguePanel.SetActive(false); // Hide dialogue panel
-
-        Time.timeScale = 1f; // Reactivates simulation
+        SoundManager.StopSoundEffect(); // Stops dialogue sound
     }
 }
