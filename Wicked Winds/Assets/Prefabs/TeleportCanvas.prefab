@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 5006911545258030510}
   - component: {fileID: 1338951480989840704}
   - component: {fileID: 451563440684418733}
+  - component: {fileID: 5061067336626263813}
   m_Layer: 5
   m_Name: TeleportCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3305219446684005023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102,6 +103,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5061067336626263813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202348494342911787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf6c925fe7fb0cb4a8f60b2db5f9a525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 5006911545258030510}
+  flashDuration: 2
+  flashColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1001 &7004126030765169491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,7 +129,7 @@ PrefabInstance:
     - target: {fileID: 539532134959235761, guid: c6e28cf94f7dbb343bca82d09898a5a0,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6817924869389134811, guid: c6e28cf94f7dbb343bca82d09898a5a0,
         type: 3}

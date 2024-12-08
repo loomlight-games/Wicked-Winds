@@ -95,28 +95,26 @@ public class FogManager : MonoBehaviour
 
         if (isTransitioning)
         {
-            Debug.Log("Inicio de transición de niebla.");
-            Debug.Log($"FogDensity actual: {RenderSettings.fogDensity}, FogColor actual: {RenderSettings.fogColor}");
+            
 
             // Transición de niebla
             RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetFogDensity, Time.deltaTime * transitionSpeed);
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetFogColor, Time.deltaTime * transitionSpeed);
 
-            Debug.Log($"FogDensity interpolado: {RenderSettings.fogDensity}, FogColor interpolado: {RenderSettings.fogColor}");
+            
 
             if (Mathf.Abs(RenderSettings.fogDensity - targetFogDensity) < 0.01f && RenderSettings.fogColor == targetFogColor)
             {
-                Debug.Log("Transición de niebla completada.");
                 RenderSettings.fogDensity = targetFogDensity;
                 RenderSettings.fogColor = targetFogColor;
                 isTransitioning = false;
 
-                Debug.Log($"Valores finales - FogDensity: {RenderSettings.fogDensity}, FogColor: {RenderSettings.fogColor}");
+               
 
                 if (targetFogDensity == 0f)
                 {
                     RenderSettings.fog = false; // Desactivar la niebla si el objetivo es 0
-                    Debug.Log("La niebla se ha desactivado porque el objetivo de densidad es 0.");
+                    
                 }
             }
         }
@@ -127,7 +125,6 @@ public class FogManager : MonoBehaviour
     public void ReenableFogAfterTime()
     {
         isFogTimerActive = true;
-        Debug.Log("Fog timer re-enabled");
 
         // Desactivar todos los triggers de niebla mientras la poción esté activa
         foreach (var fogTrigger in fogTriggers)
@@ -136,7 +133,6 @@ public class FogManager : MonoBehaviour
 
             // Forzar la desactivación de la niebla en cada trigger
             FogManager.Instance.StartFogTransition(0f, new Color(0f, 0f, 0f, 0f));
-            Debug.Log("Fog disabled for all triggers");
         }
     }
 

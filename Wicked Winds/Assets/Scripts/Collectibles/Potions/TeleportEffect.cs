@@ -36,7 +36,7 @@ public class TeleportEffect : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No se encontr� una imagen con la etiqueta 'ScreenFlash' dentro del Canvas.");
+                Debug.LogError("No se encontro una imagen con la etiqueta 'ScreenFlash' dentro del Canvas.");
             }
         }
         else

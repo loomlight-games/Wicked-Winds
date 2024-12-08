@@ -76,7 +76,7 @@ public class NPCSpawner : MonoBehaviour
             if (agentNPC != null)
             {
                 agentNPC.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
-                agentNPC.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasi�n
+                agentNPC.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasion
 
             }
 
