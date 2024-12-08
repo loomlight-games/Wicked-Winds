@@ -63,7 +63,6 @@ public class GameManager : AStateController
     public List<float> missionsTimes = new();
     public float missionTime = 0;
     public float averageMissionTime = 0;
-    public float speechSpeed = 0.5f;
     #endregion
 
     [HideInInspector] public string sceneToLoad = "Gameplay";

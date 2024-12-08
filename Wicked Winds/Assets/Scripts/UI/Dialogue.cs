@@ -67,8 +67,6 @@ public class Dialogue
                 GameManager.Instance.StartCoroutine(TypeLine());
             }
         }
-        else
-            Debug.LogWarning("Typing");
     }
 
     IEnumerator TypeLine()
@@ -78,7 +76,7 @@ public class Dialogue
         foreach (char c in dialogueLines[lineIndex].ToCharArray())
         {
             messageText.text += c;
-            yield return new WaitForSeconds(GameManager.Instance.speechSpeed);
+            yield return new WaitForSeconds(0.0005f);
         }
 
         isTyping = false;
