@@ -110,15 +110,26 @@ public class ControllablePlayerState : AState
                 }
                 break;
             case "Bird":
-                // Obt�n la direcci�n opuesta a la colisi�n para empujar al personaje hacia atr�s
+
+                Debug.Log("Colisión detectada con un pájaro.");
+
+                // Obtén la dirección opuesta a la colisión para empujar al personaje hacia atrás
                 Vector3 pushBackDirection = PlayerManager.Instance.transform.position - other.transform.position;
 
-                // Normaliza la direcci�n y aplica la fuerza de retroceso utilizando el CharacterController
+                // Normaliza la dirección y aplica la fuerza de retroceso utilizando el CharacterController
                 pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
 
-                // Aplicamos el retroceso
-                PlayerManager.Instance.controller.Move(pushBackDirection.normalized * PlayerManager.Instance.pushBackForce * Time.deltaTime);
+                // Asegúrate de que el CharacterController esté configurado correctamente para aceptar movimientos
+                if (PlayerManager.Instance.controller != null)
+                {
+                    PlayerManager.Instance.controller.Move(pushBackDirection.normalized * PlayerManager.Instance.pushBackForce * Time.deltaTime);
+                }
+                else
+                {
+                    Debug.LogWarning("CharacterController no está asignado al PlayerManager.");
+                }
                 break;
+
             default:
                 break;
         }
