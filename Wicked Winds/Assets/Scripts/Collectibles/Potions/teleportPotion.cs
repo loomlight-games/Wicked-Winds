@@ -34,15 +34,10 @@ public class TeleportPotion : MonoBehaviour
                     PlayerManager.Instance.controller.enabled = true;
 
                     Debug.Log("teleport potion work");
-                    GameManager.Instance.playState.feedBackText.text = "Woooooow quicker than my ex";
                 }));
             }
         }
-        else
-        {
-            GameManager.Instance.playState.feedBackText.text = "Looks like you don't have anywhere to go!! Get some life perspective ahah";
-
-        }
+        
     }
 
 }
