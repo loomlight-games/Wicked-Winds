@@ -116,7 +116,6 @@ public class GamePlayState : AState
     void TriggerGameOver()
     {
         gameOverTriggered = true;  // avoids double calls
-
         PlayerManager.Instance.score = (int)elapsedTime;
 
         if (MissionManager.Instance.missionsCompleted >= 10)

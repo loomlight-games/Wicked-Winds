@@ -54,8 +54,14 @@ public class MisionCountLeaderboard : Panel
         currentPage = 1;
         totalPages = 0;
         LoadPlayers(1);
-        //LoadPlayersWithoutSignIn(1);
-        AddGameScore();
+        
+        // comprobamos que ha hecho mas de una mision 
+        int missionsCompleted = PlayerPrefs.GetInt(GameManager.Instance.PLAYER_MISSIONCOUNT_FILE,0);    
+        if (missionsCompleted > 0)
+        {
+            AddGameScore();
+        }
+        
 
     }
 
