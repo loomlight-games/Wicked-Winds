@@ -17,20 +17,16 @@ public class Dialogue
 
     public void StartDialogue(string name, string message)
     {
-        GameManager.Instance.SwitchState(GameManager.Instance.talkingState);
+        PlayerManager.Instance.SwitchState(PlayerManager.Instance.talkingState);
 
-        //dialogueLines = new string[] { message };
+        dialogueLines = new string[] { message };
 
         lineIndex = 0;
-
-        Debug.LogWarning($"Starting dialogue with {name}.");
 
         nameText.text = name;
 
         // Divide message in lines separating by '\n'
         dialogueLines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-        Debug.LogWarning($"Lines in message: {dialogueLines.Length}");
 
         if (dialogueLines.Length == 0)
         {
@@ -38,8 +34,6 @@ public class Dialogue
             return;
         }
 
-        //GameManager.Instance.StartCoroutine(TypeLine());
-        //PrintLineA();
         PrintLine();
     }
 
@@ -48,11 +42,6 @@ public class Dialogue
         // Not executing coroutine
         if (!isTyping)
         {
-            SoundManager.PlaySound(SoundType.Dialogue);
-
-            // Executes coroutine
-            GameManager.Instance.StartCoroutine(TypeLine());
-
             // Line is completely printed
             if (messageText.text == dialogueLines[lineIndex])
             {
@@ -62,25 +51,24 @@ public class Dialogue
                     messageText.text = string.Empty; // Clears text
                     lineIndex++; // Next line
                 }
+                // No more lines
+                else
+                {
+                    //Change to previous state
+                    PlayerManager.Instance.ReturnToPreviousState();
+                }
             }
+            // Full line isn't printed yet
             else
             {
-                //GameManager.Instance.StopAllCoroutines();
+                SoundManager.PlaySound(SoundType.Dialogue);
 
-                // Ensures the line is properly printed
-                messageText.text = dialogueLines[lineIndex];
+                // Executes coroutine
+                GameManager.Instance.StartCoroutine(TypeLine());
             }
         }
-    }
-
-    void PrintLineA()
-    {
-        if (lineIndex < dialogueLines.Length - 1)
-        {
-            messageText.text = string.Empty; // Clears text
-            GameManager.Instance.StartCoroutine(TypeLine());
-            lineIndex++;
-        }
+        else
+            Debug.LogWarning("Typing");
     }
 
     IEnumerator TypeLine()

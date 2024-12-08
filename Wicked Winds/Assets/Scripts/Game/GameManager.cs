@@ -26,7 +26,6 @@ public class GameManager : AStateController
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
     public readonly TownSelectionState selectTownState = new();
-    public readonly TalkingState talkingState = new();
     #endregion
 
     #region SUB-MANAGERS

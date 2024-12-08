@@ -32,6 +32,7 @@ public class PlayerManager : AStateController
     public readonly ControllablePlayerState controllableState = new();
     public readonly AtShopPlayerState atShopState = new();
     public readonly FinalPlayerState finalState = new();
+    public readonly TalkingPlayerState talkingState = new();
     #endregion
 
     #region HABILITIES

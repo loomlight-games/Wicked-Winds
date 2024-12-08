@@ -22,22 +22,62 @@ public class NPC : MonoBehaviour
 
     void Awake()
     {
-        // nameManager = NPCNameManager.Instance;
-        // name = nameManager.GetRandomNPCName();
-        // npcID = Guid.NewGuid(); // Unique ID
+        name = NPCNameManager.Instance.GetRandomNPCName();
+        npcID = Guid.NewGuid(); // Unique ID
     }
 
     void Start()
     {
-        // bubble = transform.Find("Bubble").gameObject;
+        bubble = transform.Find("Bubble").gameObject;
 
-        // movementScript = GetComponent<RandomNPCMovement>();
-        // agent = GetComponent<NavMeshAgent>();
+        movementScript = GetComponent<RandomNPCMovement>();
+        agent = GetComponent<NavMeshAgent>();
+
+        if (request == null) hasMission = false;
+        else hasMission = true;
+
+        if (hasMission && movementScript != null)
+        {
+            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
+            if (bubble != null)
+            {
+                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
+            }
+        }
+        else if (movementScript != null)
+        {
+            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
+
+            if (bubble != null)
+            {
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
+            }
+        }
     }
 
     void Update()
     {
-        // if (request == null)
+        if (request == null) hasMission = false;
+        else hasMission = true;
+        if (hasMission && movementScript != null)
+        {
+            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
+            if (bubble != null)
+            {
+                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
+            }
+        }
+        else if (movementScript != null)
+        {
+            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
+
+            if (bubble != null)
+            {
+                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
+            }
+        }
+
+        // if (missionIcon == null)
         // {
         //     hasMission = false;
         //     movementScript.enabled = false;
@@ -53,7 +93,7 @@ public class NPC : MonoBehaviour
 
     public void Interact()
     {
-        /*
+
         // Player has a mission
         if (PlayerManager.Instance.hasActiveMission)
         {
@@ -73,7 +113,7 @@ public class NPC : MonoBehaviour
                     desactivarOwlUI.Instance.activateOwlUI = false;
                 }
 
-                PlayerManager.Instance.npcMissionActive.cat?.SwitchState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
+                //PlayerManager.Instance.npcMissionActive.cat?.SwitchState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
                 PlayerManager.Instance.npcMissionActive.OnMissionCompleted();
                 PlayerManager.Instance.currentTargets.Remove(gameObject);
                 PlayerManager.Instance.npcMissionActive = null;
@@ -113,7 +153,7 @@ public class NPC : MonoBehaviour
                 // Assigns the mission of this NPC to the player
                 PlayerManager.Instance.activeMission = request;
 
-                if (request.data.type == "LetterMision")
+                if (request.data.name == "LetterMision")
                 {
                     Guid targetID = PlayerManager.Instance.npcMissionActive.request.addressee.npcID;
 
@@ -131,13 +171,13 @@ public class NPC : MonoBehaviour
                     }
                 }
 
-                if (PlayerManager.Instance.activeMission.data.type == "CatMission")
+                if (PlayerManager.Instance.activeMission.data.name == "CatMission")
                 {
                     GameObject objetivo = PlayerManager.Instance.npcMissionActive.cat.gameObject;
                     PlayerManager.Instance.AddTarget(objetivo.gameObject);
                 }
 
-                if (PlayerManager.Instance.activeMission.data.type == "OwlMission")
+                if (PlayerManager.Instance.activeMission.data.name == "OwlMission")
                 {
                     GameObject objetivo = PlayerManager.Instance.npcMissionActive.owl.gameObject;
                     PlayerManager.Instance.AddTarget(objetivo.gameObject);
@@ -146,13 +186,11 @@ public class NPC : MonoBehaviour
                 PlayerManager.Instance.hasActiveMission = true; // Marca que el jugador tiene una mision activa
             }
         }
-        */
     }
 
     // Este m�todo es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
-        /*
         Debug.Log("Devolviendo MissionIcon al pool.");
 
         if (request != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
@@ -172,13 +210,11 @@ public class NPC : MonoBehaviour
         }
 
         Debug.Log("Referencias limpiadas en OnObjectReturn.");
-        */
     }
 
     // M�todo llamado cuando el jugador interact�a con el NPC
     public void OnMissionCompleted()
     {
-        /*
         // Mostrar el mensaje antes de completar la misión
         if (agent.isStopped == false)
         {
@@ -189,24 +225,19 @@ public class NPC : MonoBehaviour
         this.message = string.Empty;
 
         CompleteMission(this);
-        */
     }
 
     public void OnInteractAfterLetter()
     {
-        /*
         StopMovement();
         CompleteMission(sender);
-        */
     }
     public void StopMovement()
     {
-        /*
         if (agent != null)
         {
             agent.isStopped = true; // Detiene el movimiento del NPC
         }
-        */
     }
 
     /// <summary>
@@ -214,7 +245,6 @@ public class NPC : MonoBehaviour
     /// </summary>
     public void CompleteMission(NPC npc)
     {
-        /*
         if (this.request != null)
             request.CompleteMission();
 
@@ -230,7 +260,6 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
 
         PlayerManager.Instance.hasActiveMission = false;
-        */
     }
 
 }

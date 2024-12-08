@@ -128,7 +128,7 @@ public class ControllablePlayerState : AState
     {
         // Interact key is pressed and game is not in talking state
         if (PlayerManager.Instance.interactKey &&
-            GameManager.Instance.GetState() != GameManager.Instance.talkingState)
+            PlayerManager.Instance.GetState() != PlayerManager.Instance.talkingState)
         {
             // Player is not facing this collider
             if (!PlayerManager.Instance.playerController.PlayerIsFacing(other.transform))

@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TalkingState : AState
+public class TalkingPlayerState : AState
 {
     GameObject dialoguePanel;
 
     public override void Enter()
     {
-        Time.timeScale = 0f; // Stops simulation
+        //Time.timeScale = 0f; // Stops simulation
 
-        GameObject UI = GameObject.Find("Game UI");
+        GameObject UI = GameObject.Find("HUD");
         dialoguePanel = UI.transform.Find("Dialogue panel").gameObject;
 
         dialoguePanel.SetActive(true); // Show dialogue panel
 
         GameObject messageGO = dialoguePanel.transform.Find("Message").gameObject;
-        GameObject nameGO = dialoguePanel.transform.Find("Name").gameObject;
+        GameObject namePanel = dialoguePanel.transform.Find("Name panel").gameObject;
+        GameObject nameGO = namePanel.transform.Find("Name").gameObject;
 
         TextMeshProUGUI messageText = messageGO.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI nameText = nameGO.GetComponent<TextMeshProUGUI>();
