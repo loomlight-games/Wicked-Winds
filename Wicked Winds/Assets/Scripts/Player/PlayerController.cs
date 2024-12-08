@@ -21,8 +21,9 @@ public class PlayerController
         verticalVelocity,
         verticalPosition,
         flyPotionLoss,
-        speedPotionLoss;
-    
+        speedPotionLoss,
+        interactionThreshold;
+
     public float flyPotionValue, speedPotionValue;
 
     Vector3 movement3D,
@@ -32,20 +33,22 @@ public class PlayerController
     Vector2 movement2D;
 
     Transform cameraTransform,
-            player,
             orientation;
+
+    public Transform player;
 
     #endregion
 
-    private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
+    private bool isAlreadyUnderCloud = false;
 
 
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
-        flyPotionValue = PlayerManager.Instance.MAX_VALUE; 
-        speedPotionValue = PlayerManager.Instance.MAX_VALUE; ;
-        
+        flyPotionValue = PlayerManager.Instance.MAX_VALUE;
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE;
+        interactionThreshold = PlayerManager.Instance.interactionThreshold;
+
         controller = PlayerManager.Instance.controller;
         player = PlayerManager.Instance.transform;
         orientation = PlayerManager.Instance.orientation;
@@ -55,9 +58,6 @@ public class PlayerController
 
         PlayerManager.Instance.controllableState.SpeedPotionCollected += SpeedPotionGain;
         PlayerManager.Instance.controllableState.FlyPotionCollected += FlyPotionGain;
-
-       
-
     }
 
     public void Update()
@@ -156,7 +156,7 @@ public class PlayerController
             if (IsPlayerUnderCloud())
             {
                 movementSpeed = rainySpeed;
-                
+
             }
             else if (speedPotionValue >= 0f)
             { // If able to run (speed potion available)
@@ -169,17 +169,15 @@ public class PlayerController
             else  // If not able to run, walk
                 movementSpeed = walkSpeed;
         }
-        else
-            if (IsPlayerUnderCloud())
-            {
+        else if (IsPlayerUnderCloud())
+        {
             movementSpeed = rainySpeed;
-
-            }
-            else
-            {
+        }
+        else
+        {
             movementSpeed = walkSpeed;
         }
-        
+
 
         // Get direction in 3D space based on camera orientation
         forward = cameraTransform.forward;
@@ -257,8 +255,6 @@ public class PlayerController
         speedPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
-
-
     /// <summary>
     /// Recovers fly potion value
     /// </summary>
@@ -267,6 +263,22 @@ public class PlayerController
         flyPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
+    /// <summary>
+    /// Detects if player is facing a target 
+    /// </summary>
+    public bool PlayerIsFacing(Transform target)
+    {
+        // Calculate the direction from this object to the target
+        Vector3 directionToTarget = (target.position - player.position).normalized;
+
+        // Calculate the dot product between the forward vector and the direction to the target
+        float dotProduct = Vector3.Dot(player.forward, directionToTarget);
+
+        Debug.LogWarningFormat(dotProduct.ToString());
+
+        // Check if the dot product is bigger than the threshold
+        return dotProduct >= interactionThreshold;
+    }
 
     /// <summary>
     /// Checks if the player is directly beneath the cloud on the Y axis.
@@ -281,9 +293,9 @@ public class PlayerController
 
         // Comprobar si el jugador est� dentro de los l�mites de la nube en X y Z
         bool isPlayerInRange = playerPosition.x > cloudTransform.position.x - cloudWidth / 2 &&
-                               playerPosition.x < cloudTransform.position.x + cloudWidth / 2 &&
-                               playerPosition.z > cloudTransform.position.z - cloudDepth / 2 &&
-                               playerPosition.z < cloudTransform.position.z + cloudDepth / 2;
+                                playerPosition.x < cloudTransform.position.x + cloudWidth / 2 &&
+                                playerPosition.z > cloudTransform.position.z - cloudDepth / 2 &&
+                                playerPosition.z < cloudTransform.position.z + cloudDepth / 2;
 
         // Comprobar si el jugador est� debajo de la nube en Y (un poco m�s bajo que la nube)
         bool isPlayerBelowCloud = playerPosition.y < cloudTransform.position.y;
@@ -305,7 +317,4 @@ public class PlayerController
 
         return isUnderCloud;
     }
-
-
-
 }

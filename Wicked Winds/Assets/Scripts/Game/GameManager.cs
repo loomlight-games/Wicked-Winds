@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Manages the game states
 /// </summary>
-public class GameManager : AStateController 
+public class GameManager : AStateController
 {
     public static GameManager Instance; //only one GameManager in the game (singleton)
     public event EventHandler<string> TownSelected;
@@ -43,7 +44,7 @@ public class GameManager : AStateController
     public float tileSize = 50f;
     public int townSize = 4; // In tiles
     public TownGenerator.Town town;
-    public GameObject townParent;
+
     [Header("Stardust Town")]
     public GameObject landscape1;
     public List<GameObject> townTiles1 = new();
@@ -88,18 +89,34 @@ public class GameManager : AStateController
 
     private void SetStateBasedOnScene(Scene scene)
     {
-        if (scene.name == "Main menu") {
+        if (scene.name == "Main menu")
+        {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(mainMenuState);
         }
-        else if (scene.name == "Shop") {
+        else if (scene.name == "Shop")
+        {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(shopState);
         }
-        else if (scene.name == "Leaderboard") {
+        else if (scene.name == "Leaderboard")
+        {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(leaderboardState);
-        } 
-        else if (scene.name == "Gameplay") {
+        }
+        else if (scene.name == "Gameplay")
+        {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
+            RandomHour();
             remainingTime = initialTime;
             townGenerator.GenerateTown();
+            SetState(playState);
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
+            RandomHour();
+            remainingTime = initialTime;
             SetState(playState);
         }
     }
@@ -108,7 +125,7 @@ public class GameManager : AStateController
     {
         // Set the state based on the newly loaded scene
         SetStateBasedOnScene(scene);
-        
+
         // Unsubscribe from the event to avoid multiple calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -118,7 +135,7 @@ public class GameManager : AStateController
         Debug.Log(buttonName);
 
         // Play sound effect
-        SoundManager.Instance.PlayButtonClickEffect();
+        SoundManager.PlaySound(SoundType.ButtonClick);
 
         // Send button
         TownSelected?.Invoke(this, buttonName);
@@ -138,7 +155,7 @@ public class GameManager : AStateController
                 SwitchState(pauseState);
                 break;
             case "Return":
-                SwitchState(pauseState);
+                SwitchState(mainMenuState);
                 break;
             case "Resume":
                 SwitchState(playState);
@@ -151,13 +168,13 @@ public class GameManager : AStateController
                 LoadSceneDirectly("Main menu");
                 break;
             case "Main menu":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Main menu");
                 break;
             case "Leaderboard":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Leaderboard");
                 break;
             case "Shop":
-                LoadSceneDirectly(buttonName);
+                LoadSceneDirectly("Shop");
                 break;
             case "Playing on PC":
                 playingOnPC = !playingOnPC;
@@ -167,7 +184,7 @@ public class GameManager : AStateController
         }
     }
 
- 
+
     /////////////////////////////////////////////////////////////////////////////////////////
     #region UNITY SERVICES ZONE (LEADERBOARD)
     /// <summary>
@@ -341,7 +358,8 @@ public class GameManager : AStateController
     /// <summary>
     /// For scenes that take time to load - through loading screen
     /// </summary>
-    void LoadingSceneScreen (string sceneName){
+    void LoadingSceneScreen(string sceneName)
+    {
         sceneToLoad = sceneName;
         SceneManager.LoadScene("Loading screen");
     }
@@ -349,12 +367,14 @@ public class GameManager : AStateController
     /// <summary>
     /// For scenes that don't take time to load
     /// </summary>
-    void LoadSceneDirectly(string sceneName){
+    void LoadSceneDirectly(string sceneName)
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
 
-    public void DestroyGO(GameObject gameObject){
+    public void DestroyGO(GameObject gameObject)
+    {
         Destroy(gameObject);
     }
 
@@ -367,11 +387,75 @@ public class GameManager : AStateController
         return Instantiate(prefab, position, rotation);
     }
 
+    private void RandomHour()
+    {
+        // Finds game object with Sun tag
+        GameObject sun = GameObject.FindGameObjectWithTag("Sun");
+        if (sun == null)
+        {
+            Debug.LogWarning("Sun object not found!");
+            return;
+        }
 
+        // Random value from 15 to 60 - X axis
+        float randomX = UnityEngine.Random.Range(15f, 60f);
 
+        // Random value from 0 to 360 - Y axis
+        float randomY = UnityEngine.Random.Range(0f, 360f);
 
+        // Apply new rotations to Sun
+        sun.transform.rotation = Quaternion.Euler(randomX, randomY, sun.transform.rotation.eulerAngles.z);
+    }
 
-   
+    public void AddTime(int timeBonus)
+    {
+        remainingTime += timeBonus;
 
+        playState.timerText.color = Color.green;
 
+        // Start the scaling animation coroutine
+        StartCoroutine(ScaleTimerText(1, Color.white));
+    }
+
+    public IEnumerator ScaleTimerText(int times, Color colorToReturn)
+    {
+        Transform timerText = playState.timerText.transform;
+
+        Vector3 originalScale = timerText.localScale;
+        Vector3 targetScale = originalScale * 1.5f; // Scale up by 20%
+        float duration = 0.5f; // Duration of the scaling animation
+
+        for (int i = 0; i < times; i++)
+        {
+            // Reset elapsed time for scaling up
+            float elapsed = 0f;
+
+            // Scale up
+            while (elapsed < duration)
+            {
+                timerText.transform.localScale = Vector3.Lerp(originalScale, targetScale, Mathf.Clamp01(elapsed / duration));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the target scale is set
+            timerText.transform.localScale = targetScale;
+
+            // Reset elapsed time for scaling down
+            elapsed = 0f;
+
+            // Scale down
+            while (elapsed < duration)
+            {
+                timerText.transform.localScale = Vector3.Lerp(targetScale, originalScale, Mathf.Clamp01(elapsed / duration));
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure the original scale is restored
+            timerText.transform.localScale = originalScale;
+        }
+
+        playState.timerText.color = colorToReturn; // Reset color after scaling
+    }
 }

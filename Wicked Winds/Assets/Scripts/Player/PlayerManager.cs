@@ -10,8 +10,6 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : AStateController
 {
-    public event EventHandler MissionCompleteEvent;
-
     public static PlayerManager Instance { get; private set; } // Only one player
 
     public Transform orientation;
@@ -24,7 +22,6 @@ public class PlayerManager : AStateController
     public bool potionFog;
     public bool potionBird;
     public Transform cloudTransform;
-    public float moveSpeed; // Esta es la velocidad que usas para moverte
     [HideInInspector] public int score, MAX_VALUE = 100;
     public List<GameObject> currentTargets = new();
     public Transform target;
@@ -32,8 +29,8 @@ public class PlayerManager : AStateController
     public Animator animator;
 
     #region STATES
-    public readonly ControllablePlayerState controllableState = new();// On ground
-    public readonly AtShopPlayerState atShopState = new();// At shop
+    public readonly ControllablePlayerState controllableState = new();
+    public readonly AtShopPlayerState atShopState = new();
     public readonly FinalPlayerState finalState = new();
     #endregion
 
@@ -48,19 +45,19 @@ public class PlayerManager : AStateController
     [Header("Movement")]
     public float walkSpeed = 6f;
     public float boostSpeed = 12f;
-    public float rainySpeed = 3f;
+    public float rainySpeed = 5f;
     public float rotationSpeed = 2f;
     public float flyForce = 2f;
     public float gravityForce = 3f;
     public float lowerHeightLimit = 7f;
     public float maxHeightLimit = 20f;
     public float joystickScale = 1.1f;
-    // Fuerza de retroceso
-    public float pushBackForce = 5f; // Fuerza de retroceso al chocar con p�jaros
+    public float pushBackForce = 5f;
 
     [Header("Mechanics")]
     public float speedPotionLossPerSecond = 2f;
     public float flyPotionLossPerSecond = 4f;
+    public float interactionThreshold = 0.9f;
     public Transform compassTransform;
 
 
@@ -159,10 +156,5 @@ public class PlayerManager : AStateController
             currentTargets.Remove(target);
             Debug.Log($"Removed {target.name} from current targets.");
         }
-    }
-
-    public void OnMissionCompleted()
-    {
-        MissionCompleteEvent?.Invoke(this, null);
     }
 }

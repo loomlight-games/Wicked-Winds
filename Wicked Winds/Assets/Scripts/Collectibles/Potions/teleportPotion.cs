@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class TeleportPotion : MonoBehaviour
 {
-    private SoundManager soundManager;
-
     private void Awake()
     {
-        soundManager = FindObjectOfType<SoundManager>();
+
     }
 
     public void CollectTeleportPotion()
     {
-        if (PlayerManager.Instance.currentTargets.Count>0)
+        if (PlayerManager.Instance.currentTargets.Count > 0)
         {
-            if(soundManager != null) soundManager.PlayPotionEffect();
-            
+            SoundManager.PlaySound(SoundType.Potion);
+
             // Obtener la posici�n del objetivo
             Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;
 
@@ -35,7 +33,7 @@ public class TeleportPotion : MonoBehaviour
                     PlayerManager.Instance.transform.position = teleportPosition;
                     PlayerManager.Instance.controller.enabled = true;
 
-                    
+                    Debug.Log("teleport potion work");
                     GameManager.Instance.playState.feedBackText.text = "Woooooow quicker than my ex";
                 }));
             }
@@ -43,7 +41,7 @@ public class TeleportPotion : MonoBehaviour
         else
         {
             GameManager.Instance.playState.feedBackText.text = "Looks like you don't have anywhere to go!! Get some life perspective ahah";
-            
+
         }
     }
 

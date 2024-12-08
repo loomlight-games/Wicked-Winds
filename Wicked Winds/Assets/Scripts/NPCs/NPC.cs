@@ -164,8 +164,6 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.RemoveTarget(gameObject);
 
         PlayerManager.Instance.hasActiveMission = false;
-
-        PlayerManager.Instance.OnMissionCompleted();
     }
 }
 

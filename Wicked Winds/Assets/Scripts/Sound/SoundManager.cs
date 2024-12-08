@@ -1,122 +1,155 @@
 using System.Collections;
 using UnityEngine;
+using System;
+using UnityEditor;
 
 /// <summary>
-/// Handles music and sound effects reproduction
+/// Public sound types enumeration
 /// </summary>
+public enum SoundType
+{
+    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport,
+    Dialogue, Cat, Bird, Owl, Final,
+}
+
+/// <summary>
+/// Allows to handle multiple sounds of the same type
+/// </summary>
+[Serializable]
+public struct SoundsList
+{
+    [HideInInspector] public string name;
+    [SerializeField] public AudioClip[] sounds;
+}
+
+/// <summary>
+/// Handles music and sound effects reproduction. Requires two 
+/// audioSource components 
+/// </summary>
+[ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-    public float fadeDuration = 0.5f;
-    public float maxVolume = 0.1f;
+    public AudioSource effectsSource, musicSource;
+    [SerializeField, Range(0, 1)] float fadeDuration = 0.5f;
+    //[SerializeField, Range(0, 1)] float maxVolume = 1f;
+    [SerializeField] SoundsList[] soundsList;
 
-    [SerializeField] AudioClip[] soundEffects;
-    [SerializeField] AudioClip[] musicTracks;
+#if UNITY_EDITOR
+    /// <summary>
+    /// Automatically assigns the names of the sound types to the sound lists
+    /// </summary>
+    void OnEnable()
+    {
+        string[] names = Enum.GetNames(typeof(SoundType));
+        Array.Resize(ref soundsList, names.Length);
 
-    AudioSource audioSource;
+        for (int i = 0; i < soundsList.Length; i++)
+            soundsList[i].name = names[i];
+    }
+#endif
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+
+            if (Application.isPlaying)
+                DontDestroyOnLoad(gameObject);// To avoid error in editor
         }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        // Retrieve all AudioSource components attached to the GameObject
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+
+        // effectsSource is the first AudioSource component
+        effectsSource = audioSources[0];
+
+        // musicSource is the second AudioSource component
+        musicSource = audioSources[1];
     }
 
-    void PlaySoundEffect(int id, float volume)
+    /// <summary>
+    /// Plays random sound of a specific type. If it's music starts a transition
+    /// </summary>
+    public static void PlaySound(SoundType type, float volume = 1)
     {
-        // Set the AudioSource to loop
-        audioSource.loop = false;
-        audioSource.PlayOneShot(soundEffects[id], volume);
-    }
+        // Takes all the clips of the type
+        AudioClip[] clips = Instance.soundsList[(int)type].sounds;
 
-    public void PlayMainMenuMusic()
-    {
-        PlayMusicTrack(0, maxVolume);
-    }
+        // Randomly selects a clip from the list
+        AudioClip randomClip = clips[UnityEngine.Random.Range(0, clips.Length)];
 
-    public void PlayGamePlayMusic()
-    {
-        PlayMusicTrack(1, maxVolume);
-    }
-
-    private void PlayMusicTrack(int id, float maxVolume)
-    {
-        audioSource.Stop();
-        audioSource.loop = true;
-        // Luego, reproducimos la nueva m�sica con fade-in
-
-        audioSource.clip = musicTracks[id];
-        audioSource.volume = 0f;
-        audioSource.Play();
-        StartCoroutine(FadeInMusic());
-    }
-
-    // Music fade-in
-    private IEnumerator FadeInMusic()
-    {
-        Debug.LogWarning("SUBIENDO EL VOLUMEN");
-
-
-        // Fading in the music (gradualmente subiendo el volumen)
-        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        // Type is music
+        if (type == SoundType.MenuMusic || type == SoundType.GameplayMusic)
         {
-            audioSource.volume = Mathf.Lerp(0, maxVolume, t / fadeDuration);  // Aumenta el volumen a targetVolume
+            // Played in musicSource with a transition effect
+            Instance.StartCoroutine(Instance.MusicTransition(randomClip, volume));
+        }
+        // Type is an effect
+        else
+            // Played in effectsSource
+            Instance.effectsSource.PlayOneShot(randomClip, volume);
+    }
+
+    private IEnumerator MusicTransition(AudioClip newClip, float targetVolume)
+    {
+        // Fade out the current clip
+        float startVolume = musicSource.volume;
+        while (musicSource.volume > 0)
+        {
+            musicSource.volume -= startVolume * Time.deltaTime / fadeDuration;
             yield return null;
         }
 
-        audioSource.volume = maxVolume;
-    }
+        // Stop the current clip and change to the new clip
+        musicSource.Stop();
+        musicSource.clip = newClip;
+        musicSource.Play();
 
-    //////////////////////////////////////////////////
-    /// SOUND EFFECTS
-    public void PlayButtonClickEffect()
-    {
-        PlaySoundEffect(0, 1);
-    }
-
-    public void PlayCoinEffect()
-    {
-        PlaySoundEffect(1, 1);
-    }
-
-    public void PlayPotionEffect()
-    {
-        int id = Random.Range(2, 3);
-        PlaySoundEffect(id, 0.6f);
-    }
-
-    public void PlayTeleportEffect()
-    {
-        PlaySoundEffect(4, 0.6f);
-    }
-
-    public void PlayDialogueEffect()
-    {
-        PlaySoundEffect(5, 0.6f);
-    }
-
-    public void StopDialogueEffect()
-    {
-        if (audioSource.isPlaying && audioSource.clip == soundEffects[5]) // Verificar si el efecto de di�logo est� sonando
+        // Fade in the new clip
+        while (musicSource.volume < targetVolume)
         {
-            Debug.LogWarning("[SoundManager] Deteniendo el efecto de di�logo.");
-            audioSource.Stop();
+            musicSource.volume += targetVolume * Time.deltaTime / fadeDuration;
+            yield return null;
         }
-    }
 
-    public void PlayFinalEffect()
+        // Ensure the volume is set to the target volume at the end
+        musicSource.volume = targetVolume;
+    }
+}
+
+/// <summary>
+/// To ensure that at least two AudioSources are attached to the SoundManager GO
+/// </summary>
+[CustomEditor(typeof(SoundManager))]
+public class SoundManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
     {
-        PlaySoundEffect(6, 0.6f);
+        DrawDefaultInspector();
+
+        SoundManager soundManager = (SoundManager)target;
+
+        // Check if there are exactly two AudioSource components
+        AudioSource[] audioSources = soundManager.GetComponents<AudioSource>();
+        if (audioSources.Length != 2)
+        {
+            EditorGUILayout.HelpBox("SoundManager requires exactly two AudioSource components.", MessageType.Warning);
+
+            if (GUILayout.Button("Add Missing AudioSources"))
+            {
+                while (audioSources.Length < 2)
+                {
+                    soundManager.gameObject.AddComponent<AudioSource>();
+                    audioSources = soundManager.GetComponents<AudioSource>();
+                }
+            }
+        }
     }
 }
