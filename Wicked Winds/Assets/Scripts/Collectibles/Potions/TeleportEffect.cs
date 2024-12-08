@@ -9,11 +9,10 @@ public class TeleportEffect : MonoBehaviour
     public Color flashColor = Color.black; // Color del flash
 
     private Image screenFlash; // Referencia a la imagen para el efecto
-    private SoundManager soundManager;
 
     private void Awake()
     {
-        soundManager = FindObjectOfType<SoundManager>();
+
     }
 
     private void Start()
@@ -32,7 +31,7 @@ public class TeleportEffect : MonoBehaviour
 
             if (screenFlash != null)
             {
-                
+
                 screenFlash.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0); // Asegura que la opacidad sea 0
             }
             else
@@ -48,11 +47,11 @@ public class TeleportEffect : MonoBehaviour
 
     public IEnumerator FlashAndTeleport(Vector3 teleportPosition, System.Action onComplete)
     {
-        soundManager.PlayTeleportEffect();
+        SoundManager.PlaySound(SoundType.Teleport);
 
         if (screenFlash != null)
         {
-            
+
             float timer = 0;
 
             // Parpadeo progresivo

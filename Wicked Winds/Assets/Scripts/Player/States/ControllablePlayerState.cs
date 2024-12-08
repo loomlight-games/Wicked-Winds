@@ -36,7 +36,7 @@ public class ControllablePlayerState : AState
                     {
                         collectible.Deactivate();
 
-                        SoundManager.Instance.PlayPotionEffect();
+                        SoundManager.PlaySound(SoundType.Potion);
 
                         // Notify that a speed potion was collected
                         SpeedPotionCollected?.Invoke(this, null);
@@ -53,7 +53,7 @@ public class ControllablePlayerState : AState
                     {
                         collectible.Deactivate();
 
-                        SoundManager.Instance.PlayPotionEffect();
+                        SoundManager.PlaySound(SoundType.Potion);
 
                         // Notify that a fly high potion was collected
                         FlyPotionCollected?.Invoke(this, null);
@@ -66,7 +66,7 @@ public class ControllablePlayerState : AState
                 if (collectible != null && collectible.isModelActive)
                 {
                     collectible.Deactivate();
-                    SoundManager.Instance.PlayCoinEffect();
+                    SoundManager.PlaySound(SoundType.Coin);
 
                     // Increment the player's coin count and save it
                     PlayerManager.Instance.customizable.coins++;
@@ -110,15 +110,26 @@ public class ControllablePlayerState : AState
                 }
                 break;
             case "Bird":
-                // Obt�n la direcci�n opuesta a la colisi�n para empujar al personaje hacia atr�s
+
+                Debug.Log("Colisión detectada con un pájaro.");
+
+                // Obtén la dirección opuesta a la colisión para empujar al personaje hacia atrás
                 Vector3 pushBackDirection = PlayerManager.Instance.transform.position - other.transform.position;
 
-                // Normaliza la direcci�n y aplica la fuerza de retroceso utilizando el CharacterController
+                // Normaliza la dirección y aplica la fuerza de retroceso utilizando el CharacterController
                 pushBackDirection.y = 0; // Asegura que no haya movimiento en el eje Y (no saltar ni caer)
 
-                // Aplicamos el retroceso
-                PlayerManager.Instance.controller.Move(pushBackDirection.normalized * PlayerManager.Instance.pushBackForce * Time.deltaTime);
+                // Asegúrate de que el CharacterController esté configurado correctamente para aceptar movimientos
+                if (PlayerManager.Instance.controller != null)
+                {
+                    PlayerManager.Instance.controller.Move(pushBackDirection.normalized * PlayerManager.Instance.pushBackForce * Time.deltaTime);
+                }
+                else
+                {
+                    Debug.LogWarning("CharacterController no está asignado al PlayerManager.");
+                }
                 break;
+
             default:
                 break;
         }
@@ -126,41 +137,28 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerStay(Collider other)
     {
-        // It's an NPC
-        if (other.gameObject.TryGetComponent(out Interactable interactable))
+        // Interact key is pressed
+        if (PlayerManager.Instance.interactKey)
         {
-            // Interact key is pressed
-            if (PlayerManager.Instance.interactKey)
-            {
-                //Debug.Log("Interacting with interactable");
-                // Interact with NPC
+            // Player is not facing this collider
+            if (!PlayerManager.Instance.playerController.PlayerIsFacing(other.transform))
+                return; // Won't do anything if the player is not facing the collider
+
+            Debug.LogWarningFormat("Facing player");
+
+            // It's an NPC
+            if (other.gameObject.TryGetComponent(out Interactable interactable))
                 interactable.Interact();
-            }
-        }
-        // It's a mission collectible
-        else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
-        {
-            // Interact key is pressed
-            if (PlayerManager.Instance.interactKey)
-                // Collects it
+            // It's a mission collectible
+            else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
                 pickableObject.CollectItem();
-        }
-        else if (other.gameObject.TryGetComponent(out InteractableCat cat))
-        {
-            if (PlayerManager.Instance.interactKey)
-            {
-                GameManager.Instance.playState.feedBackText.text = "This cat is LOUDDDD";
-
+            // It's a cat
+            else if (other.gameObject.TryGetComponent(out InteractableCat cat))
                 cat.InteractCat();
-            }
-        }
-        else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
-        {
-            GameManager.Instance.playState.feedBackText.text = "Gotcha! You can run, but you can't hide from me!";
+            // It's an owl
+            else if (other.gameObject.TryGetComponent(out InteractableOwl owl))
+                owl.Interact();
 
-            GameManager.Instance.playState.feedBackText.text = "A wise owl said something to me";
-            //Deactivates it
-            owl.Interact();
         }
     }
 }

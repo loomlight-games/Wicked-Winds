@@ -21,7 +21,8 @@ public class PlayerController
         verticalVelocity,
         verticalPosition,
         flyPotionLoss,
-        speedPotionLoss;
+        speedPotionLoss,
+        interactionThreshold;
 
     public float flyPotionValue, speedPotionValue;
 
@@ -32,19 +33,21 @@ public class PlayerController
     Vector2 movement2D;
 
     Transform cameraTransform,
-            player,
             orientation;
+
+    public Transform player;
 
     #endregion
 
-    private bool isAlreadyUnderCloud = false; // Bandera para controlar si el jugador ya esta bajo la nube
+    private bool isAlreadyUnderCloud = false;
 
 
     ///////////////////////////////////////////////////////////////////////////////////
     public void Start()
     {
         flyPotionValue = PlayerManager.Instance.MAX_VALUE;
-        speedPotionValue = PlayerManager.Instance.MAX_VALUE; ;
+        speedPotionValue = PlayerManager.Instance.MAX_VALUE;
+        interactionThreshold = PlayerManager.Instance.interactionThreshold;
 
         controller = PlayerManager.Instance.controller;
         player = PlayerManager.Instance.transform;
@@ -252,8 +255,6 @@ public class PlayerController
         speedPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
-
-
     /// <summary>
     /// Recovers fly potion value
     /// </summary>
@@ -262,6 +263,22 @@ public class PlayerController
         flyPotionValue = PlayerManager.Instance.MAX_VALUE;
     }
 
+    /// <summary>
+    /// Detects if player is facing a target 
+    /// </summary>
+    public bool PlayerIsFacing(Transform target)
+    {
+        // Calculate the direction from this object to the target
+        Vector3 directionToTarget = (target.position - player.position).normalized;
+
+        // Calculate the dot product between the forward vector and the direction to the target
+        float dotProduct = Vector3.Dot(player.forward, directionToTarget);
+
+        Debug.LogWarningFormat(dotProduct.ToString());
+
+        // Check if the dot product is bigger than the threshold
+        return dotProduct >= interactionThreshold;
+    }
 
     /// <summary>
     /// Checks if the player is directly beneath the cloud on the Y axis.

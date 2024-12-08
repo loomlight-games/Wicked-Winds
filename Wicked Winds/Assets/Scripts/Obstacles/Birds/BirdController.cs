@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+
 public class BirdController : MonoBehaviour
 {
     public Transform flockCenter; // Centro de la bandada
     public float flightRadius = 15f; // Radio de vuelo alrededor del centro
     public float moveSpeed = 2f; // Velocidad de movimiento
-    public float heightOffset = 25f; // Altura fija de vuelo
+    public float minHeightOffset = 12f; // Altura mínima de vuelo
+    public float maxHeightOffset = 30f; // Altura máxima de vuelo
     public float randomTargetInterval = 2f; // Tiempo entre objetivos aleatorios
 
     private Vector3 targetPosition; // Posición aleatoria dentro del radio de vuelo
@@ -56,6 +58,18 @@ public class BirdController : MonoBehaviour
         );
 
         targetPosition = flockCenter.position + randomOffset;
-        targetPosition.y = heightOffset; // Mantener la altura fija
+
+        // Asignar una altura aleatoria entre minHeightOffset y maxHeightOffset
+        targetPosition.y = Random.Range(minHeightOffset, maxHeightOffset);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Cambia de dirección o realiza otra acción
+            SetRandomTarget();
+            Debug.Log("Bird collided with the player and changed direction!");
+        }
     }
 }

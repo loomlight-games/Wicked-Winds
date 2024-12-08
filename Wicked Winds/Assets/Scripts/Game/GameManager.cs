@@ -91,19 +91,22 @@ public class GameManager : AStateController
     {
         if (scene.name == "Main menu")
         {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(mainMenuState);
-            SoundManager.Instance.PlayMainMenuMusic();
         }
         else if (scene.name == "Shop")
         {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(shopState);
         }
         else if (scene.name == "Leaderboard")
         {
+            SoundManager.PlaySound(SoundType.MenuMusic);
             SetState(leaderboardState);
         }
         else if (scene.name == "Gameplay")
         {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
             RandomHour();
             remainingTime = initialTime;
             townGenerator.GenerateTown();
@@ -111,9 +114,9 @@ public class GameManager : AStateController
         }
         else
         {
+            SoundManager.PlaySound(SoundType.GameplayMusic);
             RandomHour();
             remainingTime = initialTime;
-            //townGenerator.GenerateTown();
             SetState(playState);
         }
     }
@@ -132,7 +135,7 @@ public class GameManager : AStateController
         Debug.Log(buttonName);
 
         // Play sound effect
-        SoundManager.Instance.PlayButtonClickEffect();
+        SoundManager.PlaySound(SoundType.ButtonClick);
 
         // Send button
         TownSelected?.Invoke(this, buttonName);

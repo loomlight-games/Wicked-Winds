@@ -41,8 +41,6 @@ public class GamePlayState : AState
         else // Show them in other device type
             handledControls.SetActive(true);
 
-        SoundManager.Instance.PlayGamePlayMusic();
-
         gameOverTriggered = false;
     }
 

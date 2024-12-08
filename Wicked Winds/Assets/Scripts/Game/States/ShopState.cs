@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class ShopState : AState
 {
-    GameObject UI, player;
-
     public override void Enter()
     {
         Time.timeScale = 1f; // Resumes simulation
-
-        UI = GameObject.Find("UI");
-
-        SoundManager.Instance.PlayMainMenuMusic();
     }
 
     public override void Update()
