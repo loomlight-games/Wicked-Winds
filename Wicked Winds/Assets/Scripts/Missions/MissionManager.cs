@@ -294,7 +294,7 @@ public class MissionManager : MonoBehaviour
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
                         Debug.Log($"Adding NPC: {Npc}");
-                        if (!string.IsNullOrEmpty(Npc.npcname)) // Check if the name is not null or empty
+                        if (!string.IsNullOrEmpty(Npc.npcName)) // Check if the name is not null or empty
                         {
                             npcNames.Add(Npc); // Add the name to the list
                         }
@@ -309,7 +309,7 @@ public class MissionManager : MonoBehaviour
                 if (npcNames.Count > 0)
                 {
                     NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
-                    npc.request.addresseeName = randomNPC.npcname;
+                    npc.request.addresseeName = randomNPC.npcName;
                     npc.request.addressee = randomNPC;
                     randomNPC.sender = npc;
 

@@ -9,7 +9,7 @@ public class NPC : MonoBehaviour
     public RandomNPCMovement movementScript; // Referencia al script de movimiento
     public GameObject bubble; // Referencia al objeto bubble del NPC
     public MissionIconPool missionIconPool; // Agrega esta l�nea
-    [SerializeField] public string npcname;
+    [SerializeField] public string npcName;
     private NPCNameManager nameManager;
     private MessageGenerator messageGenerator;
     [SerializeField] public string message;
@@ -22,18 +22,17 @@ public class NPC : MonoBehaviour
     public Guid npcID; // Identificador único para el NPC
     public Animator animator;
 
-    public Dialogue dialoguePanel;
-
     private void Awake()
     {
         nameManager = NPCNameManager.Instance;
-        npcname = nameManager.GetRandomNPCName();
+        npcName = nameManager.GetRandomNPCName();
         npcID = Guid.NewGuid(); // Generar un ID único al inicializar el NPC
 
     }
 
     void Start()
     {
+        name = npcName;
 
         agent = GetComponent<NavMeshAgent>();
 
@@ -170,9 +169,7 @@ public class NPC : MonoBehaviour
                 // Start conversation
                 if (responseMessage != null)
                 {
-                    dialoguePanel.lines = null;
-                    dialoguePanel.lines = new string[] { responseMessage };
-                    dialoguePanel.StartDialogue(this, responseMessage, 0);
+                    GameManager.Instance.dialogue.StartDialogue(npcName, responseMessage);
                 }
                 else
                     Debug.LogError("npc.responseMessage is null.");
@@ -214,9 +211,7 @@ public class NPC : MonoBehaviour
                 // Start conversation
                 if (message != null)
                 {
-                    dialoguePanel.lines = null;
-                    dialoguePanel.lines = new string[] { message };
-                    dialoguePanel.StartDialogue(this, message, 0);
+                    GameManager.Instance.dialogue.StartDialogue(npcName, message);
                 }
                 else
                     Debug.LogError("npc.message is null.");

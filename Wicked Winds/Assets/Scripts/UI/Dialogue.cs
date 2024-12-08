@@ -2,121 +2,97 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Dialogue : MonoBehaviour
+public class Dialogue
 {
-    public TextMeshProUGUI text = null; // Para mostrar el diálogo
-    public TextMeshProUGUI npcName = null;   // Para mostrar el nombre del NPC
-    public string[] lines;        // Las líneas del diálogo
-    public float textSpeed;       // Velocidad del texto
+    TextMeshProUGUI messageText, nameText;
+    string[] dialogueLines;
+    int lineIndex = 0;
+    bool isTyping = false;
 
-    private int lineIndex;
-    private bool isTyping = false; // Indica si se está escribiendo texto
-
-    void Update()
+    public void Initialize(TextMeshProUGUI messageText, TextMeshProUGUI nameText)
     {
-        if (lines.Length == 0)
+        this.messageText = messageText;
+        this.nameText = nameText;
+    }
+
+    public void StartDialogue(string name, string message)
+    {
+        GameManager.Instance.SwitchState(GameManager.Instance.talkingState);
+
+        //dialogueLines = new string[] { message };
+
+        lineIndex = 0;
+
+        Debug.LogWarning($"Starting dialogue with {name}.");
+
+        nameText.text = name;
+
+        // Divide message in lines separating by '\n'
+        dialogueLines = message.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+        Debug.LogWarning($"Lines in message: {dialogueLines.Length}");
+
+        if (dialogueLines.Length == 0)
         {
-            return; // Sale si lines está vacío
+            Debug.LogError("A message is required!");
+            return;
         }
 
-        if (PlayerManager.Instance.nextLineKey && !isTyping) // Solo avanza si no se está escribiendo
+        //GameManager.Instance.StartCoroutine(TypeLine());
+        //PrintLineA();
+        PrintLine();
+    }
+
+    public void PrintLine()
+    {
+        // Not executing coroutine
+        if (!isTyping)
         {
-            if (text.text == lines[lineIndex])
+            SoundManager.PlaySound(SoundType.Dialogue);
+
+            // Executes coroutine
+            GameManager.Instance.StartCoroutine(TypeLine());
+
+            // Line is completely printed
+            if (messageText.text == dialogueLines[lineIndex])
             {
-                NextLine();
+                // There're more lines
+                if (lineIndex < dialogueLines.Length - 1)
+                {
+                    messageText.text = string.Empty; // Clears text
+                    lineIndex++; // Next line
+                }
             }
             else
             {
-                StopAllCoroutines();
-                text.text = lines[lineIndex];
+                //GameManager.Instance.StopAllCoroutines();
+
+                // Ensures the line is properly printed
+                messageText.text = dialogueLines[lineIndex];
             }
         }
     }
 
-    // Método para iniciar el diálogo y mostrar el nombre del NPC
-    public void StartDialogue(NPC npc, string mensajito, int tipo) //0= humano, 1= gato
+    void PrintLineA()
     {
-        SoundManager.PlaySound(SoundType.Dialogue);
-        // Activar todos los hijos del objeto
-        ActivateAllChildren();
-        lineIndex = 0;
-        // Limpiar cualquier texto previo
-
-        text.text = string.Empty;
-        npcName.text = string.Empty;
-
-        Debug.Log("Iniciando diálogo...");
-        if (tipo == 0)
-        {// Asignar el nombre del NPC
-            npcName.text = npc.npcname;
-            Debug.Log($"Nombre del NPC asignado: {npc.npcname}");
-        }
-
-        if (tipo == 1)
+        if (lineIndex < dialogueLines.Length - 1)
         {
-            npcName.text = npc.npcname + "'s cat";
+            messageText.text = string.Empty; // Clears text
+            GameManager.Instance.StartCoroutine(TypeLine());
+            lineIndex++;
         }
-
-
-        // Dividir el mensaje en líneas
-        lines = mensajito.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        Debug.Log($"Número de líneas en el mensaje: {lines.Length}");
-
-        if (lines.Length == 0)
-        {
-            Debug.LogWarning("¡No hay mensaje! Se requiere un mensaje.");
-            return;
-        }
-
-        StartCoroutine(TypeLine());
-        Debug.Log("Se han activado todos los hijos del objeto.");
     }
 
     IEnumerator TypeLine()
     {
-        isTyping = true; // Inicia la escritura
-        foreach (char c in lines[lineIndex].ToCharArray())
-        {
-            text.text += c;
-            yield return new WaitForSeconds(textSpeed);
-        }
-        isTyping = false; // Termina de escribir
-    }
+        isTyping = true;
 
-    void NextLine()
-    {
-        if (lineIndex < lines.Length - 1)
+        foreach (char c in dialogueLines[lineIndex].ToCharArray())
         {
-            lineIndex++;
-            text.text = string.Empty; // Limpia el texto actual
-            StartCoroutine(TypeLine()); // Escribe la siguiente línea
+            messageText.text += c;
+            yield return new WaitForSeconds(GameManager.Instance.speechSpeed);
         }
-        else
-        {
-            DeactivateAllChildren(); // Termina el diálogo
-        }
-    }
 
-    void ActivateAllChildren()
-    {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(true);
-        }
-    }
-
-    void DeactivateAllChildren()
-    {
-        foreach (Transform child in transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-    }
-
-    // Método para ajustar el cuadro de texto
-    void AdjustTextBox()
-    {
-        text.ForceMeshUpdate(); // Fuerza una actualización del texto
-        text.GetComponent<RectTransform>().sizeDelta = new Vector2(text.preferredWidth, text.preferredHeight); // Ajusta el tamaño del cuadro de texto
+        isTyping = false;
     }
 }

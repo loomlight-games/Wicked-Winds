@@ -126,23 +126,26 @@ public class ControllablePlayerState : AState
 
     public override void OnTriggerStay(Collider other)
     {
-        // Interact key is pressed
-        if (PlayerManager.Instance.interactKey)
+        // Interact key is pressed and game is not in talking state
+        if (PlayerManager.Instance.interactKey &&
+            GameManager.Instance.GetState() != GameManager.Instance.talkingState)
         {
             // Player is not facing this collider
             if (!PlayerManager.Instance.playerController.PlayerIsFacing(other.transform))
                 return; // Won't do anything if the player is not facing the collider
 
-            // It's an NPC
+            Debug.LogWarning("Interacting with " + other.gameObject.name);
+
+            // NPC
             if (other.gameObject.TryGetComponent(out NPC npc))
                 npc.Interact();
-            // It's a mission collectible
+            // Mission collectible
             else if (other.gameObject.TryGetComponent(out Pickable pickableObject))
                 pickableObject.CollectItem();
-            // It's a cat
+            // Cat
             else if (other.gameObject.TryGetComponent(out CatController cat))
                 cat.Interact();
-            // It's an owl
+            // Owl
             else if (other.gameObject.TryGetComponent(out OwlController owl))
                 owl.Interact();
         }

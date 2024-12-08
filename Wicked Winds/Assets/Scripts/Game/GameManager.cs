@@ -26,10 +26,12 @@ public class GameManager : AStateController
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
     public readonly TownSelectionState selectTownState = new();
+    public readonly TalkingState talkingState = new();
     #endregion
 
     #region SUB-MANAGERS
     public TownGenerator townGenerator = new();
+    public Dialogue dialogue = new();
     #endregion
 
     #region CLOUD SERVICES
@@ -62,6 +64,7 @@ public class GameManager : AStateController
     public List<float> missionsTimes = new();
     public float missionTime = 0;
     public float averageMissionTime = 0;
+    public float speechSpeed = 0.5f;
     #endregion
 
     [HideInInspector] public string sceneToLoad = "Gameplay";
