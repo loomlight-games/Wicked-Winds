@@ -9,7 +9,7 @@ public class AuthentificationPanel : Panel
 
     [SerializeField] private Button signinButton = null;
     [SerializeField] private Button signupButton = null;
-    [SerializeField] Button anonymousButton = null, leaderboardButton;
+    //[SerializeField] Button anonymousButton = null, leaderboardButton;
 
     // Colores para el placeholder
     private Color errorPlaceholderColor = Color.red;
