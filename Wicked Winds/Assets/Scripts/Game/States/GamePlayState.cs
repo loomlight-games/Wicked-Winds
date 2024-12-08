@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GamePlayState : AState
 {
-    public TextMeshProUGUI feedBackText;
-
     GameObject UI, statesUI, gameplayUI, handledControls;
     public TextMeshProUGUI timerText;
     HUDBar highSpeedBar, flyHighBar;
@@ -28,7 +26,6 @@ public class GamePlayState : AState
         gameplayUI.SetActive(true);
 
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
-        feedBackText = GameObject.Find("Feedback").GetComponent<TextMeshProUGUI>();
         highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
         handledControls = UI.transform.Find("Handled controls").gameObject;

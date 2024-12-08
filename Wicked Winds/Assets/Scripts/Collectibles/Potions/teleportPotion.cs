@@ -32,16 +32,8 @@ public class TeleportPotion : MonoBehaviour
                     PlayerManager.Instance.controller.enabled = false;
                     PlayerManager.Instance.transform.position = teleportPosition;
                     PlayerManager.Instance.controller.enabled = true;
-
-
-                    GameManager.Instance.playState.feedBackText.text = "Woooooow quicker than my ex";
                 }));
             }
-        }
-        else
-        {
-            GameManager.Instance.playState.feedBackText.text = "Looks like you don't have anywhere to go!! Get some life perspective ahah";
-
         }
     }
 

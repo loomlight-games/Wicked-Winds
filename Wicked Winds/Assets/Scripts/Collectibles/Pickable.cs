@@ -52,7 +52,6 @@ public class Pickable : MonoBehaviour
 
                         // Makes NPC the next target 
                         PlayerManager.Instance.AddTarget(missionIcon.assignedNPC.gameObject);
-                        GameManager.Instance.playState.feedBackText.text = $"All ingredients found! Bring them to {npc.name}\n";
                     }
                 }
             }

@@ -368,7 +368,7 @@ public class MissionManager : MonoBehaviour
         numMissionsToAssign = numMissions;
         missionsCompleted++;
         currentRound = (missionsCompleted / 5) + 1;
-        GameManager.Instance.playState.feedBackText.text = $"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}";
+        Debug.Log($"Mision completada. Total completadas: {missionsCompleted}. Ronda actual: {currentRound}");
         AssignMissions();
     }
 }

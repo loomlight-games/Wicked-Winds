@@ -12,7 +12,7 @@ public class FogManager : MonoBehaviour
     private bool isFogTimerActive = false;
     // Start is called before the first frame update
 
-    public  void Awake()
+    public void Awake()
     {
         //if there's not an instance, it creates one - SINGLETON
         if (Instance == null)
@@ -22,7 +22,7 @@ public class FogManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-       
+
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class FogManager : MonoBehaviour
         if (isFogTimerActive)
         {
             timer += Time.deltaTime;
-            if (timer > 5f) { GameManager.Instance.playState.feedBackText.text = "The potion only lasts 20 seconds you better hurry!"; }
+            if (timer > 5f) { }
             if (timer >= potionFogEffectTime)
             {
                 // Reactivar la niebla y reiniciar el temporizador
@@ -38,14 +38,12 @@ public class FogManager : MonoBehaviour
                 DesactivarPotionUI.Instance.activarFogUI = false;
                 timer = 0f;
                 isFogTimerActive = false;
-                GameManager.Instance.playState.feedBackText.text =  "Back to London time...";
             }
         }
     }
 
     public void ReenableFogAfterTime()
     {
-       
         isFogTimerActive = true; // Activar el temporizador
     }
 }

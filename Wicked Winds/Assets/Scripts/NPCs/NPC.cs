@@ -120,9 +120,6 @@ public class NPC : MonoBehaviour
                 PlayerManager.Instance.npcObjective = null;
 
             }
-            // This NPC is not the target
-            else
-                GameManager.Instance.playState.feedBackText.text = "Finish the current task before speaking to another villager.";
         }
         // Player has no mission assigned
         else

@@ -5,7 +5,7 @@ public class FogTrigger : MonoBehaviour
 {
     public Color fogColor = Color.gray;
     public float fogDensity = 0.3f;
-    public float transitionSpeed = 2f; // Velocidad de transición de la niebla
+    public float transitionSpeed = 2f; // Velocidad de transiciï¿½n de la niebla
 
     private Color targetColor;
     private float targetDensity;
@@ -21,7 +21,6 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && PlayerManager.Instance.potionFog == false) // Si el jugador entra en la zona especificada
         {
-            GameManager.Instance.playState.feedBackText.text = "Perfect weather for some ghost stories...";
             PlayerManager.Instance.playerIsInsideFog = true;
             StartFogTransition(fogColor, fogDensity);
         }
@@ -31,16 +30,12 @@ public class FogTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.playState.feedBackText.text = "Finally some sunlight!";
             PlayerManager.Instance.playerIsInsideFog = false;
-            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
+            StartFogTransition(Color.clear, 0f);  // Transiciï¿½n a sin niebla
         }
     }
 
-
-  
-
-    // Inicia la transición de la niebla
+    // Inicia la transiciï¿½n de la niebla
     private void StartFogTransition(Color targetFogColor, float targetFogDensity)
     {
         targetColor = targetFogColor;
@@ -49,14 +44,13 @@ public class FogTrigger : MonoBehaviour
 
     private void Update()
     {
-        if(PlayerManager.Instance.potionFog && PlayerManager.Instance.playerIsInsideFog == true)
+        if (PlayerManager.Instance.potionFog && PlayerManager.Instance.playerIsInsideFog == true)
         {
-            GameManager.Instance.playState.feedBackText.text ="WOW! The fog has magically dissapeared!";
             PlayerManager.Instance.playerIsInsideFog = false;
-            StartFogTransition(Color.clear, 0f);  // Transición a sin niebla
+            StartFogTransition(Color.clear, 0f);  // Transiciï¿½n a sin niebla
         }
-            // Solo actualiza la transición si hay un cambio
-            if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
+        // Solo actualiza la transiciï¿½n si hay un cambio
+        if (RenderSettings.fogColor != targetColor || RenderSettings.fogDensity != targetDensity)
         {
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, Time.deltaTime * transitionSpeed);
             RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetDensity, Time.deltaTime * transitionSpeed);
@@ -64,7 +58,7 @@ public class FogTrigger : MonoBehaviour
             // Si hemos alcanzado los valores objetivos, dejamos de actualizar
             if (Mathf.Approximately(RenderSettings.fogDensity, targetDensity) && RenderSettings.fogColor == targetColor)
             {
-                // Si estamos completamente en el valor objetivo, podemos detener la interpolación
+                // Si estamos completamente en el valor objetivo, podemos detener la interpolaciï¿½n
                 RenderSettings.fog = targetDensity > 0f; // Solo habilitamos la niebla si la densidad es mayor que 0
             }
         }
