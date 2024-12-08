@@ -17,9 +17,13 @@ public class Dialogue
 
     public void StartDialogue(string name, string message)
     {
+        Debug.LogWarning(message);
+
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.talkingState);
 
-        dialogueLines = new string[] { message };
+        dialogueLines = null; // Clear previous lines
+
+        //dialogueLines = new string[] { message }; // Set new lines
 
         lineIndex = 0;
 
@@ -45,18 +49,14 @@ public class Dialogue
             // Line is completely printed
             if (messageText.text == dialogueLines[lineIndex])
             {
+                messageText.text = string.Empty; // Clears text
+
                 // There're more lines
                 if (lineIndex < dialogueLines.Length - 1)
-                {
-                    messageText.text = string.Empty; // Clears text
                     lineIndex++; // Next line
-                }
                 // No more lines
                 else
-                {
-                    //Change to previous state
                     PlayerManager.Instance.ReturnToPreviousState();
-                }
             }
             // Full line isn't printed yet
             else
