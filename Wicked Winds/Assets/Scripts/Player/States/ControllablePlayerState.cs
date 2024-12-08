@@ -134,8 +134,6 @@ public class ControllablePlayerState : AState
             if (!PlayerManager.Instance.playerController.PlayerIsFacing(other.transform))
                 return; // Won't do anything if the player is not facing the collider
 
-            Debug.LogWarning("Interacting with " + other.gameObject.name);
-
             // NPC
             if (other.gameObject.TryGetComponent(out NPC npc))
                 npc.Interact();

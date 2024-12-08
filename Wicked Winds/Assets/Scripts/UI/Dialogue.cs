@@ -17,13 +17,9 @@ public class Dialogue
 
     public void StartDialogue(string name, string message)
     {
-        Debug.LogWarning(message);
-
         PlayerManager.Instance.SwitchState(PlayerManager.Instance.talkingState);
 
         dialogueLines = null; // Clear previous lines
-
-        //dialogueLines = new string[] { message }; // Set new lines
 
         lineIndex = 0;
 

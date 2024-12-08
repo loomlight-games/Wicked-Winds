@@ -44,6 +44,10 @@ public class GamePlayState : AState
 
     public override void Update()
     {
+        // Not if player is talking
+        if (PlayerManager.Instance.GetState() == PlayerManager.Instance.talkingState)
+            return;
+
         UpdateTimer();
 
         if (PlayerManager.Instance.hasActiveMission)
