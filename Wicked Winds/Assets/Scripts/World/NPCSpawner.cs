@@ -28,7 +28,7 @@ public class NPCSpawner : MonoBehaviour
 
 
     public float cloudSpawnRadious = 100f;
-    public float cloudHeightOffset = 40;
+    public float cloudHeightOffset = 35;
     public int numOfClouds = 2;
     public LayerMask buildingLayer; // Capa de edificios
     public LayerMask waterLayer; // Capa de agua
