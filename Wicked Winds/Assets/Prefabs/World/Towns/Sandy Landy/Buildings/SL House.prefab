@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5856110970872739736}
-  - component: {fileID: -8856544411030259310}
   m_Layer: 7
   m_Name: SL House
   m_TagString: Untagged
@@ -33,22 +32,6 @@ Transform:
   - {fileID: 670717399661374443}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &-8856544411030259310
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8329116098707980668}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 9, y: 2.5, z: 3}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 2, y: 2.5, z: -2}
-  m_TimeToStationary: 0.5
 --- !u!1001 &1064086010087869440
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,8 +103,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fd1551ff67f899e4b99f9ed142c27251,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1176817096497686604}
   m_SourcePrefab: {fileID: 100100000, guid: fd1551ff67f899e4b99f9ed142c27251, type: 3}
+--- !u!1 &145537162724323665 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fd1551ff67f899e4b99f9ed142c27251,
+    type: 3}
+  m_PrefabInstance: {fileID: 1064086010087869440}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &1176817096497686604
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145537162724323665}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.101, y: 0.07700001, z: 0.07700001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.017, y: 0.026, z: 0.030000001}
+  m_TimeToStationary: 0.5
 --- !u!4 &670717399661374443 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fd1551ff67f899e4b99f9ed142c27251,
