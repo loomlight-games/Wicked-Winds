@@ -3,51 +3,37 @@ using UnityEngine;
 
 public class CloudMovement : MonoBehaviour
 {
-    // Rango de movimiento en 3D
-    [SerializeField] private Vector3 movementAreaMin = new Vector3(-175f, 40f, -175f); // Coordenadas mínimas del área
-    [SerializeField] private Vector3 movementAreaMax = new Vector3(175f, 40f, 175f);   // Coordenadas máximas del área
-    // Velocidad de la nube
-    [SerializeField] private float speed = 2f;
-
-    // Tiempo entre cambios de dirección
-    [SerializeField] private float directionChangeInterval = 3f;
-
-    private Vector3 targetPosition;
+    [SerializeField] private float speed = 2f; // Velocidad de movimiento
+    private Vector3 targetPosition; // Posición final fija (X = 105
 
     private void Start()
     {
-        // Generar una posición inicial aleatoria
-        GenerateNewTargetPosition();
-        StartCoroutine(ChangeDirectionRoutine());
+        SetTargetPosition();
     }
 
     private void Update()
     {
-        // Mover la nube hacia la posición objetivo
+        // Mover hacia el objetivo
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        // Si llega al objetivo, genera una nueva posición
+        // Verificar si ha llegado al objetivo
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
         {
-            GenerateNewTargetPosition();
+            ReturnToPool();
         }
     }
 
-    private void GenerateNewTargetPosition()
+    public void SetTargetPosition()
     {
-        // Genera una nueva posición aleatoria dentro del área
-        float randomX = Random.Range(movementAreaMin.x, movementAreaMax.x);
-        float randomY = Random.Range(movementAreaMin.y, movementAreaMax.y);
-        targetPosition = new Vector3(randomX, randomY, transform.position.z);
-        PlayerManager.Instance.cloudTransform = transform;
+        // Definir el destino en X = 150 manteniendo Y y Z
+        targetPosition = new Vector3(105, transform.position.y, transform.position.z);
     }
 
-    private IEnumerator ChangeDirectionRoutine()
+    private void ReturnToPool()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(directionChangeInterval);
-            GenerateNewTargetPosition();
-        }
+        // Devolver al pool y desactivar la nube
+        CloudPool.Instance.ReturnCloud(gameObject);
+
     }
+
 }

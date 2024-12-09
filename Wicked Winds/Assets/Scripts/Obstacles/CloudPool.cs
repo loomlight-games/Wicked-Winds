@@ -11,8 +11,11 @@ public class CloudPool : MonoBehaviour
 
     private static CloudPool instance;
     public static CloudPool Instance { get { return instance; } } // con el patron singleton hacemos que 
-    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
-    // y campos desde otros scripts
+                                                                  //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
+                                                                  // y campos desde otros scripts
+
+    [SerializeField] private float respawnDelay = 2f; // Tiempo antes de reaparecer una nube
+
 
     private void Awake()
     {
@@ -46,7 +49,7 @@ public class CloudPool : MonoBehaviour
 
     public GameObject GetCloud()
     {
-       
+
 
         for (int i = 0; i < cloudList.Count; i++)
         {
@@ -63,5 +66,18 @@ public class CloudPool : MonoBehaviour
     public void ReturnCloud(GameObject cloud)
     {
         cloud.SetActive(false);
+        cloud.SetActive(false);
+        StartCoroutine(RespawnCloudWithDelay(cloud)); // Manejar el respawn aquí
+    }
+
+    private IEnumerator RespawnCloudWithDelay(GameObject cloud)
+    {
+        yield return new WaitForSeconds(respawnDelay);
+
+        // Reposicionar la nube en un punto inicial
+        Vector3 newStartPosition = NPCSpawner.Instance.GetCloudSpawnPosition();
+        cloud.transform.position = newStartPosition;
+        cloud.SetActive(true);
+        cloud.GetComponent<CloudMovement>().SetTargetPosition(); // Reiniciar su objetivo
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,13 +29,30 @@ public class NPCSpawner : MonoBehaviour
 
     public float cloudSpawnRadious = 100f;
     public float cloudHeightOffset = 40;
+    public int numOfClouds = 2;
     public LayerMask buildingLayer; // Capa de edificios
     public LayerMask waterLayer; // Capa de agua
 
 
+    private static NPCSpawner instance;
+    public static NPCSpawner Instance { get { return instance; } } // con el patron singleton hacemos que 
+    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
+    // y campos desde otros scripts
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
-    void Start()
+        void Start()
     {
         // Instantiate all the parents
         npcsParent = GameObject.Find("NpcsParent") ?? new GameObject("NpcsParent");
@@ -54,15 +72,23 @@ public class NPCSpawner : MonoBehaviour
             SpawnFlock();
         }
 
-        SpawnCloud();
+        // Iniciar corutina para spawnear nubes
+        StartCoroutine(SpawnCloudsWithDelay());
+        }
+
+    IEnumerator SpawnCloudsWithDelay()
+    {
+        for (int i = 0; i < numOfClouds; i++)
+        {
+            SpawnCloud();
+            yield return new WaitForSeconds(50f); // Esperar 50 segundos antes de spawnear la siguiente nube
+        }
     }
 
     void SpawnNPC()
     {
-        // Obtener el ID del tipo de agente para NPCs (Humanoid)
         int humanoidAgentTypeID = NavMesh.GetSettingsByIndex(0).agentTypeID;
 
-        // Buscar una posici�n v�lida en el NavMesh para el NPC
         Vector3 spawnPosition = GetRandomPositionOnGround(humanoidAgentTypeID, false);
         if (spawnPosition != Vector3.zero)
         {
@@ -85,7 +111,7 @@ public class NPCSpawner : MonoBehaviour
                 // Obtener el ID del tipo de agente para gatos (Cat)
                 int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
 
-                // Buscar una posici�n v�lida en el NavMesh para el gato
+               
                 Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
                 if (catPosition != Vector3.zero)
                 {
@@ -99,7 +125,7 @@ public class NPCSpawner : MonoBehaviour
                     if (agentCat != null)
                     {
                         agentCat.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
-                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasi�n
+                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; 
 
                     }
                 }
@@ -107,10 +133,9 @@ public class NPCSpawner : MonoBehaviour
 
             }
 
-            // 10% de probabilidad de generar un b�ho
             if (Random.value < 0.3f)
             {
-                // Generar el b�ho en cualquier parte del mapa a una altura de 10 unidades
+                
                 Vector3 owlPosition = new Vector3(
                     Random.Range(-detectionRadius, detectionRadius),
                     15f, // Altura fija de 10 unidades
@@ -150,6 +175,8 @@ public class NPCSpawner : MonoBehaviour
         GameObject flockCenterObject = new GameObject("FlockCenter");
         flockCenterObject.transform.position = flockCenter;
         flockCenterObject.transform.parent = flocksParent.transform;
+        flockCenterObject.tag = "Flock";
+        BirdManager.Instance.flocks.Add( flockCenterObject );
 
         // Crear pajaros alrededor del centro y asignarlos como hijos del centro
         for (int i = 0; i < birdsPerFlock; i++)
@@ -172,27 +199,33 @@ public class NPCSpawner : MonoBehaviour
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
 
-            // Registrar el pajaro en el BirdManager
-            BirdManager.Instance.RegisterBird(bird);
+            
         }
+    }
+
+
+    public Vector3 GetCloudSpawnPosition()
+    {
+        Vector3 position = new Vector3(
+            -100, // Fijo en X
+            cloudHeightOffset, // Fijo en Y
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious) // Aleatorio en Z
+        );
+
+        return position;
     }
 
     void SpawnCloud()
     {
-        
-        Vector3 position = new Vector3(
-            Random.Range(-cloudSpawnRadious, cloudSpawnRadious),
-            cloudHeightOffset,
-            Random.Range(-cloudSpawnRadious, cloudSpawnRadious)
-        );
-
-
-        position = GetRandomPositionOnGround(0, false);
+        Vector3 position = GetCloudSpawnPosition();
         GameObject cloud = CloudPool.Instance.GetCloud();
-        cloud.transform.position = position;
-        PlayerManager.Instance.cloudTransform = cloud.transform;
-
+        if (cloud != null)
+        {
+            cloud.transform.position = position;
+            cloud.SetActive(true);
+        }
     }
+
 
 
 
