@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using UnityEditor;
+//using UnityEditor;
 
 /// <summary>
 /// Handles music and sound effects reproduction. Requires two 
@@ -154,35 +154,35 @@ public class SoundManager : MonoBehaviour
     // }
 }
 
-/// <summary>
-/// To ensure that at least two AudioSources are attached to the SoundManager GO
-/// </summary>
-[CustomEditor(typeof(SoundManager))]
-public class SoundManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
+// /// <summary>
+// /// To ensure that at least two AudioSources are attached to the SoundManager GO
+// /// </summary>
+// [CustomEditor(typeof(SoundManager))]
+// public class SoundManagerEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
 
-        SoundManager soundManager = (SoundManager)target;
+//         SoundManager soundManager = (SoundManager)target;
 
-        // Check if there are exactly two AudioSource components
-        AudioSource[] audioSources = soundManager.GetComponents<AudioSource>();
-        if (audioSources.Length != 2)
-        {
-            EditorGUILayout.HelpBox("SoundManager requires exactly two AudioSource components.", MessageType.Warning);
+//         // Check if there are exactly two AudioSource components
+//         AudioSource[] audioSources = soundManager.GetComponents<AudioSource>();
+//         if (audioSources.Length != 2)
+//         {
+//             EditorGUILayout.HelpBox("SoundManager requires exactly two AudioSource components.", MessageType.Warning);
 
-            if (GUILayout.Button("Add Missing AudioSources"))
-            {
-                while (audioSources.Length < 2)
-                {
-                    soundManager.gameObject.AddComponent<AudioSource>();
-                    audioSources = soundManager.GetComponents<AudioSource>();
-                }
-            }
-        }
-    }
-}
+//             if (GUILayout.Button("Add Missing AudioSources"))
+//             {
+//                 while (audioSources.Length < 2)
+//                 {
+//                     soundManager.gameObject.AddComponent<AudioSource>();
+//                     audioSources = soundManager.GetComponents<AudioSource>();
+//                 }
+//             }
+//         }
+//     }
+// }
 
 /// <summary>
 /// Public sound types enumeration
