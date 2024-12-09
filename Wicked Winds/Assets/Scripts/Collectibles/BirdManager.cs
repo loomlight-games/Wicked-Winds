@@ -5,8 +5,11 @@ using UnityEngine;
 public class BirdManager : MonoBehaviour
 {
     public static BirdManager Instance { get; private set; }
-    private List<GameObject> birds; // Lista de pájaros en la escena
+    public List<GameObject> flocks; // Lista de pájaros en la escena
     private bool birdsActive = true;
+    private bool isBirdsTimerActive = false;
+    float timer = 0f;  // Temporizador que se incrementa cada frame
+    float potionBirdsEffectTime = 20f;
 
     private void Awake()
     {
@@ -15,30 +18,34 @@ public class BirdManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        birds = new List<GameObject>(GameObject.FindGameObjectsWithTag("Bird")); // Asume que los pájaros tienen el tag "Bird"
+
     }
 
-    public void DeactivateBirds()
+    public void DeactivateAllBirds()
     {
         if (!birdsActive) return; // Evita desactivar si ya están desactivados
         birdsActive = false;
 
-        birds.RemoveAll(b => b == null);
-        foreach (var bird in birds)
+        foreach (GameObject flock in flocks)
         {
-            bird.SetActive(false);
+            foreach (Transform child in flock.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
     }
 
-    public void ActivateBirds()
+    public void ActivateAllBirds()
     {
         if (birdsActive) return; // Evita activar si ya están activos
         birdsActive = true;
 
-        birds.RemoveAll(b => b == null);
-        foreach (var bird in birds)
+        foreach (GameObject flock in flocks)
         {
-            bird.SetActive(true);
+            foreach (Transform child in flock.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -47,14 +54,31 @@ public class BirdManager : MonoBehaviour
         return birdsActive;
     }
 
-
-    // Método para añadir un pájaro a la lista
-    public void RegisterBird(GameObject bird)
+    public void ReenableBirdsAfterTime()
     {
-        if (!birds.Contains(bird))
-        {
-            birds.Add(bird);
-        }
+        isBirdsTimerActive = true;
     }
 
+    private void Update()
+    {
+        if (isBirdsTimerActive)
+        {
+            timer += Time.deltaTime;
+            if (timer >= potionBirdsEffectTime)
+            {
+                PlayerManager.Instance.potionBird = false;
+                DesactivarPotionUI.Instance.activarBirdUI = false;
+                timer = 0f;
+                isBirdsTimerActive = false;
+                ActivateAllBirds();
+                GameManager.Instance.playState.feedBackText.text = "Birds again in the sky";
+
+            }
+        }
+
+
+
+
+
+    }
 }

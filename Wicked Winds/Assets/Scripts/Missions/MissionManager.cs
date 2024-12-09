@@ -12,7 +12,7 @@ public class MissionManager : MonoBehaviour
 
     public MissionData[] availableMissions; // Todas las misiones disponibles
     public List<NPC> allNPCs;
-    public int numMissionsToAssign = 10; // N�mero de misiones por ronda
+    public int numMissionsToAssign = 15; // N�mero de misiones por ronda
 
     private MissionIconPool missionIconPool;
     public List<NPC> assignedNPCs = new List<NPC>();

@@ -13,26 +13,11 @@ public class BirdPotion : MonoBehaviour
         PlayerManager.Instance.potionBird = true;
         DesactivarPotionUI.Instance.activarBirdUI = true; // Muestra la UI de la poci�n
 
-        // Desactivar todos los p�jaros
-        StartCoroutine(DeactivateBirdsTemporarily());
+        BirdManager.Instance.DeactivateAllBirds();
 
-        gameObject.SetActive(false); // Desactiva la poci�n
+        gameObject.SetActive(false); // Desactiva la pocion
+        BirdManager.Instance.ReenableBirdsAfterTime();
     }
 
-    // Coroutine para desactivar los p�jaros durante 20 segundos
-    private IEnumerator DeactivateBirdsTemporarily()
-    {
-        // Desactivar los p�jaros
-        BirdManager.Instance.DeactivateBirds();
 
-        // Espera 20 segundos
-        yield return new WaitForSeconds(20f);
-
-        // Reactivar los p�jaros
-        BirdManager.Instance.ActivateBirds(); // Reactiva los p�jaros despu�s de 20 segundos
-
-        // Ocultar la UI de la poci�n
-        DesactivarPotionUI.Instance.activarBirdUI = false;
-        PlayerManager.Instance.potionBird = false;
-    }
 }

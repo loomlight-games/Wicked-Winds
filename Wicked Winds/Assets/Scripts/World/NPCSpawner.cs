@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +23,22 @@ public class NPCSpawner : MonoBehaviour
         birdHeightOffset = 15f, // Altura fija de las bandadas
         cloudSpawnRadious = 100f,
         cloudHeightOffset = 40;
+    private static NPCSpawner instance;
+    public static NPCSpawner Instance { get { return instance; } } // con el patron singleton hacemos que 
+    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
+    // y campos desde otros scripts
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public LayerMask buildingLayer, waterLayer, groundLayer;
     int spawnedNPCCount = 0;
@@ -44,15 +61,23 @@ public class NPCSpawner : MonoBehaviour
             SpawnFlock();
         }
 
-        SpawnCloud();
+        // Iniciar corutina para spawnear nubes
+        StartCoroutine(SpawnCloudsWithDelay());
+    }
+
+    IEnumerator SpawnCloudsWithDelay()
+    {
+        for (int i = 0; i < numOfClouds; i++)
+        {
+            SpawnCloud();
+            yield return new WaitForSeconds(50f); // Esperar 50 segundos antes de spawnear la siguiente nube
+        }
     }
 
     void SpawnNPC()
     {
-        // Obtener el ID del tipo de agente para NPCs (Humanoid)
         int humanoidAgentTypeID = NavMesh.GetSettingsByIndex(0).agentTypeID;
 
-        // Buscar una posici�n v�lida en el NavMesh para el NPC
         Vector3 spawnPosition = GetRandomPositionOnGround(humanoidAgentTypeID, false);
         if (spawnPosition != Vector3.zero)
         {
@@ -69,7 +94,7 @@ public class NPCSpawner : MonoBehaviour
             if (agentNPC != null)
             {
                 agentNPC.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
-                agentNPC.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasi�n
+                agentNPC.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasion
 
             }
 
@@ -79,7 +104,7 @@ public class NPCSpawner : MonoBehaviour
                 // Obtener el ID del tipo de agente para gatos (Cat)
                 int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
 
-                // Buscar una posici�n v�lida en el NavMesh para el gato
+
                 Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
                 if (catPosition != Vector3.zero)
                 {
@@ -93,7 +118,7 @@ public class NPCSpawner : MonoBehaviour
                     if (agentCat != null)
                     {
                         agentCat.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
-                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance; // Calidad de evasi�n
+                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
 
                     }
                 }
@@ -102,7 +127,7 @@ public class NPCSpawner : MonoBehaviour
             // 10% de probabilidad de generar un b�ho
             if (Random.value < 0.1f)
             {
-                // Generar el b�ho en cualquier parte del mapa a una altura de 10 unidades
+
                 Vector3 owlPosition = new Vector3(
                     Random.Range(-detectionRadius, detectionRadius),
                     15f, // Altura fija de 10 unidades
@@ -138,6 +163,8 @@ public class NPCSpawner : MonoBehaviour
         GameObject flockCenterObject = new GameObject("FlockCenter");
         flockCenterObject.transform.position = flockCenter;
         flockCenterObject.transform.parent = flocksParent.transform;
+        flockCenterObject.tag = "Flock";
+        BirdManager.Instance.flocks.Add(flockCenterObject);
 
         // Crear pajaros alrededor del centro y asignarlos como hijos del centro
         for (int i = 0; i < birdsPerFlock; i++)
@@ -160,26 +187,33 @@ public class NPCSpawner : MonoBehaviour
                 birdController.flockCenter = flockCenterObject.transform; // Asignar el centro
             }
 
-            // Registrar el pajaro en el BirdManager
-            BirdManager.Instance.RegisterBird(bird);
+
         }
+    }
+
+
+    public Vector3 GetCloudSpawnPosition()
+    {
+        Vector3 position = new Vector3(
+            -100, // Fijo en X
+            cloudHeightOffset, // Fijo en Y
+            Random.Range(-cloudSpawnRadious, cloudSpawnRadious) // Aleatorio en Z
+        );
+
+        return position;
     }
 
     void SpawnCloud()
     {
-        // Generar una posici�n central aleatoria para la bandada
-        Vector3 position = new Vector3(
-            Random.Range(-cloudSpawnRadious, cloudSpawnRadious),
-            cloudHeightOffset,
-            Random.Range(-cloudSpawnRadious, cloudSpawnRadious)
-        );
-
-
-        position = GetRandomPositionOnGround(0, false);
-        GameObject cloud = Instantiate(cloudPrefab, position, Quaternion.identity);
-        PlayerManager.Instance.cloudTransform = cloud.transform;
-
+        Vector3 position = GetCloudSpawnPosition();
+        GameObject cloud = CloudPool.Instance.GetCloud();
+        if (cloud != null)
+        {
+            cloud.transform.position = position;
+            cloud.SetActive(true);
+        }
     }
+
 
 
 
@@ -222,51 +256,9 @@ public class NPCSpawner : MonoBehaviour
         }
 
 
-        Debug.LogWarning("No se encontr� una posici�n v�lida despu�s de varios intentos.");
+        Debug.LogWarning("No se encontro una posicion valida despues de varios intentos.");
         return Vector3.zero;
     }
 
 
-    Vector3 GetValidNavMeshPosition(int agentTypeID, Vector3 randomPoint)
-    {
-        int attempts = 30;  // N�mero de intentos para encontrar una posici�n v�lida
-        for (int i = 0; i < attempts; i++)
-        {
-            // Realizar un raycast hacia abajo para detectar el suelo
-            if (Physics.Raycast(randomPoint, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
-            {
-                Vector3 potentialPosition = hit.point;
-
-                // Comprobar si el punto est� en el NavMesh para el agente especificado
-                if (NavMesh.SamplePosition(potentialPosition, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
-                {
-                    // Validar que el tipo de agente sea compatible con el NavMesh en esa posici�n
-                    if (navHit.mask != 0 && navHit.hit && navHit.distance <= 1.0f)
-                    {
-                        NavMeshQueryFilter filter = new NavMeshQueryFilter
-                        {
-                            agentTypeID = agentTypeID,
-                            areaMask = NavMesh.AllAreas // Puedes limitar esto a �reas espec�ficas si es necesario
-                        };
-
-                        // Verificar que realmente pertenece al NavMesh del agente
-                        if (NavMesh.FindClosestEdge(navHit.position, out NavMeshHit edgeHit, filter))
-                        {
-                            return navHit.position; // Retorna la posici�n v�lida si se encuentra
-                        }
-                    }
-                }
-            }
-
-            // Si no se encuentra una posici�n v�lida, genera una nueva posici�n aleatoria
-            randomPoint = new Vector3(
-                Random.Range(-50f, 50f), // Ajusta el rango seg�n lo que necesites
-                randomPoint.y,
-                Random.Range(-50f, 50f)
-            );
-        }
-
-        Debug.LogWarning($"No se encontr� una posici�n v�lida en el NavMesh para el agente con ID {agentTypeID} despu�s de {attempts} intentos.");
-        return Vector3.zero; // Si no se encuentra ninguna posici�n v�lida despu�s de los intentos, devuelve Vector3.zero
-    }
 }

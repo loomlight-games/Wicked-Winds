@@ -46,6 +46,8 @@ public class BirdController : MonoBehaviour
         timer += Time.deltaTime;
     }
 
+
+
     // Define una nueva posición objetivo aleatoria dentro del radio de vuelo
     private void SetRandomTarget()
     {

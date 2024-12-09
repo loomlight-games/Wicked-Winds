@@ -16,6 +16,8 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
     public GameObject fogTriggerPrefab;
+    public GameObject fogPrefab;
+    int fogTriggersCreated = 0;  // Variable para contar los FogTriggers
 
     public void GenerateTown()
     {
@@ -23,6 +25,9 @@ public class TownGenerator
         townSize = GameManager.Instance.townSize;
 
         fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
+
+        fogPrefab = FogManager.Instance.FogPrefab;
+
 
         // Select tiles according to map theme
         townTiles = GameManager.Instance.town switch
@@ -62,6 +67,9 @@ public class TownGenerator
         CalculatePositions(); // Fills positions arrays calculating them - from upper left corner
 
         InstantiateTiles(); // Instantiates a town tile in each position - from center
+
+        // Llamar a la función para crear exactamente dos fog triggers
+        AddFogTriggerRandomly();
     }
 
     /// <summary>
@@ -128,6 +136,7 @@ public class TownGenerator
                 if (direction == 1 || direction == 3) steps++;
             }
         }
+
     }
 
     /// <summary>
@@ -152,20 +161,46 @@ public class TownGenerator
             // Instantiate tile in position with random rotation on Y
             GameObject instantiatedTile = GameManager.Instance.InstantiateGO(currentTile, position, Quaternion.Euler(0, randomRotation, 0), townParent.transform);
 
-            AddFogTriggerRandomly(instantiatedTile, tileData);
+
+            
+
         }
     }
 
     /// <summary>
     /// Adds fog trigger randomly
     /// </summary>
-    void AddFogTriggerRandomly(GameObject tile, TownTile tileData)
-    {
-        float fogChance = 0.2f;
-        if (UnityEngine.Random.value < fogChance)
+
+    void AddFogTriggerRandomly()
+
+    {// Solo generamos los fog triggers si no hemos creado dos aún
+        if (fogTriggersCreated < 2)
         {
-            tileData.hasFog = true;
-            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tile.transform.position, tile.transform.rotation, tile.transform);
+            // Seleccionamos un tile aleatorio en el que colocar el FogTrigger
+            int row = UnityEngine.Random.Range(0, townSize);
+            int col = UnityEngine.Random.Range(0, townSize);
+
+            // Asegurarnos de que no haya otro fog trigger ya en ese tile
+            while (tilesPositions[row, col] == null)  // Si ya se generó un fog en este tile, seleccionamos otro
+            {
+                row = UnityEngine.Random.Range(0, townSize);
+                col = UnityEngine.Random.Range(0, townSize);
+            }
+
+            // Instanciamos los fog triggers en los tiles seleccionados
+            GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tilesPositions[row, col], Quaternion.identity);
+            GameObject fog = GameObject.Instantiate(fogPrefab, tilesPositions[row, col], Quaternion.identity);
+            fogTriggersCreated++;  // Aumentamos el contador de fog triggers creados
+
+            // Repetir para el segundo fog trigger
+            if (fogTriggersCreated < 2)
+            {
+                row = UnityEngine.Random.Range(0, townSize);
+                col = UnityEngine.Random.Range(0, townSize);
+                GameObject fogTrigger2 = GameObject.Instantiate(fogTriggerPrefab, tilesPositions[row, col], Quaternion.identity);
+                GameObject fog2 = GameObject.Instantiate(fogPrefab, tilesPositions[row, col], Quaternion.identity);
+                fogTriggersCreated++;
+            }
         }
     }
 }

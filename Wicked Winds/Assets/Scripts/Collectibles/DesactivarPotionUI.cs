@@ -28,24 +28,24 @@ public class DesactivarPotionUI : MonoBehaviour
 
     void Update()
     {
-        // Desactiva el objeto de la poci�n de niebla si la condici�n se cumple
+        
         if (activarFogUI)
         {
-            potionFog.SetActive(true); // Activa la UI de la poci�n de niebla
+            potionFog.SetActive(true); 
         }
         else
         {
-            potionFog.SetActive(false); // Desactiva la UI de la poci�n de niebla
+            potionFog.SetActive(false); 
         }
 
-        // Desactiva el objeto de la poci�n de p�jaros si la condici�n se cumple
+       
         if (activarBirdUI)
         {
-            potionBird.SetActive(true); // Activa la UI de la poci�n de p�jaros
+            potionBird.SetActive(true); 
         }
         else
         {
-            potionBird.SetActive(false); // Desactiva la UI de la poci�n de p�jaros
+            potionBird.SetActive(false); 
         }
     }
 }
