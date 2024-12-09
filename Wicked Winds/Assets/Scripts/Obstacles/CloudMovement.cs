@@ -5,7 +5,7 @@ public class CloudMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 2f; // Velocidad de movimiento
     private Vector3 targetPosition; // Posición final fija (X = 105
-
+   
     private void Start()
     {
         SetTargetPosition();
@@ -35,5 +35,6 @@ public class CloudMovement : MonoBehaviour
         CloudPool.Instance.ReturnCloud(gameObject);
 
     }
+
 
 }

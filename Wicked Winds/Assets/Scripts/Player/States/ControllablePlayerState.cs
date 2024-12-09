@@ -133,6 +133,12 @@ public class ControllablePlayerState : AState
             default:
                 break;
         }
+
+        if (other.CompareTag("CloudCollider"))
+        {
+            CloudPool.Instance.ChangePlayerSpeed(true);
+            Debug.LogWarning("ESTA DEBAJO DE LA NUBE");
+        }
     }
 
     public override void OnTriggerStay(Collider other)
@@ -157,6 +163,20 @@ public class ControllablePlayerState : AState
             // Owl
             else if (other.gameObject.TryGetComponent(out OwlController owl))
                 owl.Interact();
+
         }
+       
     }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("CloudCollider"))
+        {
+            CloudPool.Instance.ChangePlayerSpeed(false);
+            Debug.Log("Player has exited the cloud.");
+        }
+        Debug.LogWarning("ESTA SALIENDO DE LA NUBE");
+
+    }
+
 }
