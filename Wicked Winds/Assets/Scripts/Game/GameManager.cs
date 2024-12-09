@@ -26,6 +26,7 @@ public class GameManager : AStateController
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
     public readonly TownSelectionState selectTownState = new();
+    public readonly AuthentificationState authentificationState = new();
     #endregion
 
     #region SUB-MANAGERS
@@ -145,6 +146,13 @@ public class GameManager : AStateController
         switch (buttonName)
         {
             case "Start":
+                //SwitchState(selectTownState);
+                SwitchState(authentificationState);
+                break;
+            case "SignInButton":
+                SwitchState(selectTownState);
+                break;
+            case "SignUpButton":
                 SwitchState(selectTownState);
                 break;
             case "Play":

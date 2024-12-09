@@ -13,9 +13,10 @@ public class TownSelectionState : AState
     public override void Enter()
     {
         GameManager.Instance.TownSelected += ShowTownImage;
-
+        
         GameObject UI = GameObject.Find("UI");
         townSelectionMenu = UI.transform.Find("Town selection").gameObject;
+        Debug.Log("town selector menu");
         townSelectionMenu.SetActive(true);
         GameObject townInfo = townSelectionMenu.transform.Find("Town info").gameObject;
 
