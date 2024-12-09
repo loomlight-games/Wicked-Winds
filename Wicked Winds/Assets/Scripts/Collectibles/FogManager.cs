@@ -67,7 +67,6 @@ public class FogManager : MonoBehaviour
                 DesactivarPotionUI.Instance.activarFogUI = false;
                 timer = 0f;
                 isFogTimerActive = false;
-                GameManager.Instance.playState.feedBackText.text = "Back to London time...";
                 FogManager.Instance.StartFogTransition(fogDensity, targetColor);
 
 
@@ -85,7 +84,6 @@ public class FogManager : MonoBehaviour
 
         if (PlayerManager.Instance.potionFog)
         {
-            GameManager.Instance.playState.feedBackText.text = "WOW! The fog has magically disappeared!";
             RenderSettings.fog = false; // Apagar inmediatamente la niebla
             isTransitioning = false; // Detener transiciones en curso
             RenderSettings.fogDensity = 0f; // Reiniciar la densidad

@@ -20,7 +20,6 @@ public class FogTrigger : MonoBehaviour
         if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
         {
             PlayerManager.Instance.playerIsInsideFog = true;
-            GameManager.Instance.playState.feedBackText.text = "Perfect weather for some ghost stories...";
             FogManager.Instance.StartFogTransition(FogManager.Instance.fogDensity, FogManager.Instance.targetColor); // Activar niebla (hacia blanco)
         }
     }
@@ -41,7 +40,6 @@ public class FogTrigger : MonoBehaviour
         if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
         {
             PlayerManager.Instance.playerIsInsideFog = false;
-            GameManager.Instance.playState.feedBackText.text = "Finally some sunlight!";
             FogManager.Instance.StartFogTransition(0f, FogManager.Instance.transparentColor); // Desactivar niebla (hacia transparente)
             RenderSettings.fog = false;
         }

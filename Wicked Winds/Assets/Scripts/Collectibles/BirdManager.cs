@@ -5,7 +5,7 @@ using UnityEngine;
 public class BirdManager : MonoBehaviour
 {
     public static BirdManager Instance { get; private set; }
-    public List<GameObject> flocks; // Lista de pájaros en la escena
+    public List<GameObject> flocks; // Lista de pï¿½jaros en la escena
     private bool birdsActive = true;
     private bool isBirdsTimerActive = false;
     float timer = 0f;  // Temporizador que se incrementa cada frame
@@ -23,7 +23,7 @@ public class BirdManager : MonoBehaviour
 
     public void DeactivateAllBirds()
     {
-        if (!birdsActive) return; // Evita desactivar si ya están desactivados
+        if (!birdsActive) return; // Evita desactivar si ya estï¿½n desactivados
         birdsActive = false;
 
         foreach (GameObject flock in flocks)
@@ -37,7 +37,7 @@ public class BirdManager : MonoBehaviour
 
     public void ActivateAllBirds()
     {
-        if (birdsActive) return; // Evita activar si ya están activos
+        if (birdsActive) return; // Evita activar si ya estï¿½n activos
         birdsActive = true;
 
         foreach (GameObject flock in flocks)
@@ -71,14 +71,7 @@ public class BirdManager : MonoBehaviour
                 timer = 0f;
                 isBirdsTimerActive = false;
                 ActivateAllBirds();
-                GameManager.Instance.playState.feedBackText.text = "Birds again in the sky";
-
             }
         }
-
-
-
-
-
     }
 }

@@ -15,7 +15,8 @@ public class NPCSpawner : MonoBehaviour
     public int npcCount = 50,
         numOfTries = 30, // To find valid position
         numberOfFlocks = 15,
-        birdsPerFlock = 5;
+        birdsPerFlock = 5,
+        numOfClouds = 2;
 
     public float detectionRadius = 50f, // Radious to detect ground
         flockSpawnRadius = 80f,// Radio para dispersar las bandadas
@@ -24,9 +25,7 @@ public class NPCSpawner : MonoBehaviour
         cloudSpawnRadious = 100f,
         cloudHeightOffset = 40;
     private static NPCSpawner instance;
-    public static NPCSpawner Instance { get { return instance; } } // con el patron singleton hacemos que 
-    //solo tengamos una unica instancia de bulletpool y nos permite acceder más fácilmente a sus metodos
-    // y campos desde otros scripts
+    public static NPCSpawner Instance { get { return instance; } }
 
     private void Awake()
     {
