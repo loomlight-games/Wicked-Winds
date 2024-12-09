@@ -38,21 +38,7 @@ public class AuthentificationPanel : Panel
         base.Open();
         usernameInput.ActivateInputField();
         passwordInput.DeactivateInputField();
-        // Forzar apertura del teclado táctil
-        if (Application.isMobilePlatform)
-        {
-            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-        }
-        usernameInput.onSelect.AddListener((value) =>
-        {
-            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-        });
-        passwordInput.onSelect.AddListener((value) =>
-        {
-            Debug.Log("Campo seleccionado. Intentando abrir el teclado...");
-            TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
-            Debug.Log("Intentando abrir el teclado sin verificar la plataforma");
-        });
+
     }
     private void AnonymousSignIn()
     {
@@ -178,11 +164,6 @@ public class AuthentificationPanel : Panel
         return hasUppercase && hasLowercase && hasDigit && hasSymbol;
     }
 
-    void Viewtable()
-    {
-        Close();
-        PanelManager.Open("TotalTimeLeaderboard");
-    }
 
     // UI EFFECTS
     // Método para cambiar el color del borde a rojo en caso de error

@@ -4,7 +4,7 @@ public class LeaderboardGameState : AState
 {
     public override void Enter()
     {
-        PanelManager.Open("auth");
+        PanelManager.Open("profile");
     }
 
     public override void Update()
