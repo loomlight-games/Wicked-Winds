@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3166506626971974311}
-  m_Layer: 3
+  - component: {fileID: 5097202900780647801}
+  m_Layer: 6
   m_Name: FH IceHockey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +33,22 @@ Transform:
   - {fileID: 8575802735395733789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &5097202900780647801
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027491513647467979}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.21, y: 1.49, z: 1.65}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 11.21, y: 2.13, z: 0.4}
+  m_TimeToStationary: 0.5
 --- !u!1001 &8109265885890045686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68,7 +85,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: adbcebaec9f51c0469d231e9810e7f52,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.9623655
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: adbcebaec9f51c0469d231e9810e7f52,
         type: 3}
@@ -123,7 +140,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: adbcebaec9f51c0469d231e9810e7f52,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3196817101657809528}
   m_SourcePrefab: {fileID: 100100000, guid: adbcebaec9f51c0469d231e9810e7f52, type: 3}
 --- !u!4 &8575802735395733789 stripped
 Transform:
@@ -131,3 +152,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8109265885890045686}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8955565682459040679 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: adbcebaec9f51c0469d231e9810e7f52,
+    type: 3}
+  m_PrefabInstance: {fileID: 8109265885890045686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!208 &3196817101657809528
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8955565682459040679}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.33, y: 2.02, z: 1.37}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -11, y: -0.49, z: 1.56}
+  m_TimeToStationary: 0.5

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5856110970872739736}
+  - component: {fileID: 3989569774893695199}
   m_Layer: 7
   m_Name: FH House4
   m_TagString: Untagged
@@ -33,6 +34,22 @@ Transform:
   - {fileID: 4077302316588197229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &3989569774893695199
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8329116098707980668}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.615, y: 2.75, z: 3.43}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 3.29, z: 2.44}
+  m_TimeToStationary: 0.5
 --- !u!1001 &4079729411657703447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,11 +116,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FH Grass
-      objectReference: {fileID: 0}
-    - target: {fileID: 8550617601447814566, guid: a3e484e617d43ac4f97ab22cdc9e446c,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8550617601447814566, guid: a3e484e617d43ac4f97ab22cdc9e446c,
         type: 3}
@@ -212,34 +224,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9dce5cbe15892b74393dfa7783de3a1a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7073528599653500188}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dce5cbe15892b74393dfa7783de3a1a, type: 3}
---- !u!1 &8250127767890755088 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9dce5cbe15892b74393dfa7783de3a1a,
-    type: 3}
-  m_PrefabInstance: {fileID: 9133087492964860737}
-  m_PrefabAsset: {fileID: 0}
---- !u!208 &7073528599653500188
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8250127767890755088}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 6.714, y: 4.7910004, z: 3.9}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 2.374, y: -1.2650001, z: -2.6650002}
-  m_TimeToStationary: 0.5
 --- !u!4 &8734036392495457450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9dce5cbe15892b74393dfa7783de3a1a,
