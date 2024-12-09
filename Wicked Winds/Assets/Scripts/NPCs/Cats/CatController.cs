@@ -1,18 +1,17 @@
 using UnityEngine.AI;
 using UnityEngine;
 
-public class CatController : AStateController
+public class CatController : AAnimationController
 {
-    public Animator animator;
-    public LayerMask buildingLayer;
+    public string currentStateName; // For debugging
+    public float stopDistance = 2f,
+        followSpeedFactor = 0.9f,
+        distanceToPlayer,
+        distanceToOwner,
+        minIdleTime = 5f,
+        maxIdleTime = 10f;
     public NPC owner;
-    public string currentStateName;
-    public float minFollowDistance = 2f, // Min distance for the cat to stop
-    followSpeedFactor = 0.9f,
-    distanceToPlayer,
-    distanceToOwner,
-    minIdleTime = 5f,
-    maxIdleTime = 10f;
+    public LayerMask buildingLayer;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public RaycastHit hit;
 
@@ -22,6 +21,10 @@ public class CatController : AStateController
     public ClimbingState climbingState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
+
+    // ANIMATIONS
+    readonly int IdleAnimation = Animator.StringToHash("Idle"),
+                MovingAnimation = Animator.StringToHash("Moving");
 
     public override void Start()
     {
@@ -61,5 +64,14 @@ public class CatController : AStateController
             // Next target is cat owner
             PlayerManager.Instance.AddTarget(owner.gameObject);
         }
+    }
+
+    public override void CheckAnimation()
+    {
+        // Is still
+        if (GetState() == idleState)
+            ChangeAnimationTo(IdleAnimation);
+        else
+            ChangeAnimationTo(MovingAnimation);
     }
 }
