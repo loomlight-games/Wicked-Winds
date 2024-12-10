@@ -118,11 +118,14 @@ public class MissionManager : MonoBehaviour
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
-        numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1, numMissionsToAssign - numHardMissions));
-        numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
+        /* numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
+         numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1, numMissionsToAssign - numHardMissions));
+         numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
-        numEasyMissions = Mathf.Max(numEasyMissions, 0);
+         numEasyMissions = Mathf.Max(numEasyMissions, 0);*/
+        numEasyMissions = 0;
+        numHardMissions = numMissionsToAssign;
+        numMediumMissions = 0;
         Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
@@ -153,6 +156,15 @@ public class MissionManager : MonoBehaviour
                     selectedNPC = GetRandomNPC(npcsWithCat);
                     npcsWithCat.Remove(selectedNPC); // Remover el NPC con gato de la lista
                 }
+
+                else
+                {
+                    // Generar un nuevo búho y asignarlo a un NPC genérico
+                    selectedNPC = GetRandomNPC(shuffledNPCs);
+                    shuffledNPCs.Remove(selectedNPC); // Remover el NPC genérico de la lista
+                    NPCSpawner.Instance.SpawnCat(selectedNPC);
+                    npcsWithCat.Add(selectedNPC); // Añadir este NPC a la lista de NPCs con búho
+                }
             }
             else if (mission.missionName == "OwlMission")
             {
@@ -161,6 +173,15 @@ public class MissionManager : MonoBehaviour
                 {
                     selectedNPC = GetRandomNPC(npcsWithOwl);
                     npcsWithOwl.Remove(selectedNPC); // Remover el NPC con gato de la lista
+                }
+
+                else
+                {
+                    // Generar un nuevo búho y asignarlo a un NPC genérico
+                    selectedNPC = GetRandomNPC(shuffledNPCs);
+                    NPCSpawner.Instance.SpawnOwl(selectedNPC);
+                    shuffledNPCs.Remove(selectedNPC); // Remover el NPC genérico de la lista
+                    npcsWithOwl.Add(selectedNPC); // Añadir este NPC a la lista de NPCs con búho
                 }
             }
             else if (mission.missionName == "PotionMission" || mission.missionName == "LetterMision") // Si es una misión de tipo Potion o Letter
@@ -185,22 +206,19 @@ public class MissionManager : MonoBehaviour
 
     private NPC GetRandomNPC(List<NPC> shuffledNPCs)
     {
-
-        int randomIndex = UnityEngine.Random.Range(0, shuffledNPCs.Count);
-        NPC selectedNPC = shuffledNPCs[randomIndex];
-
-        if (selectedNPC.request != null)
+        while (shuffledNPCs.Count > 0)
         {
-
+            int randomIndex = UnityEngine.Random.Range(0, shuffledNPCs.Count);
+            NPC selectedNPC = shuffledNPCs[randomIndex];
+            if (selectedNPC.request == null)
+            {
+                return selectedNPC;
+            }
             shuffledNPCs.RemoveAt(randomIndex);
-            return null;
         }
-
-
-        return selectedNPC;
+        return null;
     }
-
-    private MissionData SelectMission(Dictionary<string, List<MissionData>> missionLists, ref int assignedCount, int numEasyMissions, int numMediumMissions)
+        private MissionData SelectMission(Dictionary<string, List<MissionData>> missionLists, ref int assignedCount, int numEasyMissions, int numMediumMissions)
     {
 
         MissionData mission = null;
