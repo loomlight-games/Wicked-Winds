@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPC : MonoBehaviour
+public class NpcController : MonoBehaviour
 {
     public string missionType,
         message,
         responseMessage;
     public bool hasMission;
     public MissionIcon request = null;
-    public NPC sender;
+    public NpcController sender;
     public CatController cat;
     public OwlController owl;
     public Animator animator;
@@ -157,9 +157,9 @@ public class NPC : MonoBehaviour
                     Guid targetID = PlayerManager.Instance.npcMissionActive.request.addressee.npcID;
 
                     // Encuentra todos los NPCs en la escena
-                    NPC[] allNPCs = FindObjectsOfType<NPC>();
+                    NpcController[] allNPCs = FindObjectsOfType<NpcController>();
 
-                    foreach (NPC npc in allNPCs)
+                    foreach (NpcController npc in allNPCs)
                     {
                         // Compara el ID del NPC con el objetivo
                         if (npc.npcID == targetID)
@@ -243,7 +243,7 @@ public class NPC : MonoBehaviour
     /// <summary>
     /// Removes target and mission from player
     /// </summary>
-    public void CompleteMission(NPC npc)
+    public void CompleteMission(NpcController npc)
     {
         if (this.request != null)
             request.CompleteMission();

@@ -113,7 +113,7 @@ public class NPCSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnOwl(NPC npc)
+    public void SpawnOwl(NpcController npc)
     {
         Vector3 owlPosition = new Vector3(
                            Random.Range(-detectionRadius, detectionRadius),
@@ -127,7 +127,7 @@ public class NPCSpawner : MonoBehaviour
         owlController.owner = npc;
     }
 
-    public void SpawnCat(NPC npc)
+    public void SpawnCat(NpcController npc)
     {
         // Obtener el ID del tipo de agente para gatos (Cat)
         int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
