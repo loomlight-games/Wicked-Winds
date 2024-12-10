@@ -31,7 +31,7 @@ public class NpcController : AAnimationController
 
     #region STATES
     // Idle: has a mission
-    // Walking: doesn't have a mission
+    // Walking: doesn't have a mission. Already RandomNpcMovement?
     // Talking: player has interacted
     #endregion
 
@@ -57,11 +57,9 @@ public class NpcController : AAnimationController
     {
         // If player isn't talking with anyone
         if (PlayerManager.Instance.GetState() != PlayerManager.Instance.talkingState)
+        {
             isTalking = false; // This isn't either
 
-        // This is not talking
-        if (!isTalking)
-        {
             // Doesn't have a mission
             if (request == null)
             {
@@ -247,12 +245,22 @@ public class NpcController : AAnimationController
         PlayerManager.Instance.hasActiveMission = false;
     }
 
+    void RotateTowardsPlayer()
+    {
+        // Calculates rotation to player
+        Quaternion lookRotation = Quaternion.LookRotation(PlayerManager.Instance.transform.position - transform.position);
+
+        // Transitions to it
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * agent.speed);
+    }
+
     public override void CheckAnimation()
     {
         if (isTalking)
         {
             ChangeAnimationTo(Talking);
             agent.isStopped = true;
+            RotateTowardsPlayer();
         }
         else
         {
