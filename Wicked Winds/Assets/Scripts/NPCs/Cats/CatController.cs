@@ -1,31 +1,26 @@
 using UnityEngine.AI;
 using UnityEngine;
 
-public class CatController : AAnimationController
+public class CatController : AStateController
 {
-    public string currentStateName; // For debugging
-    public float stopDistance = 2f,
-        followSpeedFactor = 0.9f,
-        distanceToPlayer,
-        distanceToOwner,
-        minIdleTime = 5f,
-        maxIdleTime = 10f;
-    public NpcController owner;
+    public Animator animator;
     public LayerMask buildingLayer;
+    public NPC owner;
+    public string currentStateName;
+    public float minFollowDistance = 2f, // Min distance for the cat to stop
+    followSpeedFactor = 0.9f,
+    distanceToPlayer,
+    distanceToOwner,
+    minIdleTime = 5f,
+    maxIdleTime = 10f;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public RaycastHit hit;
 
-    #region STATES
+    // STATES
     public IdleState idleState;
     public MovingState randomMoveState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
-    #endregion
-
-    #region ANIMATIONS
-    readonly int IdleAnimation = Animator.StringToHash("Idle"),
-                MovingAnimation = Animator.StringToHash("Moving");
-    #endregion
 
     public override void Start()
     {
@@ -57,8 +52,6 @@ public class CatController : AAnimationController
         if (PlayerManager.Instance.hasActiveMission &&
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
-            SoundManager.PlaySound(SoundType.Cat);
-
             SwitchState(followingPlayerState);
 
             PlayerManager.Instance.RemoveTarget(gameObject);
@@ -66,14 +59,5 @@ public class CatController : AAnimationController
             // Next target is cat owner
             PlayerManager.Instance.AddTarget(owner.gameObject);
         }
-    }
-
-    public override void CheckAnimation()
-    {
-        // Is still
-        if (GetState() == idleState)
-            ChangeAnimationTo(IdleAnimation);
-        else
-            ChangeAnimationTo(MovingAnimation);
     }
 }

@@ -4,7 +4,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class OwlController : MonoBehaviour
 {
     public Transform player; // Reference to the player
-    public NpcController owner; // Reference to the NPC owner of the owl
+    public NPC owner; // Reference to the NPC owner of the owl
     public float moveSpeed = 2f; // Movement speed of the owl (This will be overwritten by PlayerManager)
     public float detectionRadius = 10f; // Radius for detecting the player
     public float flightHeight = 15f; // Height at which the owl flies
@@ -108,8 +108,6 @@ public class OwlController : MonoBehaviour
         if (PlayerManager.Instance.hasActiveMission &&
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
-            SoundManager.PlaySound(SoundType.Owl);
-
             // Show icon in UI
             desactivarOwlUI.Instance.activateOwlUI = true;
 

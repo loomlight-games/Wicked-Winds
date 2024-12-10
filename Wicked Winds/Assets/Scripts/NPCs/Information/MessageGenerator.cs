@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MessageGenerator
 {
-    public (string, string) GenerateMessage(MissionData mission, NpcController currentNPC, MissionIcon missionIcon)
+    public (string, string) GenerateMessage(MissionData mission, NPC currentNPC, MissionIcon missionIcon)
     {
         // Check if the mission has messages
         if (mission.npcMessages == null || mission.npcMessages.Count == 0)

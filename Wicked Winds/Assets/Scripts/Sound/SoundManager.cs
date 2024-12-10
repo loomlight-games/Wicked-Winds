@@ -36,8 +36,8 @@ public class SoundManager : MonoBehaviour
         {
             Instance = this;
 
-            if (Application.isPlaying) // To avoid error in editor
-                DontDestroyOnLoad(gameObject);
+            if (Application.isPlaying)
+                DontDestroyOnLoad(gameObject);// To avoid error in editor
         }
         else
             Destroy(gameObject);
@@ -189,7 +189,8 @@ public class SoundManager : MonoBehaviour
 /// </summary>
 public enum SoundType
 {
-    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport, Dialogue, Cat, Bird, Owl, Final, Ingredient
+    MenuMusic, GameplayMusic, ButtonClick, Coin, Water, Potion, Teleport,
+    Dialogue, Cat, Bird, Owl, Final,
 }
 
 /// <summary>

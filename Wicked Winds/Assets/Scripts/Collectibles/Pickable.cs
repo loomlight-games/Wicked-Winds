@@ -3,7 +3,7 @@ using UnityEngine;
 public class Pickable : MonoBehaviour
 {
     // Referencia al NPC asociado
-    public NpcController npc;
+    public NPC npc;
     public MissionIcon missionIcon; // Referencia al icono de mision del NPC
     public int numOfObjectsToCollect;
 
@@ -20,7 +20,7 @@ public class Pickable : MonoBehaviour
         }
     }
 
-    public void SetNPC(NpcController assignedNPC)
+    public void SetNPC(NPC assignedNPC)
     {
         npc = assignedNPC;
     }
@@ -38,7 +38,6 @@ public class Pickable : MonoBehaviour
 
                 if (missionIcon != null)
                 {
-                    SoundManager.PlaySound(SoundType.Ingredient);
                     missionIcon.collectedItemsCount++;
 
                     // Remove ingredient from targets and destroy it
