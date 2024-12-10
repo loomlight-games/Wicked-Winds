@@ -108,6 +108,8 @@ public class OwlController : MonoBehaviour
         if (PlayerManager.Instance.hasActiveMission &&
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
+            SoundManager.PlaySound(SoundType.Owl);
+
             // Show icon in UI
             desactivarOwlUI.Instance.activateOwlUI = true;
 

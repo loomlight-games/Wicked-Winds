@@ -38,6 +38,7 @@ public class Pickable : MonoBehaviour
 
                 if (missionIcon != null)
                 {
+                    SoundManager.PlaySound(SoundType.Ingredient);
                     missionIcon.collectedItemsCount++;
 
                     // Remove ingredient from targets and destroy it

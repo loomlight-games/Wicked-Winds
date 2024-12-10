@@ -59,6 +59,8 @@ public class CatController : AAnimationController
         if (PlayerManager.Instance.hasActiveMission &&
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
+            SoundManager.PlaySound(SoundType.Cat);
+
             SwitchState(followingPlayerState);
 
             PlayerManager.Instance.RemoveTarget(gameObject);
