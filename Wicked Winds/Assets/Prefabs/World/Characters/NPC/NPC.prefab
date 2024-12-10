@@ -73,14 +73,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ccff8a4df03b14409ad1484a052a7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  request: {fileID: 0}
-  hasMission: 0
-  movementScript: {fileID: 8597868268812028505}
-  bubble: {fileID: 2492813812020445530}
-  npcName: 
-  message: 
   missionType: 
+  message: 
   responseMessage: 
+  hasMission: 0
+  request: {fileID: 0}
   sender: {fileID: 0}
   cat: {fileID: 0}
   owl: {fileID: 0}
@@ -112,6 +109,11 @@ MonoBehaviour:
   agent: {fileID: 7407445220720339385}
   range: 50
   centrePoint: {fileID: 1771561285409204118}
+  stuckDistance: 1
+  checkInterval: 0.5
+  npcLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &7407445220720339385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -358,14 +360,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7112992431056180252, guid: 32c92e01b26edc149b17fb458bf4de2d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3287293942978799672}
   m_SourcePrefab: {fileID: 100100000, guid: 32c92e01b26edc149b17fb458bf4de2d, type: 3}
---- !u!1 &2492813812020445530 stripped
+--- !u!1 &3819885783665227696 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 8443363077405139702, guid: 32c92e01b26edc149b17fb458bf4de2d,
+  m_CorrespondingSourceObject: {fileID: 7112992431056180252, guid: 32c92e01b26edc149b17fb458bf4de2d,
     type: 3}
   m_PrefabInstance: {fileID: 6319844469877990316}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3287293942978799672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819885783665227696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4901b57fabeb1b5498d8c51fb9915dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  lockX: 0
+  lockY: 0
+  lockZ: 0
 --- !u!4 &9156519798351197072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2929282809338433596, guid: 32c92e01b26edc149b17fb458bf4de2d,

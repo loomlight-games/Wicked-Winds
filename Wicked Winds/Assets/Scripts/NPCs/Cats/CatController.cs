@@ -19,7 +19,6 @@ public class CatController : AStateController
     // STATES
     public IdleState idleState;
     public MovingState randomMoveState;
-    public ClimbingState climbingState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
 
@@ -29,7 +28,6 @@ public class CatController : AStateController
 
         idleState = new IdleState(this);
         randomMoveState = new MovingState(this);
-        climbingState = new ClimbingState(this);
         followingPlayerState = new FollowingPlayerState(this);
         followingOwnerState = new FollowingOwnerState(this);
 

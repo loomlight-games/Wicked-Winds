@@ -74,6 +74,11 @@ MonoBehaviour:
   agent: {fileID: 7407445220720339385}
   range: 50
   centrePoint: {fileID: 1771561285409204118}
+  stuckDistance: 1
+  checkInterval: 0.5
+  npcLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &7407445220720339385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -314,8 +319,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7112992431056180252, guid: 32c92e01b26edc149b17fb458bf4de2d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4173018781926869666}
   m_SourcePrefab: {fileID: 100100000, guid: 32c92e01b26edc149b17fb458bf4de2d, type: 3}
+--- !u!1 &3819885783665227696 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7112992431056180252, guid: 32c92e01b26edc149b17fb458bf4de2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 6319844469877990316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4173018781926869666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819885783665227696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4901b57fabeb1b5498d8c51fb9915dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  lockX: 1
+  lockY: 0
+  lockZ: 0
 --- !u!4 &9156519798351197072 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2929282809338433596, guid: 32c92e01b26edc149b17fb458bf4de2d,
