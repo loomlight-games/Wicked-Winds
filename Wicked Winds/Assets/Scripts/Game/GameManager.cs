@@ -162,12 +162,12 @@ public class GameManager : AStateController
                 SwitchState(authentificationState);
                 PanelManager.Open("auth");
                 break;
-            case "SignInButton":
+            /*case "SignInButton":
                 SwitchState(selectTownState);
                 break;
             case "SignUpButton":
                 SwitchState(selectTownState);
-                break;
+                break;*/
             case "Play":
                 LoadSceneDirectly("Gameplay");
                 break;
@@ -293,7 +293,7 @@ public class GameManager : AStateController
         try
         {
             await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
-
+            SwitchState(selectTownState);
 
         }
         catch (AuthenticationException)
@@ -314,6 +314,7 @@ public class GameManager : AStateController
             await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
             string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
             await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
+            SwitchState(selectTownState);
         }
         catch (AuthenticationException)
         {
