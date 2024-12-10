@@ -106,6 +106,9 @@ public class GamePlayState : AState
         GameManager.Instance.remainingTime = remainingTime;
     }
 
+
+
+
     private void UpdateMissionTime()
     {
         if (remainingTime > 0)
