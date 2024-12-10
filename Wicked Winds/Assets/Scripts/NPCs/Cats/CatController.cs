@@ -18,7 +18,6 @@ public class CatController : AAnimationController
     #region STATES
     public IdleState idleState;
     public MovingState randomMoveState;
-    public ClimbingState climbingState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
     #endregion
@@ -34,7 +33,6 @@ public class CatController : AAnimationController
 
         idleState = new IdleState(this);
         randomMoveState = new MovingState(this);
-        climbingState = new ClimbingState(this);
         followingPlayerState = new FollowingPlayerState(this);
         followingOwnerState = new FollowingOwnerState(this);
 

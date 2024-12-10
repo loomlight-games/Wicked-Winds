@@ -100,46 +100,57 @@ public class NPCSpawner : MonoBehaviour
             // 30% de probabilidad de generar un gato
             if (Random.value < 0.3f)
             {
-                // Obtener el ID del tipo de agente para gatos (Cat)
-                int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
-
-
-                Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
-                if (catPosition != Vector3.zero)
-                {
-                    GameObject catInstance = Instantiate(catPrefab, catPosition, Quaternion.identity, catsParent.transform);
-                    CatController catController = catInstance.GetComponent<CatController>();
-                    npcComponent.cat = catController;
-                    catController.owner = npcComponent;
-
-                    // Configurar NavMeshAgent
-                    NavMeshAgent agentCat = catInstance.GetComponent<NavMeshAgent>();
-                    if (agentCat != null)
-                    {
-                        agentCat.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
-                        agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
-
-                    }
-                }
+                SpawnCat(npcComponent);
             }
 
             // 10% de probabilidad de generar un b�ho
             if (Random.value < 0.1f)
             {
-
-                Vector3 owlPosition = new Vector3(
-                    Random.Range(-detectionRadius, detectionRadius),
-                    15f, // Altura fija de 10 unidades
-                    Random.Range(-detectionRadius, detectionRadius)
-                );
-
-                GameObject owl = Instantiate(owlPrefab, owlPosition, Quaternion.identity, owlsParent.transform);
-                OwlController owlController = owl.GetComponent<OwlController>();
-                npcComponent.owl = owlController;
-                owlController.owner = npcComponent;
+                SpawnOwl(npcComponent);
+               
             }
             spawnedNPCCount++;
         }
+    }
+
+    public void SpawnOwl(NPC npc)
+    {
+        Vector3 owlPosition = new Vector3(
+                           Random.Range(-detectionRadius, detectionRadius),
+                           15f, // Altura fija de 10 unidades
+                           Random.Range(-detectionRadius, detectionRadius)
+                       );
+
+        GameObject owl = Instantiate(owlPrefab, owlPosition, Quaternion.identity, owlsParent.transform);
+        OwlController owlController = owl.GetComponent<OwlController>();
+        npc.owl = owlController;
+        owlController.owner = npc;
+    }
+
+    public void SpawnCat(NPC npc)
+    {
+        // Obtener el ID del tipo de agente para gatos (Cat)
+        int catAgentTypeID = NavMesh.GetSettingsByIndex(1).agentTypeID;
+
+
+        Vector3 catPosition = GetRandomPositionOnGround(catAgentTypeID, true);
+        if (catPosition != Vector3.zero)
+        {
+            GameObject catInstance = Instantiate(catPrefab, catPosition, Quaternion.identity, catsParent.transform);
+            CatController catController = catInstance.GetComponent<CatController>();
+            npc.cat = catController;
+            catController.owner = npc;
+
+            // Configurar NavMeshAgent
+            NavMeshAgent agentCat = catInstance.GetComponent<NavMeshAgent>();
+            if (agentCat != null)
+            {
+                agentCat.avoidancePriority = spawnedNPCCount; // Prioridad aleatoria para evitar colisiones
+                agentCat.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+
+            }
+        }
+
     }
 
     //BIRD SPAWNER
