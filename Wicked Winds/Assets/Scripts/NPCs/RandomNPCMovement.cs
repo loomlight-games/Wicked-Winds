@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RandomNPCMovement
+public class RandomNPCMovement : MonoBehaviour
 {
-    readonly NpcController controller;
+    public NavMeshAgent agent;
+    public float range; // Radius of sphere
+    public Transform centrePoint; // Centre of the area the agent wants to move around in
+    public float stuckDistance = 1.0f; // Minimum distance to consider NPCs stuck
+    public float checkInterval = 0.5f; // How often to check for stuck NPCs
+    public LayerMask npcLayer; // Layer to identify other NPCs
+
     private float lastCheckTime;
 
-    public RandomNPCMovement(NpcController controller)
+    void Start()
     {
-        this.controller = controller;
+        agent = GetComponent<NavMeshAgent>();
+
+        // `avoidancePriority` is assumed to be set externally
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
     }
 
-    public void Update()
+    void Update()
     {
-        if (controller.agent.remainingDistance <= controller.agent.stoppingDistance) // Done with path
+        if (agent.remainingDistance <= agent.stoppingDistance) // Done with path
         {
             MoveToRandomPoint();
         }
 
         // Periodically check if this NPC is stuck
-        if (Time.time - lastCheckTime > controller.checkInterval)
+        if (Time.time - lastCheckTime > checkInterval)
         {
             lastCheckTime = Time.time;
             HandleStuckNPC();
@@ -31,21 +40,21 @@ public class RandomNPCMovement
     void MoveToRandomPoint()
     {
         Vector3 point;
-        if (RandomPoint(controller.transform.position, controller.range, out point))
+        if (RandomPoint(centrePoint.position, range, out point))
         {
             Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); // Visualize the point
-            controller.agent.SetDestination(point);
+            agent.SetDestination(point);
         }
     }
 
     void HandleStuckNPC()
     {
-        Collider[] nearbyNPCs = Physics.OverlapSphere(controller.transform.position, controller.stuckDistance, controller.npcLayer);
+        Collider[] nearbyNPCs = Physics.OverlapSphere(transform.position, stuckDistance, npcLayer);
         foreach (Collider npc in nearbyNPCs)
         {
-            if (npc.gameObject != controller.gameObject) // Avoid detecting itself
+            if (npc.gameObject != gameObject) // Avoid detecting itself
             {
-                Debug.Log($"{controller.gameObject.name} is stuck with {npc.gameObject.name}. Moving...");
+                Debug.Log($"{gameObject.name} is stuck with {npc.gameObject.name}. Moving...");
                 MoveToRandomPoint();
                 break;
             }
@@ -70,6 +79,6 @@ public class RandomNPCMovement
     {
         // Visualize the stuck detection radius
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(controller.transform.position, controller.stuckDistance);
+        Gizmos.DrawWireSphere(transform.position, stuckDistance);
     }
 }
