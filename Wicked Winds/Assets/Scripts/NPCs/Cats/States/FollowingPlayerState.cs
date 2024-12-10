@@ -13,7 +13,7 @@ public class FollowingPlayerState : AState
     public override void Update()
     {
         // Distance to player is greater than minimum
-        if (catController.distanceToPlayer > catController.minFollowDistance)
+        if (catController.distanceToPlayer > catController.stopDistance)
         {
             catController.agent.isStopped = false; // Moves
             catController.agent.SetDestination(PlayerManager.Instance.transform.position);
@@ -22,7 +22,7 @@ public class FollowingPlayerState : AState
             catController.agent.isStopped = true; // Stops
 
         // Distance to owner is smaller than minimum
-        if (catController.distanceToOwner < catController.minFollowDistance)
+        if (catController.distanceToOwner < catController.stopDistance)
         {
             catController.SwitchState(catController.followingOwnerState);
         }

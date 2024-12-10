@@ -5,7 +5,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 
-public class Compass 
+public class Compass
 {
     // Target
     //public Transform target; // Lista de targets del jugador
@@ -38,16 +38,17 @@ public class Compass
     // Update is called once per frame
     public void Update()
     {
-        if(PlayerManager.Instance.playerIsInsideFog && PlayerManager.Instance.potionFog)
-        { // Instantiated compass
+        if (PlayerManager.Instance.playerIsInsideFog && PlayerManager.Instance.potionFog)
+        {
+            // Instantiated compass
             if (!isIstanciated)
             {
                 return;
             }
             if (isIstanciated)
             {
-            prefabInstance.SetActive(false);
-           
+                prefabInstance.SetActive(false);
+
                 return;
             }
         }

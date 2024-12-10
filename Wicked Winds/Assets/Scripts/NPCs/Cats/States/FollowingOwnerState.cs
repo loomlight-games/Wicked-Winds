@@ -28,7 +28,7 @@ public class FollowingOwnerState : AState
         else
         {
             // Distance to owner is greater than minimum
-            if (catController.distanceToOwner > catController.minFollowDistance)
+            if (catController.distanceToOwner > catController.stopDistance)
             {
                 catController.agent.isStopped = false; // Moves
                 catController.agent.SetDestination(catController.owner.gameObject.transform.position);
