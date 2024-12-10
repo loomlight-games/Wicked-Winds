@@ -123,9 +123,9 @@ public class MissionManager : MonoBehaviour
          numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
          numEasyMissions = Mathf.Max(numEasyMissions, 0);*/
-        numEasyMissions = 0;
-        numHardMissions = numMissionsToAssign;
-        numMediumMissions = 0;
+        numEasyMissions = 5;
+        numHardMissions = 5;
+        numMediumMissions = 5;
         Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 

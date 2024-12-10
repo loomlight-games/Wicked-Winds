@@ -7,14 +7,14 @@ public class MissionIcon : MonoBehaviour
     public Sprite spriteMission;
     public Sprite spriteMissionCompleted;
 
-    public MissionData data; // La misi�n asignada a este �cono
+    public MissionData data; // La mision asignada a este icono
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
     public NPC assignedNPC; // A�adimos una referencia al NPC
     public MessageGenerator messageGenerator;
     public string addresseeName = null;
     public NPC addressee;
-    public Guid missionID; // Identificador �nico para este �cono
+    public Guid missionID; // Identificador Unico para este icono
 
     [SerializeField] public string message;
     [SerializeField] private string responseMessage;
@@ -22,7 +22,7 @@ public class MissionIcon : MonoBehaviour
     //contador para los objetos recogidos
     public int collectedItemsCount = 0;
 
-    // M�todo para asignar una misi�n a este �cono
+    // M�todo para asignar una mision a este �cono
     public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
     {
         data = mission;
@@ -30,8 +30,8 @@ public class MissionIcon : MonoBehaviour
         assignedNPC = npc; // Asignamos el NPC
         assignedNPC.missionType = data.missionName;
 
-        // Generar un ID �nico para esta misi�n
-        missionID = Guid.NewGuid();
+        // Generar un ID unico para esta misi�n
+        this.missionID = Guid.NewGuid();
 
         // Obtiene el componente SpriteRenderer del GameObject al que est� adjunto este script
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,12 +46,12 @@ public class MissionIcon : MonoBehaviour
     public void AssignMissionText(MissionData mission, MissionManager manager, NPC npc)
     {
 
-        // Almacenar la misi�n actual y el manager
+        // Almacenar la mision actual y el manager
         data = mission;
         missionManager = manager;
         assignedNPC = npc; // Asignamos el NPC
 
-        // Generar IDs �nicos para el MissionIcon y NPC si no tienen
+        // Generar IDs unicos para el MissionIcon y NPC si no tienen
         if (missionID == Guid.Empty) missionID = Guid.NewGuid();
         if (npc.npcID == Guid.Empty) npc.npcID = Guid.NewGuid();
 
@@ -83,7 +83,7 @@ public class MissionIcon : MonoBehaviour
         }
     }
 
-    // Este m�todo es llamado cuando el objeto es tomado del pool
+    // Este metodo es llamado cuando el objeto es tomado del pool
     public void OnObjectSpawn()
     {
         if (data != null)
