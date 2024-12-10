@@ -295,7 +295,7 @@ public class MissionManager : MonoBehaviour
                     // Exclude the current NPC and those with a mission icon
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
-                        Debug.Log($"Adding NPC: {Npc}");
+                        //Debug.Log($"Adding NPC: {Npc}");
                         if (!string.IsNullOrEmpty(Npc.name)) // Check if the name is not null or empty
                         {
                             npcNames.Add(Npc); // Add the name to the list

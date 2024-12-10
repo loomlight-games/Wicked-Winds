@@ -77,6 +77,7 @@ public class PanelManager : MonoBehaviour
         {
             panel.Open();
         }
+        Debug.Log("abriendo panel " + panel);
     }
 
     public static void Close(string id)

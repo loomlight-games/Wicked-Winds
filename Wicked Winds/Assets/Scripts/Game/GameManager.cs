@@ -78,6 +78,7 @@ public class GameManager : AStateController
         else
             Destroy(gameObject);
 
+        
         StartClientService();
 
         remainingTime = initialTime;
@@ -88,6 +89,7 @@ public class GameManager : AStateController
     {
         // Initialize state based on the currently active scene
         SetStateBasedOnScene(SceneManager.GetActiveScene());
+
     }
 
     private void SetStateBasedOnScene(Scene scene)
@@ -215,16 +217,18 @@ public class GameManager : AStateController
                 options.SetProfile("default_profile");
                 await UnityServices.InitializeAsync();
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                
             }
 
             if (!eventsInitialized)
             {
                 SetupEvents();
             }
-
+            
             //to avoid repeating the authentificaction process
             if (AuthenticationService.Instance.SessionTokenExists)
             {
+                Debug.Log("session token already exist");
                 AuthenticationService.Instance.SignOut();
                 AuthenticationService.Instance.ClearSessionToken();
                 //if user already sign in
@@ -235,6 +239,7 @@ public class GameManager : AStateController
             else
             {
                 PanelManager.Open("auth");
+                Debug.Log("abriendo Auth 2");
             }
         }
         catch (Exception)
