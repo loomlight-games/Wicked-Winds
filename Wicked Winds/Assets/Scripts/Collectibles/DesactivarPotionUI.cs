@@ -33,7 +33,7 @@ public class DesactivarPotionUI : MonoBehaviour
         {
             potionFog.SetActive(true); 
         }
-        else
+        if(!activarFogUI)
         {
             potionFog.SetActive(false); 
         }
@@ -43,7 +43,7 @@ public class DesactivarPotionUI : MonoBehaviour
         {
             potionBird.SetActive(true); 
         }
-        else
+        if (!activarBirdUI)
         {
             potionBird.SetActive(false); 
         }

@@ -76,8 +76,8 @@ public class BirdManager : MonoBehaviour
 
             if (timer <= 0)
             {
-                PlayerManager.Instance.potionFog = false;
-                DesactivarPotionUI.Instance.activarFogUI = false;
+                PlayerManager.Instance.potionBird = false;
+                DesactivarPotionUI.Instance.activarBirdUI = false;
                 timer = 0f;
                 isBirdsTimerActive = false;
                 // Ocultar y restablecer el texto del temporizador
