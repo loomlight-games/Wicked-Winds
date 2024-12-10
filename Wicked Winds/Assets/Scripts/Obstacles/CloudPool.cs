@@ -15,6 +15,8 @@ public class CloudPool : MonoBehaviour
                                                                   // y campos desde otros scripts
 
     [SerializeField] private float respawnDelay = 2f; // Tiempo antes de reaparecer una nube
+    public bool IsUnderCloud = false;
+
 
 
     private void Awake()
@@ -79,5 +81,12 @@ public class CloudPool : MonoBehaviour
         cloud.transform.position = newStartPosition;
         cloud.SetActive(true);
         cloud.GetComponent<CloudMovement>().SetTargetPosition(); // Reiniciar su objetivo
+    }
+    
+    public bool ChangePlayerSpeed(bool underCloud)
+    {
+        IsUnderCloud = underCloud;
+        return IsUnderCloud;
+
     }
 }

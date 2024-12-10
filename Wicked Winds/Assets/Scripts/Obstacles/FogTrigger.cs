@@ -2,38 +2,18 @@ using UnityEngine;
 
 public class FogTrigger : MonoBehaviour
 {
-
-
-    private Collider fogCollider;
-
-    private void Start()
-    {
-
-
-        fogCollider = GetComponent<Collider>(); // Obtener el collider del trigger
-    }
-
-
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
+        if (other.CompareTag("Player"))
         {
             PlayerManager.Instance.playerIsInsideFog = true;
+        }
+        if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
+        {
+            
             FogManager.Instance.StartFogTransition(FogManager.Instance.fogDensity, FogManager.Instance.targetColor); // Activar niebla (hacia blanco)
         }
     }
-
-
-    /* private void OnTriggerStay(Collider other)
-     {
-         if (other.CompareTag("Player") && !PlayerManager.Instance.potionFog)
-         {
-             // Esto se ejecuta constantemente mientras el jugador est� dentro del Trigger
-             GameManager.Instance.playState.feedBackText.text = "Perfect weather for some ghost stories...";
-             StartFogTransition(fogDensity, targetColor); // Activar niebla si es necesario
-         }
-     }*/
 
     private void OnTriggerExit(Collider other)
     {
@@ -45,12 +25,6 @@ public class FogTrigger : MonoBehaviour
         }
     }
 
-
-
-    public void SetFogTriggerState(bool isActive)
-    {
-        fogCollider.enabled = isActive;
-    }
 
 
 

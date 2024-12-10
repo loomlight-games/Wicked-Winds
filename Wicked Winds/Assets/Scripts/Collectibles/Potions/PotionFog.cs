@@ -7,12 +7,10 @@ public class PotionFog : MonoBehaviour
     // Metodo para recolectar el objeto
     public void CollectPotionFog()
     {
-        // Reproducir el sonido del efecto de la poción
+        // Reproducir el sonido del efecto de la pocion
+        SoundManager.PlaySound(SoundType.Potion);
 
-        //SoundManager.Instance.PlayPotionEffect();
-        
-
-        // Activar la niebla de la poción
+        // Activar la niebla de la pocion
         PlayerManager.Instance.potionFog = true;
       
         // Activar la UI de la niebla
