@@ -1,16 +1,15 @@
 using System;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public class MissionIcon : MonoBehaviour
 {
     public GameObject bubble; // Referencia al GameObject del Bubble
-    public Sprite spriteMission;
-    public Sprite spriteMissionCompleted;
 
     public MissionData data; // La mision asignada a este icono
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
-    public NPC assignedNPC; // A�adimos una referencia al NPC
+    public NPC assignedNPC; // Añadimos una referencia al NPC
     public MessageGenerator messageGenerator;
     public string addresseeName = null;
     public NPC addressee;
@@ -22,7 +21,7 @@ public class MissionIcon : MonoBehaviour
     //contador para los objetos recogidos
     public int collectedItemsCount = 0;
 
-    // M�todo para asignar una mision a este �cono
+    // Metodo para asignar una mision a este icono
     public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
     {
         data = mission;
@@ -30,17 +29,10 @@ public class MissionIcon : MonoBehaviour
         assignedNPC = npc; // Asignamos el NPC
         assignedNPC.missionType = data.missionName;
 
-        // Generar un ID unico para esta misi�n
+        // Generar un ID unico para esta mision
         this.missionID = Guid.NewGuid();
 
-        // Obtiene el componente SpriteRenderer del GameObject al que est� adjunto este script
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // Verifica si el componente SpriteRenderer existe
-        if (spriteRenderer != null && spriteMission != null)
-        {
-            spriteRenderer.sprite = spriteMission;
-        }
+      
     }
 
     public void AssignMissionText(MissionData mission, MissionManager manager, NPC npc)
@@ -88,14 +80,7 @@ public class MissionIcon : MonoBehaviour
     {
         if (data != null)
         {
-            // Obtiene el componente SpriteRenderer del GameObject al que est� adjunto este script
-            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null && spriteMission != null)
-            {
-                spriteRenderer.sprite = spriteMission;
-            }
-
-            data.isCompleted = false;
+            
         }
     }
 

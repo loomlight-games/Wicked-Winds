@@ -118,14 +118,12 @@ public class MissionManager : MonoBehaviour
 
     private void GetMissionCounts(out int numEasyMissions, out int numMediumMissions, out int numHardMissions)
     {
-        /* numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
+         numHardMissions = Mathf.Max(0, Mathf.Min(currentRound, numMissionsToAssign));
          numMediumMissions = Mathf.Max(0, Mathf.Min(currentRound + 1, numMissionsToAssign - numHardMissions));
          numEasyMissions = numMissionsToAssign - numMediumMissions - numHardMissions;
 
-         numEasyMissions = Mathf.Max(numEasyMissions, 0);*/
-        numEasyMissions = 5;
-        numHardMissions = 5;
-        numMediumMissions = 5;
+         numEasyMissions = Mathf.Max(numEasyMissions, 0);
+        
         Debug.Log($"Numero calculado de misiones: Facil: {numEasyMissions}, Media: {numMediumMissions}, Dificil: {numHardMissions}");
     }
 
@@ -258,6 +256,7 @@ public class MissionManager : MonoBehaviour
         SetMissionIconPosition(selectedNPC, missionIcon);
         selectedNPC.request = missionIcon;
         selectedNPC.hasMission = true;
+        selectedNPC.isMissionStateDirty = true;
 
         assignedNPCs.Add(selectedNPC);
 
