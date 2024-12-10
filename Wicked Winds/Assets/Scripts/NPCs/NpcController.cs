@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NpcController : AAnimationController
 {
     public Guid npcID;
+
+    public List<GameObject> models;
 
     [Header("Mission")]
     public bool isTalking,
@@ -321,5 +324,21 @@ public class NpcController : AAnimationController
             else
                 ChangeAnimationTo(Moving);
         }
+    }
+
+
+    /// <summary>
+    /// Chooses a random element from the models list.
+    /// </summary>
+    public GameObject ChooseRandomModel()
+    {
+        if (models == null || models.Count == 0)
+        {
+            Debug.LogWarning("The models list is empty or not initialized.");
+            return null;
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, models.Count);
+        return models[randomIndex];
     }
 }
