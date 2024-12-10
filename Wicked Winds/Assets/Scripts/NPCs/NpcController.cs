@@ -142,6 +142,7 @@ public class NpcController : AAnimationController
                 if (responseMessage != null)
                 {
                     GameManager.Instance.dialogue.StartDialogue(name, responseMessage);
+                    isTalking = true;
                 }
                 else
                     Debug.LogError("npc.responseMessage is null.");
@@ -176,6 +177,7 @@ public class NpcController : AAnimationController
                 if (message != null)
                 {
                     GameManager.Instance.dialogue.StartDialogue(name, message);
+                    isTalking = true;
                 }
                 else
                     Debug.LogError("npc.message is null.");
