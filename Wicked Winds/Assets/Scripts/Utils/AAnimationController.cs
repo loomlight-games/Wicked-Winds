@@ -15,7 +15,11 @@ public abstract class AAnimationController : AStateController
     public override void Awake()
     {
         animator = GetComponent<Animator>();
+
+        AwakeFrame();
     }
+
+    public virtual void AwakeFrame() { }
 
     public override void Update()
     {

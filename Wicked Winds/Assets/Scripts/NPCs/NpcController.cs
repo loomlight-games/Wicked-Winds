@@ -30,10 +30,8 @@ public class NpcController : AAnimationController
         Moving = Animator.StringToHash("Moving");
     #endregion
 
-    public override void Awake()
+    public override void AwakeFrame()
     {
-        animator = GetComponent<Animator>();
-
         name = NPCNameManager.Instance.GetRandomNPCName();
         npcID = Guid.NewGuid(); // Unique ID
     }
