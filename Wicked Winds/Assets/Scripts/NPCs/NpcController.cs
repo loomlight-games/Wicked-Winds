@@ -2,108 +2,75 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(RandomNPCMovement))]
 public class NpcController : AAnimationController
 {
+    public Guid npcID;
+
+    [Header("Mission")]
+    public bool hasMission;
     public string missionType,
         message,
         responseMessage;
-    public bool hasMission;
     public MissionIcon request = null;
     public NpcController sender;
     public CatController cat;
     public OwlController owl;
-    public Guid npcID;
 
-    NavMeshAgent agent;
+
+    [Header("Movement")]
+    public float range = 50; // Radius of sphere
+    public float stuckDistance = 1.0f; // Minimum distance to consider NPCs stuck
+    public float checkInterval = 0.5f; // How often to check for stuck NPCs
+    public LayerMask npcLayer; // Layer to identify other NPCs
+
+    [HideInInspector] public NavMeshAgent agent;
     RandomNPCMovement movementScript;
     GameObject bubble;
 
+
     #region STATES
-    // Idle
-    // Walking
-    // Talking
+    // Idle: has a mission
+    // Walking: doesn't have a mission
+    // Talking: player has interacted
     #endregion
 
     #region ANIMATIONS
     readonly int Idle = Animator.StringToHash("Idle"),
-        Moving = Animator.StringToHash("Moving");
+        Moving = Animator.StringToHash("Moving"),
+        Talking = Animator.StringToHash("Talking");
     #endregion
-
-    public override void AwakeFrame()
-    {
-        name = NPCNameManager.Instance.GetRandomNPCName();
-        npcID = Guid.NewGuid(); // Unique ID
-    }
 
     public override void Start()
     {
+        name = NPCNameManager.Instance.GetRandomNPCName();
+        npcID = Guid.NewGuid(); // Unique ID
         bubble = transform.Find("Bubble").gameObject;
-
-        movementScript = GetComponent<RandomNPCMovement>();
         agent = GetComponent<NavMeshAgent>();
+        movementScript = new(this);
 
-        if (request == null) hasMission = false;
-        else hasMission = true;
-
-        if (hasMission && movementScript != null)
-        {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
-            if (bubble != null)
-            {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
-            }
-        }
-        else if (movementScript != null)
-        {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
-
-            if (bubble != null)
-            {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
-            }
-        }
+        // 'avoidancePriority' is assumed to be set externally
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
     }
 
     public override void UpdateFrame()
     {
-        if (request == null) hasMission = false;
-        else hasMission = true;
-        if (hasMission && movementScript != null)
+        if (request == null)
         {
-            movementScript.enabled = false; // Desactiva el movimiento si tiene misi�n
-            if (bubble != null)
-            {
-                bubble.SetActive(true); // Mostrar el bubble si tiene misi�n
-            }
+            hasMission = false;
+            bubble.SetActive(false);
+
+            // Moves if it doesn't have a mission
+            movementScript.Update();
         }
-        else if (movementScript != null)
+        else
         {
-            movementScript.enabled = true; // Activa el movimiento si no tiene misi�n
-
-            if (bubble != null)
-            {
-                bubble.SetActive(false); // Ocultar el bubble si no tiene misi�n
-            }
+            hasMission = true;
+            bubble.SetActive(true);
         }
-
-        // if (missionIcon == null)
-        // {
-        //     hasMission = false;
-        //     movementScript.enabled = false;
-        //     bubble.SetActive(false);
-        // }
-        // else
-        // {
-        //     hasMission = true;
-        //     movementScript.enabled = true;
-        //     bubble.SetActive(true);
-        // }
     }
 
     public void Interact()
     {
-
         // Player has a mission
         if (PlayerManager.Instance.hasActiveMission)
         {
@@ -123,7 +90,7 @@ public class NpcController : AAnimationController
                     desactivarOwlUI.Instance.activateOwlUI = false;
                 }
 
-                //PlayerManager.Instance.npcMissionActive.cat?.SwitchState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
+                PlayerManager.Instance.npcMissionActive.cat?.SwitchState(PlayerManager.Instance.npcMissionActive.cat.followingOwnerState);
                 PlayerManager.Instance.npcMissionActive.OnMissionCompleted();
                 PlayerManager.Instance.currentTargets.Remove(gameObject);
                 PlayerManager.Instance.npcMissionActive = null;
@@ -198,25 +165,19 @@ public class NpcController : AAnimationController
     // Este m�todo es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
-        Debug.Log("Devolviendo MissionIcon al pool.");
-
-        if (request != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
+        if (request != null)
         {
             Debug.Log($"Devolviendo MissionIcon de {gameObject.name} al pool.");
 
             if (request != null)
             {
-                Debug.Log($"Liberando �cono de misi�n de {gameObject.name}.");
                 MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(request);
                 request = null;
             }
 
             this.hasMission = false;
             this.message = string.Empty;
-            Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
         }
-
-        Debug.Log("Referencias limpiadas en OnObjectReturn.");
     }
 
     // M�todo llamado cuando el jugador interact�a con el NPC

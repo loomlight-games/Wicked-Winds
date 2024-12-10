@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1771561285409204118}
   - component: {fileID: 4250233420254471838}
   - component: {fileID: 2414267959813268362}
-  - component: {fileID: 8597868268812028505}
   - component: {fileID: 7407445220720339385}
   - component: {fileID: 2358239107455341228}
   m_Layer: 0
@@ -81,26 +80,14 @@ MonoBehaviour:
   sender: {fileID: 0}
   cat: {fileID: 0}
   owl: {fileID: 0}
---- !u!114 &8597868268812028505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7218170469500960052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a4f2b157ccb8c746aba5f0de96b1fdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 7407445220720339385}
   range: 50
-  centrePoint: {fileID: 1771561285409204118}
+  centrePoint: {fileID: 0}
   stuckDistance: 1
   checkInterval: 0.5
   npcLayer:
     serializedVersion: 2
     m_Bits: 0
+  agent: {fileID: 0}
 --- !u!195 &7407445220720339385
 NavMeshAgent:
   m_ObjectHideFlags: 0
