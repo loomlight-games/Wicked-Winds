@@ -25,8 +25,7 @@ public class FogManager : MonoBehaviour
     public bool isTransitioning;
 
     public TextMeshProUGUI timerText;
-    private bool isScalingRed;
-    private bool isScalingYellow;
+   
 
     public void Awake()
     {

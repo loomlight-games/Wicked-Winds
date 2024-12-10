@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BirdManager : MonoBehaviour
@@ -8,8 +9,10 @@ public class BirdManager : MonoBehaviour
     public List<GameObject> flocks; // Lista de p�jaros en la escena
     private bool birdsActive = true;
     private bool isBirdsTimerActive = false;
-    float timer = 0f;  // Temporizador que se incrementa cada frame
+    float timer;  // Temporizador que se incrementa cada frame
     float potionBirdsEffectTime = 20f;
+
+    public TextMeshProUGUI timerText;
 
     private void Awake()
     {
@@ -19,6 +22,11 @@ public class BirdManager : MonoBehaviour
             Destroy(gameObject);
 
 
+    }
+
+    private void Start()
+    {
+        timer = potionBirdsEffectTime;
     }
 
     public void DeactivateAllBirds()
@@ -63,14 +71,45 @@ public class BirdManager : MonoBehaviour
     {
         if (isBirdsTimerActive)
         {
-            timer += Time.deltaTime;
-            if (timer >= potionBirdsEffectTime)
+            timer -= Time.deltaTime;
+            UpdatePotionTimer();
+
+            if (timer <= 0)
             {
-                PlayerManager.Instance.potionBird = false;
-                DesactivarPotionUI.Instance.activarBirdUI = false;
+                PlayerManager.Instance.potionFog = false;
+                DesactivarPotionUI.Instance.activarFogUI = false;
                 timer = 0f;
                 isBirdsTimerActive = false;
+                // Ocultar y restablecer el texto del temporizador
+                timerText.gameObject.SetActive(false);
+                timerText.text = "";
+                timerText.color = Color.white;
+                timer = potionBirdsEffectTime;
                 ActivateAllBirds();
+            }
+        }
+    }
+
+    private void UpdatePotionTimer()
+    {
+        if (timer < potionBirdsEffectTime)
+        {
+            if (!timerText.gameObject.activeSelf)
+            {
+                timerText.gameObject.SetActive(true); // Mostrar el texto si está oculto
+            }
+
+            timerText.text = Mathf.CeilToInt(timer).ToString(); // Actualizar el texto con el tiempo restante
+
+            if (timer <= 5)
+            {
+                timerText.color = Color.red;
+
+            }
+            else if (timer <= 15)
+            {
+                timerText.color = Color.yellow;
+
             }
         }
     }
