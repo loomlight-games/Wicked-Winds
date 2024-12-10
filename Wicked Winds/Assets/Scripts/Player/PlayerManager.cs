@@ -16,8 +16,8 @@ public class PlayerManager : AStateController
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
-    public NPC npcMissionActive;
-    public NPC npcObjective;
+    public NpcController npcMissionActive;
+    public NpcController npcObjective;
     public bool playerIsInsideFog;
     public bool potionFog;
     public bool potionBird;

@@ -4,7 +4,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class OwlController : MonoBehaviour
 {
     public Transform player; // Reference to the player
-    public NPC owner; // Reference to the NPC owner of the owl
+    public NpcController owner; // Reference to the NPC owner of the owl
     public float moveSpeed = 2f; // Movement speed of the owl (This will be overwritten by PlayerManager)
     public float detectionRadius = 10f; // Radius for detecting the player
     public float flightHeight = 15f; // Height at which the owl flies

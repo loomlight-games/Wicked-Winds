@@ -2,31 +2,43 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPC : MonoBehaviour
+[RequireComponent(typeof(RandomNPCMovement))]
+public class NpcController : AAnimationController
 {
     public string missionType,
         message,
         responseMessage;
     public bool hasMission;
     public MissionIcon request = null;
-    public NPC sender;
+    public NpcController sender;
     public CatController cat;
     public OwlController owl;
-    public Animator animator;
     public Guid npcID;
 
     NavMeshAgent agent;
     RandomNPCMovement movementScript;
     GameObject bubble;
 
+    #region STATES
+    // Idle
+    // Walking
+    // Talking
+    #endregion
 
-    void Awake()
+    #region ANIMATIONS
+    readonly int Idle = Animator.StringToHash("Idle"),
+        Moving = Animator.StringToHash("Moving");
+    #endregion
+
+    public override void Awake()
     {
+        animator = GetComponent<Animator>();
+
         name = NPCNameManager.Instance.GetRandomNPCName();
         npcID = Guid.NewGuid(); // Unique ID
     }
 
-    void Start()
+    public override void Start()
     {
         bubble = transform.Find("Bubble").gameObject;
 
@@ -55,7 +67,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    void Update()
+    public override void UpdateFrame()
     {
         if (request == null) hasMission = false;
         else hasMission = true;
@@ -155,9 +167,9 @@ public class NPC : MonoBehaviour
                     Guid targetID = PlayerManager.Instance.npcMissionActive.request.addressee.npcID;
 
                     // Encuentra todos los NPCs en la escena
-                    NPC[] allNPCs = FindObjectsOfType<NPC>();
+                    NpcController[] allNPCs = FindObjectsOfType<NpcController>();
 
-                    foreach (NPC npc in allNPCs)
+                    foreach (NpcController npc in allNPCs)
                     {
                         // Compara el ID del NPC con el objetivo
                         if (npc.npcID == targetID)
@@ -229,6 +241,7 @@ public class NPC : MonoBehaviour
         StopMovement();
         CompleteMission(sender);
     }
+
     public void StopMovement()
     {
         if (agent != null)
@@ -240,7 +253,7 @@ public class NPC : MonoBehaviour
     /// <summary>
     /// Removes target and mission from player
     /// </summary>
-    public void CompleteMission(NPC npc)
+    public void CompleteMission(NpcController npc)
     {
         if (this.request != null)
             request.CompleteMission();
@@ -259,4 +272,12 @@ public class NPC : MonoBehaviour
         PlayerManager.Instance.hasActiveMission = false;
     }
 
+    public override void CheckAnimation()
+    {
+        // Is still
+        if (hasMission)
+            ChangeAnimationTo(Idle);
+        else
+            ChangeAnimationTo(Moving);
+    }
 }

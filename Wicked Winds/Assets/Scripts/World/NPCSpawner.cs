@@ -81,7 +81,7 @@ public class NPCSpawner : MonoBehaviour
         if (spawnPosition != Vector3.zero)
         {
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity, npcsParent.transform);
-            NPC npcComponent = npc.GetComponent<NPC>();
+            NpcController npcComponent = npc.GetComponent<NpcController>();
 
             if (npcComponent == null)
                 return;

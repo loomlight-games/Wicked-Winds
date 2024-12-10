@@ -10,21 +10,23 @@ public class CatController : AAnimationController
         distanceToOwner,
         minIdleTime = 5f,
         maxIdleTime = 10f;
-    public NPC owner;
+    public NpcController owner;
     public LayerMask buildingLayer;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public RaycastHit hit;
 
-    // STATES
+    #region STATES
     public IdleState idleState;
     public MovingState randomMoveState;
     public ClimbingState climbingState;
     public FollowingPlayerState followingPlayerState;
     public FollowingOwnerState followingOwnerState;
+    #endregion
 
-    // ANIMATIONS
+    #region ANIMATIONS
     readonly int IdleAnimation = Animator.StringToHash("Idle"),
                 MovingAnimation = Animator.StringToHash("Moving");
+    #endregion
 
     public override void Start()
     {

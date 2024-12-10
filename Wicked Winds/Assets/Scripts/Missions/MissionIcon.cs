@@ -10,10 +10,10 @@ public class MissionIcon : MonoBehaviour
     public MissionData data; // La misi�n asignada a este �cono
     private MissionManager missionManager; // Referencia al MissionManager
     private MissionIconPool missionIconPool;
-    public NPC assignedNPC; // A�adimos una referencia al NPC
+    public NpcController assignedNPC; // A�adimos una referencia al NPC
     public MessageGenerator messageGenerator;
     public string addresseeName = null;
-    public NPC addressee;
+    public NpcController addressee;
     public Guid missionID; // Identificador �nico para este �cono
 
     [SerializeField] public string message;
@@ -23,7 +23,7 @@ public class MissionIcon : MonoBehaviour
     public int collectedItemsCount = 0;
 
     // M�todo para asignar una misi�n a este �cono
-    public void AssignMission(MissionData mission, MissionManager manager, NPC npc)
+    public void AssignMission(MissionData mission, MissionManager manager, NpcController npc)
     {
         data = mission;
         missionManager = manager;
@@ -43,7 +43,7 @@ public class MissionIcon : MonoBehaviour
         }
     }
 
-    public void AssignMissionText(MissionData mission, MissionManager manager, NPC npc)
+    public void AssignMissionText(MissionData mission, MissionManager manager, NpcController npc)
     {
 
         // Almacenar la misi�n actual y el manager

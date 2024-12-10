@@ -146,7 +146,7 @@ public class ControllablePlayerState : AState
                 return; // Won't do anything if the player is not facing the collider
 
             // NPC
-            if (other.gameObject.TryGetComponent(out NPC npc))
+            if (other.gameObject.TryGetComponent(out NpcController npc))
                 npc.Interact();
             // Mission collectible
             else if (other.gameObject.TryGetComponent(out Pickable pickableObject))

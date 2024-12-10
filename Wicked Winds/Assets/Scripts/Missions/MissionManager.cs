@@ -11,15 +11,15 @@ public class MissionManager : MonoBehaviour
     public static MissionManager Instance;
 
     public MissionData[] availableMissions; // Todas las misiones disponibles
-    public List<NPC> allNPCs;
+    public List<NpcController> allNPCs;
     public int numMissionsToAssign = 15; // N�mero de misiones por ronda
 
     private MissionIconPool missionIconPool;
-    public List<NPC> assignedNPCs = new List<NPC>();
+    public List<NpcController> assignedNPCs = new List<NpcController>();
     private int currentRound = 1; // Empezamos con la primera ronda
     public int missionsCompleted = 0;
-    public List<NPC> npcsWithCat;
-    public List<NPC> npcsWithOwl;
+    public List<NpcController> npcsWithCat;
+    public List<NpcController> npcsWithOwl;
 
 
     public void Awake()
@@ -37,7 +37,7 @@ public class MissionManager : MonoBehaviour
     void Start()
     {
         allNPCs.Clear();
-        NPC[] npcs = FindObjectsOfType<NPC>();
+        NpcController[] npcs = FindObjectsOfType<NpcController>();
         allNPCs.AddRange(npcs);
 
         if (allNPCs.Count <= 0)
@@ -128,7 +128,7 @@ public class MissionManager : MonoBehaviour
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
-        List<NPC> shuffledNPCs = new List<NPC>(allNPCs);
+        List<NpcController> shuffledNPCs = new List<NpcController>(allNPCs);
         npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
         npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
 
@@ -143,7 +143,7 @@ public class MissionManager : MonoBehaviour
                 continue;
             }
 
-            NPC selectedNPC = null;
+            NpcController selectedNPC = null;
 
             // Asignar NPC dependiendo del tipo de misión
             if (mission.missionName == "CatMission") // Si es una misión de tipo Cat
@@ -183,11 +183,11 @@ public class MissionManager : MonoBehaviour
         specialMissionGeneration(assignedNPCs);
     }
 
-    private NPC GetRandomNPC(List<NPC> shuffledNPCs)
+    private NpcController GetRandomNPC(List<NpcController> shuffledNPCs)
     {
 
         int randomIndex = UnityEngine.Random.Range(0, shuffledNPCs.Count);
-        NPC selectedNPC = shuffledNPCs[randomIndex];
+        NpcController selectedNPC = shuffledNPCs[randomIndex];
 
         if (selectedNPC.request != null)
         {
@@ -226,7 +226,7 @@ public class MissionManager : MonoBehaviour
         return mission;
     }
 
-    private void AssignMissionToNPC(NPC selectedNPC, MissionData mission)
+    private void AssignMissionToNPC(NpcController selectedNPC, MissionData mission)
     {
         MissionIcon missionIcon = MissionIconPoolManager.Instance.GetMissionIconPool().GetIcon();
         if (missionIcon == null)
@@ -245,9 +245,9 @@ public class MissionManager : MonoBehaviour
 
     }
 
-    public void specialMissionGeneration(List<NPC> assignedNpcs)
+    public void specialMissionGeneration(List<NpcController> assignedNpcs)
     {
-        foreach (NPC npc in assignedNpcs)
+        foreach (NpcController npc in assignedNpcs)
         {
             if (npc.missionType == "PotionMission")
             {
@@ -285,10 +285,10 @@ public class MissionManager : MonoBehaviour
             if (npc.missionType == "LetterMision")
             {
                 // Get a list of all NPCs in the scene
-                NPC[] allNPCs = GetAllNPCs();
+                NpcController[] allNPCs = GetAllNPCs();
 
                 // Create a list to hold NPC names, excluding the current NPC and those with a mission icon
-                List<NPC> npcNames = new List<NPC>();
+                List<NpcController> npcNames = new List<NpcController>();
 
                 foreach (var Npc in allNPCs)
                 {
@@ -310,7 +310,7 @@ public class MissionManager : MonoBehaviour
                 // Select a random NPC name from the list, if available
                 if (npcNames.Count > 0)
                 {
-                    NPC randomNPC = npcNames[Random.Range(0, npcNames.Count)];
+                    NpcController randomNPC = npcNames[Random.Range(0, npcNames.Count)];
                     npc.request.addresseeName = randomNPC.name;
                     npc.request.addressee = randomNPC;
                     randomNPC.sender = npc;
@@ -331,13 +331,13 @@ public class MissionManager : MonoBehaviour
 
     }
 
-    public static NPC[] GetAllNPCs()
+    public static NpcController[] GetAllNPCs()
     {
-        return GameObject.FindObjectsOfType<NPC>();
+        return GameObject.FindObjectsOfType<NpcController>();
     }
 
 
-    private void SetMissionIconPosition(NPC selectedNPC, MissionIcon missionIcon)
+    private void SetMissionIconPosition(NpcController selectedNPC, MissionIcon missionIcon)
     {
         Transform bubbleTransform = selectedNPC.transform.Find("Bubble");
         if (bubbleTransform != null)
