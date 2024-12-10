@@ -7,7 +7,8 @@ public class NpcController : AAnimationController
     public Guid npcID;
 
     [Header("Mission")]
-    public bool hasMission;
+    public bool isTalking,
+        hasMission;
     public string missionType,
         message,
         responseMessage;
@@ -54,18 +55,31 @@ public class NpcController : AAnimationController
 
     public override void UpdateFrame()
     {
-        if (request == null)
-        {
-            hasMission = false;
-            bubble.SetActive(false);
+        // If player isn't talking with anyone
+        if (PlayerManager.Instance.GetState() != PlayerManager.Instance.talkingState)
+            isTalking = false; // This isn't either
 
-            // Moves if it doesn't have a mission
-            movementScript.Update();
-        }
-        else
+        // This is not talking
+        if (!isTalking)
         {
-            hasMission = true;
-            bubble.SetActive(true);
+            // Doesn't have a mission
+            if (request == null)
+            {
+                hasMission = false;
+                bubble.SetActive(false);
+
+                // Moves
+                movementScript.Update();
+                agent.isStopped = false;
+            }
+            else // Has a mission
+            {
+                hasMission = true;
+                bubble.SetActive(true);
+
+                // Doesn't move
+                agent.isStopped = true;
+            }
         }
     }
 
@@ -81,6 +95,7 @@ public class NpcController : AAnimationController
                 if (responseMessage != null)
                 {
                     GameManager.Instance.dialogue.StartDialogue(name, responseMessage);
+                    isTalking = true;
                 }
                 else
                     Debug.LogError("npc.responseMessage is null.");
@@ -120,6 +135,7 @@ public class NpcController : AAnimationController
                 if (message != null)
                 {
                     GameManager.Instance.dialogue.StartDialogue(name, message);
+                    isTalking = true;
                 }
                 else
                     Debug.LogError("npc.message is null.");
@@ -233,10 +249,17 @@ public class NpcController : AAnimationController
 
     public override void CheckAnimation()
     {
-        // Is still
-        if (hasMission)
-            ChangeAnimationTo(Idle);
+        if (isTalking)
+        {
+            ChangeAnimationTo(Talking);
+            agent.isStopped = true;
+        }
         else
-            ChangeAnimationTo(Moving);
+        {
+            if (hasMission)
+                ChangeAnimationTo(Idle);
+            else
+                ChangeAnimationTo(Moving);
+        }
     }
 }
