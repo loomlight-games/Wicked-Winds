@@ -78,8 +78,17 @@ public class GameManager : AStateController
         else
             Destroy(gameObject);
 
-        
-        StartClientService();
+
+        //StartClientService();
+        // Obtener el nombre de la escena activa
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        // Verificar si la escena activa es "MainMenu" y ejecutar el método
+        if (sceneName == "Main menu")
+        {
+            Debug.Log("escena menuuuu");
+            StartClientService();
+        }
 
         remainingTime = initialTime;
     }
@@ -89,6 +98,7 @@ public class GameManager : AStateController
     {
         // Initialize state based on the currently active scene
         SetStateBasedOnScene(SceneManager.GetActiveScene());
+       
 
     }
 
@@ -150,6 +160,7 @@ public class GameManager : AStateController
             case "Start":
                 //SwitchState(selectTownState);
                 SwitchState(authentificationState);
+                PanelManager.Open("auth");
                 break;
             case "SignInButton":
                 SwitchState(selectTownState);
@@ -217,8 +228,12 @@ public class GameManager : AStateController
                 options.SetProfile("default_profile");
                 await UnityServices.InitializeAsync();
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
                 
-            }
+                //string username1 = PlayerPrefs.GetString(GameManager.Instance.PLAYER_USERNAME_FILE, "PlayerU");
+                //await AuthenticationService.Instance.UpdatePlayerNameAsync(username1);
+            
+        }
 
             if (!eventsInitialized)
             {

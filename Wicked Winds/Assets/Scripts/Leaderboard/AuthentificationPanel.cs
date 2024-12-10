@@ -67,6 +67,7 @@ public class AuthentificationPanel : Panel
         {
             GameManager.Instance.SignInWithUsernameAndPasswordAsync(user, pass);
             PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE, user);
+            Debug.Log("SIGNED IN");
         }
         /*
         if (string.IsNullOrEmpty(user) == false && string.IsNullOrEmpty(pass) == false)
@@ -98,6 +99,7 @@ public class AuthentificationPanel : Panel
             {
                 GameManager.Instance.SignUpWithUsernameAndPasswordAsync(user, pass);
                 PlayerPrefs.SetString(GameManager.Instance.PLAYER_USERNAME_FILE, user);
+                Debug.Log("SIGNED UP");
             }
             else
             {
