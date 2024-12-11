@@ -55,7 +55,7 @@ public class NPCSpawner : MonoBehaviour
         catsParent = GameObject.Find("CatsParent") ?? new GameObject("CatsParent");
         owlsParent = GameObject.Find("OwlsParent") ?? new GameObject("OwlsParent");
         flocksParent = GameObject.Find("FlocksParent") ?? new GameObject("FlocksParent");
-        model = GameObject.Find("Model") ?? new GameObject("Model");
+
 
 
         for (int i = 0; i < npcCount; i++)
