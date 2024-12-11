@@ -13,8 +13,7 @@ public class TalkingPlayerState : AState
         dialoguePanel.SetActive(true); // Show dialogue panel
 
         GameObject messageGO = dialoguePanel.transform.Find("Message").gameObject;
-        GameObject namePanel = dialoguePanel.transform.Find("Name panel").gameObject;
-        GameObject nameGO = namePanel.transform.Find("Name").gameObject;
+        GameObject nameGO = dialoguePanel.transform.Find("Name").gameObject;
 
         TextMeshProUGUI messageText = messageGO.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI nameText = nameGO.GetComponent<TextMeshProUGUI>();
