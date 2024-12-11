@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEditor.Formats.Fbx.Exporter;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPCSpawner : MonoBehaviour
 {
     GameObject npcsParent, catsParent, owlsParent, flocksParent, model;
+
+    public List<GameObject> NPCs;
 
     public GameObject npcPrefab,
     catPrefab,
@@ -85,10 +88,9 @@ public class NPCSpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomPositionOnGround(humanoidAgentTypeID, false);
         if (spawnPosition != Vector3.zero)
         {
-            GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity, npcsParent.transform);
+            GameObject npc = Instantiate(ChooseRandomModel(), spawnPosition, Quaternion.identity, npcsParent.transform);
 
             NpcController npcComponent = npc.GetComponent<NpcController>();
-            GameObject modelInstance = Instantiate(npcComponent.ChooseRandomModel(), spawnPosition, Quaternion.identity, npc.transform);
 
             if (npcComponent == null)
                 return;
@@ -276,5 +278,18 @@ public class NPCSpawner : MonoBehaviour
         return Vector3.zero;
     }
 
+    /// <summary>
+    /// Chooses a random element from the models list.
+    /// </summary>
+    public GameObject ChooseRandomModel()
+    {
+        if (NPCs == null || NPCs.Count == 0)
+        {
+            Debug.LogWarning("The models list is empty or not initialized.");
+            return null;
+        }
 
+        int randomIndex = Random.Range(0, NPCs.Count);
+        return NPCs[randomIndex];
+    }
 }
