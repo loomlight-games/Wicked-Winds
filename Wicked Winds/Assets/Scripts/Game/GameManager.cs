@@ -148,10 +148,10 @@ public class GameManager : AStateController
                 SwitchState(selectTownState);
                 break;
             case "Play":
-                LoadSceneDirectly("Gameplay");
+                LoadingSceneScreen("Gameplay");
                 break;
             case "Replay":
-                LoadSceneDirectly(SceneManager.GetActiveScene().name);
+                LoadingSceneScreen(SceneManager.GetActiveScene().name);
                 break;
             case "Pause":
                 SwitchState(pauseState);
