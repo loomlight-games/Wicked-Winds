@@ -1,10 +1,11 @@
 using System.Collections;
+using UnityEditor.Formats.Fbx.Exporter;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class NPCSpawner : MonoBehaviour
 {
-    GameObject npcsParent, catsParent, owlsParent, flocksParent;
+    GameObject npcsParent, catsParent, owlsParent, flocksParent, model;
 
     public GameObject npcPrefab,
     catPrefab,
@@ -20,10 +21,12 @@ public class NPCSpawner : MonoBehaviour
 
     public float detectionRadius = 50f, // Radious to detect ground
         flockSpawnRadius = 80f,// Radio para dispersar las bandadas
-        flockRadius = 15f, // Radio inicial para posicionar a los p�jaros en la bandada
+        flockRadius = 15f, // Radio inicial para posicionar a los pajaros en la bandada
         birdHeightOffset = 15f, // Altura fija de las bandadas
         cloudSpawnRadious = 100f,
         cloudHeightOffset = 40;
+
+
     private static NPCSpawner instance;
     public static NPCSpawner Instance { get { return instance; } }
 
@@ -49,6 +52,8 @@ public class NPCSpawner : MonoBehaviour
         catsParent = GameObject.Find("CatsParent") ?? new GameObject("CatsParent");
         owlsParent = GameObject.Find("OwlsParent") ?? new GameObject("OwlsParent");
         flocksParent = GameObject.Find("FlocksParent") ?? new GameObject("FlocksParent");
+        model = GameObject.Find("Model") ?? new GameObject("Model");
+
 
         for (int i = 0; i < npcCount; i++)
         {
@@ -81,7 +86,9 @@ public class NPCSpawner : MonoBehaviour
         if (spawnPosition != Vector3.zero)
         {
             GameObject npc = Instantiate(npcPrefab, spawnPosition, Quaternion.identity, npcsParent.transform);
+
             NpcController npcComponent = npc.GetComponent<NpcController>();
+            GameObject modelInstance = Instantiate(npcComponent.ChooseRandomModel(), spawnPosition, Quaternion.identity, npc.transform);
 
             if (npcComponent == null)
                 return;
@@ -103,11 +110,10 @@ public class NPCSpawner : MonoBehaviour
                 SpawnCat(npcComponent);
             }
 
-            // 10% de probabilidad de generar un b�ho
+            // 10% de probabilidad de generar un buho
             if (Random.value < 0.1f)
             {
                 SpawnOwl(npcComponent);
-               
             }
             spawnedNPCCount++;
         }
@@ -116,10 +122,10 @@ public class NPCSpawner : MonoBehaviour
     public void SpawnOwl(NpcController npc)
     {
         Vector3 owlPosition = new Vector3(
-                           Random.Range(-detectionRadius, detectionRadius),
+                        Random.Range(-detectionRadius, detectionRadius),
                            15f, // Altura fija de 10 unidades
-                           Random.Range(-detectionRadius, detectionRadius)
-                       );
+                        Random.Range(-detectionRadius, detectionRadius)
+                    );
 
         GameObject owl = Instantiate(owlPrefab, owlPosition, Quaternion.identity, owlsParent.transform);
         OwlController owlController = owl.GetComponent<OwlController>();
@@ -246,11 +252,11 @@ public class NPCSpawner : MonoBehaviour
                 RaycastHit hitpoint;
                 if (Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, buildingLayer))
                 {
-                    // Si hay un edificio encima, continuamos con la siguiente iteraci�n
+                    // Si hay un edificio encima, continuamos con la siguiente iteracion
                     continue;
                 }
 
-                // Verificar que el punto est� libre de agua o NPCs cercanos
+                // Verificar que el punto esta libre de agua o NPCs cercanos
                 bool isWaterNearby = Physics.CheckSphere(spawnPoint, 1f, waterLayer);
                 bool isNPCNearby = Physics.CheckSphere(spawnPoint, 2f, LayerMask.GetMask("NPC"));
 
