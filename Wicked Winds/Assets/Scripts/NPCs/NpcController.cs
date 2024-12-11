@@ -10,8 +10,8 @@ public class NpcController : AAnimationController
     public List<GameObject> models;
 
     [Header("Mission")]
-    public bool isTalking,
-        hasMission;
+    public bool isTalking;
+    public bool hasMission;
     public string missionType,
         message,
         responseMessage;
