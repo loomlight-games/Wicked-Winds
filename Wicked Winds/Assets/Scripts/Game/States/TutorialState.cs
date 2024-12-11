@@ -8,7 +8,7 @@ public class TutorialState : AState
     public override void Enter()
     {
         Menu = GameObject.Find("TutorialPanel");
-        panel = Menu.transform.Find("Panel").gameObject;
+        panel = Menu.transform.Find("Canvas").gameObject;
         panel.SetActive(true);
 
     }
