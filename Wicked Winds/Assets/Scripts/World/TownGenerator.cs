@@ -26,7 +26,7 @@ public class TownGenerator
 
         fogTriggerPrefab = FogManager.Instance.FogTriggerPrefab;
 
-        fogPrefab = FogManager.Instance.FogPrefab;
+        
 
 
         // Select tiles according to map theme
