@@ -8,9 +8,12 @@ public class FinalPlayerState : AState
         PlayerPrefs.SetInt(GameManager.Instance.PLAYER_SCORE_FILE, PlayerManager.Instance.score);
         PlayerPrefs.SetInt(GameManager.Instance.PLAYER_MISSIONCOUNT_FILE, MissionManager.Instance.missionsCompleted);
         PlayerPrefs.SetInt(GameManager.Instance.PLAYER_MISSIONTIME_FILE, (int)GameManager.Instance.averageMissionTime);
-        Debug.Log("Saved Average Time/Mission: " + GameManager.Instance.PLAYER_MISSIONTIME_FILE);
+
+        string missionPerTime = GameManager.Instance.PLAYER_MISSIONTIME_FILE;
+        string missionCount = GameManager.Instance.PLAYER_MISSIONCOUNT_FILE;
+        Debug.Log("Saved Average Time/Mission: " + missionPerTime);
         Debug.Log("Saved score: " + PlayerManager.Instance.score);
-        Debug.Log("Saved mission count: " + GameManager.Instance.PLAYER_MISSIONCOUNT_FILE);
+        Debug.Log("Saved mission count: " + missionCount);
     }
 
     // Update is called once per frame
