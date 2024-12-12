@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class swipeController : MonoBehaviour
 {
@@ -13,10 +14,15 @@ public class swipeController : MonoBehaviour
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
 
+    [SerializeField] Image[] barImage;
+    [SerializeField] Sprite barClosed, barOpen;
+
+
     private void Awake()
     {
         currentPage = 1;
         targetPos = levelPagesRect.localPosition;
+        UpdateBar();
     }
     public void Next()
     {
@@ -43,5 +49,14 @@ public class swipeController : MonoBehaviour
         levelPagesRect.LeanMoveLocal(targetPos, tweenTime)
                       .setEase(tweenType)
                       .setIgnoreTimeScale(true);
+        UpdateBar();
+    }
+    void UpdateBar()
+    {
+        foreach (var item in barImage)
+        {
+            item.sprite = barClosed;
+        }
+        barImage[currentPage-1].sprite = barOpen;
     }
 }
