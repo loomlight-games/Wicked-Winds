@@ -72,6 +72,7 @@ public class GamePlayState : AState
     {
         gameplayUI.SetActive(false);
 
+        SoundManager.StopSoundEffect(); // Stops dialogue sound
     }
 
     private void UpdateTimer()
