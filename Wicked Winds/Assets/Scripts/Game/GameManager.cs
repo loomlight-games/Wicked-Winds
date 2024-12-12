@@ -26,6 +26,7 @@ public class GameManager : AStateController
     public readonly ShopState shopState = new();
     public readonly LeaderboardGameState leaderboardState = new();
     public readonly TownSelectionState selectTownState = new();
+    public readonly TutorialState tutorialState = new();
     #endregion
 
     #region SUB-MANAGERS
@@ -167,6 +168,9 @@ public class GameManager : AStateController
                 break;
             case "Settings":
                 SwitchState(settingsState);
+                break;
+            case "Tutorial":
+                SwitchState(tutorialState);
                 break;
             case "Main menu leaderboard":
                 AuthenticationService.Instance.SignOut();
