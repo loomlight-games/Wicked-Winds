@@ -179,7 +179,7 @@ public class GameManager : AStateController
                 LoadSceneDirectly("Leaderboard");
                 break;
             case "Shop":
-                LoadSceneDirectly("Shop");
+                LoadingSceneScreen("Shop");
                 break;
             case "Playing on PC":
                 playingOnPC = !playingOnPC;
