@@ -65,6 +65,9 @@ public class PlayerManager : AStateController
     [Header("Customizable")]
     public Transform model;
     public float rotatorySpeedAtShop = 0.1f;
+
+    // Lists of garments
+    public List<GameObject> headGarments, upperBodyGarments, lowerBodyGarments, brooms;
     #endregion
 
     /////////////////////////////////////////////////////////////////////////////////////////////

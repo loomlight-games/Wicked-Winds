@@ -19,7 +19,7 @@ public class CustomizableCharacter
         {BodyPart.Head, null},
         {BodyPart.UpperBody, null},
         {BodyPart.LowerBody, null},
-        {BodyPart.Shoes, null},
+        {BodyPart.Broom, null},
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ public class CustomizableCharacter
         model = PlayerManager.Instance.model;
 
         // Load customization,  purchased items and coins
-        Load();
+        //Load();
     }
 
     /// <summary>
@@ -43,20 +43,18 @@ public class CustomizableCharacter
         {
             // Is the same one wearing
             if (currentGarment == newGarment)
-                // Unwears it
-                currentCustomization[newGarment.bodyPart] = null;
+                UnwearGarment(newGarment);
             // Is different
             else
-                // Activates it and updates dictionary
                 WearGarment(newGarment);
         }
-        else
-            // Activates it and updates dictionary
+        else // Is null
             WearGarment(newGarment);
 
-        // Adds item to purchased list if new
+        // New item
         if (!newGarment.isPurchased)
         {
+            // Add to list
             purchasedGarments.Add(newGarment);
             newGarment.isPurchased = true;
         }
@@ -65,57 +63,76 @@ public class CustomizableCharacter
         Save();
     }
 
-    private void WearGarment(Garment garment)
+    private void WearGarment(Garment newGarment)
     {
-        // Find the garment GameObject by tag inside the model
-        Transform garmentTransform = model.Find(garment.tag);
-
-        if (garmentTransform != null)
+        switch (newGarment.bodyPart)
         {
-            // Activate the garment GameObject
-            garmentTransform.gameObject.SetActive(true);
-
-            // Update the current customization dictionary
-            currentCustomization[garment.bodyPart] = garment;
-        }
-        else
-        {
-            Debug.LogWarning("Garment with tag " + garment.tag + " not found in the model.");
+            case BodyPart.Head:
+                ActivateGarment(PlayerManager.Instance.headGarments, newGarment);
+                break;
+            case BodyPart.UpperBody:
+                ActivateGarment(PlayerManager.Instance.upperBodyGarments, newGarment);
+                break;
+            case BodyPart.LowerBody:
+                ActivateGarment(PlayerManager.Instance.lowerBodyGarments, newGarment);
+                break;
+            case BodyPart.Broom:
+                ActivateGarment(PlayerManager.Instance.brooms, newGarment);
+                break;
+            default:
+                break;
         }
     }
 
-    /// <summary>
-    /// Instantiates a copy of the item gameobject at the correspondant body transform as a child.
-    /// Updates the dictionary with the new item
-    /// </summary>
-    // void InstantiateItem(Garment item)
-    // {
-    //     // Gets transform
-    //     Transform bodyPartTransform = GetBodyPartTransform(item.bodyPart);
-
-    //     // Instantiates a copy of the prefab in that transform as a child of it
-    //     GameObject prefabCopy = GameManager.Instance.InstantiateGO(item.prefab, bodyPartTransform.position, bodyPartTransform.rotation, bodyPartTransform);
-    //     prefabCopy.transform.localScale = new Vector3(1, 1, 1); // Ensure normal scale
-
-    //     // Defines item reference to the copy
-    //     item.instance = prefabCopy;
-
-    //     // Update dictionary
-    //     currentCustomization[item.bodyPart] = item;
-    // }
-
-    /// <returns>Corresponding transform to body part</returns>
-    Transform GetBodyPartTransform(BodyPart bodyPart)
+    private void UnwearGarment(Garment newGarment)
     {
-        return null;
-        // return bodyPart switch
-        // {
-        //     BodyPart.Head => headTransform,
-        //     BodyPart.UpperBody => upperBodyTransform,
-        //     BodyPart.LowerBody => lowerBodyTransform,
-        //     BodyPart.Shoes => shoesTransform,
-        //     _ => null,
-        // };
+        switch (newGarment.bodyPart)
+        {
+            case BodyPart.Head:
+                DeactivateGarment(PlayerManager.Instance.headGarments, newGarment);
+                break;
+            case BodyPart.UpperBody:
+                DeactivateGarment(PlayerManager.Instance.upperBodyGarments, newGarment);
+                break;
+            case BodyPart.LowerBody:
+                DeactivateGarment(PlayerManager.Instance.lowerBodyGarments, newGarment);
+                break;
+            case BodyPart.Broom:
+                DeactivateGarment(PlayerManager.Instance.brooms, newGarment);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ActivateGarment(List<GameObject> garments, Garment newGarment)
+    {
+        foreach (var garment in garments)
+        {
+            bool isActive = garment.tag == newGarment.tag;
+            garment.SetActive(isActive);
+
+            if (isActive)
+                // Update the current customization dictionary
+                currentCustomization[newGarment.bodyPart] = newGarment;
+        }
+    }
+
+    void DeactivateGarment(List<GameObject> garments, Garment newGarment)
+    {
+        foreach (var garment in garments)
+        {
+            if (garment.tag == newGarment.tag)
+            {
+                garment.SetActive(false);
+
+                // Update the current customization dictionary
+                currentCustomization[newGarment.bodyPart] = null;
+
+                if (garments == PlayerManager.Instance.brooms)
+                    garments[4].SetActive(true);
+            }
+        }
     }
 
     internal void UpdateCoins(int coins)
@@ -153,11 +170,11 @@ public class CustomizableCharacter
     /// </summary>
     public void SavePurchasedItems()
     {
-        List<ItemData> dataList = new();
+        List<GarmentData> dataList = new();
 
         foreach (var item in purchasedGarments)
         {
-            ItemData data = new()
+            GarmentData data = new()
             {
                 bodyPart = item.bodyPart,
                 //prefabName = item.prefab.name,
@@ -168,7 +185,7 @@ public class CustomizableCharacter
         }
 
         // Serialize the list to JSON
-        string json = JsonUtility.ToJson(new PurchasedItemsList(dataList));
+        string json = JsonUtility.ToJson(new PurchasedGarmentsList(dataList));
         PlayerPrefs.SetString(PLAYER_PURCHASED_ITEMS_FILE, json);
         Debug.Log("Saved purchased items: " + json);
     }
@@ -179,14 +196,14 @@ public class CustomizableCharacter
     /// </summary>
     public void SaveCustomization()
     {
-        List<ItemData> dataList = new();
+        List<GarmentData> dataList = new();
 
         // Convert dictionary to a serializable list
         foreach (var kvp in currentCustomization)
         {
             if (kvp.Value != null)
             {
-                ItemData data = new()
+                GarmentData data = new()
                 {
                     bodyPart = kvp.Key,
                     //prefabName = kvp.Value.prefab.name,
@@ -234,13 +251,13 @@ public class CustomizableCharacter
 
         Debug.Log("Loaded purchased items: " + json);
 
-        PurchasedItemsList loadedPurchasedItemsList = JsonUtility.FromJson<PurchasedItemsList>(json);
+        PurchasedGarmentsList loadedPurchasedItemsList = JsonUtility.FromJson<PurchasedGarmentsList>(json);
 
         // Mark each item prefab as purchased
-        foreach (var item in loadedPurchasedItemsList.purchasedItems)
+        foreach (var item in loadedPurchasedItemsList.purchasedGarments)
         {
             // Use Addressables to load the prefab by name/label
-            Addressables.LoadAssetAsync<GameObject>(item.prefabName).Completed += handle =>
+            Addressables.LoadAssetAsync<GameObject>(item.tag).Completed += handle =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
@@ -253,7 +270,7 @@ public class CustomizableCharacter
                 }
                 else
                 {
-                    Debug.LogError("Failed to load prefab: " + item.prefabName);
+                    Debug.LogError("Failed to load prefab: " + item.tag);
                 }
             };
         }
@@ -275,29 +292,28 @@ public class CustomizableCharacter
 
         CustomizationList customizationList = JsonUtility.FromJson<CustomizationList>(json);
 
-        foreach (var data in customizationList.customizationItems)
+        foreach (var data in customizationList.customizationGarments)
         {
             // Use Addressables to load the prefab by name/label
-            Addressables.LoadAssetAsync<GameObject>(data.prefabName).Completed += handle =>
+            Addressables.LoadAssetAsync<GameObject>(data.tag).Completed += handle =>
             {
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     GameObject prefab = handle.Result;
 
-                    // Get the CustomizableItem component attached to the prefab
-                    Garment newItem = prefab.GetComponent<Garment>();
+                    // Get the component attached to the prefab
+                    Garment loadedGarment = prefab.GetComponent<Garment>();
 
                     // Assign data to the new item
-                    newItem.bodyPart = data.bodyPart;
+                    loadedGarment.bodyPart = data.bodyPart;
                     //newItem.prefab = prefab;
-                    newItem.isPurchased = data.isPurchased;
+                    loadedGarment.isPurchased = data.isPurchased;
 
-                    // Instantiate the item
-                    //InstantiateItem(newItem);
+                    WearGarment(loadedGarment);
                 }
                 else
                 {
-                    Debug.LogError("Failed to load prefab: " + data.prefabName);
+                    Debug.LogError("Failed to load prefab: " + data.tag);
                 }
             };
         }
@@ -310,10 +326,10 @@ public class CustomizableCharacter
 /// Customization data class for serialization
 /// </summary>
 [Serializable]
-public class ItemData
+public class GarmentData
 {
     public BodyPart bodyPart;
-    public string prefabName; // Label for addressables
+    public string tag;
     public bool isPurchased;
 }
 
@@ -323,11 +339,11 @@ public class ItemData
 [Serializable]
 public class CustomizationList
 {
-    public List<ItemData> customizationItems = new();
+    public List<GarmentData> customizationGarments = new();
 
-    public CustomizationList(List<ItemData> customizationItems)
+    public CustomizationList(List<GarmentData> customizationGarments)
     {
-        this.customizationItems = customizationItems;
+        this.customizationGarments = customizationGarments;
     }
 }
 
@@ -335,12 +351,12 @@ public class CustomizationList
 /// Wrapper class to hold list of CustomizationData (required for Unity serialization)
 /// </summary>
 [Serializable]
-public class PurchasedItemsList
+public class PurchasedGarmentsList
 {
-    public List<ItemData> purchasedItems = new();
+    public List<GarmentData> purchasedGarments = new();
 
-    public PurchasedItemsList(List<ItemData> purchasedItems)
+    public PurchasedGarmentsList(List<GarmentData> purchasedGarments)
     {
-        this.purchasedItems = purchasedItems;
+        this.purchasedGarments = purchasedGarments;
     }
 }

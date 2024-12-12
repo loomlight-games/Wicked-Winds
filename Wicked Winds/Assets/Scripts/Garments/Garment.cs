@@ -18,5 +18,5 @@ public enum BodyPart
     Head = 0,
     UpperBody = 1,
     LowerBody = 2,
-    Shoes = 3
+    Broom = 3
 }
