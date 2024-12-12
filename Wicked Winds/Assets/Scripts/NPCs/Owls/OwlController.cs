@@ -23,7 +23,6 @@ public class OwlController : MonoBehaviour
     void Start()
     {
         this.missionIcon = owner.request;
-
         SetRandomTarget(); // Set an initial random position for flight
     }
 
@@ -35,12 +34,9 @@ public class OwlController : MonoBehaviour
             Vector3 escapeDirection = (transform.position - player.position).normalized;
             escapeDirection.y += flightHeight; // Raise the owl while escaping
             Vector3 newPosition = transform.position + escapeDirection * moveSpeed * Time.deltaTime;
-
             // Rotate the owl towards the escape direction
             RotateTowards(newPosition - transform.position);
-
             transform.position = newPosition;
-
             // Restrict the owl within the map boundaries
             ClampToMapBounds();
         }
@@ -49,7 +45,6 @@ public class OwlController : MonoBehaviour
             // Random flight while not interacting with the player
             Vector3 directionToTarget = targetPosition - transform.position;
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
             // Rotate the owl towards its target
             RotateTowards(directionToTarget);
 
@@ -58,18 +53,15 @@ public class OwlController : MonoBehaviour
             {
                 SetRandomTarget();
             }
-
             // Detect the player and trigger escape mode
             if (Vector3.Distance(transform.position, player.position) < detectionRadius)
             {
                 isEscaping = true;
             }
-
             // Restrict the owl within the map boundaries
             ClampToMapBounds();
         }
     }
-
     // Rotates the owl to face the given direction smoothly
     void RotateTowards(Vector3 direction)
     {
@@ -86,19 +78,15 @@ public class OwlController : MonoBehaviour
         float randomX = Random.Range(mapMinBounds.x, mapMaxBounds.x);
         float randomY = Random.Range(mapMinBounds.y, mapMaxBounds.y);
         float randomZ = Random.Range(mapMinBounds.z, mapMaxBounds.z);
-
         targetPosition = new Vector3(randomX, randomY, randomZ);
     }
-
     // Restricts the owl's position within the map boundaries
     void ClampToMapBounds()
     {
         Vector3 clampedPosition = transform.position;
-
         clampedPosition.x = Mathf.Clamp(clampedPosition.x, mapMinBounds.x, mapMaxBounds.x);
         clampedPosition.y = Mathf.Clamp(clampedPosition.y, mapMinBounds.y, mapMaxBounds.y);
         clampedPosition.z = Mathf.Clamp(clampedPosition.z, mapMinBounds.z, mapMaxBounds.z);
-
         transform.position = clampedPosition;
     }
 
@@ -109,12 +97,12 @@ public class OwlController : MonoBehaviour
             PlayerManager.Instance.currentTargets.Contains(gameObject))
         {
             SoundManager.PlaySound(SoundType.Owl);
-
+            PlayerManager.Instance.currentTargets.Remove(gameObject);
             // Show icon in UI
             desactivarOwlUI.Instance.activateOwlUI = true;
-
+            PlayerManager.Instance.currentTargets.Add(owner.gameObject);
             // TODO make it reappear
-            this.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
