@@ -134,7 +134,7 @@ public class ControllablePlayerState : AState
                 break;
         }
 
-        
+
     }
 
     public override void OnTriggerStay(Collider other)

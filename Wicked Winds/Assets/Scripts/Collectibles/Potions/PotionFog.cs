@@ -12,12 +12,11 @@ public class PotionFog : MonoBehaviour
 
         // Activar la niebla de la pocion
         PlayerManager.Instance.potionFog = true;
-      
         // Activar la UI de la niebla
         DesactivarPotionUI.Instance.activarFogUI = true;
 
         // Reactivar el temporizador de niebla
         FogManager.Instance.ReenableFogAfterTime();
-        FogManager.Instance.StartFogTransition(0f, new Color(0f, 0f, 0f, 0f)); // Desactivar la niebla inmediatamente
+        //FogManager.Instance.StartFogTransition(FogManager.Instance.startNoFog, FogManager.Instance.endNoFog, FogManager.Instance.transparentColor); // Desactivar niebla (hacia transparente)    }
     }
 }
