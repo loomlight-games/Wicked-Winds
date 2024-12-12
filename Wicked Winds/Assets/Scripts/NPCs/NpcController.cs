@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -226,26 +227,12 @@ public class NpcController : AAnimationController
     // Este metodo es llamado cuando el objeto es devuelto al pool
     public void OnObjectReturn()
     {
-        Debug.Log("Devolviendo MissionIcon al pool.");
+        this.hasMission = false;
+        isMissionStateDirty = true; // Asegura que el estado de la burbuja se actualice
+        this.message = string.Empty;
+        this.request = null;
+        Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
 
-        if (request != null) ////NO ENTRA PORQ NO HAY ASIGNED NPC
-        {
-            Debug.Log($"Devolviendo MissionIcon de {gameObject.name} al pool.");
-
-            if (request != null)
-            {
-                Debug.Log($"Liberando icono de mision de {gameObject.name}.");
-                MissionIconPoolManager.Instance.GetMissionIconPool().ReleaseIcon(request);
-                request = null;
-            }
-
-            this.hasMission = false;
-            isMissionStateDirty = true; // Asegura que el estado de la burbuja se actualice
-            this.message = string.Empty;
-            Debug.Log($"Estado del NPC {gameObject.name} actualizado: hasMission = false.");
-        }
-
-        Debug.Log("Referencias limpiadas en OnObjectReturn.");
     }
 
     // Metodo llamado cuando el jugador interactua con el NPC
@@ -261,6 +248,7 @@ public class NpcController : AAnimationController
         this.message = string.Empty;
 
         CompleteMission(this);
+        MissionManager.Instance.NotSelectedNPCS.Add(this);
     }
 
     public void OnInteractAfterLetter()

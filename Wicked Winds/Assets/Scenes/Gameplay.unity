@@ -340,7 +340,12 @@ MonoBehaviour:
   fogDensity: 0.5
   transitionSpeed: 2
   transparentColor: {r: 0, g: 0, b: 0, a: 0}
-  targetFogDensity: 0
+  targetStart: 0
+  targetEnd: 0
+  startNoFog: 0
+  endNoFog: 100000
+  startFog: -10
+  endFog: 35
   targetFogColor: {r: 0, g: 0, b: 0, a: 0}
   isTransitioning: 0
   timerText: {fileID: 1269058275}
@@ -448,22 +453,22 @@ PrefabInstance:
     - target: {fileID: 794863660287082047, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9951334
+      value: 0.99513334
       objectReference: {fileID: 0}
     - target: {fileID: 794863660287082047, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0985376
+      value: 0.098537594
       objectReference: {fileID: 0}
     - target: {fileID: 794863660287082047, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 5.3486165e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 794863660287082047, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 8.620327e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1230888750555362092, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
@@ -523,22 +528,22 @@ PrefabInstance:
     - target: {fileID: 3489994603495211762, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9951334
+      value: 0.99513334
       objectReference: {fileID: 0}
     - target: {fileID: 3489994603495211762, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0985376
+      value: 0.098537594
       objectReference: {fileID: 0}
     - target: {fileID: 3489994603495211762, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 5.3486165e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3489994603495211762, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 8.620327e-16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4154599782957734524, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
@@ -563,12 +568,12 @@ PrefabInstance:
     - target: {fileID: 7884585810121251927, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9951334
+      value: 0.99513334
       objectReference: {fileID: 0}
     - target: {fileID: 7884585810121251927, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0985376
+      value: 0.098537594
       objectReference: {fileID: 0}
     - target: {fileID: 7884585810121251927, guid: eb74f42b0536a8d4292168354db3e282,
         type: 3}
@@ -1178,7 +1183,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6fdf0eaa4d27aca4994478d18ac9e672, type: 2}
   - {fileID: 11400000, guid: 13435a0468a3524499f9dfddfb3ca97d, type: 2}
   allNPCs: []
-  numMissionsToAssign: 10
+  numMissionsToAssign: 15
   assignedNPCs: []
   missionsCompleted: 0
   npcsWithCat: []

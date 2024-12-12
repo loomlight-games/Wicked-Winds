@@ -6,6 +6,7 @@ public class MissionIconPool
     private MissionIcon prefab;
     private List<MissionIcon> pool;
     private Transform iconPoolParent; // Almacena la referencia al GameObject del pool
+    private GameObject assignedIcons;
 
     // Constructor que acepta el prefab y el GameObject del pool
     public MissionIconPool(MissionIcon prefab, int initialSize, Transform parent)
@@ -13,7 +14,7 @@ public class MissionIconPool
         this.prefab = prefab;
         this.iconPoolParent = parent; // Asigna el padre
         pool = new List<MissionIcon>();
-
+        assignedIcons = GameObject.Find("IngredientsParent") ?? new GameObject("IngredientsParent");
         // Inicializa el pool con el tama?o dado
         for (int i = 0; i < initialSize; i++)
         {
@@ -35,18 +36,16 @@ public class MissionIconPool
             if (!icon.gameObject.activeInHierarchy)
             {
                 icon.gameObject.SetActive(true);
-                icon.OnObjectSpawn();
                 return icon;
             }
         }
 
-        // Si no hay iconos disponibles, crea uno nuevo y añdelo al pool
+        // Si no hay iconos disponibles, crea uno nuevo y aï¿½delo al pool
         MissionIcon newIcon = Object.Instantiate(prefab);
         newIcon.gameObject.SetActive(true); // Activa el nuevo icono
-        newIcon.transform.SetParent(iconPoolParent); // Asigna el nuevo ?cono al padre del pool
+        newIcon.transform.SetParent(assignedIcons.transform); // Asigna el nuevo ?cono al padre del pool
         pool.Add(newIcon); // A?adir el nuevo ?cono al pool para su reutilizacion futura
 
-        newIcon.OnObjectSpawn();
         return newIcon;
     }
 
@@ -54,9 +53,9 @@ public class MissionIconPool
     public void ReleaseIcon(MissionIcon icon)
     {
 
-        icon.gameObject.SetActive(false); // Desactiva el Icono
+        icon.gameObject.SetActive(true); 
         icon.transform.SetParent(iconPoolParent); // Devuelve el Icono al padre del pool
 
-      
+
     }
 }
