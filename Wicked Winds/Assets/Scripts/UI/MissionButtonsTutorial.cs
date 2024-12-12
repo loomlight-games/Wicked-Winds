@@ -55,7 +55,7 @@ public class MissionButtonsTutorial : MonoBehaviour
                 textoDinamico.text = "This mission requires you to deliver a letter to a specific NPC.";
                 break;
             case "Recipe":
-                textoDinamico.text = "This mission involves finding a rare recipe hidden in a secret location.";
+                textoDinamico.text = "This mission involves finding all the ingredients of a rare recipe hidden in secret locations.";
                 break;
             case "Owl":
                 textoDinamico.text = "This mission tasks you with rescuing a lost owl from the forest.";

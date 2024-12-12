@@ -15,6 +15,8 @@ public class GamePauseState : AState
         statesUI = UI.transform.Find("States").gameObject;
         pauseMenuUI = statesUI.transform.Find("PauseMenu").gameObject;
         pauseMenuUI.SetActive(true);
+        
+
     }
 
     public override void Update()
