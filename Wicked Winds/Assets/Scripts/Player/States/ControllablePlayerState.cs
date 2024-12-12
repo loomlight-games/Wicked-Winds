@@ -129,6 +129,10 @@ public class ControllablePlayerState : AState
                     Debug.LogWarning("CharacterController no está asignado al PlayerManager.");
                 }
                 break;
+            case "Owl":
+                if (other.gameObject.TryGetComponent(out OwlController owl))
+                    owl.Interact();
+                break;
 
             default:
                 break;
@@ -157,8 +161,7 @@ public class ControllablePlayerState : AState
             else if (other.gameObject.TryGetComponent(out CatController cat))
                 cat.Interact();
             // Owl
-            else if (other.gameObject.TryGetComponent(out OwlController owl))
-                owl.Interact();
+
 
         }
     }
