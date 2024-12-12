@@ -1,33 +1,43 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PotionButtonsTutorial : MonoBehaviour
 {
     private TextMeshProUGUI textoDinamico; // Referencia al componente Text
-    private GameObject textContainer; // Contenedor del texto para mostrar/ocultar
+    private GameObject textContainer, textTitle, textDescription, textSelect; // Contenedor del texto para mostrar/ocultar
+    [SerializeField] private GameObject PotionsPage; // Asignado desde el Inspector
 
     private void Awake()
     {
-        // Buscar el objeto 'Contenedor' en el mismo nivel que 'LevelPages'
-        Transform contenedorTransform = transform.parent.Find("Contenedor");
+        // Comprobamos si PotionsPage está asignado desde el Inspector
+        if (PotionsPage == null)
+        {
+            Debug.LogError("PotionsPage no está asignado en el Inspector.");
+            return;
+        }
+
+        // Buscar el contenedor dentro de PotionsPage
+        Transform contenedorTransform = PotionsPage.transform.Find("Contenedor");
         if (contenedorTransform == null)
         {
-            Debug.LogError("No se encontró el objeto 'Contenedor'. Asegúrate de que está al mismo nivel que 'LevelPages' en la jerarquía.");
+            Debug.LogError("No se encontró el objeto 'Contenedor' dentro de 'PotionsPage'. Asegúrate de que existe en la jerarquía.");
             return;
         }
 
         textContainer = contenedorTransform.gameObject;
+        textTitle = contenedorTransform.Find("TituloPociones").gameObject;
+        textDescription = contenedorTransform.Find("Descripcion").gameObject;
+        textSelect = contenedorTransform.Find("SelectText").gameObject;
 
-        // Buscar el componente Text dentro del contenedor
-        textoDinamico = textContainer.GetComponentInChildren<TextMeshProUGUI>();
+        // Buscar el componente Text dentro del contenedor de Descripción
+        textoDinamico = textDescription.GetComponent<TextMeshProUGUI>();
         if (textoDinamico == null)
         {
-            Debug.LogError("No se encontró un componente Text dentro del contenedor 'Contenedor'.");
+            Debug.LogError("No se encontró un componente Text dentro del contenedor 'Descripcion'.");
         }
 
-        // Ocultar el contenedor inicialmente
-        textContainer.SetActive(false);
+        // Ocultar la descripción al principio
+        textDescription.SetActive(false);
     }
 
     public void MostrarTexto(string botonPresionado)
@@ -42,35 +52,35 @@ public class PotionButtonsTutorial : MonoBehaviour
         switch (botonPresionado)
         {
             case "FlyHigh":
-                textoDinamico.text = "Has seleccionado volar alto.";
+                textoDinamico.text = "This potion allows you to fly until your stamina runs out.";
                 break;
             case "Speed":
-                textoDinamico.text = "Has seleccionado aumentar la velocidad.";
+                textoDinamico.text = "This potion allows you to sprint until your stamina runs out. To use it press 'shift'.";
                 break;
             case "Birds":
-                textoDinamico.text = "Has seleccionado invocar a los pájaros.";
+                textoDinamico.text = "This potion clears the sky of pesky birds, allowing you to fly freely without obstacles.";
                 break;
             case "Teleport":
-                textoDinamico.text = "Has seleccionado teletransportarte.";
+                textoDinamico.text = "This potion teleports you close to your mission objective, bringing you one step closer to success.";
                 break;
             case "Fog":
-                textoDinamico.text = "Has seleccionado crear niebla.";
+                textoDinamico.text = "Sometimes, the weather works against you, and the fog hides the arrow above your head. This potion frees you from its effects, revealing the arrow guiding you to your objective.";
                 break;
             default:
                 textoDinamico.text = "Opción no válida.";
                 break;
         }
 
-        // Activar el contenedor para mostrar el texto
-        textContainer.SetActive(true);
+        // Activar el contenedor de texto de descripción para mostrarlo
+        textDescription.SetActive(true);
     }
 
     public void OcultarTexto()
     {
         // Ocultar el contenedor cuando no se necesite mostrar el texto
-        if (textContainer != null)
+        if (textDescription != null)
         {
-            textContainer.SetActive(false);
+            textDescription.SetActive(false);
         }
     }
 }
