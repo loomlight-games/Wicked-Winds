@@ -7,10 +7,9 @@ public class NPCSpawner : MonoBehaviour
 {
     GameObject npcsParent, catsParent, owlsParent, flocksParent, model;
 
-    public List<GameObject> NPCs;
+    public List<GameObject> Npcs;
 
-    public GameObject npcPrefab,
-    catPrefab,
+    public GameObject catPrefab,
     birdPrefab,
     owlPrefab,
     cloudPrefab;
@@ -27,7 +26,6 @@ public class NPCSpawner : MonoBehaviour
         birdHeightOffset = 15f, // Altura fija de las bandadas
         cloudSpawnRadious = 100f,
         cloudHeightOffset = 40;
-
 
     private static NPCSpawner instance;
     public static NPCSpawner Instance { get { return instance; } }
@@ -54,8 +52,6 @@ public class NPCSpawner : MonoBehaviour
         catsParent = GameObject.Find("CatsParent") ?? new GameObject("CatsParent");
         owlsParent = GameObject.Find("OwlsParent") ?? new GameObject("OwlsParent");
         flocksParent = GameObject.Find("FlocksParent") ?? new GameObject("FlocksParent");
-
-
 
         for (int i = 0; i < npcCount; i++)
         {
@@ -208,7 +204,6 @@ public class NPCSpawner : MonoBehaviour
         }
     }
 
-
     public Vector3 GetCloudSpawnPosition()
     {
         Vector3 position = new Vector3(
@@ -230,10 +225,6 @@ public class NPCSpawner : MonoBehaviour
             cloud.SetActive(true);
         }
     }
-
-
-
-
 
     Vector3 GetRandomPositionOnGround(int agentTypeID, bool cat)
     {
@@ -278,17 +269,17 @@ public class NPCSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// Chooses a random element from the models list.
+    /// Chooses a random element from the npcs list.
     /// </summary>
     public GameObject ChooseRandomModel()
     {
-        if (NPCs == null || NPCs.Count == 0)
+        if (Npcs == null || Npcs.Count == 0)
         {
             Debug.LogWarning("The models list is empty or not initialized.");
             return null;
         }
 
-        int randomIndex = Random.Range(0, NPCs.Count);
-        return NPCs[randomIndex];
+        int randomIndex = Random.Range(0, Npcs.Count);
+        return Npcs[randomIndex];
     }
 }
