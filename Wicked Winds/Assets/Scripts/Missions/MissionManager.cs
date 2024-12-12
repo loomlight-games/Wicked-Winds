@@ -11,7 +11,6 @@ public class MissionManager : MonoBehaviour
     public static MissionManager Instance;
 
     public MissionData[] availableMissions; // Todas las misiones disponibles
-    public List<NpcController> allNPCs;
     public int numMissionsToAssign = 15; // N�mero de misiones por ronda
 
     private MissionIconPool missionIconPool;
@@ -20,6 +19,7 @@ public class MissionManager : MonoBehaviour
     public int missionsCompleted = 0;
     public List<NpcController> npcsWithCat;
     public List<NpcController> npcsWithOwl;
+    public List<NpcController> NotSelectedNPCS;
 
 
     public void Awake()
@@ -36,11 +36,13 @@ public class MissionManager : MonoBehaviour
 
     void Start()
     {
-        allNPCs.Clear();
-        NpcController[] npcs = FindObjectsOfType<NpcController>();
-        allNPCs.AddRange(npcs);
 
-        if (allNPCs.Count <= 0)
+        NotSelectedNPCS.Clear();
+
+        NpcController[] npcs = FindObjectsOfType<NpcController>();
+        NotSelectedNPCS.AddRange(npcs);
+
+        if (NotSelectedNPCS.Count <= 0)
         {
             Debug.LogError("No NPC found to assign any mission.");
             return;
@@ -69,7 +71,7 @@ public class MissionManager : MonoBehaviour
 
     private bool CanAssignMissions()
     {
-        if (allNPCs.Count < numMissionsToAssign)
+        if (NotSelectedNPCS.Count < numMissionsToAssign)
         {
             Debug.LogError("Not enough NPCs for all the missions to be assigned");
             return false;
@@ -128,13 +130,13 @@ public class MissionManager : MonoBehaviour
 
     private void AssignMissionsToNPCs(Dictionary<string, List<MissionData>> missionLists, int numEasyMissions, int numMediumMissions, int numHardMissions)
     {
-        List<NpcController> shuffledNPCs = new List<NpcController>(allNPCs);
-        npcsWithCat = allNPCs.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
-        npcsWithOwl = allNPCs.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
+
+        npcsWithCat = NotSelectedNPCS.Where(npc => npc.cat != null).ToList(); // Filtrar los NPCs que tienen gato
+        npcsWithOwl = NotSelectedNPCS.Where(npc => npc.owl != null).ToList(); // Filtrar los NPCs que tienen buho
 
         int assignedCount = 0;
 
-        while (assignedCount < numMissionsToAssign && (shuffledNPCs.Count > 0 || npcsWithCat.Count > 0))
+        while (assignedCount < numMissionsToAssign && (NotSelectedNPCS.Count > 0 || npcsWithCat.Count > 0))
         {
             // Seleccionar una misión
             MissionData mission = SelectMission(missionLists, ref assignedCount, numEasyMissions, numMediumMissions);
@@ -165,10 +167,10 @@ public class MissionManager : MonoBehaviour
             }
             else if (mission.missionName == "PotionMission" || mission.missionName == "LetterMision") // Si es una misión de tipo Potion o Letter
             {
-                if (shuffledNPCs.Count > 0)
+                if (NotSelectedNPCS.Count > 0)
                 {
-                    selectedNPC = GetRandomNPC(shuffledNPCs);
-                    shuffledNPCs.Remove(selectedNPC); // Remover el NPC de la lista
+                    selectedNPC = GetRandomNPC(NotSelectedNPCS);
+                    NotSelectedNPCS.Remove(selectedNPC); // Remover el NPC de la lista
                 }
             }
 
@@ -179,7 +181,6 @@ public class MissionManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Todas las misiones han sido asignadas a los NPCs.");
         specialMissionGeneration(assignedNPCs);
     }
 
@@ -295,7 +296,6 @@ public class MissionManager : MonoBehaviour
                     // Exclude the current NPC and those with a mission icon
                     if (!assignedNPCs.Contains(Npc) && Npc != npc)
                     {
-                        Debug.Log($"Adding NPC: {Npc}");
                         if (!string.IsNullOrEmpty(Npc.name)) // Check if the name is not null or empty
                         {
                             npcNames.Add(Npc); // Add the name to the list

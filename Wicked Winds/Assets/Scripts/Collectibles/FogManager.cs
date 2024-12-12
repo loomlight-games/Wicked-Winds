@@ -51,7 +51,7 @@ public class FogManager : MonoBehaviour
         timer = potionFogEffectTime;
         // Establecer el color inicial de la niebla como completamente transparente
         transparentColor = new Color(targetColor.r, targetColor.g, targetColor.b, 0f);
-        RenderSettings.fogColor = transparentColor;
+        RenderSettings.fogColor = targetColor;
         RenderSettings.fog = true;
         RenderSettings.fogMode = FogMode.Linear; // Configurar el modo de niebla como lineal
         RenderSettings.fogStartDistance = 0f; // Configurar el inicio de la niebla
@@ -66,7 +66,7 @@ public class FogManager : MonoBehaviour
             RenderSettings.fogStartDistance = 0f; // Configurar el inicio de la niebla
             RenderSettings.fogEndDistance = 100000f;
         }
-        
+
 
         if (isFogTimerActive)
         {
@@ -104,9 +104,8 @@ public class FogManager : MonoBehaviour
             // Transicion de niebla
             RenderSettings.fogStartDistance = Mathf.Lerp(RenderSettings.fogStartDistance, targetStart, Time.deltaTime * transitionSpeed);
             RenderSettings.fogEndDistance = Mathf.Lerp(RenderSettings.fogEndDistance, targetEnd, Time.deltaTime * transitionSpeed);
-            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetFogColor, Time.deltaTime * transitionSpeed);
-            if(RenderSettings.fogColor== targetFogColor) { isTransitioning = false; }
-           
+            if (RenderSettings.fogColor == targetFogColor) { isTransitioning = false; }
+
         }
     }
 
@@ -144,7 +143,6 @@ public class FogManager : MonoBehaviour
     {
         targetStart = start;
         targetEnd = end;
-        targetFogColor = newFogColor;
         isTransitioning = true;
     }
 }

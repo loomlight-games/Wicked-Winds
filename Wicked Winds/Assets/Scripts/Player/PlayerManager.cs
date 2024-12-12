@@ -23,7 +23,6 @@ public class PlayerManager : AStateController
     public Transform cloudTransform;
     [HideInInspector] public int score, MAX_VALUE = 100;
     public List<GameObject> currentTargets = new();
-    public Transform target;
     [HideInInspector] public MissionIcon activeMission;
 
     #region STATES
