@@ -9,7 +9,6 @@ public class ItemButton : MonoBehaviour
     public float rotationSpeed,
                 scaleUp = 1.5f;
 
-    Vector3 initialItemScale;
     TextMeshProUGUI priceText;
     CustomizableCharacter player;
     PlayerCustomizationUI shopUI;
@@ -39,7 +38,6 @@ public class ItemButton : MonoBehaviour
         {
             // Get item and price panel
             garment = transform.GetComponentInChildren<Garment>();
-            initialItemScale = garment.transform.localScale;
 
             pricePanel = transform.Find("Price panel").gameObject;
             priceText = pricePanel.transform.GetComponentInChildren<TextMeshProUGUI>();
@@ -59,32 +57,8 @@ public class ItemButton : MonoBehaviour
         if (garment == null) return;
         if (player == null) return;
 
-        // Item is purchased
-        if (garment.isPurchased)
+        if (!player.GarmentIsPurchased(garment))
         {
-            // Hide price panel
-            pricePanel.SetActive(false);
-
-            // Move item to center
-            garment.transform.position = Vector3.MoveTowards(garment.transform.position, center.transform.position, 2f * Time.deltaTime);
-
-            // Scale it up a little
-            garment.transform.localScale = Vector3.Lerp(garment.transform.localScale, initialItemScale * scaleUp, 2f * Time.deltaTime);
-
-            // Character is wearing smth of that body part
-            if (player.currentCustomization[garment.bodyPart] != null)
-            {
-                // Its this item -> blue
-                if (player.currentCustomization[garment.bodyPart].name == garment.name)
-                    button.image.color = semiTransparentBlue;
-                else // Its not -> white
-                    button.image.color = semiTransparentWhite;
-            }
-            else
-                button.image.color = semiTransparentWhite;
-        }
-        else
-        { // Item not purchased
             // Show price panel
             pricePanel.SetActive(true);
 
@@ -95,18 +69,25 @@ public class ItemButton : MonoBehaviour
             else
                 button.image.color = semiTransparentRed;
         }
+        else // Item is purchased
+        {
+            // Hide price panel
+            pricePanel.SetActive(false);
 
-        try
-        {
-            // Check if item is in the the purchased items list of player
-            foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments)
+            // Move item to center
+            garment.transform.position = Vector3.MoveTowards(garment.transform.position, center.transform.position, 2f * Time.deltaTime);
+
+            // Character is wearing smth of that body part
+            if (player.currentCustomization[garment.bodyPart] != null)
             {
-                if (purchasedItem.tag == garment.tag) garment.isPurchased = true;
+                // Its this item -> blue
+                if (player.currentCustomization[garment.bodyPart].tag == garment.tag)
+                    button.image.color = semiTransparentBlue;
+                else // Its not -> white
+                    button.image.color = semiTransparentWhite;
             }
-        }
-        catch
-        {
-            Debug.LogWarning("No purchased items");
+            else
+                button.image.color = semiTransparentWhite;
         }
 
         rotationSpeed = PlayerManager.Instance.rotatorySpeedAtShop;

@@ -5,10 +5,7 @@ using UnityEngine;
 public class Garment : MonoBehaviour
 {
     public BodyPart bodyPart; // Head, upper body, lower body or shoes
-    // public GameObject prefab;  // Reference to the prefab
-    // public GameObject instance;  // Instance of the item in the scene
     public int price; // Coins this item costs
-    public bool isPurchased = false;
 }
 
 // Types of body parts, basically of garments

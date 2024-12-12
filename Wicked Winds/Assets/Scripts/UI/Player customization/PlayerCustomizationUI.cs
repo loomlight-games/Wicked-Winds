@@ -59,10 +59,11 @@ public class PlayerCustomizationUI : MonoBehaviour
         int itemPrice = button.garment.price;
 
         // Enough money to buy it or is already purchased
-        if (coinsNum >= itemPrice || button.garment.isPurchased)
+        if (coinsNum >= itemPrice ||
+            PlayerManager.Instance.customizable.GarmentIsPurchased(button.garment))
         {
             // Not purchased yet
-            if (!button.garment.isPurchased)
+            if (!PlayerManager.Instance.customizable.GarmentIsPurchased(button.garment))
                 // Reduces coins number
                 coinsNum -= itemPrice;
 

@@ -27,6 +27,12 @@ public class CustomizableCharacter
         Load();
     }
 
+    public bool GarmentIsPurchased(Garment garment)
+    {
+        //Check if garment is in purchasedGarments list
+        return purchasedGarments.Exists(purchasedItem => purchasedItem.tag == garment.tag);
+    }
+
     /// <summary>
     /// Change body part according to item received, creationg or destroying it
     /// </summary>
@@ -48,11 +54,10 @@ public class CustomizableCharacter
             WearGarment(newGarment);
 
         // New item
-        if (!newGarment.isPurchased)
+        if (!GarmentIsPurchased(newGarment))
         {
             // Add to list
             purchasedGarments.Add(newGarment);
-            newGarment.isPurchased = true;
         }
 
         // Save customization and purchased items after updating
@@ -125,6 +130,7 @@ public class CustomizableCharacter
                 // Update the current customization dictionary
                 currentCustomization[newGarment.bodyPart] = null;
 
+                // Maintain default broom
                 if (garments == PlayerManager.Instance.brooms)
                     garments[4].SetActive(true);
             }
@@ -174,7 +180,6 @@ public class CustomizableCharacter
             {
                 bodyPart = item.bodyPart,
                 tag = item.tag,
-                isPurchased = item.isPurchased,
             };
 
             dataList.Add(data);
@@ -203,7 +208,6 @@ public class CustomizableCharacter
                 {
                     bodyPart = kvp.Key,
                     tag = kvp.Value.tag,
-                    isPurchased = kvp.Value.isPurchased,
                 };
 
                 dataList.Add(data);
@@ -302,8 +306,6 @@ public class CustomizableCharacter
 
                     // Assign data to the new item
                     loadedGarment.bodyPart = data.bodyPart;
-                    //newItem.prefab = prefab;
-                    loadedGarment.isPurchased = true;
 
                     WearGarment(loadedGarment);
                 }
@@ -326,7 +328,6 @@ public class GarmentData
 {
     public BodyPart bodyPart;
     public string tag;
-    public bool isPurchased;
 }
 
 /// <summary>
