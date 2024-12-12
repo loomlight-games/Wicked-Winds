@@ -101,7 +101,7 @@ public class ItemButton : MonoBehaviour
             // Check if item is in the the purchased items list of player
             foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments)
             {
-                if (purchasedItem.name == garment.name) garment.isPurchased = true;
+                if (purchasedItem.tag == garment.tag) garment.isPurchased = true;
             }
         }
         catch

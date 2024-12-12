@@ -260,9 +260,9 @@ public class CustomizableCharacter
                     GameObject prefab = handle.Result;
 
                     // Get the CustomizableItem component attached to the prefab
-                    Garment loadedItem = prefab.GetComponent<Garment>();
+                    Garment loadedGarment = prefab.GetComponent<Garment>();
 
-                    purchasedGarments.Add(loadedItem);
+                    purchasedGarments.Add(loadedGarment);
                 }
                 else
                 {
@@ -303,7 +303,7 @@ public class CustomizableCharacter
                     // Assign data to the new item
                     loadedGarment.bodyPart = data.bodyPart;
                     //newItem.prefab = prefab;
-                    loadedGarment.isPurchased = data.isPurchased;
+                    loadedGarment.isPurchased = true;
 
                     WearGarment(loadedGarment);
                 }
