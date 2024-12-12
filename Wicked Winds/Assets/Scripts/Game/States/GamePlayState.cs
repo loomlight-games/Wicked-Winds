@@ -6,10 +6,10 @@ using UnityEngine;
 public class GamePlayState : AState
 {
     GameObject UI, statesUI, gameplayUI, handledControls;
-    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI timerText, coinsNumText;
     HUDBar highSpeedBar, flyHighBar;
     float elapsedTime, remainingTime;
-    int timerMinutes, timerSeconds;
+    int timerMinutes, timerSeconds, coinsNum;
     bool gameOverTriggered = false, //in order to not recall the method
         isScalingRed = false,
         isScalingYellow = false;
@@ -26,6 +26,8 @@ public class GamePlayState : AState
         gameplayUI.SetActive(true);
 
         timerText = GameObject.Find("Timer").GetComponent<TextMeshProUGUI>();
+        coinsNumText = GameObject.Find("Coin number").GetComponent<TextMeshProUGUI>();
+
         highSpeedBar = GameObject.Find("High speed bar").GetComponent<HUDBar>();
         flyHighBar = GameObject.Find("Fly high bar").GetComponent<HUDBar>();
         handledControls = UI.transform.Find("Handled controls").gameObject;
@@ -41,6 +43,8 @@ public class GamePlayState : AState
 
     public override void Update()
     {
+        coinsNumText.text = PlayerManager.Instance.customizable.coins.ToString();
+
         // Not if player is talking
         if (PlayerManager.Instance.GetState() == PlayerManager.Instance.talkingState)
             return;
