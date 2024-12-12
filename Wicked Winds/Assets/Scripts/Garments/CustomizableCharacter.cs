@@ -9,10 +9,8 @@ public class CustomizableCharacter
     public int coins;
     public List<Garment> purchasedGarments = new();
     public readonly string PLAYER_CUSTOMIZATION_FILE = "PlayerCustomization";
-    public readonly string PLAYER_PURCHASED_ITEMS_FILE = "PlayerPurchasedItems";
+    public readonly string PLAYER_PURCHASED_GARMENTS_FILE = "PlayerPurchasedItems";
     public readonly string PLAYER_COINS_FILE = "PlayerCoins";
-
-    Transform model;
 
     // Dictionary that maintains the relation between each bodypart and its item with its GO
     public Dictionary<BodyPart, Garment> currentCustomization = new(){
@@ -25,10 +23,8 @@ public class CustomizableCharacter
     /////////////////////////////////////////////////////////////////////////////////////////////
     public void Awake()
     {
-        model = PlayerManager.Instance.model;
-
         // Load customization,  purchased items and coins
-        //Load();
+        Load();
     }
 
     /// <summary>
@@ -177,7 +173,7 @@ public class CustomizableCharacter
             GarmentData data = new()
             {
                 bodyPart = item.bodyPart,
-                //prefabName = item.prefab.name,
+                tag = item.tag,
                 isPurchased = item.isPurchased,
             };
 
@@ -186,7 +182,7 @@ public class CustomizableCharacter
 
         // Serialize the list to JSON
         string json = JsonUtility.ToJson(new PurchasedGarmentsList(dataList));
-        PlayerPrefs.SetString(PLAYER_PURCHASED_ITEMS_FILE, json);
+        PlayerPrefs.SetString(PLAYER_PURCHASED_GARMENTS_FILE, json);
         Debug.Log("Saved purchased items: " + json);
     }
 
@@ -206,7 +202,7 @@ public class CustomizableCharacter
                 GarmentData data = new()
                 {
                     bodyPart = kvp.Key,
-                    //prefabName = kvp.Value.prefab.name,
+                    tag = kvp.Value.tag,
                     isPurchased = kvp.Value.isPurchased,
                 };
 
@@ -241,20 +237,20 @@ public class CustomizableCharacter
     /// </summary>
     public void LoadPurchasedItems()
     {
-        string json = PlayerPrefs.GetString(PLAYER_PURCHASED_ITEMS_FILE, "");
+        string json = PlayerPrefs.GetString(PLAYER_PURCHASED_GARMENTS_FILE, "");
 
         if (string.IsNullOrEmpty(json))
         {
-            Debug.LogWarning("No purchased items found.");
+            Debug.LogWarning("No purchased garments found.");
             return;
         }
 
-        Debug.Log("Loaded purchased items: " + json);
+        Debug.Log("Loaded purchased garments: " + json);
 
-        PurchasedGarmentsList loadedPurchasedItemsList = JsonUtility.FromJson<PurchasedGarmentsList>(json);
+        PurchasedGarmentsList loadedPurchasedGarmentsList = JsonUtility.FromJson<PurchasedGarmentsList>(json);
 
         // Mark each item prefab as purchased
-        foreach (var item in loadedPurchasedItemsList.purchasedGarments)
+        foreach (var item in loadedPurchasedGarmentsList.purchasedGarments)
         {
             // Use Addressables to load the prefab by name/label
             Addressables.LoadAssetAsync<GameObject>(item.tag).Completed += handle =>
