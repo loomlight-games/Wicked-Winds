@@ -54,21 +54,20 @@ public class PlayerCustomizationUI : MonoBehaviour
     /// </summary>
     public void ChooseItem(ItemButton button)
     {
-
         OnCoinsChange?.Invoke(this, coinsNum);
 
-        int itemPrice = button.item.price;
+        int itemPrice = button.garment.price;
 
         // Enough money to buy it or is already purchased
-        if (coinsNum >= itemPrice || button.item.isPurchased)
+        if (coinsNum >= itemPrice || button.garment.isPurchased)
         {
             // Not purchased yet
-            if (!button.item.isPurchased)
+            if (!button.garment.isPurchased)
                 // Reduces coins number
                 coinsNum -= itemPrice;
 
             // Sends it to the player customization
-            player.UpdateBodyPart(button.item);
+            player.UpdateBodyPart(button.garment);
             player.UpdateCoins(coinsNum);
         }
         else
