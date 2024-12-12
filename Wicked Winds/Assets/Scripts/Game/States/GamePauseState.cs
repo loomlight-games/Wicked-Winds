@@ -19,7 +19,7 @@ public class GamePauseState : AState
 
     public override void Update()
     {
-
+        float deltaTime = Time.unscaledDeltaTime;
     }
 
     public override void Exit()

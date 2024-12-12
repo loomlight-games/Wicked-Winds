@@ -39,6 +39,9 @@ public class swipeController : MonoBehaviour
     }
     void MovePage()
     {
-        levelPagesRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
+        // Usamos un LeanTween con Time.unscaledDeltaTime
+        levelPagesRect.LeanMoveLocal(targetPos, tweenTime)
+                      .setEase(tweenType)
+                      .setIgnoreTimeScale(true);
     }
 }
