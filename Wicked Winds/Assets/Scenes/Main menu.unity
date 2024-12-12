@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -510,11 +510,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2897878059594732896, guid: f3dc61a073031e0429e8513bf791cac4,
-        type: 3}
-      propertyPath: fadeDuration
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4317323368946030866, guid: 03a7f18aa7e9a1449a1a13ed30914b33,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -569,6 +564,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897878059594732896, guid: f3dc61a073031e0429e8513bf791cac4,
+        type: 3}
+      propertyPath: fadeDuration
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
