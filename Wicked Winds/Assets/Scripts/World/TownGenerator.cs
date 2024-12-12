@@ -16,7 +16,6 @@ public class TownGenerator
     Dictionary<TileType, bool> isTypeInstantiated = new();
     List<GameObject> townTiles = new();
     public GameObject fogTriggerPrefab;
-    public GameObject fogPrefab;
     int fogTriggersCreated = 0;  // Variable para contar los FogTriggers
 
     public void GenerateTown()
@@ -189,7 +188,7 @@ public class TownGenerator
 
             // Instanciamos los fog triggers en los tiles seleccionados
             GameObject fogTrigger = GameObject.Instantiate(fogTriggerPrefab, tilesPositions[row, col], Quaternion.identity);
-            GameObject fog = GameObject.Instantiate(fogPrefab, tilesPositions[row, col], Quaternion.identity);
+            
             fogTriggersCreated++;  // Aumentamos el contador de fog triggers creados
 
             // Repetir para el segundo fog trigger
@@ -198,7 +197,6 @@ public class TownGenerator
                 row = UnityEngine.Random.Range(0, townSize);
                 col = UnityEngine.Random.Range(0, townSize);
                 GameObject fogTrigger2 = GameObject.Instantiate(fogTriggerPrefab, tilesPositions[row, col], Quaternion.identity);
-                GameObject fog2 = GameObject.Instantiate(fogPrefab, tilesPositions[row, col], Quaternion.identity);
                 fogTriggersCreated++;
             }
         }
