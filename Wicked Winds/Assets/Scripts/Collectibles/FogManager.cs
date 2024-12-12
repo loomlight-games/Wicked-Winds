@@ -57,34 +57,32 @@ public class FogManager : MonoBehaviour
         RenderSettings.fogStartDistance = 0f; // Configurar el inicio de la niebla
         RenderSettings.fogEndDistance = 100000f; // Configurar el final de la niebla
 
-        // Asegurarse de que la niebla esta desactivada al inicio
-        //RenderSettings.fog = false;  //TODO
-        //RenderSettings.fogDensity = 0f;
     }
 
     private void Update()
     {
-        if(PlayerManager.Instance.potionFog)
+        if (PlayerManager.Instance.potionFog)
         {
             RenderSettings.fogStartDistance = 0f; // Configurar el inicio de la niebla
             RenderSettings.fogEndDistance = 100000f;
         }
+        
 
         if (isFogTimerActive)
         {
 
             timer -= Time.deltaTime;
-            UpdatePotionTimer();
+
 
             if (timer <= 0)
             {
+                if (PlayerManager.Instance.playerIsInsideFog == true && PlayerManager.Instance.potionFog == false)
+                {
+                    StartFogTransition(startFog, endFog, targetColor); // Activar niebla (hacia blanco)
+                }
                 PlayerManager.Instance.potionFog = false;
                 DesactivarPotionUI.Instance.activarFogUI = false;
                 timer = 0f;
-                isFogTimerActive = false;
-
-
-
                 // Ocultar y restablecer el texto del temporizador
                 timerText.gameObject.SetActive(false);
                 timerText.text = "";
@@ -92,11 +90,10 @@ public class FogManager : MonoBehaviour
                 timer = potionFogEffectTime;
 
                 Debug.Log("Potion fog effect ended.");
-                if (PlayerManager.Instance.playerIsInsideFog && !PlayerManager.Instance.potionFog)
-                {
-                    StartFogTransition(startFog, endFog, targetColor); // Activar niebla (hacia blanco)
-                }
+                isFogTimerActive = false;
             }
+
+            UpdatePotionTimer();
         }
 
 
@@ -104,27 +101,13 @@ public class FogManager : MonoBehaviour
 
         if (isTransitioning)
         {
-
-
             // Transicion de niebla
             RenderSettings.fogStartDistance = Mathf.Lerp(RenderSettings.fogStartDistance, targetStart, Time.deltaTime * transitionSpeed);
             RenderSettings.fogEndDistance = Mathf.Lerp(RenderSettings.fogEndDistance, targetEnd, Time.deltaTime * transitionSpeed);
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetFogColor, Time.deltaTime * transitionSpeed);
-
-
-
-            if (Mathf.Abs(RenderSettings.fogStartDistance - targetStart) < 0.01f && RenderSettings.fogColor == targetFogColor && Mathf.Abs(RenderSettings.fogEndDistance - targetEnd) < 0.01f)
-            {
-                RenderSettings.fogEndDistance = targetEnd;
-                RenderSettings.fogStartDistance = targetStart;
-                RenderSettings.fogColor = targetFogColor;
-                isTransitioning = false;
-            }
+            if(RenderSettings.fogColor== targetFogColor) { isTransitioning = false; }
+           
         }
-
-
-
-
     }
 
     private void UpdatePotionTimer()
@@ -162,7 +145,6 @@ public class FogManager : MonoBehaviour
         targetStart = start;
         targetEnd = end;
         targetFogColor = newFogColor;
-        RenderSettings.fog = true; // Asegurarse de que la niebla esta activa
         isTransitioning = true;
     }
 }
