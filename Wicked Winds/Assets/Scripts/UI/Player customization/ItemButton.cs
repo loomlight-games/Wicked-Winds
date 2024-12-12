@@ -5,11 +5,10 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class ItemButton : MonoBehaviour
 {
-    public Garment item;
+    public Garment garment;
     public float rotationSpeed,
                 scaleUp = 1.5f;
 
-    Vector3 initialItemScale;
     TextMeshProUGUI priceText;
     CustomizableCharacter player;
     PlayerCustomizationUI shopUI;
@@ -38,14 +37,13 @@ public class ItemButton : MonoBehaviour
         try
         {
             // Get item and price panel
-            item = transform.GetComponentInChildren<Garment>();
-            initialItemScale = item.transform.localScale;
+            garment = transform.GetComponentInChildren<Garment>();
 
             pricePanel = transform.Find("Price panel").gameObject;
             priceText = pricePanel.transform.GetComponentInChildren<TextMeshProUGUI>();
             center = transform.Find("Center").gameObject;
 
-            priceText.text = item.price.ToString();
+            priceText.text = garment.price.ToString();
         }
         catch
         {
@@ -56,26 +54,34 @@ public class ItemButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (item == null) return;
+        if (garment == null) return;
         if (player == null) return;
 
-        // Item is purchased
-        if (item.isPurchased)
+        if (!player.GarmentIsPurchased(garment))
+        {
+            // Show price panel
+            pricePanel.SetActive(true);
+
+            // Enough money to buy it -> green
+            if (shopUI.coinsNum >= garment.price)
+                button.image.color = semiTransparentGreen;
+            // Not enough money -> red
+            else
+                button.image.color = semiTransparentRed;
+        }
+        else // Item is purchased
         {
             // Hide price panel
             pricePanel.SetActive(false);
 
             // Move item to center
-            item.transform.position = Vector3.MoveTowards(item.transform.position, center.transform.position, 2f * Time.deltaTime);
-
-            // Scale it up a little
-            item.transform.localScale = Vector3.Lerp(item.transform.localScale, initialItemScale * scaleUp, 2f * Time.deltaTime);
+            garment.transform.position = Vector3.MoveTowards(garment.transform.position, center.transform.position, 2f * Time.deltaTime);
 
             // Character is wearing smth of that body part
-            if (player.currentCustomization[item.bodyPart] != null)
+            if (player.currentCustomization[garment.bodyPart] != null)
             {
                 // Its this item -> blue
-                if (player.currentCustomization[item.bodyPart].name == item.name)
+                if (player.currentCustomization[garment.bodyPart].tag == garment.tag)
                     button.image.color = semiTransparentBlue;
                 else // Its not -> white
                     button.image.color = semiTransparentWhite;
@@ -83,35 +89,10 @@ public class ItemButton : MonoBehaviour
             else
                 button.image.color = semiTransparentWhite;
         }
-        else
-        { // Item not purchased
-            // Show price panel
-            pricePanel.SetActive(true);
-
-            // Enough money to buy it -> green
-            if (shopUI.coinsNum >= item.price)
-                button.image.color = semiTransparentGreen;
-            // Not enough money -> red
-            else
-                button.image.color = semiTransparentRed;
-        }
-
-        try
-        {
-            // Check if item is in the the purchased items list of player
-            foreach (Garment purchasedItem in PlayerManager.Instance.customizable.purchasedGarments)
-            {
-                if (purchasedItem.name == item.name) item.isPurchased = true;
-            }
-        }
-        catch
-        {
-            Debug.LogWarning("No purchased items");
-        }
 
         rotationSpeed = PlayerManager.Instance.rotatorySpeedAtShop;
 
         // Rotates item
-        item.transform.Rotate(0, 360 * rotationSpeed * Time.deltaTime, 0);
+        garment.transform.Rotate(0, 360 * rotationSpeed * Time.deltaTime, 0);
     }
 }

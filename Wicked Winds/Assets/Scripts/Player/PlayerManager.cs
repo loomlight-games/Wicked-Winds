@@ -12,7 +12,6 @@ public class PlayerManager : AStateController
 {
     public static PlayerManager Instance { get; private set; } // Only one player
 
-    public Transform orientation;
     [HideInInspector] public CharacterController controller;
     [HideInInspector] public bool runKey, runJoystick, flyKey, interactKey, nextLineKey, hasActiveMission;
     [HideInInspector] public Vector2 movement2D;
@@ -26,7 +25,6 @@ public class PlayerManager : AStateController
     public List<GameObject> currentTargets = new();
     public Transform target;
     [HideInInspector] public MissionIcon activeMission;
-    public Animator animator;
 
     #region STATES
     public readonly ControllablePlayerState controllableState = new();
@@ -44,6 +42,8 @@ public class PlayerManager : AStateController
 
     #region PROPERTIES
     [Header("Movement")]
+    public Transform orientation;
+    public Animator animator;
     public float walkSpeed = 6f;
     public float boostSpeed = 12f;
     public float rainySpeed = 3f;
@@ -63,11 +63,9 @@ public class PlayerManager : AStateController
 
 
     [Header("Customizable")]
-    public Transform head;
-    public Transform upperBody;
-    public Transform lowerBody;
-    public Transform shoes;
     public float rotatorySpeedAtShop = 0.1f;
+    // Lists of garments
+    public List<GameObject> headGarments, upperBodyGarments, lowerBodyGarments, brooms;
     #endregion
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +79,7 @@ public class PlayerManager : AStateController
 
         controller = GetComponent<CharacterController>();
 
-        customizable = new(head, upperBody, lowerBody, shoes);
+        customizable = new();
 
         hasActiveMission = false;
 

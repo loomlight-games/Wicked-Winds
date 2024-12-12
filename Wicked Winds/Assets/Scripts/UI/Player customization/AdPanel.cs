@@ -11,7 +11,7 @@ public class AdPanel : MonoBehaviour
     public const int COINS_TO_EARN = 3;
     int timerMinutes, timerSeconds;
 
-    public const float SECONDS_FOR_REWARD = 15f;
+    public const float SECONDS_FOR_REWARD = 16f;
     float secondsForReward = SECONDS_FOR_REWARD;
 
     public TextMeshProUGUI earnCoinsText, rewardText;
@@ -63,6 +63,9 @@ public class AdPanel : MonoBehaviour
 
         // Close panel
         gameObject.SetActive(false);
+
+        // Restart timer
+        secondsForReward = SECONDS_FOR_REWARD;
     }
 
     /// <summary>
