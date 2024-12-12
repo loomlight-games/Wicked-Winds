@@ -13,6 +13,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
                      waterLayerMask,// Mascara de capa para detectar agua.
                      groundLayerMask; // Mascara de capa para detectar el suelo.
 
+    GameObject ingredientsParent;
     const int maxAttempts = 30; // Numero maximo de intentos para encontrar una posicion valida.
     bool validPosition;
     int attempts;
@@ -32,6 +33,11 @@ public class MissionObjectiveSpawner : MonoBehaviour
         {
             Destroy(gameObject); // Destruye el objeto si ya existe una instancia.
         }
+    }
+
+    private void Start()
+    {
+        ingredientsParent = GameObject.Find("IngredientsParent") ?? new GameObject("IngredientsParent");
     }
 
     public GameObject[] SpawnIngredients(Vector3 centerPosition, int count)
@@ -100,7 +106,7 @@ public class MissionObjectiveSpawner : MonoBehaviour
                 Debug.LogWarning($"No se encontro una posicion valida para el ingrediente {i + 1} despues de {maxAttempts} intentos.");
                 continue;
             }
-            GameObject spawnedIngredient = Instantiate(randomPrefab, randomPos, Quaternion.identity);
+            GameObject spawnedIngredient = Instantiate(randomPrefab, randomPos, Quaternion.identity, ingredientsParent.transform);
             spawnedIngredients.Add(spawnedIngredient);
         }
         return spawnedIngredients.ToArray();
