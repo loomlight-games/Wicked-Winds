@@ -87,7 +87,13 @@ public class Compass
                 // Rotation to object
                 Quaternion lookRotation = Quaternion.LookRotation(target.position - compass.position);
                 // Transition rotation
-                compass.rotation = Quaternion.Slerp(compass.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+                prefabInstance.transform.rotation = Quaternion.Slerp(prefabInstance.transform.rotation, lookRotation, PlayerManager.Instance.rotationSpeed * Time.deltaTime);
+
+                // Debug para diagnosticar problemas
+                if (target != null)
+                {
+                    Debug.DrawLine(PlayerManager.Instance.orientation.position, target.position, Color.red);
+                }
             }
         }
         // No mission
