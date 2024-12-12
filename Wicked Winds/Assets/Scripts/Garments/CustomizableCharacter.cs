@@ -48,7 +48,7 @@ public class CustomizableCharacter
     public void Awake()
     {
         // Load customization,  purchased items and coins
-        //Load();
+        Load();
     }
 
     /// <summary>
