@@ -15,7 +15,7 @@ public class TeleportPotion : MonoBehaviour
         {
             SoundManager.PlaySound(SoundType.Potion);
 
-            // Obtener la posici�n del objetivo
+            // Obtener la posici0n del objetivo
             Vector3 targetPosition = PlayerManager.Instance.currentTargets[0].transform.position;
 
             // Generar un desplazamiento aleatorio
@@ -37,7 +37,7 @@ public class TeleportPotion : MonoBehaviour
                 }));
             }
         }
-        
+
     }
 
 }
