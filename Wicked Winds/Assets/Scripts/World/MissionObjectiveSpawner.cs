@@ -11,7 +11,8 @@ public class MissionObjectiveSpawner : MonoBehaviour
 
     public LayerMask buildingLayerMask, // Mascara de capa para detectar edificios.
                      waterLayerMask,// Mascara de capa para detectar agua.
-                     groundLayerMask; // Mascara de capa para detectar el suelo.
+                     groundLayerMask, // Mascara de capa para detectar el suelo.
+                    propLayerMask; // Mascara de capa para detectar obstáculos.
 
     GameObject ingredientsParent;
     const int maxAttempts = 30; // Numero maximo de intentos para encontrar una posicion valida.
@@ -95,7 +96,8 @@ public class MissionObjectiveSpawner : MonoBehaviour
                 // Establece la posicion final del ingrediente.
                 randomPos.y = highestPoint;
                 // Asegurate de que el collider del ingrediente no esta dentro de un edificio.
-                if (Physics.CheckBox(randomPos, randomPrefab.GetComponent<Collider>().bounds.extents, Quaternion.identity, buildingLayerMask))
+                if (Physics.CheckBox(randomPos, randomPrefab.GetComponent<Collider>().bounds.extents, Quaternion.identity, buildingLayerMask) ||
+                    Physics.CheckBox(randomPos, randomPrefab.GetComponent<Collider>().bounds.extents, Quaternion.identity, propLayerMask))
                 {
                     continue;
                 }
