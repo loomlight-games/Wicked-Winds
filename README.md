@@ -22,7 +22,7 @@
 # Wicked Winds - Documento de Diseño de Juego
 
 <div align="center"><b><i>
-    Versión 1.0.0
+    Versión 2.0.0
 </i></b></div>
 
 # 1. INTRODUCCIÓN
@@ -209,18 +209,58 @@ Oculta los obstáculos voladores (pájaros) durante 20 segundos, despejando el c
 ### 10. Mapas Generativos y Escenarios
 Wicked Winds cuenta con un sistema de mapas generativos que garantiza una experiencia fresca y diferente en cada partida. Los jugadores pueden explorar tres escenarios únicos, cada uno con su propia temática y estética:
 
-#### Sandy Landy
-Un pueblo perdido entre dunas doradas y un sol eterno, donde el calor del desierto parece vibrar con hechizos antiguos.
-#### Frospeak Hollow
-Un pueblo cubierto de nieve y hielo cristalino, envuelto en el misterio de un invierno eterno.
-#### Stardust Town 
-Un lugar encantador y sereno, donde las estrellas parecen haberse caído para iluminar los tejados y caminos.
+### Stardust Town 
+Stardust Town es una encantadora ciudad de inspiración medieval, llena de toques mágicos y detalles fantásticos. Sus calles están iluminadas por farolas encantadas y adornadas con árboles y calderos mágicos que aportan un brillo especial al entorno. En el corazón de la ciudad se encuentra una plaza central animada, donde un mercadillo con coloridos puestos invita a explorar y descubrir los secretos de esta vibrante comunidad mágica.
+
+<p align="center">
+<img src="https://i.postimg.cc/C1tsC6Nq/ST0.jpg"/>
+</p>
+<p align="center"> 
+<img src="https://i.postimg.cc/pVhZVRWY/ST1.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/66khygTs/ST2.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/nrDY3YRw/ST3.jpg"/>
+</p>
+
+### Sandy Landy
+Sandy Landy es una aldea en el corazón del desierto y rodeada por enormes pirámides. Sus casas de adobe y mercados vibrantes reflejan la calidez y hospitalidad de sus habitantes, mientras las dunas cercanas esconden secretos y ruinas antiguas.
+
+<p align="center">
+<img src="https://i.postimg.cc/j2wwXgFG/SL0.jpg"/>
+</p>
+<p align="center"> 
+<img src="https://i.postimg.cc/P5kpWMzR/SL1.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/59TF0JH1/SL2.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/rF4RRHW4/SL3.jpg"/>
+</p>
+
+### Frospeak Hollow
+Frostpeak Hollow es una aldea nevada en lo alto de una cordillera, con casas de madera y techos empinados que resisten las tormentas. Los aldeanos viven de la artesanía y cuentan historias de espíritus guardianes que protegen el lugar.
+
+<p align="center">
+<img src="https://i.postimg.cc/mDZ7QSRs/FH0.jpg"/>
+</p>
+<p align="center"> 
+<img src="https://i.postimg.cc/Zn23ztNb/FH1.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/vTc9KHc2/FH2.jpg"/>
+</p>
+<p align="center">
+<img src="https://i.postimg.cc/RFPKGnVn/FH3.jpg"/>
+</p>
 
 ### Generación Procedural de los Mapas
 Cada uno de estos escenarios utiliza un sistema procedural para construir su mapa. En total, existen siete tiles predefinidos que se colocan en posiciones aleatorias al iniciar la partida. Este diseño garantiza que, aunque el jugador explore el mismo escenario, los elementos del mapa estarán distribuidos de manera diferente cada vez, promoviendo la exploración y adaptabilidad en cada sesión de juego.
 
 La combinación de los escenarios temáticos con la aleatoriedad en la disposición de los tiles añade una capa de rejugabilidad y sorpresa, haciendo que Wicked Winds sea una experiencia dinámica y envolvente.
-
 
 # 5. TRASFONDO
 ## Descripción Detallada de la Historia y la Trama
@@ -245,34 +285,6 @@ La historia se desarrolla a través de interacciones con estos personajes y medi
 
 - **Habitantes de la ciudad:** Cada NPC tiene características y necesidades únicas; algunos son cómicos, otros misteriosos, cada uno con tareas relacionadas con sus personalidades. Las interacciones con ellos pueden revelar conexiones sorprendentes entre sus historias.
 
-- **Personajes especiales:** A lo largo del juego, Ashen se cruzará con personajes enigmáticos que revelan secretos de la ciudad y ofrecen misiones especiales con grandes recompensas, enriqueciendo la experiencia del jugador.
-
-## Entornos y Lugares
-- **Ciudad mágica:** Inspirada en la arquitectura medieval, con influencias mágicas. Las calles están adornadas con farolas, árboles, calderos mágicos y edificaciones que dan un toque fantástico.
-
-<p align="center">
-<img src="https://i.postimg.cc/1X01VbBD/Unity5.jpg"/>
-</p>
-
-<p align="center"> 
-<img src="https://i.postimg.cc/yYBHCY6j/Unity6.jpg"/>
-</p>
-
-- **Plaza central:** Uno de los lugares más concurridos, donde los habitantes suelen congregarse. Aquí suelen comenzar y terminar varias misiones.
-<p align="center">
-<img src="https://i.postimg.cc/7LckF3bJ/Unity1.jpg"/>
-</p>
-
-- **Mercadillo:** Ubicado en la plaza central, lleno de puestos de vendedores de ingredientes y herramientas mágicas, es uno de los lugares favoritos de Ashen para realizar sus recados.
-<p align="center">
-<img src="https://i.postimg.cc/BZ20z13t/Unity2.jpg"/>
-</p>
-
-- **Lugares adicionales:** El bosque encantado, el pantano y la torre de hechicería ofrecen más oportunidades de exploración y aventuras que conectan con la narrativa principal.
-<p align="center">
-<img src="https://i.postimg.cc/xCz2nXbx/Unity3.jpg"/>
-</p>
-
 # 6. ARTE
 ## Estética General del Juego
 La estética de Wicked Winds se basa en un estilo cartoon en 3D de *low-poly*, diseñado para capturar una ambientación colorida y mágica. Se emplean colores vibrantes y efectos luminosos suaves, creando una atmósfera envolvente que refleja la naturaleza mágica de la ciudad y su encanto sobrenatural. Esta elección estética no solo atrae visualmente, sino que también establece el tono del juego, invitando a los jugadores a sumergirse en un mundo de fantasía.
@@ -281,11 +293,78 @@ La estética de Wicked Winds se basa en un estilo cartoon en 3D de *low-poly*, d
 El diseño de los personajes y del entorno sigue una línea visual simple, caracterizada por formas estilizadas y texturas planas. Los colores son saturados lo que contribuye a crear un estilo visual homogéneo y atractivo. Esta simplicidad en el diseño permite que la atención se centre en la jugabilidad y las interacciones, manteniendo al mismo tiempo un enfoque estético agradable.
 
 # 7. INTERFAZ
-La interfaz del juego es minimalista y se centra en la funcionalidad, evitando distracciones que puedan apartar al jugador de la acción principal. Durante la partida, el HUD (Head-Up Display) presenta el joystick en el lado izquierdo de la pantalla, permitiendo un control intuitivo del movimiento de Ashen. En el lado derecho, se encuentran los botones para interactuar y volar, facilitando la ejecución de acciones de manera rápida y eficiente.
+## Menu Principal
+El menú principal incluye cinco botones: Jugar, que lleva a la selección de escenarios; Créditos, donde se reconocen a los desarrolladores; Tienda, para personalizar al personaje; Leaderboard, que muestra las clasificaciones y permite registrarse; y Tutorial, para aprender las mecánicas del juego.
 
-En la parte superior de la pantalla, se muestra el tiempo restante y el medidor de impulso, lo que permite al jugador gestionar su tiempo y recursos con claridad. Cuando el jugador interactúa con los NPCs, aparece un cuadro de diálogo que muestra el nombre del personaje y las instrucciones correspondientes, asegurando una comunicación efectiva durante las misiones.
+<p align="center">
+<img src="https://i.postimg.cc/MpQ21hmy/MainMenu.png"/>
+</p>
 
-Además, el HUD incluye un botón que lleva al menú de pausa, lo que facilita el control y la navegación en el juego.
+## Start
+La pantalla de start lleva al jugador a seleccionar un escenario entre los 3 disponibles. Tras elegir uno, da comienzo el juego.
+
+<p align="center">
+<img src="https://i.postimg.cc/fTXQ9GKY/Map-Selector.png"/>
+</p>
+
+<p align="center">
+<img src="https://i.postimg.cc/ryDk80Rn/Gameplay.png"/>
+</p>
+
+## Menu Pausa
+Desde el menú de pausa, los jugadores pueden consultar el tutorial, regresar al menú principal para salir de la partida, acceder a las opciones o reanudar el juego y continuar desde donde lo dejaron.
+
+<p align="center">
+<img src="https://i.postimg.cc/kgvrjWL4/MP.png"/>
+</p>
+
+<p align="center">
+<img src="[https://i.postimg.cc/6pXJLMjg/Opciones.png"/>
+</p>
+
+## Tienda
+En la tienda, los jugadores pueden ver su ropa equipada, las prendas compradas, las disponibles para adquirir, y las bloqueadas. También pueden ganar monedas viendo anuncios para desbloquear nuevas opciones de personalización.
+
+<p align="center">
+<img src="https://i.postimg.cc/G3619Lkc/Shop.png"/>
+</p>
+
+## Creditos
+Una pantalla dedicada a honrar a los desarrolladores y colaboradores del proyecto.
+
+<p align="center">
+<img src="https://i.postimg.cc/hvZW0nY0/Creditos.png"/>
+</p>
+
+## Leaderboard
+El leaderboard consta de dos pantallas. La primera permite registrarse ingresando un nombre de usuario y contraseña y logearse en caso de que ya se tenga una cuenta. La segunda muestra tablas de clasificación organizadas por categorías.
+
+<p align="center">
+<img src="https://i.postimg.cc/RVqzZ33p/LB1.png"/>
+</p>
+
+<p align="center">
+<img src="https://i.postimg.cc/L4xpSksZ/LB2.png"/>
+</p>
+
+## Tutorial
+El tutorial está dividido en secciones que explican los controles básicos, cómo jugar, los efectos de las pociones, y cómo completar misiones, ayudando a los jugadores a dominar las mecánicas del juego.
+
+<p align="center">
+<img src="https://i.postimg.cc/N0vhDpdZ/T1.png"/>
+</p>
+
+<p align="center">
+<img src="https://i.postimg.cc/xC9wDqDR/T2.png"/>
+</p>
+
+<p align="center">
+<img src="https://i.postimg.cc/SK6BvC5R/T3.png"/>
+</p>
+
+<p align="center">
+<img src="https://i.postimg.cc/sXKtVy3R/T4.png"/>
+</p>
 
 # 8. HOJA DE RUTA DEL DESARROLLO
 <p align="center">
