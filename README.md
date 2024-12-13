@@ -319,7 +319,7 @@ Desde el menú de pausa, los jugadores pueden consultar el tutorial, regresar al
 </p>
 
 <p align="center">
-<img src="[https://i.postimg.cc/6pXJLMjg/Opciones.png"/>
+<img src="https://i.postimg.cc/6pXJLMjg/Opciones.png"/>
 </p>
 
 ## Tienda
