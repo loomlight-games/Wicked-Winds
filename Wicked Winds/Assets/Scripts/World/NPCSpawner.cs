@@ -42,7 +42,7 @@ public class NPCSpawner : MonoBehaviour
         }
     }
 
-    public LayerMask buildingLayer, waterLayer, groundLayer;
+    public LayerMask buildingLayer, waterLayer, groundLayer, propLayer;
     int spawnedNPCCount = 0;
 
     void Start()
@@ -242,7 +242,7 @@ public class NPCSpawner : MonoBehaviour
 
                 // Realizar un raycast hacia arriba desde el punto de spawn para comprobar si hay un edificio
                 RaycastHit hitpoint;
-                if (Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, buildingLayer))
+                if (Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, buildingLayer) || Physics.Raycast(spawnPoint, Vector3.up, out hitpoint, Mathf.Infinity, propLayer))
                 {
                     // Si hay un edificio encima, continuamos con la siguiente iteracion
                     continue;
