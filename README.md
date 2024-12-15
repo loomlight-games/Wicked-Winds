@@ -118,8 +118,6 @@ La partida inicia con un tiempo límite (por ejemplo, 60 segundos), y cada misi�
 ### 1. Movimiento y Desplazamiento
 - **Control de la Escoba:** El jugador controla a Ashen mientras se desplaza por el escenario en su escoba. La escoba permite un movimiento fluido y ágil en diferentes direcciones (adelante, atrás, izquierda, derecha) con opción de activar un impulso para mayor velocidad.
 
-- **Movimiento a Pie:** Además de desplazarse en escoba, Ashen puede caminar. Esta mecánica proporciona flexibilidad al jugador para interactuar con los NPCs y explorar el entorno a un ritmo más pausado.
-
 - **Impulso Temporizado:** A lo largo del escenario, el jugador puede recolectar objetos o completar misiones que rellenan una barra de impulso. Este impulso ofrece una ventaja de velocidad limitada que se agota al usarse, regresando al desplazamiento normal hasta que la barra se recargue nuevamente.
 
 ### 2. Sistema de Misiones
@@ -587,7 +585,23 @@ Con estos tres escenarios se concretan las expectativas de las cifras a alcanzar
 - **Retención:** Un 35% de los jugadores permanecen después de 7 días.
 - **Resultado:** El juego se convierte en un éxito moderado, generando ingresos suficientes para ampliar el contenido, agregar nuevas skins e ítems, y mejorar la experiencia de usuario.
 
-# 10. Post-Mortem
+# 10. MARKETING Y REDES SOCIALES
+En LoomLight, hemos desarrollado un enfoque integral para dar a conocer Wicked Winds, combinando diferentes estrategias de publicación, marketing digital y gestión de redes sociales para conectar con nuestra audiencia y construir una comunidad entusiasta en torno al juego.
+
+## Publicación y Presencia Online
+Hemos consolidado toda la información relevante sobre Wicked Winds en nuestra página web oficial de LoomLight. Aquí, los visitantes pueden encontrar detalles clave del juego, su desarrollo y su propuesta única. Además, la página web incluye información sobre otros proyectos de LoomLight, así como detalles sobre el equipo detrás de estos desarrollos, ofreciendo una experiencia completa y profesional para quienes buscan conocer más sobre nuestra visión como estudio.
+En paralelo, hemos personalizado la página del juego en Itch.io, creando un espacio dedicado donde los jugadores pueden descubrir, descargar y apoyar Wicked Winds. Esta página está diseñada con elementos visuales y descripciones atractivas que reflejan la esencia del juego, buscando captar la atención de nuestra audiencia y facilitar una experiencia de compra sencilla.
+
+## Estrategias en Redes Sociales
+Para fortalecer la presencia de Wicked Winds, hemos aprovechado plataformas clave como X (antes Twitter), Instagram y YouTube. En estas redes hemos implementado una estrategia de contenido diversificada que incluye:
+- **Imágenes y adelantos del juego:** Capturas de pantalla, videos cortos y clips que destacan el arte, la jugabilidad y los momentos más emocionantes de Wicked Winds.
+- **Memes y contenido ligero:** Incorporamos humor y referencias populares relacionadas con el juego, logrando un enfoque cercano y entretenido que ha fomentado el engagement con nuestra audiencia.
+- **Actualizaciones del desarrollo:** Compartimos avances clave en el desarrollo para mantener a nuestra comunidad informada y generar expectativa.
+
+## Resultados 
+Con estas estrategias, hemos conseguido no solo aumentar la visibilidad de Wicked Winds, sino también construir una comunidad activa y fiel que respalde el lanzamiento y crecimiento del juego. Nuestro enfoque en la interacción con los jugadores, combinado con contenido atractivo y una presentación profesional, garantiza que el público no solo conozca el juego, sino que se sienta parte del proyecto.
+
+# 11. POST-MORTEM
 ## Paula González Stradiotto - ‘Concept Artist’ y ‘3D Model Artist’
 **Trabajo Realizado:**
 Durante el desarrollo de Wicked Winds, mi principal responsabilidad fue la creación del arte del escenario jugable. Mis tareas específicas incluyen:
@@ -675,7 +689,7 @@ Integrar accesibilidad para distintas plataformas y manejar objetivos variados m
 **Trabajo Realizado:**
 Como programador de mecánicas, mi labor en Wicked Winds se enfocó en la creación y ajuste de diversas funcionalidades esenciales para la jugabilidad. Las tareas incluyeron:
 
-- **Sistema de Movimiento y Cámara:** Desarrollé e implementé los sistemas de movimiento para PC y móvil en dos modalidades: andar y volar. Esto incluyó la configuración de la cámara para ambas plataformas, permitiendo una experiencia de juego fluida y adecuada en cada una.
+- **Sistema de Movimiento y Cámara:** Desarrollé e implementé los sistemas de movimiento para PC y móvil. Esto incluyó la configuración de la cámara para ambas plataformas, permitiendo una experiencia de juego fluida y adecuada en cada una.
   
 - **Control del Tiempo y Boost:** Programé la mecánica de control del tiempo, de modo que los jugadores deben gestionar su tiempo en cada misión. Además, desarrollé el sistema de boost, permitiendo a los jugadores activar o desactivar la velocidad extra y ajustar su consumo de recursos.
   
