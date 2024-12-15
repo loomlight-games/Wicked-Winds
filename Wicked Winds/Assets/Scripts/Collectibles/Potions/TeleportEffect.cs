@@ -65,7 +65,7 @@ public class TeleportEffect : MonoBehaviour
 
             // Terminar el efecto de flash
             screenFlash.color = new Color(flashColor.r, flashColor.g, flashColor.b, 0); // Opacidad 0
-            canvas.gameObject.SetActive(false); // Desactiva el Canvas para que no obstruya
+            //canvas.gameObject.SetActive(false); // Desactiva el Canvas para que no obstruya
 
             // Teletransportar al jugador
             onComplete?.Invoke();

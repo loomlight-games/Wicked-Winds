@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
@@ -225,6 +225,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  propLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &289218276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,7 +1823,7 @@ PrefabInstance:
     - target: {fileID: 6983667754835187850, guid: 72af6b11c99722743b2fe1062fbc3aee,
         type: 3}
       propertyPath: town
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6983667754835187850, guid: 72af6b11c99722743b2fe1062fbc3aee,
         type: 3}
