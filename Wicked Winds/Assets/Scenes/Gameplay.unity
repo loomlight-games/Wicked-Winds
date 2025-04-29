@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -96,7 +93,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 76652e60a75badc4cb2d96d8232f2e75,
+    type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 582ac7036238c3c4580f0fcfeb8cb397,
     type: 2}
 --- !u!196 &4
@@ -969,6 +967,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1826906484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1826906487}
+  - component: {fileID: 1826906486}
+  - component: {fileID: 1826906485}
+  m_Layer: 5
+  m_Name: PerformanceHud
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1826906485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826906484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c3e4bdf7048aa4e95e060770b74d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFps: 60
+  baseFontSize: 32
+  overBudgetHoldSec: 0.75
+--- !u!222 &1826906486
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826906484}
+  m_CullTransparentMesh: 1
+--- !u!224 &1826906487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826906484}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1885737527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,8 +1234,8 @@ Mesh:
   m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1.0000002
-  m_MeshMetrics[1]: 1
+  'm_MeshMetrics[0]': 1.0000002
+  'm_MeshMetrics[1]': 1
   m_MeshOptimizationFlags: 1
   m_StreamData:
     serializedVersion: 2
@@ -1942,22 +2000,22 @@ PrefabInstance:
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_ActionName
-      value: Player movement/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+      value: 'Player movement/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionName
-      value: Player movement/Run[/Keyboard/leftShift]
+      value: 'Player movement/Run[/Keyboard/leftShift]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
-      value: Player movement/Fly[/Keyboard/space]
+      value: 'Player movement/Fly[/Keyboard/space]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: Player movement/Interact[/Keyboard/e]
+      value: 'Player movement/Interact[/Keyboard/e]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
@@ -1967,27 +2025,27 @@ PrefabInstance:
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[6].m_ActionName
-      value: Player/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+      value: 'Player/Walk[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_ActionName
-      value: Player/Run[/Keyboard/leftShift]
+      value: 'Player/Run[/Keyboard/leftShift]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_ActionName
-      value: Player/Fly[/Keyboard/space]
+      value: 'Player/Fly[/Keyboard/space]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[9].m_ActionName
-      value: Player/Interact[/Keyboard/e]
+      value: 'Player/Interact[/Keyboard/e]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
       propertyPath: m_ActionEvents.Array.data[10].m_ActionName
-      value: Player/NextLine[/Keyboard/tab]
+      value: 'Player/NextLine[/Keyboard/tab]'
       objectReference: {fileID: 0}
     - target: {fileID: 1570237454362240502, guid: 2e58d67de17b23644a2bc9824b8f0296,
         type: 3}
@@ -2432,3 +2490,4 @@ SceneRoots:
   - {fileID: 2102299233}
   - {fileID: 1734215245}
   - {fileID: 7836177084560793265}
+  - {fileID: 1826906487}
